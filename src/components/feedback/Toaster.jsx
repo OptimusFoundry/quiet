@@ -53,7 +53,7 @@ export function Toaster({ position = 'bottom-right', duration = 5000, max = 5, l
     <>
       <span ref={anchor} hidden />
       {host && createPortal(
-        <section aria-label={label} className={cls} {...scope} style={{ ...(scope && scope.style), ...style }}>
+        <section aria-label={label} className={cls} data-quiet="" {...scope} style={{ ...(scope && scope.style), ...style }}>
           {/* The live region exists before any toast does, so insertions are announced; errors are assertive via Toast's role="alert". */}
           <ol className="q-toaster__list" aria-live="polite" aria-relevant="additions">
             {shown.map(t => <ToasterItem key={t.id} t={t} duration={duration} />)}
