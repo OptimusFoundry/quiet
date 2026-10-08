@@ -1,0 +1,201 @@
+.page {
+	display: flex;
+	align-items: flex-start;
+	min-height: 100vh;
+	background: var(--q-paper);
+}
+
+.sidebar {
+	position: sticky;
+	top: 0;
+	display: flex;
+	flex: none;
+	flex-direction: column;
+	gap: var(--q-space-4);
+	box-sizing: border-box;
+	width: var(--q-w-sidebar);
+	height: 100vh;
+	overflow-y: auto;
+	padding: var(--q-space-5) var(--q-space-4);
+	border-right: 1px solid var(--q-rule-soft);
+}
+
+.wordmark {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-1);
+	font-family: var(--q-font-sans);
+	font-size: var(--q-type-body-sm);
+	font-style: italic;
+	font-weight: var(--q-weight-bold);
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	color: var(--q-ink);
+}
+
+.mono {
+	font: var(--q-role-label);
+	font-style: normal;
+	letter-spacing: var(--q-tracking-mono);
+	text-transform: uppercase;
+	color: var(--q-muted);
+}
+
+.group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-1);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.groupName {
+	composes: mono;
+	color: var(--q-ink);
+}
+
+.navLink {
+	display: flex;
+	gap: var(--q-space-1-5);
+	font-size: var(--q-type-body-sm);
+	text-decoration: none;
+	color: var(--q-ink);
+	transition: color var(--q-dur-hover) var(--q-ease-soft);
+
+	&:hover {
+		color: var(--q-accent);
+	}
+	&:focus-visible {
+		outline: var(--q-focus-outline);
+		outline-offset: 2px;
+		border-radius: var(--q-radius-xs);
+	}
+}
+
+.navIndex {
+	width: 18px;
+	padding-top: 3px;
+	font: var(--q-role-serial);
+	letter-spacing: var(--q-tracking-mono);
+	color: var(--q-muted);
+}
+
+.main {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: var(--q-w-content);
+	padding: var(--q-space-8) var(--q-space-6) var(--q-space-16);
+}
+
+.intro {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-3);
+	padding-bottom: var(--q-space-8);
+}
+
+.lede {
+	max-width: 620px;
+	margin: 0;
+	font-size: var(--q-type-body-lg);
+	line-height: 1.55;
+	text-wrap: pretty;
+	color: var(--q-ink-2);
+}
+
+.block {
+	padding: var(--q-space-8) 0;
+	border-top: 1px solid var(--q-ink);
+	scroll-margin-top: 0;
+}
+
+.blockHead {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--q-space-2);
+	margin-bottom: var(--q-space-3);
+}
+
+.blockTitle {
+	display: flex;
+	align-items: baseline;
+	gap: var(--q-space-2);
+
+	h2 {
+		margin: 0;
+		font-size: 40px;
+		font-weight: var(--q-weight-bold);
+		line-height: 1;
+		letter-spacing: -0.04em;
+		color: var(--q-ink);
+	}
+}
+
+.period {
+	color: var(--q-accent);
+}
+
+.spec {
+	display: flex;
+	gap: var(--q-space-3);
+	align-items: center;
+	padding: var(--q-space-3) 0;
+	border-top: 1px solid var(--q-rule-soft);
+
+	&[data-col] {
+		align-items: flex-start;
+	}
+}
+
+.specLabel {
+	composes: mono;
+	flex: none;
+	width: 160px;
+	color: var(--q-muted-2);
+	.spec[data-col] & {
+		padding-top: 4px;
+	}
+}
+
+.specBody {
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	gap: var(--q-space-2);
+	align-items: center;
+	min-width: 0;
+
+	.spec[data-col] & {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		align-items: stretch;
+	}
+}
+
+.fields {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--q-space-3);
+	> * {
+		flex: 1 1 240px;
+	}
+}
+
+.narrow {
+	max-width: 480px;
+}
+
+.commandStage {
+	position: relative;
+	height: 420px;
+	border-radius: var(--q-radius-lg);
+	background: var(--q-paper-2);
+}
+
+// The reference sizes the display specimen down so it fits one line in the spec column.
+.specBody .display72 {
+	font-size: 72px;
+}

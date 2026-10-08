@@ -1,33 +1,31 @@
+// The "enclosed" Tabs look: a paper-2 tray with one raised paper segment sliding between labels.
 .group {
 	position: relative;
 	box-sizing: border-box;
-	margin: 0;
-	min-width: 0;
-	border: 0;
 	display: inline-flex;
 	align-items: center;
-	height: var(--q-control-md);
+	gap: var(--q-space-0-5);
+	min-width: 0;
+	margin: 0;
 	padding: var(--q-space-0-5);
-	border-radius: var(--q-radius-full);
-	background: var(--q-surface-sunken);
-	box-shadow: inset 0 0 0 1px var(--q-border);
+	border: 0;
+	border-radius: var(--q-radius-md);
+	background: var(--q-paper-2);
 }
 
 .indicator {
 	position: absolute;
 	top: var(--q-space-0-5);
-	bottom: var(--q-space-0-5);
 	left: 0;
 	width: var(--seg-w);
-	border-radius: var(--q-radius-full);
-	background: var(--q-surface);
-	box-shadow:
-		0 0 0 1px var(--q-border),
-		0 1px 2px oklch(0% 0 0 / 0.06);
+	height: 36px;
+	border-radius: var(--q-radius-sm);
+	background: var(--q-paper);
+	box-shadow: var(--q-shadow-1);
 	transform: translateX(var(--seg-x));
 	transition:
-		transform var(--q-spring-duration) var(--q-spring-snappy),
-		width var(--q-spring-duration) var(--q-spring-snappy);
+		transform var(--q-dur-move) var(--q-ease-soft),
+		width var(--q-dur-move) var(--q-ease-soft);
 }
 
 .segment {
@@ -35,32 +33,28 @@
 	z-index: 1;
 	display: inline-flex;
 	align-items: center;
-	gap: var(--q-space-2);
+	gap: var(--q-space-1);
 	// Explicit: percentage heights don't resolve inside a fieldset.
-	height: calc(var(--q-control-md) - 2 * var(--q-space-0-5));
-	padding: 0 var(--q-space-3);
-	border: 0;
-	border-radius: var(--q-radius-full);
-	background: transparent;
-	font: inherit;
-	font-size: var(--q-text-sm);
-	font-weight: var(--q-weight-medium);
-	color: var(--q-text-secondary);
+	height: 36px;
+	padding: 0 var(--q-space-2);
+	border-radius: var(--q-radius-sm);
+	font-family: var(--q-font-mono);
+	font-size: var(--q-type-mono);
+	letter-spacing: var(--q-tracking-mono);
+	text-transform: uppercase;
+	white-space: nowrap;
+	color: var(--q-muted);
 	cursor: pointer;
-	transition: color var(--q-duration-fast) var(--q-ease-out);
+	transition: color var(--q-dur-hover) var(--q-ease-soft);
 
-	&[data-checked] {
-		color: var(--q-text);
-	}
-
+	&[data-checked],
 	&:hover {
-		color: var(--q-text);
+		color: var(--q-ink);
 	}
-
 	&:has(:focus-visible) {
-		box-shadow: 0 0 0 2px var(--q-focus);
+		outline: var(--q-focus-outline);
+		outline-offset: 2px;
 	}
-
 	svg {
 		width: 14px;
 		height: 14px;
@@ -69,7 +63,7 @@
 
 .count {
 	font-variant-numeric: tabular-nums;
-	color: var(--q-text-tertiary);
+	color: var(--q-muted-2);
 }
 
 .legend,

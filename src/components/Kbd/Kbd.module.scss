@@ -2,22 +2,23 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	box-sizing: border-box;
 	min-width: 20px;
 	height: 20px;
-	padding: 0 var(--q-space-1);
+	padding: 0 var(--q-space-0-5);
 	border-radius: var(--q-radius-xs);
 	font-family: var(--q-font-mono);
-	font-size: var(--q-text-xs);
+	font-size: var(--q-type-mono);
 	line-height: 1;
 }
 
 .default {
-	background: var(--q-surface-sunken);
-	color: var(--q-text-secondary);
-	box-shadow: var(--q-ring);
+	border: 1px solid var(--q-rule-soft);
+	background: var(--q-paper-2);
+	color: var(--q-muted);
 }
 
 .inverse {
-	background: oklch(100% 0 0 / 0.14);
-	color: var(--q-text-on-strong);
+	background: color-mix(in srgb, var(--q-on-ink) 16%, transparent);
+	color: var(--q-on-ink);
 }

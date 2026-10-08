@@ -5,26 +5,36 @@
 .table {
 	width: 100%;
 	border-collapse: collapse;
-	font-size: var(--q-text-md);
-	color: var(--q-text);
+	font-size: var(--q-type-body-sm);
+	line-height: 1.45;
+	color: var(--q-ink-2);
 
 	th {
-		height: 36px;
-		padding: 0 var(--q-space-3);
-		border-bottom: 1px solid var(--q-border);
-		font-size: var(--q-text-sm);
+		padding: 14px var(--q-space-2);
+		border-bottom: 1px solid var(--q-ink);
+		font-family: var(--q-font-mono);
+		font-size: var(--q-type-mono);
 		font-weight: var(--q-weight-regular);
+		letter-spacing: var(--q-tracking-mono);
 		text-align: left;
-		color: var(--q-text-tertiary);
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: var(--q-muted);
+	}
+
+	td {
+		padding: 14px var(--q-space-2);
+		border-top: 1px solid var(--q-rule-soft);
 		white-space: nowrap;
 	}
 
-	// Padding, not a fixed height, so two-line cells (title + subline) breathe.
-	td {
-		height: 44px;
-		padding: var(--q-space-2) var(--q-space-3);
-		border-bottom: 1px solid var(--q-border);
-		white-space: nowrap;
+	// The first column names the row, so it reads in ink; the rest in body grey.
+	td:first-child {
+		color: var(--q-ink);
+	}
+
+	tbody tr:first-child td {
+		border-top: 0;
 	}
 
 	[data-align="end"] {
@@ -41,15 +51,24 @@
 }
 
 .row {
-	transition: background-color var(--q-duration-fast) var(--q-ease-out);
-	animation: row-in var(--q-duration-slow) var(--q-ease-out) both;
-	animation-delay: calc(var(--i) * var(--q-stagger));
+	transition: background-color var(--q-dur-hover) var(--q-ease-soft);
+	animation: row-in var(--q-dur-move) var(--q-ease-soft) both;
+	animation-delay: calc(var(--i) * 40ms);
 
 	&:hover,
 	&[data-hovered],
 	&:focus-within {
-		background: var(--q-surface-hover);
+		background: var(--q-paper-2);
 	}
+}
+
+.srOnly {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 
 .actionsCell {
@@ -58,25 +77,25 @@
 
 .actions {
 	display: inline-flex;
-	gap: var(--q-space-1);
+	gap: var(--q-space-0-5);
 	opacity: 0;
-	transform: translateX(8px);
-	transition:
-		opacity var(--q-duration-fast) var(--q-ease-out),
-		transform var(--q-duration) var(--q-ease-out);
+	transition: opacity var(--q-dur-hover) var(--q-ease-soft);
 
 	.row:hover &,
 	.row[data-hovered] &,
 	.row:focus-within & {
 		opacity: 1;
-		transform: none;
 	}
 }
 
 @keyframes row-in {
 	from {
 		opacity: 0;
-		transform: translateY(6px);
-		filter: blur(4px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.row {
+		animation: none;
 	}
 }

@@ -1,6 +1,9 @@
 # quiet — agent guide
 
-Read [DESIGN.md](DESIGN.md) before writing any component or story; it is the spec. The reference
+Read [DESIGN.md](DESIGN.md) before writing any component or story; it is the spec. quiet ports
+the Optimus Foundry "Soft" system mirrored in `docs/reference/optimus-design/` — port a
+component from its `.jsx`/`.d.ts`/`.prompt.md` there, keep the prop API, and add it to the
+catalog story (`src/stories/Catalog.stories.tsx`) in the same group and order. The reference
 corpus it came from (per-post analysis of 1,384 liked UI posts) lives outside this repo in
 `~/Workspaces/x-likes/` (`ui_all.json`, `design-dna.md`), media in `s3://protoapp-x-likes-media`.
 
@@ -14,8 +17,8 @@ corpus it came from (per-post analysis of 1,384 liked UI posts) lives outside th
 - **Behaviour is hand-rolled.** Use the shared hooks in `src/hooks/` (focus trap, roving focus,
   dismiss, portal, positioning) instead of re-implementing them per component. Every interactive
   component ships keyboard support, correct ARIA, and a Playwright test with axe in `tests/`.
-- **Motion:** springs and layout morphs use `motion`; simple hovers/fades may stay in CSS.
-  Everything respects `prefers-reduced-motion`.
+- **Motion:** eased, never bouncy (`--q-ease-soft`); layout morphs may use `motion`, hovers and
+  fades stay in CSS. Everything respects `prefers-reduced-motion`.
 - **Showcase stories:** components with motion get a `Showcase` story that runs a scripted
   timeline (no real pointer) so it can be recorded as a social clip.
 - **Comments explain why, never what.** Keep them rare.

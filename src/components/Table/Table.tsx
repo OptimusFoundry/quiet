@@ -39,7 +39,11 @@ export function Table<R>({ columns, rows, rowKey, actions, revealKey, hoveredKey
 								{c.header}
 							</th>
 						))}
-						{actions && <th aria-label="Actions" />}
+						{actions && (
+							<th>
+								<span className={styles.srOnly}>Actions</span>
+							</th>
+						)}
 					</tr>
 				</thead>
 				<tbody key={revealKey}>

@@ -1,163 +1,195 @@
-// quiet foundations, scoped to .quiet (QuietRoot) so the system can sit beside
-// older UI during adoption. Derived from 1,384 liked UI posts: neutral chrome, one accent, small
-// tight type in two weights, hairline borders, 8/12px radii, restrained motion.
+// quiet foundations — the Optimus Foundry "Soft" system (docs/reference/optimus-design),
+// scoped to .quiet (QuietRoot) so it can sit beside older UI during adoption.
+// Values are the project's exactly; dark mode and the swappable accent are quiet's additions.
 // Rules and rationale: ./DESIGN.md
 
 .quiet {
-	// ---- colour: neutral greys (chroma 0), one accent -----------------------
-	--q-page: oklch(98.5% 0 0);
-	--q-surface: oklch(100% 0 0);
-	--q-surface-sunken: oklch(97% 0 0);
-	--q-surface-hover: oklch(96% 0 0);
-	--q-surface-active: oklch(93.5% 0 0);
-	--q-text: oklch(21% 0 0);
-	--q-text-secondary: oklch(46% 0 0);
-	// Darkest grey that still reads as "third tier"; 4.5:1 on page and surface for 12px text.
-	--q-text-tertiary: oklch(54% 0 0);
-	--q-text-on-strong: oklch(100% 0 0);
-	--q-border: oklch(0% 0 0 / 0.09);
-	--q-border-strong: oklch(0% 0 0 / 0.15);
-	--q-strong: oklch(21% 0 0);
-	--q-strong-hover: oklch(30% 0 0);
+	// ---- colour: paper, neutral-cool greys, lifted ink, one accent ------------
+	--q-paper: #ffffff; //       page ground
+	--q-paper-2: #f6f6f7; //     alternate sections, hover fills
+	--q-rule-soft: #eaeaed; //   hairlines, card edges
+	--q-rule-strong: #d3d3d9; // hover edges
+	--q-muted-2: #95959c; //     quiet emphasis — 2.98:1, non-essential text only
+	--q-muted: #6e6e75; //       labels, metadata
+	--q-ink-2: #36363c; //       body copy
+	--q-ink: #1b1b1f; //         headlines, primary buttons
+	--q-on-ink: var(--q-paper);
 
-	// Each product overrides --q-accent-h/c to set its own accent.
-	--q-accent-h: 255;
-	--q-accent-c: 0.19;
-	--q-accent: oklch(55% var(--q-accent-c) var(--q-accent-h));
-	--q-accent-hover: oklch(50% var(--q-accent-c) var(--q-accent-h));
-	--q-accent-subtle: oklch(96% calc(var(--q-accent-c) * 0.2) var(--q-accent-h));
-	--q-on-accent: oklch(100% 0 0);
-	--q-success: oklch(58% 0.15 150);
-	--q-success-subtle: oklch(96% 0.04 150);
-	--q-warning: oklch(70% 0.15 70);
-	--q-warning-subtle: oklch(96% 0.05 85);
-	--q-danger: oklch(56% 0.2 27);
-	--q-danger-subtle: oklch(96% 0.03 27);
-	--q-focus: oklch(55% var(--q-accent-c) var(--q-accent-h) / 0.45);
+	// Punctuation only (headline period, one italic phrase, a status dot, the rail) —
+	// never a fill, never a button. Products override it via <QuietRoot accent>.
+	--q-accent: #e0531a;
 
-	// ---- type: Inter + one mono, 400/500, small tight scale ----------------
-	--q-font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
-	--q-font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+	--q-scrim: rgb(27 27 31 / 0.24);
+	--q-glow: radial-gradient(
+		closest-side,
+		color-mix(in srgb, var(--q-accent) 18%, transparent),
+		transparent 100%
+	);
+
+	// ---- type: Inter Tight for everything, JetBrains Mono for structure -------
+	--q-font-sans: "Inter Tight", "Helvetica Neue", helvetica, arial, sans-serif;
+	--q-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", menlo, monospace;
 	--q-weight-regular: 400;
 	--q-weight-medium: 500;
-	--q-weight-strong: 600; // display only
-	--q-text-xs: 0.75rem; //   12 / 16
-	--q-text-sm: 0.8125rem; // 13 / 18
-	--q-text-md: 0.875rem; //  14 / 20 — default UI text
-	--q-text-lg: 1rem; //      16 / 24 — reading text
-	--q-text-xl: 1.25rem; //   20 / 28
-	--q-text-2xl: 1.5rem; //   24 / 32
-	--q-text-3xl: 2rem; //     32 / 40 — marketing only
-	--q-text-4xl: 3rem; //     48 / 52 — marketing only
-	--q-leading-xs: 1rem;
-	--q-leading-sm: 1.125rem;
-	--q-leading-md: 1.25rem;
-	--q-leading-lg: 1.5rem;
-	--q-leading-xl: 1.75rem;
-	--q-leading-2xl: 2rem;
-	--q-leading-3xl: 2.5rem;
-	--q-leading-4xl: 3.25rem;
+	--q-weight-semibold: 600;
+	--q-weight-bold: 700;
 
-	// Tighter as size grows; UI sizes stay at 0.
-	--q-tracking-xl: -0.01em;
-	--q-tracking-2xl: -0.015em;
-	--q-tracking-3xl: -0.02em;
-	--q-tracking-4xl: -0.025em;
-	--q-tracking-caps: 0.06em;
+	--q-type-display: clamp(56px, 9vw, 128px);
+	--q-type-h2: 68px;
+	--q-type-h2-md: 52px;
+	--q-type-h2-sm: 40px;
+	--q-type-h3: 30px;
+	--q-type-h4: 24px;
+	--q-type-body-lg: 19px;
+	--q-type-body: 17px;
+	--q-type-body-sm: 15px;
+	--q-type-small: 13px;
+	--q-type-mono-lg: 12px;
+	--q-type-mono: 11px;
+	--q-type-mono-sm: 10px;
+	--q-tracking-display: -0.035em;
+	--q-tracking-h2: -0.032em;
+	--q-tracking-h3: -0.025em;
+	--q-tracking-h4: -0.02em;
+	--q-tracking-tight: -0.01em;
+	--q-tracking-mono: 0.08em;
 
-	// ---- space: 4px base -------------------------------------------------
-	--q-space-px: 1px;
-	--q-space-0-5: 2px;
-	--q-space-1: 4px;
-	--q-space-2: 8px;
-	--q-space-3: 12px;
-	--q-space-4: 16px;
-	--q-space-5: 20px;
-	--q-space-6: 24px;
-	--q-space-8: 32px;
-	--q-space-10: 40px;
-	--q-space-12: 48px;
-	--q-space-16: 64px;
-	--q-space-20: 80px;
-	--q-space-24: 96px;
-	--q-control-sm: 28px;
-	--q-control-md: 32px;
-	--q-control-lg: 40px;
+	// Type roles for app surfaces: font shorthand + tracking, line heights on a 4px rhythm.
+	--q-role-hero: 700 68px/68px var(--q-font-sans);
+	--q-role-page-title: 700 40px/40px var(--q-font-sans);
+	--q-role-section-title: 600 24px/32px var(--q-font-sans);
+	--q-role-card-title: 600 17px/24px var(--q-font-sans);
+	--q-role-metric: 700 40px/40px var(--q-font-sans);
+	--q-role-body-lg: 400 17px/28px var(--q-font-sans);
+	--q-role-body: 400 15px/24px var(--q-font-sans);
+	--q-role-small: 400 13px/20px var(--q-font-sans);
+	--q-role-label: 400 11px/16px var(--q-font-mono);
+	--q-role-serial: 400 10px/16px var(--q-font-mono);
 
-	// ---- shape: one control radius, one card radius ------------------------
-	--q-radius-xs: 4px;
-	--q-radius-control: 8px;
-	--q-radius-card: 12px;
-	--q-radius-sheet: 16px;
-	--q-radius-full: 9999px;
+	// ---- space: strict 8px ladder; 4px steps only inside controls -------------
+	--q-space-0-5: 4px;
+	--q-space-1: 8px;
+	--q-space-1-5: 12px;
+	--q-space-2: 16px;
+	--q-space-3: 24px;
+	--q-space-4: 32px;
+	--q-space-5: 40px;
+	--q-space-6: 48px;
+	--q-space-8: 64px;
+	--q-space-10: 80px;
+	--q-space-12: 96px;
+	--q-space-16: 128px;
+	--q-space-20: 160px;
 
-	// Half the 44px command bar, so pill → panel radius animates smoothly (9999px would jump).
-	--q-radius-bar: 22px;
+	--q-control-sm: 32px;
+	--q-control-md: 40px;
+	--q-control-lg: 48px;
+	--q-field-sm: 36px;
+	--q-field-md: 48px;
+	--q-field-lg: 56px;
+	--q-row-compact: 32px;
+	--q-row: 48px;
 
-	// ---- elevation: hairline for resting, layered soft shadow for floating --
-	--q-ring: 0 0 0 1px var(--q-border);
-	--q-shadow-float:
-		0 0 0 1px var(--q-border),
-		0 1px 2px oklch(0% 0 0 / 0.04),
-		0 4px 12px oklch(0% 0 0 / 0.05),
-		0 16px 32px -8px oklch(0% 0 0 / 0.08);
-	--q-shadow-overlay:
-		0 0 0 1px var(--q-border),
-		0 2px 4px oklch(0% 0 0 / 0.05),
-		0 12px 24px oklch(0% 0 0 / 0.08),
-		0 32px 64px -12px oklch(0% 0 0 / 0.16);
+	--q-w-sidebar: 240px;
+	--q-w-sidebar-collapsed: 64px;
+	--q-w-settings-nav: 200px;
+	--q-w-list-pane: 360px;
+	--q-w-detail-panel: 400px;
+	--q-w-form: 640px;
+	--q-w-content: 1040px;
+	--q-w-max: 1280px;
+	--q-h-topbar: 64px;
 
-	// ---- motion: restrained ease-out + two springs --------------------------
-	--q-duration-fast: 150ms;
-	--q-duration: 200ms;
-	--q-duration-slow: 250ms;
-	--q-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-	--q-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	// ---- shape: soft radii scaled to the surface; never 0 on a container ------
+	--q-radius-xs: 6px; //  checkboxes, tiny chips
+	--q-radius-sm: 10px; // tooltips, menu and nav items, segments
+	--q-radius-md: 14px; // inputs, selects, alerts
+	--q-radius-lg: 20px; // cards, tables, popovers, toasts
+	--q-radius-xl: 28px; // dialogs, drawers, command palette
+	--q-radius-pill: 999px; // buttons, tags, switches, dots
 
-	// CSS linear() approximations of springs (stiff, low bounce / softer, more bounce).
-	--q-spring-snappy: linear(0, 0.33 8%, 0.82 22%, 1.03 34%, 1.04 42%, 1.01 58%, 1);
-	--q-spring-gentle: linear(0, 0.2 9%, 0.62 24%, 0.97 40%, 1.07 50%, 1.04 64%, 0.99 80%, 1);
-	--q-spring-duration: 420ms;
-	--q-stagger: 50ms;
+	// ---- elevation: hairlines first; soft shadow only for floating surfaces ---
+	--q-shadow-1: 0 1px 2px rgb(27 27 31 / 0.05), 0 1px 3px rgb(27 27 31 / 0.04);
+	--q-shadow-2: 0 2px 6px rgb(27 27 31 / 0.04), 0 12px 32px rgb(27 27 31 / 0.08);
+	--q-shadow-3: 0 4px 12px rgb(27 27 31 / 0.05), 0 24px 64px rgb(27 27 31 / 0.14);
+	--q-ring-focus: 0 0 0 4px rgb(27 27 31 / 0.08);
+	// The soft ring alone is too faint for keyboard users; controls add this outline.
+	--q-focus-outline: 2px solid var(--q-ink);
+
+	// ---- motion: slow, eased out, one moving thing; never a bounce ------------
+	--q-ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+	--q-ease-forge: cubic-bezier(0.45, 0, 0.55, 1);
+	--q-dur-hover: 0.22s;
+	--q-dur-move: 0.32s;
+	--q-dur-forge-loop: 6s;
+	--q-dur-heat-pass: 10s;
+
+	// ---- density: marketing (default) · app · compact — spacing by job ---------
+	--q-space-inline: 8px;
+	--q-space-stack: 16px;
+	--q-space-field: 24px;
+	--q-space-card-pad: 32px;
+	--q-space-card-gap: 32px;
+	--q-space-block: 64px;
+	--q-space-section: 128px;
+	--q-space-page-x: 32px;
+	--q-grid-gutter: 32px;
+	--q-font-body: var(--q-role-body-lg);
 
 	color-scheme: light;
-	font-family: var(--q-font-sans);
-	font-size: var(--q-text-md);
-	line-height: var(--q-leading-md);
-	color: var(--q-text);
-	background: var(--q-page);
+	font: var(--q-font-body);
+	color: var(--q-ink-2);
+	background: var(--q-paper);
 	-webkit-font-smoothing: antialiased;
-	font-feature-settings: "cv11", "ss03";
+	text-rendering: optimizelegibility;
+
+	::selection {
+		background: var(--q-ink);
+		color: var(--q-paper);
+	}
 }
 
+.quiet[data-density="app"],
+.quiet [data-density="app"] {
+	--q-space-card-pad: 24px;
+	--q-space-card-gap: 24px;
+	--q-space-block: 32px;
+	--q-space-section: 48px;
+	--q-grid-gutter: 24px;
+	--q-font-body: var(--q-role-body);
+}
+
+.quiet[data-density="compact"],
+.quiet [data-density="compact"] {
+	--q-space-stack: 8px;
+	--q-space-field: 16px;
+	--q-space-card-pad: 16px;
+	--q-space-card-gap: 16px;
+	--q-space-block: 24px;
+	--q-space-section: 32px;
+	--q-space-page-x: 24px;
+	--q-grid-gutter: 16px;
+	--q-font-body: var(--q-role-small);
+}
+
+// Dark is derived, not in the brand: the same grey ladder inverted, ink becomes the light end.
+// Primary buttons stay "ink", so they turn light with dark text.
 .quiet[data-mode="dark"] {
-	--q-page: oklch(15.5% 0 0);
-	--q-surface: oklch(19% 0 0);
-	--q-surface-sunken: oklch(17% 0 0);
-	--q-surface-hover: oklch(23% 0 0);
-	--q-surface-active: oklch(26% 0 0);
-	--q-text: oklch(96% 0 0);
-	--q-text-secondary: oklch(72% 0 0);
-	--q-text-tertiary: oklch(60% 0 0);
-	--q-text-on-strong: oklch(15.5% 0 0);
-	--q-border: oklch(100% 0 0 / 0.09);
-	--q-border-strong: oklch(100% 0 0 / 0.16);
-	--q-strong: oklch(96% 0 0);
-	--q-strong-hover: oklch(88% 0 0);
-	--q-accent: oklch(65% var(--q-accent-c) var(--q-accent-h));
-	--q-accent-hover: oklch(70% var(--q-accent-c) var(--q-accent-h));
-	--q-accent-subtle: oklch(26% calc(var(--q-accent-c) * 0.35) var(--q-accent-h));
-	--q-success-subtle: oklch(25% 0.05 150);
-	--q-warning-subtle: oklch(27% 0.05 80);
-	--q-danger-subtle: oklch(25% 0.06 27);
-	--q-shadow-float:
-		0 0 0 1px var(--q-border),
-		0 2px 4px oklch(0% 0 0 / 0.3),
-		0 12px 28px oklch(0% 0 0 / 0.4);
-	--q-shadow-overlay:
-		0 0 0 1px var(--q-border-strong),
-		0 4px 8px oklch(0% 0 0 / 0.35),
-		0 32px 64px -12px oklch(0% 0 0 / 0.6);
+	--q-paper: #131316;
+	--q-paper-2: #1c1c20;
+	--q-rule-soft: #2a2a30;
+	--q-rule-strong: #3d3d45;
+	--q-muted-2: #6e6e76;
+	--q-muted: #9a9aa2;
+	--q-ink-2: #c9c9cf;
+	--q-ink: #f3f3f5;
+	--q-on-ink: #131316;
+	--q-accent: #f06a33;
+	--q-scrim: rgb(0 0 0 / 0.5);
+	--q-shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+	--q-shadow-2: 0 0 0 1px var(--q-rule-soft), 0 12px 32px rgb(0 0 0 / 0.45);
+	--q-shadow-3: 0 0 0 1px var(--q-rule-soft), 0 24px 64px rgb(0 0 0 / 0.6);
+	--q-ring-focus: 0 0 0 4px rgb(243 243 245 / 0.12);
 
 	color-scheme: dark;
 }
@@ -169,10 +201,7 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.quiet {
-		--q-duration-fast: 0ms;
-		--q-duration: 0ms;
-		--q-duration-slow: 0ms;
-		--q-spring-duration: 0ms;
-		--q-stagger: 0ms;
+		--q-dur-hover: 0s;
+		--q-dur-move: 0s;
 	}
 }

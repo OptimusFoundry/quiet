@@ -1,78 +1,89 @@
 # quiet — DESIGN.md
 
-Rules for anyone (human or agent) building UI on quiet. Values live in `tokens.scss`; use the
-tokens, never literals. These rules come from 1,384 UI references the owner saved; when a rule and
-a reference disagree, the rule wins.
+Rules for anyone (human or agent) building UI on quiet. quiet implements the **Optimus Foundry
+"Soft"** system; its source of truth is mirrored in `docs/reference/optimus-design/` (`readme.md`
+for the rules, `tokens/`, `components/`). Values live in `src/tokens/tokens.scss` as `--q-*`; use
+the tokens, never literals. Where this file and the reference disagree, the reference wins, except
+for the two quiet additions marked below.
 
 ## Character
 
-Quiet, precise, neutral software. The chrome stays grey; personality comes from motion and from
-one hero visual per screen. If a screen looks good in pure greyscale, it is ready for colour.
+Heavy software, quietly made. White paper, neutral-cool greys, a lifted near-black ink, and one
+accent used as punctuation. Bold display type does the talking; no imagery, textures or patterns.
 
 ## Colour
 
-- Chrome is **neutral grey only** (chroma 0). No warm or tinted neutrals.
-- Page is `--q-page` (off-white); content sits on `--q-surface` (white). Dark mode is a twin
-  from the same tokens, never a separate design.
-- Text uses exactly **three greys**: `--q-text`, `--q-text-secondary`, `--q-text-tertiary`.
-  Hierarchy comes from these greys before it comes from size or weight.
-  All three meet WCAG AA (4.5:1) for 12px text on page and surface in both modes — never add a
-  lighter grey for text.
-- Borders are **alpha hairlines** (`--q-border`, 9%), never solid greys.
-- The primary action is **near-black** (`--q-strong`); the **accent** is for focus, links,
-  selection and data — one accent per product (`--q-accent-h`, `--q-accent-c`).
-- Semantic colours (success/warning/danger) only for status, usually as a small dot or a subtle
-  tint, not as large fills.
-- At most **one colour moment** per screen (a gradient, illustration or photo).
+- Greys: `--q-paper`, `--q-paper-2`, `--q-rule-soft`, `--q-rule-strong`, `--q-muted-2`,
+  `--q-muted`, `--q-ink-2`, `--q-ink`. Ratio ≈ paper 70 · paper-2 20 · ink 9 · accent 1.
+- Headlines and primary buttons are `--q-ink`; body copy `--q-ink-2`; labels and metadata
+  `--q-muted`.
+- `--q-muted-2` (2.98:1) is for non-essential text only (spec labels, counts, placeholders of
+  placeholders). This and small accent text are **accepted contrast exceptions**, kept to match the
+  reference exactly; `tests/catalog.spec.ts` allows exactly these colours and nothing else.
+- **The accent** (`--q-accent`, molten `#E0531A` by default) is punctuation only: the headline full
+  stop, one italic phrase, a status dot, the process rail, hover heat on links and ghost buttons.
+  Never a fill, never a button, never a section.
+- **quiet addition — swappable accent:** a product sets its own with `<QuietRoot accent="…">`;
+  the punctuation-only rule doesn't change.
+- **quiet addition — dark mode:** derived from the same grey ladder, inverted
+  (`data-mode="dark"`). Ink becomes the light end, so primary buttons turn light. The brand
+  itself is light-only; the Optimus Foundry site stays light.
+- Status has no semantic colours: success = ink + dot/✓, warning = hollow accent dot, error =
+  accent hairline + accent dot.
 
 ## Type
 
-- **Inter** for everything; **Geist Mono** only for metadata, code, IDs and keyboard hints.
-- Weights **400 and 500** only. 600 is reserved for marketing display sizes.
-- App UI sizes: **12, 13, 14, 16, 20, 24** (`--q-text-xs` … `--q-text-2xl`). 14 is default
-  UI text, 16 is reading text. 32 and 48 are for marketing pages only.
-- Large sizes tighten (`--q-tracking-*`); UI sizes stay at 0.
-- **Tabular numbers** (`.q-tnum` or `data-numeric`) for anything that updates or aligns in
-  columns: prices, counters, timers, tables.
-- Body copy 45–75 characters per line.
+- **Inter Tight** for everything; **JetBrains Mono** 10–12px caps at +0.08em for eyebrows,
+  serials, labels, table headers and metadata. No serif.
+- Display 700 (`--q-type-display`, clamp 56–128), H2 700 (68/52/40), H3/H4 600 (30/24).
+  Italic of the same weight for the one emphasised phrase.
+- Headlines end with an accent full stop and carry one italic phrase (`<Headline>`).
+- App surfaces use the roles only: `font: var(--q-role-*)` — page-title 40, section-title 24,
+  card-title 17, metric 40, body-lg 17, body 15, small 13, label 11 mono.
+- Tabular numbers (`.q-tnum` / `data-numeric`) for anything that aligns or updates.
+- Sentence case for headlines and buttons; mono labels in ALL CAPS.
 
-## Space & layout
+## Space, density & layout
 
-- 4px base: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64. Nothing in between.
-- Control heights: 28 (sm), **32 (default app UI)**, 40 (marketing / touch).
-- Pick one major and one minor rhythm per screen and keep them.
-- Rem for type, px for layout. Container queries for component responsiveness.
-- `scrollbar-gutter: stable` on scroll containers that lock.
+- Strict 8px ladder (`--q-space-1` = 8 … `--q-space-20` = 160). 4px steps (`-0-5`, `-1-5`)
+  only inside controls.
+- **Pick a density first** on the root: `marketing` (default), `app`, `compact`. Then space by
+  job, not by step: `--q-space-inline`, `-stack`, `-field`, `-card-pad`, `-card-gap`, `-block`,
+  `-section`, `--q-grid-gutter`. Never mix densities on one surface.
+- Line heights and control heights are multiples of 4. Controls 32/40/48; fields 36/48/56; rows
+  32 (compact) / 48.
+- Fixed widths only: sidebar 240 (64 collapsed), settings nav 200, list pane 360, detail panel
+  400, form/prose 640, app content 1040, site max 1280, top bar 64.
 
 ## Shape & depth
 
-- Radius: **8 for controls**, **12 for cards**, 16 for sheets/dialogs, full for pills and avatars.
-  One card radius across a screen; nested corners are concentric (inner = outer − padding).
-- Resting surfaces get a **hairline** (`--q-ring` or a 1px `--q-border`), not a shadow.
-- Only **floating** things get shadow: popovers, menus, toolbars, toasts (`--q-shadow-float`),
-  dialogs and sheets (`--q-shadow-overlay`).
-- Glass/blur only where something floats over imagery.
+- Radii scale with the surface: xs 6 (checkboxes), sm 10 (tooltips, menu/nav items, segments),
+  md 14 (inputs, alerts), lg 20 (cards, tables, popovers, toasts), xl 28 (dialogs, drawers,
+  palette), pill (buttons, tags, switches, dots). Never 0 on a container.
+- Hairlines before shadows: `--q-ink` for section tops and emphasis, `--q-rule-soft` for
+  dividers and card edges.
+- Shadows only on floating surfaces: `--q-shadow-1` (selected segment), `-2` (popovers, menus,
+  toasts, card hover), `-3` (dialogs, drawers, palette). Floating surfaces use a soft hairline +
+  shadow, not an ink border. The only translucency is the dialog scrim.
 
 ## Motion
 
-- Animate meaningful transitions only. Utility UI stays restrained.
-- Default 150–250ms with `--q-ease-out`. Interactive controls (toggles, drags, morphs) use
-  `--q-spring-snappy` or `--q-spring-gentle`; animations must be interruptible.
-- Morph containers instead of swapping them (pill → panel, tooltip that travels).
-- Staggered reveals: `--q-stagger` (50ms) apart, optionally from 6–8px blur.
-- Expand with `grid-template-rows: 0fr → 1fr`, never `height: auto`. Animate transforms and
-  masks, not layout properties.
-- Everything respects `prefers-reduced-motion` (the tokens collapse to 0ms).
+- Slow and soft: `--q-dur-hover` (0.22s) with `--q-ease-soft` for hovers; `--q-dur-move` for
+  indicators and morphs. **Never a bounce**, no press shrink.
+- One moving thing per surface. Nothing scroll-triggered. Ambient loops in seconds.
+- Morph containers instead of swapping them (pill → palette). Expand with
+  `grid-template-rows: 0fr → 1fr`, never `height: auto`.
+- `prefers-reduced-motion` collapses durations to 0 and stops loops at their finished state.
 
-## States
+## States & focus
 
-Design every state in both modes: idle, hover, focus, active, disabled, loading, empty, error.
-Focus is a visible ring in `--q-focus`. Nothing shifts layout between states (reserve space,
-fix label widths, use tabular numbers).
+Design every state in both modes: idle, hover, focus, active, disabled (opacity 0.4), loading,
+empty, error. Fields focus with an ink border plus `--q-ring-focus`; everything else that takes
+keyboard focus shows `--q-focus-outline` (the reference's soft ring alone is too faint to see).
+Nothing shifts layout between states.
 
-## Don't
+## Voice
 
-- Don't add a second accent, a warm "paper" background, or coloured card fills.
-- Don't use 600/700 weights for UI headings, or new type sizes outside the scale.
-- Don't stack shadows on resting cards, or mix card radii on one screen.
-- Don't ship a screen you haven't checked in dark mode.
+Say the literal thing; we/you; no exclamation marks; name real things. Banned: AI-powered,
+AI-native, next-generation, seamless, delightful, empower, leverage, utilize, scalable, solutions,
+game-changer, stay tuned. Full rules: `docs/reference/optimus-design/readme.md`.

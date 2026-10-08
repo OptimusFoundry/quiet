@@ -1,85 +1,129 @@
-// Pill buttons: the near-black pill is the most repeated CTA in the references.
 .button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: var(--q-space-2);
+	gap: var(--q-space-1);
+	box-sizing: border-box;
 	height: var(--q-control-md);
-	padding: 0 var(--q-space-4);
-	border: 0;
-	border-radius: var(--q-radius-full);
-	font: inherit;
-	font-size: var(--q-text-md);
-	font-weight: var(--q-weight-medium);
+	padding: 0 var(--q-space-3);
+	border: 1px solid transparent;
+	border-radius: var(--q-radius-pill);
+	font-family: var(--q-font-sans);
+	font-size: var(--q-type-body-sm);
+	font-weight: var(--q-weight-semibold);
+	line-height: 1;
+	letter-spacing: var(--q-tracking-tight);
+	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
 	transition:
-		background-color var(--q-duration-fast) var(--q-ease-out),
-		box-shadow var(--q-duration-fast) var(--q-ease-out),
-		transform var(--q-spring-duration) var(--q-spring-snappy);
-
-	&:active {
-		transform: scale(0.96);
-	}
+		background-color var(--q-dur-hover) var(--q-ease-soft),
+		color var(--q-dur-hover) var(--q-ease-soft),
+		border-color var(--q-dur-hover) var(--q-ease-soft);
 
 	&:focus-visible {
-		outline: none;
-		box-shadow: 0 0 0 3px var(--q-focus);
+		outline: var(--q-focus-outline);
+		outline-offset: 2px;
 	}
-
 	&:disabled {
-		opacity: 0.45;
 		cursor: not-allowed;
-		transform: none;
 	}
-}
-
-.icon {
-	display: inline-flex;
-	margin-left: calc(var(--q-space-1) * -1);
-
+	&[data-disabled] {
+		opacity: 0.4;
+	}
+	&[data-full] {
+		display: flex;
+		width: 100%;
+	}
+	&[data-icon-only] {
+		width: var(--q-control-md);
+		padding: 0;
+	}
 	svg {
 		width: 16px;
 		height: 16px;
 	}
 }
 
-.primary {
-	background: var(--q-strong);
-	color: var(--q-text-on-strong);
+.arrow {
+	display: inline-block;
+	transition: transform var(--q-dur-hover) var(--q-ease-soft);
+	.button:hover:not(:disabled) & {
+		transform: translateX(4px);
+	}
+}
 
-	&:hover {
-		background: var(--q-strong-hover);
+.primary {
+	background: var(--q-ink);
+	border-color: var(--q-ink);
+	color: var(--q-on-ink);
+	&:hover:not(:disabled) {
+		background: var(--q-ink-2);
 	}
 }
 
 .secondary {
-	background: var(--q-surface);
-	color: var(--q-text);
-	box-shadow: var(--q-ring);
-
-	&:hover {
-		background: var(--q-surface-hover);
+	background: transparent;
+	border-color: var(--q-ink);
+	color: var(--q-ink);
+	&:hover:not(:disabled) {
+		background: var(--q-paper-2);
 	}
 }
 
-.ghost {
+.outline {
 	background: transparent;
-	color: var(--q-text-secondary);
+	border-color: var(--q-rule-soft);
+	color: var(--q-ink);
+	&:hover:not(:disabled) {
+		background: var(--q-paper-2);
+		border-color: var(--q-ink);
+	}
+}
 
-	&:hover {
-		background: var(--q-surface-hover);
-		color: var(--q-text);
+// Text only: no padding, heats to the accent on hover. Icon-only ghosts get a fill instead.
+.ghost {
+	padding: 0;
+	background: transparent;
+	color: var(--q-ink);
+	&:hover:not(:disabled) {
+		color: var(--q-accent);
+	}
+	&[data-icon-only]:hover:not(:disabled) {
+		background: var(--q-paper-2);
+		color: var(--q-ink);
+	}
+}
+
+.destructive {
+	background: transparent;
+	border-color: var(--q-ink);
+	color: var(--q-ink);
+	&:hover:not(:disabled) {
+		border-color: var(--q-accent);
+		color: var(--q-accent);
 	}
 }
 
 .sm {
 	height: var(--q-control-sm);
-	padding: 0 var(--q-space-3);
-	font-size: var(--q-text-sm);
+	padding: 0 var(--q-space-2);
+	font-size: var(--q-type-small);
+	&[data-icon-only] {
+		width: var(--q-control-sm);
+	}
 }
 
 .lg {
 	height: var(--q-control-lg);
-	padding: 0 var(--q-space-5);
+	padding: 0 var(--q-space-4);
+	font-size: var(--q-type-body);
+	&[data-icon-only] {
+		width: var(--q-control-lg);
+	}
+}
+
+.ghost.sm,
+.ghost.lg {
+	padding: 0;
 }

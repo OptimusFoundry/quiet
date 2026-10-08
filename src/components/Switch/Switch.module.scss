@@ -1,28 +1,55 @@
-// 36×20 track, 16px thumb, 2px inset. The thumb springs across and stretches
-// while pressed — the "playful but small" detail from the references.
+// Track w×h with a knob k; the knob travels w - h by sliding, never bouncing.
 .row {
-	display: flex;
+	--sw-w: 40px;
+	--sw-h: 24px;
+	--sw-k: 16px;
+
+	display: inline-flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: var(--q-space-4);
+	gap: var(--q-space-1-5);
+	font-size: var(--q-type-body-sm);
+	color: var(--q-ink);
 	cursor: pointer;
+
+	&[data-label-left] {
+		display: flex;
+		justify-content: space-between;
+	}
+	&[data-disabled] {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+	&:has(.description) {
+		align-items: flex-start;
+	}
+}
+
+.sm {
+	--sw-w: 32px;
+	--sw-h: 20px;
+	--sw-k: 12px;
+
+	font-size: var(--q-type-small);
+}
+
+.lg {
+	--sw-w: 48px;
+	--sw-h: 28px;
+	--sw-k: 20px;
+
+	font-size: var(--q-type-body);
 }
 
 .text {
 	display: flex;
 	flex-direction: column;
-	gap: var(--q-space-0-5);
-}
-
-.label {
-	font-size: var(--q-text-md);
-	font-weight: var(--q-weight-medium);
-	color: var(--q-text);
+	gap: 2px;
+	line-height: 1.4;
 }
 
 .description {
-	font-size: var(--q-text-sm);
-	color: var(--q-text-secondary);
+	font-size: var(--q-type-small);
+	color: var(--q-muted);
 }
 
 .input {
@@ -33,53 +60,38 @@
 
 .track {
 	position: relative;
-	flex-shrink: 0;
-	width: 36px;
-	height: 20px;
-	border-radius: var(--q-radius-full);
-	background: var(--q-surface-active);
-	box-shadow: inset 0 0 0 1px var(--q-border);
-	transition: background-color var(--q-duration) var(--q-ease-out);
+	flex: none;
+	box-sizing: border-box;
+	width: var(--sw-w);
+	height: var(--sw-h);
+	border: 1px solid var(--q-ink);
+	border-radius: var(--q-radius-pill);
+	background: var(--q-paper);
+	transition: background-color var(--q-dur-hover) var(--q-ease-soft);
 }
 
 .thumb {
 	position: absolute;
-	top: var(--q-space-0-5);
-	left: var(--q-space-0-5);
-	width: 16px;
-	height: 16px;
-	border-radius: var(--q-radius-full);
-	background: oklch(100% 0 0);
-	box-shadow:
-		0 1px 2px oklch(0% 0 0 / 0.18),
-		0 0 0 0.5px oklch(0% 0 0 / 0.06);
+	top: calc((var(--sw-h) - 2px - var(--sw-k)) / 2);
+	left: calc((var(--sw-h) - 2px - var(--sw-k)) / 2);
+	width: var(--sw-k);
+	height: var(--sw-k);
+	border-radius: var(--q-radius-pill);
+	background: var(--q-ink);
 	transition:
-		transform var(--q-spring-duration) var(--q-spring-gentle),
-		width var(--q-duration-fast) var(--q-ease-out);
-}
-
-.row:active .thumb {
-	width: 20px;
+		transform var(--q-dur-hover) var(--q-ease-soft),
+		background-color var(--q-dur-hover) var(--q-ease-soft);
 }
 
 .input:checked + .track {
-	background: var(--q-strong);
-	box-shadow: none;
-
+	background: var(--q-ink);
 	.thumb {
-		transform: translateX(16px);
-		background: var(--q-text-on-strong);
+		transform: translateX(calc(var(--sw-w) - var(--sw-h)));
+		background: var(--q-paper);
 	}
 }
 
-.row:active .input:checked + .track .thumb {
-	transform: translateX(12px);
-}
-
 .input:focus-visible + .track {
-	box-shadow: 0 0 0 3px var(--q-focus);
-}
-
-.input:disabled + .track {
-	opacity: 0.45;
+	outline: var(--q-focus-outline);
+	outline-offset: 2px;
 }
