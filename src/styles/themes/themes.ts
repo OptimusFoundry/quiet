@@ -9,8 +9,12 @@ export type ThemeName = keyof typeof themes;
 export const defaultTheme: ThemeName = "foundry";
 export const themeNames = Object.keys(themes) as ThemeName[];
 
-/** Applies a theme to an element (default: the document root). */
+/**
+ * Applies a theme to an element (default: the document root). `data-quiet` marks the element as
+ * quiet-owned, so quiet's base styles and reference-compat names reach it and its subtree.
+ */
 export function applyTheme(theme: ThemeName, el: HTMLElement = document.documentElement) {
+	el.setAttribute("data-quiet", "");
 	el.setAttribute("data-theme", theme);
 	el.style.colorScheme = themes[theme].colorScheme;
 }

@@ -1,4 +1,5 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { type LinkComponent, LinkProvider } from "../../lib/link";
 import { applyTheme, defaultTheme, type ThemeName, themes } from "./themes";
 
 const STORAGE_KEY = "quiet-theme";
@@ -19,12 +20,15 @@ function stored(): ThemeName | null {
 	}
 }
 
-/** App-level theme: applies data-theme to <html> and remembers the choice. */
+/** App-level theme: marks <html> as quiet-owned, applies data-theme and remembers the choice. */
 export function ThemeProvider({
 	defaultValue = defaultTheme,
+	linkComponent,
 	children,
 }: {
 	defaultValue?: ThemeName;
+	/** Router link for every component that renders an `<a>` from an in-app `href`. */
+	linkComponent?: LinkComponent;
 	children: ReactNode;
 }) {
 	const [theme, setThemeState] = useState<ThemeName>(() => stored() ?? defaultValue);
@@ -37,7 +41,11 @@ export function ThemeProvider({
 			// Storage can be unavailable (private mode); the theme still applies for this session.
 		}
 	}, []);
-	return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+	return (
+		<ThemeContext.Provider value={{ theme, setTheme }}>
+			<LinkProvider value={linkComponent}>{children}</LinkProvider>
+		</ThemeContext.Provider>
+	);
 }
 
 export function useTheme(): ThemeContextValue {

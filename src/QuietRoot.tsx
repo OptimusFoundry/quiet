@@ -1,4 +1,5 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
+import { type LinkComponent, LinkProvider } from "./lib/link";
 import "./styles/index.scss";
 import { defaultTheme, type ThemeName, themes } from "./styles/themes/themes";
 
@@ -9,6 +10,8 @@ export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 	density?: "marketing" | "app" | "compact";
 	/** Overrides the theme's accent (any CSS colour). Still punctuation only — never a fill. */
 	accent?: string;
+	/** Router link for every component that renders an `<a>` from an in-app `href`. */
+	linkComponent?: LinkComponent;
 	children: ReactNode;
 	ref?: Ref<HTMLDivElement>;
 }
@@ -18,6 +21,7 @@ export function QuietRoot({
 	theme = defaultTheme,
 	density = "marketing",
 	accent,
+	linkComponent,
 	className,
 	style,
 	children,
@@ -25,21 +29,24 @@ export function QuietRoot({
 	...props
 }: QuietRootProps) {
 	return (
-		<div
-			ref={ref}
-			className={className ? `quiet ${className}` : "quiet"}
-			data-theme={theme}
-			data-density={density}
-			style={
-				{
-					colorScheme: themes[theme].colorScheme,
-					...(accent ? { "--q-accent": accent } : {}),
-					...style,
-				} as CSSProperties
-			}
-			{...props}
-		>
-			{children}
-		</div>
+		<LinkProvider value={linkComponent}>
+			<div
+				ref={ref}
+				className={className ? `quiet ${className}` : "quiet"}
+				data-quiet=""
+				data-theme={theme}
+				data-density={density}
+				style={
+					{
+						colorScheme: themes[theme].colorScheme,
+						...(accent ? { "--q-accent": accent } : {}),
+						...style,
+					} as CSSProperties
+				}
+				{...props}
+			>
+				{children}
+			</div>
+		</LinkProvider>
 	);
 }

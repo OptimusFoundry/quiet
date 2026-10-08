@@ -1,9 +1,11 @@
 import React from 'react';
+import { useLinkElement } from '../../lib/link';
 import './Card.scss';
 
 export function Card({ eyebrow, title, accent, children, meta, footer, href, onClick, className, style }) {
   const interactive = !!(href || onClick);
-  const El = href ? 'a' : 'div';
+  const A = useLinkElement(href);
+  const El = href ? A : 'div';
   return (
     <El href={href} onClick={onClick}
       {...(!href && onClick ? { role: 'button', tabIndex: 0, onKeyDown: e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onClick(e); } } } : {})}

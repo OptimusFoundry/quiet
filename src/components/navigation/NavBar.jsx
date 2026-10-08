@@ -1,10 +1,12 @@
 import React from 'react';
 import { Wordmark } from '../core/Wordmark.jsx';
 import { Button } from '../core/Button.jsx';
+import { useLinkElement } from '../../lib/link';
 import './NavBar.scss';
 
 function NavLink({ href, current, children }) {
-  return <a href={href} aria-current={current ? 'page' : undefined} className="q-nav-bar__link">{children}</a>;
+  const A = useLinkElement(href);
+  return <A href={href} aria-current={current ? 'page' : undefined} className="q-nav-bar__link">{children}</A>;
 }
 
 export function NavBar({ links = [], cta = 'Start a project', ctaHref = '#contact', onCta, mark, label = 'Main', homeLabel, className, style }) {
