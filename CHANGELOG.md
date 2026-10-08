@@ -2,6 +2,27 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.3.0
+
+### Added
+
+- **`quiet-audit` CLI** (`npx quiet-audit <url> --width 1280,390 --theme foundry,foundry-dark`).
+  It measures a running screen for off-token spacing, type, radius and colour, broken heading
+  order, nested cards and overflow (#15).
+- **`docs/guidelines/`** ships in the package: the layout system (app shell and layouts, sections,
+  grid, spacing, typography), components, accessibility and a checklist (#15).
+- **`skills/quiet-app`** ships in the package: a consumer agent skill for building apps on quiet.
+  Copy it into a product repo's `.claude/skills/` (#15).
+- Pattern screens in Storybook: app shell, dashboard, records, settings, billing, assistant and
+  states (#15).
+
+### Changed
+
+- `Receipt` `undoable` now defaults to `false`.
+- `ScopeGrant` and `BudgetLeash` render agent strings as an `Avatar`.
+- `ChatMessage` takes `headingLevel`.
+- `ChartTable` wraps its table in an sr-only container.
+
 ## 0.2.0
 
 ### Breaking
