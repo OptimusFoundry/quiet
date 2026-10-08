@@ -1,4 +1,4 @@
-// Popover — anchored non-modal panel. BEM: .q-popover (anchor), __trigger, __panel, __title.
+// Popover — anchored non-modal panel. BEM: .q-popover (anchor), __trigger, __panel (--closable), __title, __close.
 // The panel takes [data-placement="top|bottom|left|right"] and [data-align="start|center|end"];
 // the `width` prop arrives as --_width.
 @layer q.tokens {
@@ -19,6 +19,12 @@
     --q-popover-title-fg: var(--q-fg);
     --q-popover-title-size: var(--q-text-md);
     --q-popover-title-weight: var(--q-weight-semibold);
+    --q-popover-close-fg: var(--q-fg-muted);
+    --q-popover-close-fg-hover: var(--q-fg);
+    --q-popover-close-size: 16px; // the × glyph, as on Toast
+    --q-popover-close-inset: var(--q-space-1);
+    --q-popover-close-padding: var(--q-space-0-5);
+    --q-popover-close-dur: var(--q-dur-hover);
   }
 }
 
@@ -97,5 +103,27 @@
     color: var(--q-popover-title-fg);
     font-size: var(--q-popover-title-size);
     font-weight: var(--q-popover-title-weight);
+  }
+
+  .q-popover__panel--closable {
+    padding-right: calc(var(--q-popover-padding) + var(--q-popover-close-size));
+  }
+
+  .q-popover__close {
+    position: absolute;
+    top: var(--q-popover-close-inset);
+    right: var(--q-popover-close-inset);
+    padding: var(--q-popover-close-padding);
+    border: 0;
+    background: none;
+    color: var(--q-popover-close-fg);
+    font-size: var(--q-popover-close-size);
+    line-height: var(--q-leading-none);
+    cursor: pointer;
+    transition: color var(--q-popover-close-dur) var(--q-ease-linear);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--q-popover-close-fg-hover);
+    }
   }
 }
