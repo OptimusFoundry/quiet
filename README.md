@@ -15,9 +15,14 @@ npm install "git+https://github.com/OptimusFoundry/quiet.git#v0.2.0"
 
 `dist/` is not committed; npm runs the `prepare` script (`npm run build`) when it installs from git.
 The repo is private, so the installing machine needs GitHub read access. Locally that is your usual
-git credentials. In CI, add a fine-grained token with read access as a secret and run
-`git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"`
-before `npm ci`.
+git credentials. npm records the dependency in `package-lock.json` as `git+ssh://git@github.com/…`
+whatever URL you installed with, so in CI add a fine-grained token with read access as a secret and
+rewrite both forms before `npm ci`:
+
+```bash
+git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"
+git config --global --add url."https://x-access-token:${TOKEN}@github.com/".insteadOf "ssh://git@github.com/"
+```
 
 ## Use
 
