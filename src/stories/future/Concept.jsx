@@ -1,5 +1,3 @@
-import React from "react";
-
 // Layout for the Future stories: the catalog's numbered Block + Spec rows, plus the concept's
 // lineage ("Evolved from") and idea, as in the Claude Design "Future Components" pages.
 const mono = {
@@ -66,7 +64,9 @@ export function Concept({ id, index, name, from, idea, children }) {
 					<div style={mono}>Evolved from</div>
 					<div style={{ marginTop: 4 }}>{from}</div>
 				</div>
-				<p style={{ flex: "1 1 360px", margin: 0, color: "var(--q-fg-body)", lineHeight: 1.55 }}>{idea}</p>
+				<p style={{ flex: "1 1 360px", margin: 0, color: "var(--q-fg-body)", lineHeight: 1.55 }}>
+					{idea}
+				</p>
 			</div>
 			{children}
 		</section>
