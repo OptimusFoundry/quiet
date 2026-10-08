@@ -1,3 +1,4 @@
+import { isDev } from "../../lib/env";
 // Theme registry. A theme is a [data-theme] block in @layer q.themes that sets the tier-1 palette
 // (and may override tier-2/3 tokens). quiet ships foundry and foundry-dark; products register
 // their own at startup with defineThemes(), so a theme can live in the product's repo.
@@ -44,7 +45,7 @@ const warned = new Set<string>();
 /** `theme` if it is registered, otherwise defaultTheme — warning once per name in dev. */
 export function resolveTheme(theme: ThemeName | null | undefined): ThemeName {
 	if (theme != null && Object.hasOwn(themes, theme)) return theme;
-	const dev = typeof process === "undefined" || process.env.NODE_ENV !== "production";
+	const dev = isDev();
 	if (theme != null && dev && !warned.has(theme)) {
 		warned.add(theme);
 		console.warn(

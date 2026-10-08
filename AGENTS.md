@@ -132,6 +132,17 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}`, `tests/*.ts` and `scripts/*.mjs`.
   - It only reports back; it never blocks.
 
+## Vendoring (how apps use quiet)
+
+Apps don't install quiet. `node ../quiet/scripts/quiet.mjs sync` copies it into the app's
+`vendor/quiet` (see README, "Install"), and the app compiles the source. So everything under `src/`
+must build in an app's bundler, not only in this repo's:
+- **No global ambient types.** Dev checks use `isDev()` from `src/lib/env.ts`.
+- **Styles first:** `src/index.ts` imports `./styles/index.scss` before any component, so the
+  `@layer` order holds after a minifier drops the order statement. `check:package` asserts the order.
+- **The copy list** is `COPY` in `scripts/quiet.mjs`. Add a path there when apps need it.
+- **`npx quiet check`** in the app fails on local edits. A bug an app hits is fixed here, then re-synced.
+
 ## Working alongside other agents
 
 - **PRs:** open them straight against `main`, never stacked. #5 was stacked on #3; #3 was squash-merged first, so #5 merged into the stale `feat/future-components` branch instead of main, and #6 had to redo it.
@@ -142,7 +153,7 @@ section, since the catalog is generated from the reference and must stay pixel-i
 
 ## quiet's own code
 
-`src/QuietRoot.tsx`, `src/a11y/`, `src/styles/` (tokens, themes, base, utilities), `src/env.d.ts`, `scripts/`,
+`src/QuietRoot.tsx`, `src/a11y/`, `src/lib/` (`env.ts`: dev checks without Node types), `src/styles/` (tokens, themes, base, utilities), `stylelint/` (the plugin and the app config apps extend), `scripts/` (`quiet.mjs`: vendoring sync/check),
 `tests/` and the Storybook config.
 
 **Before finishing:** `npm run lint && npm run typecheck && npm run build && npm run test`.

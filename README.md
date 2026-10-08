@@ -14,14 +14,33 @@ See [DESIGN.md](DESIGN.md) and [AGENTS.md](AGENTS.md).
 
 ## Install
 
-quiet is not on a registry. Install a tagged release from git and pin the tag:
+quiet is **vendored**: its source is copied into each app, and an update overwrites the copy. The
+copy is read-only. A fix goes into this repo, and every app picks it up on its next sync.
 
 ```bash
-npm install "git+https://github.com/OptimusFoundry/quiet.git#v0.2.0"
+# in the app, with this repo checked out next to it
+node ../quiet/scripts/quiet.mjs sync          # copies quiet into vendor/quiet (replaces it)
+git add vendor/quiet && git commit -m "chore: quiet 0.4.0"
 ```
 
-`dist/` is not committed; npm runs the `prepare` script (`npm run build`) when it installs from git.
-The repo is public, so installs need no credentials, locally or in CI.
+`sync` copies `src/` (without stories), the Stylelint config, `quiet-audit`, the guidelines and the
+agent skill. It writes `vendor/quiet/package.json`, whose exports point at that source, and
+`quiet.manifest.json` with a hash per file. Setup on the first sync (it prints this too):
+
+| | |
+|---|---|
+| `package.json` | `"@optimusfoundry/quiet": "file:./vendor/quiet"`, then `npm install`. Imports stay `@optimusfoundry/quiet`, with no path aliases |
+| devDependencies | `sass-embedded`, `typescript` ≥ 5.8, `react` ≥ 19.2; for CSS lint `stylelint` and `stylelint-declaration-strict-value` |
+| Stylelint | `extends: ["@optimusfoundry/quiet/stylelint/config"]`, `ignoreFiles: ["vendor/quiet/**"]` (see "Styling your own pages") |
+| Biome / ESLint | ignore `vendor/quiet/**` (quiet's own checks already passed) |
+| CI | `npx quiet check` fails if a vendored file was edited, added or removed since the sync |
+| Agents | copy `vendor/quiet/skills/quiet-app` to `.claude/skills/` |
+
+The app compiles quiet's source with its own bundler, so it ships the CSS for only the components it
+uses.
+
+Prefer a normal dependency? quiet still builds as a package (`npm run build` → `dist/`), so
+`npm install "git+https://github.com/OptimusFoundry/quiet.git#vX.Y.Z"` works too. The imports are the same.
 
 ## Use
 
@@ -157,12 +176,17 @@ const gap: TokenName = dense ? "--q-space-inline" : "--q-space-stack";
 Check your stylesheets against the tokens your installed quiet declares:
 
 ```js
-// stylelint.config.mjs (needs stylelint >= 16)
+// stylelint.config.mjs (devDependencies: stylelint >= 16, stylelint-declaration-strict-value)
 export default {
-  plugins: ["@optimusfoundry/quiet/stylelint"],
-  rules: { "quiet/known-tokens": true },
+  extends: ["@optimusfoundry/quiet/stylelint/config"],
+  ignoreFiles: ["vendor/quiet/**"],
 };
 ```
+
+The config applies quiet's own rules to your stylesheets: no raw colour, space, radius, type,
+duration or z-index (tokens only); your custom properties are `--app-*`, locals `--_*`; and
+`quiet/known-tokens`. To use only the token rule, use
+`plugins: ["@optimusfoundry/quiet/stylelint"], rules: { "quiet/known-tokens": true }`.
 
 `quiet/known-tokens` reports any `var(--q-…)` quiet doesn't declare (a typo, or a token renamed in a
 newer quiet) and any `--q-*` your app invents: `--q-` is quiet's namespace, so name your own

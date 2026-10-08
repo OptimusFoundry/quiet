@@ -4,7 +4,22 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 ## Unreleased
 
+### Added
+
+- **Vendoring:** `node <quiet>/scripts/quiet.mjs sync` copies quiet's source into an app's
+  `vendor/quiet`, replacing it on every update. Its `package.json` exports the source, so the app
+  depends on `file:./vendor/quiet` and keeps importing `@optimusfoundry/quiet`. `quiet check` (bin)
+  fails in CI if the copy was edited. Apps compile quiet themselves and ship CSS only for the
+  components they use.
+- **`@optimusfoundry/quiet/stylelint/config`:** quiet's CSS rules for an app's own stylesheets
+  (tokens only, `quiet/known-tokens`, `--app-*` custom properties).
+
 ### Changed
+
+- `src/index.ts` imports the styles before any component, so the layer order survives minification
+  in any bundler. `postbuild` no longer patches the CSS, and `check:package` asserts the order.
+- Dev-only warnings use `isDev()` (`src/lib/env.ts`) instead of a global `process` declaration,
+  so quiet's source typechecks in an app without Node types and doesn't clash with `@types/node`.
 
 - **Stricter, more useful prop types.** No `any` is left in a public type:
   - Rest props are the HTML attributes of the element they land on (`ButtonProps`, `LinkProps`,

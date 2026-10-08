@@ -25,7 +25,9 @@ import { QuietRoot, ThemeProvider, Toaster } from "@optimusfoundry/quiet";
 </ThemeProvider>;
 ```
 
-- Install a pinned git tag: `npm i "git+https://github.com/OptimusFoundry/quiet.git#vX.Y.Z"`.
+- quiet is vendored in `vendor/quiet` (`"@optimusfoundry/quiet": "file:./vendor/quiet"`). **Never edit
+  it.** `npx quiet check` fails on any change. A quiet bug is fixed in the quiet repo, then re-synced
+  with `node ../quiet/scripts/quiet.mjs sync`. If you're blocked, say so; don't patch the copy.
 - `RouterLink` adapts your router's link to `LinkComponent`; every in-app `href` quiet renders goes
   through it.
 - Product identity is a theme (`defineThemes` plus `[data-theme="acme"]` in `@layer q.themes`), see

@@ -1,4 +1,5 @@
 import React from "react";
+import { isDev } from "../../lib/env";
 import { useLinkElement } from "../../lib/link";
 import { Spinner } from "./Spinner";
 import "./Button.scss";
@@ -61,11 +62,7 @@ export function Button({
 	const iconOnly = icon != null && children == null;
 	const named = rest["aria-label"] || rest["aria-labelledby"] || rest.title;
 	React.useEffect(() => {
-		if (
-			iconOnly &&
-			!named &&
-			(typeof process === "undefined" || process.env.NODE_ENV !== "production")
-		)
+		if (iconOnly && !named && isDev())
 			console.warn("Button: icon-only buttons need an aria-label.");
 	}, [iconOnly, named]);
 	// The spinner fades in when loading starts after mount; a button that mounts loading just shows it.
