@@ -1,0 +1,9 @@
+{
+	// Vendored apps compile quiet's source with their own types, and most have @types/node
+	// (setTimeout returns NodeJS.Timeout there, not number). Typechecking src with Node types too
+	// keeps the source valid in both kinds of app.
+	"extends": "./tsconfig.json",
+	"compilerOptions": { "types": ["vite/client", "node"] },
+	"include": ["src"],
+	"exclude": ["src/stories"]
+}

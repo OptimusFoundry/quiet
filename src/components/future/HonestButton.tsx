@@ -41,7 +41,7 @@ export function HonestButton({
 	const [p, setP] = React.useState<number | "done" | null>(null); // null idle · 0–1 running · 'done'
 	const [said, setSaid] = React.useState<React.ReactNode>("");
 	const raf = React.useRef(0);
-	const timer = React.useRef(0);
+	const timer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 	React.useEffect(
 		() => () => {
 			cancelAnimationFrame(raf.current);

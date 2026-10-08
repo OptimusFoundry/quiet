@@ -2,6 +2,28 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.4.1
+
+### Fixed
+
+- **HonestButton** typed its reset timer as `number`. That fails to compile in an app with
+  `@types/node`, where `setTimeout` returns `NodeJS.Timeout`, which is most vendored apps. It's
+  now `ReturnType<typeof setTimeout>`.
+
+### Added
+
+- `npm run typecheck` also checks `src/` with Node types (`tsconfig.app-compat.json`), so the
+  source keeps compiling in apps both with and without `@types/node`.
+
+### Upgrading from 0.3.0 (missing from 0.4.0's notes)
+
+- **Table and DataGrid columns declared on their own** need the row type now:
+  `const columns: TableProps<APIKey>["columns"] = …`, not `TableProps["columns"]`. Without the
+  argument the rows default to `Record<string, unknown>`, which an `interface` row type doesn't
+  satisfy, so `data` and `render` no longer type-check. With it, `render` is checked against
+  the real row. Columns written inline in `<Table columns={…}>` infer the row type and need
+  nothing.
+
 ## 0.4.0
 
 The headline: apps **vendor** quiet instead of installing it, and token names are checked
