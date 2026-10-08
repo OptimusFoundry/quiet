@@ -234,16 +234,20 @@ npm run test       # pixel and hover parity with the reference, axe in both them
 
 1. Bump `version` in `package.json` (semver) and run `npm install --package-lock-only` so the
    lockfile matches.
-2. Add an entry for the version at the top of [CHANGELOG.md](CHANGELOG.md).
+2. Turn the CHANGELOG's changes into an entry for the version at the top of
+   [CHANGELOG.md](CHANGELOG.md), with "Upgrading" notes for anything an app must change.
 3. Merge to `main`, then tag the merge commit and push the tag:
 
    ```bash
-   git tag v0.2.0
-   git push origin v0.2.0
+   git tag v0.4.0
+   git push origin v0.4.0
    ```
 
-Consumers move to the new version by changing the `#vX.Y.Z` in their dependency. Nothing is
-published; the tag is the release. Never move a pushed tag; cut a new patch version instead.
+Apps move to a version by syncing from that tag: `git -C ../quiet checkout v0.4.0`, then
+`node ../quiet/scripts/quiet.mjs sync` in the app. The manifest records the version and commit, and
+sync warns if quiet had uncommitted changes. (Apps that install the package instead change the
+`#vX.Y.Z` in their dependency.) Nothing is published; the tag is the release. Never move a pushed
+tag; cut a new patch version instead.
 
 Contributor rules (what's copied vs quiet's own, BEM and tokens, the a11y layer, tests) are in
 [AGENTS.md](AGENTS.md). Claude Code skills and agents for building components live in `.claude/`.
