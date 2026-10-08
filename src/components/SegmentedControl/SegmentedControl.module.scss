@@ -1,5 +1,9 @@
 // The "enclosed" Tabs look: a paper-2 tray with one raised paper segment sliding between labels.
 .group {
+	--seg-h: 36px;
+	--seg-px: var(--q-space-2);
+	--seg-fs: var(--q-type-mono);
+
 	position: relative;
 	box-sizing: border-box;
 	display: inline-flex;
@@ -13,12 +17,24 @@
 	background: var(--q-paper-2);
 }
 
+.sm {
+	--seg-h: 28px;
+	--seg-px: var(--q-space-1-5);
+	--seg-fs: var(--q-type-mono-sm);
+}
+
+.lg {
+	--seg-h: 44px;
+	--seg-px: 20px;
+	--seg-fs: var(--q-type-mono-lg);
+}
+
 .indicator {
 	position: absolute;
 	top: var(--q-space-0-5);
 	left: 0;
 	width: var(--seg-w);
-	height: 36px;
+	height: var(--seg-h);
 	border-radius: var(--q-radius-sm);
 	background: var(--q-paper);
 	box-shadow: var(--q-shadow-1);
@@ -35,11 +51,11 @@
 	align-items: center;
 	gap: var(--q-space-1);
 	// Explicit: percentage heights don't resolve inside a fieldset.
-	height: 36px;
-	padding: 0 var(--q-space-2);
+	height: var(--seg-h);
+	padding: 0 var(--seg-px);
 	border-radius: var(--q-radius-sm);
 	font-family: var(--q-font-mono);
-	font-size: var(--q-type-mono);
+	font-size: var(--seg-fs);
 	letter-spacing: var(--q-tracking-mono);
 	text-transform: uppercase;
 	white-space: nowrap;

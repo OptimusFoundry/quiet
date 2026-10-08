@@ -20,12 +20,22 @@ export interface TableProps<R> {
 	revealKey?: string;
 	/** Row rendered as hovered — for recordings, which have no real pointer. */
 	hoveredKey?: string;
+	/** Cell padding: sm 8×12 · md 14×16 · lg 20×20. Use sm on compact surfaces. */
+	size?: "sm" | "md" | "lg";
 }
 
-export function Table<R>({ columns, rows, rowKey, actions, revealKey, hoveredKey }: TableProps<R>) {
+export function Table<R>({
+	columns,
+	rows,
+	rowKey,
+	actions,
+	revealKey,
+	hoveredKey,
+	size = "md",
+}: TableProps<R>) {
 	return (
 		<div className={styles.wrap}>
-			<table className={styles.table}>
+			<table className={`${styles.table} ${styles[size]}`}>
 				<colgroup>
 					{columns.map((c) => (
 						<col key={c.key} style={c.width ? { width: c.width } : undefined} />

@@ -12,7 +12,7 @@ import { SegmentedControl } from "../components/SegmentedControl/SegmentedContro
 import { Spinner } from "../components/Spinner/Spinner";
 import { StatusDot } from "../components/StatusDot/StatusDot";
 import { Switch } from "../components/Switch/Switch";
-import { Table } from "../components/Table/Table";
+import { type Column, Table } from "../components/Table/Table";
 import { Tag } from "../components/Tag/Tag";
 import styles from "./Catalog.module.scss";
 
@@ -86,8 +86,22 @@ const ROWS = [
 	{ id: "3", name: "Cinder", client: "Halcyon", status: "archived" as const, amount: 9200 },
 ];
 
+const COLUMNS: Column<(typeof ROWS)[number]>[] = [
+	{ key: "name", header: "Piece", render: (r) => r.name },
+	{ key: "client", header: "Client", render: (r) => r.client },
+	{ key: "status", header: "Status", render: (r) => <StatusDot status={r.status} /> },
+	{
+		key: "amount",
+		header: "Amount",
+		align: "end",
+		numeric: true,
+		render: (r) => `$${r.amount.toLocaleString("en-US")}`,
+	},
+];
+
 function Catalog() {
 	const [range, setRange] = useState("week");
+	const [view, setView] = useState("list");
 	const [paletteOpen, setPaletteOpen] = useState(true);
 	return (
 		<div className={styles.page}>
@@ -275,6 +289,13 @@ function Catalog() {
 							<Input label="Error" defaultValue="Under 10k" error="We start at 25k." />
 						</div>
 					</Spec>
+					<Spec label="Sizes" col>
+						<div className={styles.fields}>
+							<Input size="sm" aria-label="Small field" placeholder="Small · 36" />
+							<Input size="md" aria-label="Medium field" placeholder="Medium · 48" />
+							<Input size="lg" aria-label="Large field" placeholder="Large · 56" />
+						</div>
+					</Spec>
 					<Spec label="Search" col>
 						<div className={styles.narrow}>
 							<Input
@@ -307,7 +328,20 @@ function Catalog() {
 				</Block>
 
 				<Block name="SegmentedControl" file="navigation/SegmentedControl.tsx">
-					<Spec label="Enclosed">
+					<Spec label="Small">
+						<SegmentedControl
+							size="sm"
+							label="View"
+							value={view}
+							onChange={setView}
+							segments={[
+								{ value: "list", label: "List" },
+								{ value: "board", label: "Board" },
+								{ value: "table", label: "Table" },
+							]}
+						/>
+					</Spec>
+					<Spec label="Medium">
 						<SegmentedControl
 							label="Range"
 							value={range}
@@ -356,22 +390,14 @@ function Catalog() {
 				</Block>
 
 				<Block name="Table" file="data/Table.tsx">
-					<Spec label="Default" col>
+					<Spec label="Small · compact" col>
+						<Table size="sm" rows={ROWS} rowKey={(r) => r.id} columns={COLUMNS} />
+					</Spec>
+					<Spec label="Medium" col>
 						<Table
 							rows={ROWS}
 							rowKey={(r) => r.id}
-							columns={[
-								{ key: "name", header: "Piece", render: (r) => r.name },
-								{ key: "client", header: "Client", render: (r) => r.client },
-								{ key: "status", header: "Status", render: (r) => <StatusDot status={r.status} /> },
-								{
-									key: "amount",
-									header: "Amount",
-									align: "end",
-									numeric: true,
-									render: (r) => `$${r.amount.toLocaleString("en-US")}`,
-								},
-							]}
+							columns={COLUMNS}
 							actions={(r) => (
 								<Button variant="ghost" size="sm" arrow aria-label={`Open ${r.name}`}>
 									Open

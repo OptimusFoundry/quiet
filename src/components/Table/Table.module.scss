@@ -3,6 +3,8 @@
 }
 
 .table {
+	--cell-p: 14px var(--q-space-2);
+
 	width: 100%;
 	border-collapse: collapse;
 	font-size: var(--q-type-body-sm);
@@ -10,7 +12,7 @@
 	color: var(--q-ink-2);
 
 	th {
-		padding: 14px var(--q-space-2);
+		padding: var(--cell-p);
 		border-bottom: 1px solid var(--q-ink);
 		font-family: var(--q-font-mono);
 		font-size: var(--q-type-mono);
@@ -23,7 +25,7 @@
 	}
 
 	td {
-		padding: 14px var(--q-space-2);
+		padding: var(--cell-p);
 		border-top: 1px solid var(--q-rule-soft);
 		white-space: nowrap;
 	}
@@ -44,6 +46,19 @@
 	[data-numeric] {
 		font-variant-numeric: tabular-nums;
 	}
+}
+
+.sm {
+	--cell-p: var(--q-space-1) var(--q-space-1-5);
+
+	font-size: var(--q-type-small);
+	th {
+		font-size: var(--q-type-mono-sm);
+	}
+}
+
+.lg {
+	--cell-p: 20px;
 }
 
 .actionsCol {
@@ -71,7 +86,10 @@
 	white-space: nowrap;
 }
 
-.actionsCell {
+// Row actions are 32px buttons; without this they would add to the cell padding and make
+// action rows taller than plain ones.
+.table .actionsCell {
+	padding-block: 0;
 	text-align: right;
 }
 

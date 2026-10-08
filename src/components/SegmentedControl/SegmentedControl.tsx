@@ -20,6 +20,8 @@ export interface SegmentedControlProps<T extends string> {
 	value: T;
 	onChange: (value: T) => void;
 	label: string;
+	/** Segment height: sm 28 · md 36 · lg 44. */
+	size?: "sm" | "md" | "lg";
 }
 
 /**
@@ -31,6 +33,7 @@ export function SegmentedControl<T extends string>({
 	value,
 	onChange,
 	label,
+	size = "md",
 }: SegmentedControlProps<T>) {
 	const name = useId();
 	const refs = useRef(new Map<T, HTMLLabelElement>());
@@ -44,7 +47,7 @@ export function SegmentedControl<T extends string>({
 	const indicator = { "--seg-x": `${box.x}px`, "--seg-w": `${box.w}px` } as CSSProperties;
 
 	return (
-		<fieldset className={styles.group} style={indicator}>
+		<fieldset className={`${styles.group} ${styles[size]}`} style={indicator}>
 			<legend className={styles.legend}>{label}</legend>
 			<span className={styles.indicator} aria-hidden="true" />
 			{segments.map((s) => (

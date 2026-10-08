@@ -17,7 +17,7 @@
 	gap: var(--q-space-1);
 	box-sizing: border-box;
 	height: var(--q-field-md);
-	padding: 0 var(--q-space-1-5) 0 var(--q-space-2);
+	padding: 0 var(--q-space-2);
 	border: 1px solid var(--q-rule-soft);
 	border-radius: var(--q-radius-md);
 	background: var(--q-paper);
@@ -34,6 +34,22 @@
 	}
 	&[data-invalid] {
 		border-color: var(--q-accent);
+	}
+}
+
+.sm {
+	height: var(--q-field-sm);
+	padding: 0 var(--q-space-1-5);
+	.input {
+		font-size: var(--q-type-body-sm);
+	}
+}
+
+.lg {
+	height: var(--q-field-lg);
+	padding: 0 20px;
+	.input {
+		font-size: var(--q-type-body-lg);
 	}
 }
 

@@ -10,10 +10,23 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 	error?: string;
 	icon?: ReactNode;
 	kbd?: string;
+	/** Field height: sm 36 · md 48 · lg 56. */
+	size?: "sm" | "md" | "lg";
 	ref?: Ref<HTMLInputElement>;
 }
 
-export function Input({ label, hint, error, icon, kbd, id, className, ref, ...props }: InputProps) {
+export function Input({
+	label,
+	hint,
+	error,
+	icon,
+	kbd,
+	size = "md",
+	id,
+	className,
+	ref,
+	...props
+}: InputProps) {
 	const auto = useId();
 	const inputId = id ?? auto;
 	const noteId = `${inputId}-note`;
@@ -25,7 +38,7 @@ export function Input({ label, hint, error, icon, kbd, id, className, ref, ...pr
 					{label}
 				</label>
 			)}
-			<span className={styles.field} data-invalid={error ? true : undefined}>
+			<span className={`${styles.field} ${styles[size]}`} data-invalid={error ? true : undefined}>
 				{icon && <span className={styles.icon}>{icon}</span>}
 				<input
 					ref={ref}

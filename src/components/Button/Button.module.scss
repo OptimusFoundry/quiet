@@ -115,11 +115,11 @@
 }
 
 .lg {
-	height: var(--q-control-lg);
+	height: var(--q-button-lg);
 	padding: 0 var(--q-space-4);
 	font-size: var(--q-type-body);
 	&[data-icon-only] {
-		width: var(--q-control-lg);
+		width: var(--q-button-lg);
 	}
 }
 
