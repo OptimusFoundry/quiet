@@ -11,6 +11,7 @@
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"bin": {
+		"quiet": "scripts/quiet.mjs",
 		"quiet-audit": "scripts/quiet-audit.mjs"
 	},
 	"exports": {
@@ -21,17 +22,19 @@
 		"./style.css": "./dist/quiet.css",
 		"./fonts.css": "./dist/fonts.css",
 		"./stylelint": "./stylelint/index.mjs",
-		"./tokens.json": "./dist/tokens.json"
+		"./tokens.json": "./dist/tokens.json",
+		"./stylelint/config": "./stylelint/config.mjs"
 	},
 	"files": [
 		"dist",
 		"stylelint",
 		"DESIGN.md",
 		"docs/guidelines",
-		"skills",
+		"claude",
 		"scripts/quiet-audit.mjs",
 		"scripts/quiet-audit-core.mjs",
-		"scripts/quiet-audit-core.d.mts"
+		"scripts/quiet-audit-core.d.mts",
+		"scripts/quiet.mjs"
 	],
 	"scripts": {
 		"dev": "storybook dev -p 6020",

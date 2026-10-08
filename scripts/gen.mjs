@@ -25,7 +25,10 @@ const own = ["future", "charts", "chat"]
 	.concat(["feedback/Toaster"]);
 writeFileSync(
 	"src/index.ts",
-	`${HEADER}${[...files, ...own]
+	`${HEADER}// Styles first: the @layer order statement must be the first CSS in every bundle (a minifier\n// otherwise drops it and layers rank by first appearance, with q.components above q.base).\nimport "./styles/index.scss";\n${[
+		...files,
+		...own,
+	]
 		.map((f) => `export * from "./components/${f}";`)
 		.join(
 			"\n",

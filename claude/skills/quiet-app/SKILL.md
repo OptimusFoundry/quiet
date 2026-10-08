@@ -25,7 +25,9 @@ import { QuietRoot, ThemeProvider, Toaster } from "@optimusfoundry/quiet";
 </ThemeProvider>;
 ```
 
-- Install a pinned git tag: `npm i "git+https://github.com/OptimusFoundry/quiet.git#vX.Y.Z"`.
+- quiet is vendored in `vendor/quiet` (`"@optimusfoundry/quiet": "file:./vendor/quiet"`). **Never edit
+  it.** `npx quiet check` fails on any change. A quiet bug is fixed in the quiet repo, then re-synced
+  with `node ../quiet/scripts/quiet.mjs sync`. If you're blocked, say so; don't patch the copy.
 - `RouterLink` adapts your router's link to `LinkComponent`; every in-app `href` quiet renders goes
   through it.
 - Product identity is a theme (`defineThemes` plus `[data-theme="acme"]` in `@layer q.themes`), see
@@ -63,5 +65,6 @@ If quiet lacks something, build it in the product on quiet tokens and BEM, and f
 1. `npx quiet-audit <url…> --width 1280,390 --theme <theme>,<dark pair>`. Fix every finding or
    justify it in the PR.
 2. Look at both themes at 1280 and 390 against `checklist.md`: hierarchy, one lead, sectioning, slop,
-   copy.
-3. `document.title` per route, focus after navigation, named landmarks, axe clean.
+   copy. For a whole screen, hand this to the `quiet-screen-reviewer` agent.
+3. `document.title` per route, focus after navigation, named landmarks, axe clean: the app's duties
+   in `accessibility.md`, "What the app must do".

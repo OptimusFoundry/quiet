@@ -123,6 +123,8 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - `port-future-concept`: judge fit and read a Claude Design concept through Chrome.
   - `sync-from-claude-design`: update the reference copy, hash-verified, with parity.
   - `review-component`: the pre-PR checklist.
+  - App-facing (shipped to apps by `quiet sync`, see "Vendoring"): `claude/skills/quiet-app`,
+    `claude/agents/qa/quiet-screen-reviewer.md`, `claude/hooks/quiet-guard.mjs`.
 - **Agents** (`.claude/agents/`):
   - `component-builder`: builds one component, write-scoped to its files.
   - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
@@ -131,6 +133,24 @@ section, since the catalog is generated from the reference and must stay pixel-i
 - **Hook:** `.claude/settings.json` runs `.claude/hooks/lint-changed.sh` after every Edit or Write.
   - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}`, `tests/*.ts` and `scripts/*.mjs`.
   - It only reports back; it never blocks.
+
+## Vendoring (how apps use quiet)
+
+Apps don't install quiet. `node ../quiet/scripts/quiet.mjs sync` copies it into the app's
+`vendor/quiet` (see README, "Install"), and the app compiles the source. So everything under `src/`
+must build in an app's bundler, not only in this repo's:
+- **No global ambient types.** Dev checks use `isDev()` from `src/lib/env.ts`.
+- **Styles first:** `src/index.ts` imports `./styles/index.scss` before any component, so the
+  `@layer` order holds after a minifier drops the order statement. `check:package` asserts the order.
+- **The copy list** is `COPY` in `scripts/quiet.mjs`. Add a path there when apps need it.
+- **`npx quiet check`** in the app fails on local edits. A bug an app hits is fixed here, then re-synced.
+- **App-facing Claude assets live in `claude/`**, not `.claude/` (which is for developing quiet).
+  `claude/skills/*` and `claude/agents/*` are placed in the app's `.claude/`, and
+  `claude/hooks/quiet-guard.mjs` is registered in its settings. They must work in any app: no quiet
+  Storybook, quiet tests or quiet paths. Name new ones `quiet-*`, put agents in a department folder
+  (`agents/qa/` for reviewers, as in saas-template), and give them `model`, `color` and
+  `skills: [quiet-app]` frontmatter. Ship what an app lacks (measuring rendered screens), not
+  duplicates of what an app's harness already has (its own a11y or code reviewers).
 
 ## Working alongside other agents
 
@@ -142,7 +162,7 @@ section, since the catalog is generated from the reference and must stay pixel-i
 
 ## quiet's own code
 
-`src/QuietRoot.tsx`, `src/a11y/`, `src/styles/` (tokens, themes, base, utilities), `src/env.d.ts`, `scripts/`,
+`src/QuietRoot.tsx`, `src/a11y/`, `src/lib/` (`env.ts`: dev checks without Node types), `src/styles/` (tokens, themes, base, utilities), `stylelint/` (the plugin and the app config apps extend), `scripts/` (`quiet.mjs`: vendoring sync/check),
 `tests/` and the Storybook config.
 
 **Before finishing:** `npm run lint && npm run typecheck && npm run build && npm run test`.

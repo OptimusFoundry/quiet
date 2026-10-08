@@ -21,9 +21,15 @@ for (const target of [...targets, pkg.main, pkg.types]) {
 }
 
 const css = readFileSync("dist/quiet.css", "utf8");
+// Layers rank by the order statement or, once a minifier drops it, by first appearance: either
+// way the first mention of each layer must follow q.tokens, q.themes, q.base, q.components, q.utilities.
+const LAYERS = ["q.tokens", "q.themes", "q.base", "q.components", "q.utilities"];
+const firstSeen = [...css.matchAll(/@layer\s+([^{;]+)[{;]/g)]
+	.flatMap((m) => m[1].split(",").map((l) => l.trim()))
+	.filter((l, i, all) => all.indexOf(l) === i);
 check(
-	css.startsWith("@layer q.tokens,q.themes,q.base,q.components,q.utilities;"),
-	"dist/quiet.css does not start with the layer order statement",
+	JSON.stringify(firstSeen) === JSON.stringify(LAYERS),
+	`dist/quiet.css layers rank ${firstSeen.join(" < ")}, not ${LAYERS.join(" < ")}`,
 );
 check(
 	!css.includes("fonts.googleapis.com"),

@@ -14,14 +14,33 @@ See [DESIGN.md](DESIGN.md) and [AGENTS.md](AGENTS.md).
 
 ## Install
 
-quiet is not on a registry. Install a tagged release from git and pin the tag:
+quiet is **vendored**: its source is copied into each app, and an update overwrites the copy. The
+copy is read-only. A fix goes into this repo, and every app picks it up on its next sync.
 
 ```bash
-npm install "git+https://github.com/OptimusFoundry/quiet.git#v0.2.0"
+# in the app, with this repo checked out next to it
+node ../quiet/scripts/quiet.mjs sync          # copies quiet into vendor/quiet (replaces it)
+git add vendor/quiet && git commit -m "chore: quiet 0.4.0"
 ```
 
-`dist/` is not committed; npm runs the `prepare` script (`npm run build`) when it installs from git.
-The repo is public, so installs need no credentials, locally or in CI.
+`sync` copies `src/` (without stories), the Stylelint config, `quiet-audit`, the guidelines and the
+agent skill. It writes `vendor/quiet/package.json`, whose exports point at that source, and
+`quiet.manifest.json` with a hash per file. Setup on the first sync (it prints this too):
+
+| | |
+|---|---|
+| `package.json` | `"@optimusfoundry/quiet": "file:./vendor/quiet"`, then `npm install`. Imports stay `@optimusfoundry/quiet`, with no path aliases |
+| devDependencies | `sass-embedded`, `typescript` ≥ 5.8, `react` ≥ 19.2; for CSS lint `stylelint` and `stylelint-declaration-strict-value` |
+| Stylelint | `extends: ["@optimusfoundry/quiet/stylelint/config"]`, `ignoreFiles: ["vendor/quiet/**"]` (see "Styling your own pages") |
+| Biome / ESLint | ignore `vendor/quiet/**` (quiet's own checks already passed) |
+| CI | `npx quiet check` fails if a vendored file was edited, added or removed since the sync |
+| Claude Code | automatic: see "Claude Code in product repos" |
+
+The app compiles quiet's source with its own bundler, so it ships the CSS for only the components it
+uses.
+
+Prefer a normal dependency? quiet still builds as a package (`npm run build` → `dist/`), so
+`npm install "git+https://github.com/OptimusFoundry/quiet.git#vX.Y.Z"` works too. The imports are the same.
 
 ## Use
 
@@ -157,28 +176,47 @@ const gap: TokenName = dense ? "--q-space-inline" : "--q-space-stack";
 Check your stylesheets against the tokens your installed quiet declares:
 
 ```js
-// stylelint.config.mjs (needs stylelint >= 16)
+// stylelint.config.mjs (devDependencies: stylelint >= 16, stylelint-declaration-strict-value)
 export default {
-  plugins: ["@optimusfoundry/quiet/stylelint"],
-  rules: { "quiet/known-tokens": true },
+  extends: ["@optimusfoundry/quiet/stylelint/config"],
+  ignoreFiles: ["vendor/quiet/**"],
 };
 ```
+
+The config applies quiet's own rules to your stylesheets: no raw colour, space, radius, type,
+duration or z-index (tokens only); your custom properties are `--app-*`, locals `--_*`; and
+`quiet/known-tokens`. To use only the token rule, use
+`plugins: ["@optimusfoundry/quiet/stylelint"], rules: { "quiet/known-tokens": true }`.
 
 `quiet/known-tokens` reports any `var(--q-…)` quiet doesn't declare (a typo, or a token renamed in a
 newer quiet) and any `--q-*` your app invents: `--q-` is quiet's namespace, so name your own
 `--app-*`. A product theme may still set quiet's tokens (`--q-accent`, the palette, `--q-status-*`).
 After building, `npx quiet-audit` measures the running page for off-token values.
 
-### Agent skill for product repos
+### Claude Code in product repos
 
-The package ships a Claude Code skill, `quiet-app`, that points agents at these guidelines when they build
-UI. Install it in a product repo:
+quiet's app-facing Claude assets live in [`claude/`](claude/). `quiet sync` puts them where Claude Code
+reads them, and overwrites them on every sync like the rest of the copy:
 
-```bash
-mkdir -p .claude/skills && cp -r node_modules/@optimusfoundry/quiet/skills/quiet-app .claude/skills/
-# or keep it in sync with the installed version:
-ln -s ../../node_modules/@optimusfoundry/quiet/skills/quiet-app .claude/skills/quiet-app
-```
+| From | To | What it does |
+|---|---|---|
+| `claude/skills/quiet-app` | `.claude/skills/quiet-app` | how to set up, lay out and check a screen on quiet |
+| `claude/agents/qa/quiet-screen-reviewer.md` | `.claude/agents/qa/` | measures a running screen with `quiet-audit`, screenshots both themes, judges it against the checklist |
+| `claude/hooks/quiet-guard.mjs` | registered in `.claude/settings.json` | **blocks** any edit inside `vendor/quiet`, and lints each changed app stylesheet with quiet's rules |
+
+In a monorepo (the app in `webapp/`, `.claude/` at the repo root), they go to the project root: the
+nearest folder from the app up to the git root that has a `.claude/`, or `--claude-root <dir>`.
+Agents keep their department folder (`qa/`); Claude Code finds agents recursively by `name`. For
+accessibility, the app's own a11y agents and rules cover what the app owns; point them at
+`docs/guidelines/accessibility.md` ("What the app must do"). If the project routes skills by path
+(`.claude/rules/*.md`), add `quiet-app` there for UI work; sync doesn't edit rules or routing.
+
+Sync only adds or replaces quiet's own entries. The app's other skills, agents, hooks and settings are
+left alone, and a file quiet stops shipping is removed on the next sync. `quiet check` also fails if a
+placed file was edited or the hook was unregistered.
+
+Installed as a package instead? Copy `node_modules/@optimusfoundry/quiet/claude/skills/quiet-app`
+into `.claude/skills/` yourself.
 
 ## Develop
 
