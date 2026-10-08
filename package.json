@@ -1,6 +1,6 @@
 {
 	"name": "@optimusfoundry/quiet",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "A design system built from 1,384 saved UI references. Quiet, precise, neutral.",
 	"type": "module",
 	"license": "UNLICENSED",
