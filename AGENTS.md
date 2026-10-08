@@ -54,7 +54,7 @@ Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
   Hover affordances apply to keyboard focus too: `:is(:hover, :focus-visible)`.
 - **Tokens, three tiers** (all `--q-*`):
   1. palette — `--q-gray-*`, `--q-molten-*` … only in `src/styles/themes/_<theme>.scss`;
-  2. semantic — `--q-bg*`, `--q-fg*`, `--q-border*`, `--q-accent`, `--q-text-*`, `--q-leading-*`,
+  2. semantic — `--q-bg*`, `--q-fg*`, `--q-border*`, `--q-accent`, `--q-status-*`, `--q-text-*`, `--q-leading-*`,
      `--q-tracking-*`, `--q-space-*`, `--q-control-*`, `--q-radius-*`, `--q-shadow-*`,
      `--q-ease-*`, `--q-dur-*`, `--q-z-*` in `src/styles/tokens/`;
   3. component — `--q-{block}-{element?}-{modifier?}-{property}-{state?}`, declared at the top of
@@ -64,8 +64,11 @@ Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
 - **Cascade layers**: `q.tokens, q.themes, q.base, q.components, q.utilities`. Component rules go in
   `@layer q.components`, so they never need to out-specify base styles.
 - **Themes**: `src/styles/themes/_<name>.scss` sets the palette (and may override any token) under
-  `[data-theme="<name>"]`; register it in `themes.ts`. `QuietRoot theme` scopes a subtree,
-  `ThemeProvider` themes the app.
+  `[data-theme="<name>"]`; register built-ins in `themes.ts`. Products register their own with
+  `defineThemes()` and style them in `@layer q.themes` (DESIGN.md, "Product themes").
+  `QuietRoot theme` scopes a subtree, `ThemeProvider` themes the app.
+- **Status colour**: components never hard-code a status grey or the accent; they read
+  `--q-status-<status>-{fg,bg,border}` through their own tier-3 tokens (DESIGN.md, "Status colour").
 - The reference names (`--ink`, `--paper`, `--molten` …) exist only in
   `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by

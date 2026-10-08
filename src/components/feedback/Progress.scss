@@ -10,6 +10,10 @@
     --q-progress-track-bg: var(--q-border);
     --q-progress-fill: var(--q-fg);
     --q-progress-fill-hot: var(--q-accent);
+    --q-progress-success-fill: var(--q-status-success-fg);
+    --q-progress-warning-fill: var(--q-status-warning-fg);
+    --q-progress-error-fill: var(--q-status-error-fg);
+    --q-progress-error-value-fg: var(--q-status-error-fg);
     --q-progress-sm-height: var(--q-space-px);
     --q-progress-md-height: var(--q-space-0-25);
     --q-progress-lg-height: var(--q-space-0-5);
@@ -45,11 +49,10 @@
     &--sm { --_height: var(--q-progress-sm-height); }
     &--lg { --_height: var(--q-progress-lg-height); }
 
-    &--warning,
-    &--error,
-    &--heat {
-      --_fill: var(--q-progress-fill-hot);
-    }
+    &--success { --_fill: var(--q-progress-success-fill); }
+    &--warning { --_fill: var(--q-progress-warning-fill); }
+    &--error { --_fill: var(--q-progress-error-fill); }
+    &--heat { --_fill: var(--q-progress-fill-hot); }
   }
 
   .q-progress__meta {
@@ -68,7 +71,7 @@
     font-variant-numeric: tabular-nums;
 
     .q-progress--error & {
-      color: var(--q-progress-fill-hot);
+      color: var(--q-progress-error-value-fg);
     }
   }
 

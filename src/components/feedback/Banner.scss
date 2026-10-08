@@ -1,5 +1,5 @@
 // Banner — full-width notice strip. BEM: .q-banner, __inner, __glyph, __text, __title, __body,
-// __dismiss, __collapse; --{paper|ink|outline} (any other variant: plain ground), --hot (warning/error).
+// __dismiss, __collapse; --{paper|ink|outline} (any other variant: plain ground), --{info|success|warning|error}.
 @layer q.tokens {
   :root,
   [data-theme] {
@@ -19,7 +19,14 @@
     --q-banner-glyph-font-size: var(--q-text-2xs);
     --q-banner-glyph-weight: var(--q-weight-semibold);
     --q-banner-ring: var(--q-fg);
-    --q-banner-hot: var(--q-accent);
+    --q-banner-info-ring: var(--q-status-info-fg);
+    --q-banner-info-glyph: var(--q-status-info-fg);
+    --q-banner-success-ring: var(--q-status-success-fg);
+    --q-banner-success-glyph: var(--q-status-success-fg);
+    --q-banner-warning-ring: var(--q-status-warning-fg);
+    --q-banner-warning-glyph: var(--q-status-warning-fg);
+    --q-banner-error-ring: var(--q-status-error-fg);
+    --q-banner-error-glyph: var(--q-status-error-fg);
     --q-banner-dismiss-fg: var(--q-fg-muted);
     --q-banner-dismiss-size: 18px; // the × glyph; between --q-text-lg and --q-text-xl
 
@@ -63,9 +70,17 @@
       border-bottom-color: var(--q-banner-outline-border);
     }
 
-    &--hot {
-      --_ring: var(--q-banner-hot);
-      --_glyph: var(--q-banner-hot);
+    @each $status in info, success, warning, error {
+      &--#{$status} {
+        --_ring: var(--q-banner-#{$status}-ring);
+        --_glyph: var(--q-banner-#{$status}-glyph);
+      }
+    }
+
+    // On the inverse strip the calm statuses keep its on-inverse colours; only hot ones show.
+    &--ink:is(.q-banner--info, .q-banner--success) {
+      --_ring: var(--q-banner-ink-ring);
+      --_glyph: var(--_fg);
     }
   }
 

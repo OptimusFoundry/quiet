@@ -83,6 +83,26 @@ owns `<html data-theme>` and ships unlayered CSS). quiet styles only what it own
 
 `tests/coexistence.spec.ts` checks this against the built `dist/quiet.css`.
 
+## Your product's theme
+
+Themes are open: define yours in your own repo, register it at startup, and style it in
+`@layer q.themes`.
+
+```tsx
+import { defineThemes, ThemeProvider } from "@optimusfoundry/quiet";
+import "@optimusfoundry/quiet/style.css";
+import "./theme/quiet-acme.scss"; // @layer q.themes { [data-theme="acme"] { --q-gray-0: …; } }
+
+defineThemes({ acme: { label: "Acme", colorScheme: "light" } });
+
+<ThemeProvider defaultValue="acme">…</ThemeProvider>;
+```
+
+An unregistered name falls back to `foundry` and warns once in development. Semantic status
+colour (`--q-status-{info,success,warning,error}-{fg,bg,border}`) is part of the theme. See
+[DESIGN.md](DESIGN.md#product-themes) for which tokens a theme must and may set, and the
+caveats for reduced motion, density and fonts.
+
 ## Develop
 
 ```bash
