@@ -1,6 +1,6 @@
 # quiet — agent guide
 
-quiet is a **1:1 copy** of the Optimus Foundry "Soft" design system in Claude Design, plus an
+quiet is a **TypeScript port** of the Optimus Foundry "Soft" design system in Claude Design, plus an
 **accessibility + motion layer** on top. The rule: at rest, every component renders pixel-identical
 to the reference (`tests/parity.spec.ts`); the layer only shows on interaction — keyboard focus,
 hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESIGN.md](DESIGN.md) first.
@@ -9,14 +9,14 @@ hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESI
 
 | quiet path | source | how |
 |---|---|---|
-| `src/components/<group>/*.jsx`, `*.d.ts` | `docs/reference/optimus-design/components/` | copied, then the a11y + motion layer edited in (`npm run drift` lists every changed file) |
+| `src/components/<group>/*.tsx` | `docs/reference/optimus-design/components/*.jsx` + `*.d.ts` | ported to TypeScript (props interface from the `.d.ts`, JSDoc and `@startingPoint` kept), then the a11y + motion layer edited in |
 | `src/styles/tokens/` | `docs/reference/optimus-design/tokens/` | rebuilt as 3-tier `--q-*` tokens with the same values; the reference names live in `tokens/_reference-compat.scss` |
 | `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest (parity tests) |
 | `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
-| `src/stories/catalog.generated.jsx` | `components/index.html` App script | `npm run gen` |
+| `src/stories/catalog.generated.tsx` | `components/index.html` App script | `npm run gen` (verbatim, `@ts-nocheck`) |
 
-`docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Biome
-ignores `src/components` and `src/styles` so formatting can never change copied code.
+`docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Everything
+in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes through Stylelint.
 
 ## Updating from Claude Design
 
@@ -24,8 +24,8 @@ ignores `src/components` and `src/styles` so formatting can never change copied 
 2. Re-mirror changed files into `docs/reference/optimus-design/` with DesignSync `get_file`
    (main session only — subagents can't use DesignSync, forks can). Write content exactly;
    keep `\uXXXX` escapes as escapes. Verify against the project before trusting the copy.
-3. Copy the changed files into `src/` (same paths) and re-apply the a11y + motion edits for those
-   components (`git diff` the previous copy to see them), then run `npm run gen`.
+3. `git diff` the mirror to see what changed and port it by hand into the `.tsx` (same paths),
+   keeping the a11y + motion layer and the types, then run `npm run gen`.
 4. `npm run test` — `tests/parity.spec.ts` must show the catalog pixel-identical to the
    reference `components/index.html`.
 
@@ -43,10 +43,10 @@ ignores `src/components` and `src/styles` so formatting can never change copied 
 
 ## Styling conventions (BEM + tokens)
 
-Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
+Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 
 - **One stylesheet per component**, next to it: `src/components/<group>/<Name>.scss`, imported by
-  `<Name>.jsx` (`import './<Name>.scss'`). No inline styles except truly dynamic values, passed as
+  `<Name>.tsx` (`import "./<Name>.scss"`). No inline styles except truly dynamic values, passed as
   custom properties (`style={{ '--_progress': pct + '%' }}`); consumers' `className`/`style` still merge.
 - **BEM under the `q-` namespace**: block `.q-dropdown-menu`, element `.q-dropdown-menu__item`,
   modifier `.q-dropdown-menu__item--danger`. Variants and sizes are modifiers. States use native
@@ -84,7 +84,7 @@ Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
 
 `src/components/future/` holds components that are **not** in the reference: concepts from the
 Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
-on quiet tokens + BEM with full keyboard/ARIA. Parity and drift don't apply to them; `npm run gen`
+on quiet tokens + BEM with full keyboard/ARIA. Parity doesn't apply to them; `npm run gen`
 exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…),
 tests: `tests/future-<set>.spec.ts`. Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
 
@@ -108,9 +108,9 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - `component-builder`: builds one component, write-scoped to its files.
   - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
   - `visual-reviewer`: screenshots stories in both themes against `docs/guidelines/checklist.md`.
-- **Scaffold:** `npm run new -- <future|charts|chat> <Name>` writes `<Name>.{jsx,d.ts,scss}` from convention templates. It refuses reference groups.
+- **Scaffold:** `npm run new -- <future|charts|chat> <Name>` writes `<Name>.{tsx,scss}` from convention templates. It refuses reference groups.
 - **Hook:** `.claude/settings.json` runs `.claude/hooks/lint-changed.sh` after every Edit or Write.
-  - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**` code outside `src/components` and `src/styles` (Biome ignores those), plus `tests/*.ts` and `scripts/*.mjs`.
+  - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}`, `tests/*.ts` and `scripts/*.mjs`.
   - It only reports back; it never blocks.
 
 ## Working alongside other agents
@@ -123,7 +123,7 @@ section, since the catalog is generated from the reference and must stay pixel-i
 
 ## quiet's own code
 
-`src/QuietRoot.tsx`, `src/a11y/`, `src/styles/` (tokens, themes, base, utilities), `src/jsx-global.d.ts`, `scripts/`,
+`src/QuietRoot.tsx`, `src/a11y/`, `src/styles/` (tokens, themes, base, utilities), `src/env.d.ts`, `scripts/`,
 `tests/` and the Storybook config.
 
 **Before finishing:** `npm run lint && npm run typecheck && npm run build && npm run test`.

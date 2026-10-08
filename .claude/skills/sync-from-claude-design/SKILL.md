@@ -1,11 +1,11 @@
 ---
 name: sync-from-claude-design
-description: Update quiet's reference copy from the Claude Design project "Rounder softer design system" (daa56afb-593e-422a-ab8a-5ecfa9309fb9) — re-mirror changed files byte-for-byte, re-apply the a11y layer, keep pixel parity. Use when the design changed in Claude Design, or a reference component (core, forms, display, data, navigation, feedback, overlays, layout) needs to change.
+description: Update quiet's reference mirror from the Claude Design project "Rounder softer design system" (daa56afb-593e-422a-ab8a-5ecfa9309fb9) — re-mirror changed files byte-for-byte, port the changes into the TypeScript components, keep pixel parity. Use when the design changed in Claude Design, or a reference component (core, forms, display, data, navigation, feedback, overlays, layout) needs to change.
 ---
 
 # Sync the reference from Claude Design
 
-The reference groups are a **1:1 copy**. Never "improve" them here. Change the design in Claude Design, then re-sync.
+The reference groups are a **TypeScript port** of the mirror. Never "improve" their design here. Change the design in Claude Design, then re-sync.
 
 ## 1. Who can fetch
 
@@ -24,11 +24,11 @@ The reference groups are a **1:1 copy**. Never "improve" them here. Change the d
 
 ## 3. Bring changes into `src/`
 
-1. Copy the changed `.jsx` and `.d.ts` files from the mirror into `src/components/<group>/` at the same paths.
-2. **Re-apply the a11y + motion layer** for those components. `git diff HEAD~ -- src/components/<group>/<Name>.jsx` shows what quiet added. `npm run drift` lists every file that differs from the reference; only a11y and motion edits are allowed there.
+1. `git diff -- docs/reference/optimus-design/components/` shows what changed in the mirror's `.jsx` and `.d.ts`.
+2. **Port those changes by hand** into `src/components/<group>/<Name>.tsx`. Keep the a11y + motion layer, keep the props interface in step with the mirror's `.d.ts` (same names, JSDoc and `@startingPoint`), and keep the types strict: no `@ts-ignore` or new `any`.
 3. Styles are quiet's own (BEM SCSS); the reference styles inline. Update `<Name>.scss` so the at-rest look matches.
 4. Tokens or `styles.css` changed? Update `src/styles/tokens/` and `tokens/_reference-compat.scss` (reference names such as `--ink`/`--paper`/`--molten` live only there).
-5. Run `npm run gen`. It regenerates `src/index.ts` and `src/stories/catalog.generated.jsx` from `components/index.html` and `ds-loader.js`.
+5. Run `npm run gen`. It regenerates `src/index.ts` and `src/stories/catalog.generated.tsx` from `components/index.html` and `ds-loader.js`.
 
 ## 4. Prove nothing drifted
 

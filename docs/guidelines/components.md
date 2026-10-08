@@ -1,6 +1,6 @@
 # Choosing components
 
-Props are in each `.d.ts`. This page covers only choices that go wrong in practice. Each row names
+Props are in each component's `.d.ts` (shipped in `dist/components/`). This page covers only choices that go wrong in practice. Each row names
 the wrong option it prevents.
 
 ## Easily confused

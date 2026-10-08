@@ -35,11 +35,7 @@ for (const family of ["Inter+Tight", "JetBrains+Mono"]) {
 	check(fonts.includes(`family=${family}`), `dist/fonts.css does not load ${family}`);
 }
 
-check(
-	readFileSync("dist/index.d.ts", "utf8").includes('/// <reference path="./jsx-global.d.ts" />'),
-	"dist/index.d.ts lost its jsx-global reference",
-);
-check(shipped.has("dist/components/core/Button.d.ts"), "component .d.ts files are not shipped");
+check(shipped.has("dist/components/core/Button.d.ts"), "component declarations are not shipped");
 
 if (failures.length) {
 	console.error(failures.map((f) => `✗ ${f}`).join("\n"));

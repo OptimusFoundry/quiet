@@ -4,7 +4,7 @@ import { ConsensusSlider } from "../../components/future/ConsensusSlider";
 import { ElasticSlider } from "../../components/future/ElasticSlider";
 import { HonestButton } from "../../components/future/HonestButton";
 import { ProbabilityToggle } from "../../components/future/ProbabilityToggle";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 const POLICY = [
 	{ upTo: 4, label: "Off", description: "Meerkat never posts without asking." },

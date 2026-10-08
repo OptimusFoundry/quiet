@@ -6,7 +6,7 @@ import { Slider } from "../../components/forms/Slider";
 import { BorderProgress } from "../../components/future/BorderProgress";
 import { DecayingBadge } from "../../components/future/DecayingBadge";
 import { GhostFuture } from "../../components/future/GhostFuture";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // Future components, display set — from the Claude Design "Future Components II" concepts
 // (43 Decaying badge, 45 Ghost future, 46 Border progress), rebuilt on quiet tokens.

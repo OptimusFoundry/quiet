@@ -7,7 +7,7 @@ reference itself, mirrored byte-for-byte in [`docs/reference/optimus-design/`](d
 - [`readme.md`](docs/reference/optimus-design/readme.md) — the rules: colour, type, density,
   spacing by job, radii, motion, voice, banned words.
 - `components/<group>/<Name>.prompt.md` — how to use each component, with examples.
-- `components/<group>/<Name>.d.ts` — each component's props.
+- `components/<group>/<Name>.d.ts` — each component's props (quiet's are in `src/components/<group>/<Name>.tsx`).
 - `guidelines/*.card.html` — foundation specimens; `ui_kits/` — app and website templates.
 
 ## What quiet adds (and nothing else)

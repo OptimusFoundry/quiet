@@ -11,7 +11,7 @@ and the fix. Blocking findings come first, then nits. Don't report anything a to
 ## 1. Run the tools
 
 ```bash
-npm run lint && npm run typecheck && npm run drift
+npm run lint && npm run typecheck
 npx playwright test tests/<set>.spec.ts tests/parity.spec.ts tests/hover-parity.spec.ts --output /tmp/review-$$
 ```
 
@@ -34,7 +34,7 @@ Each check is written as the bug it prevents:
 - **Pointer-only:** any behaviour with no keyboard path.
 - **Motion at rest:** anything that loops, pulses or drifts, or uses spring overshoot.
   Reduced motion must be respected.
-- **API drift:** `onChange` passes an event, a prop is read but not declared in the `.d.ts`, demo data
+- **API drift:** `onChange` passes an event, a prop is read but not declared in the props interface, demo data
   sits inside the component, or the consumer's `className`/`style` isn't merged.
 - **Story slop:** decorative demo content, or states shown that nobody would design against.
   A real state missing (empty, error, disabled, long text) is a finding too.

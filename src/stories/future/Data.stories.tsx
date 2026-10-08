@@ -7,7 +7,7 @@ import { AnomalyRibbon } from "../../components/future/AnomalyRibbon";
 import { StreamingTable } from "../../components/future/StreamingTable";
 import { ThresholdHandles } from "../../components/future/ThresholdHandles";
 import { UncertaintyCell } from "../../components/future/UncertaintyCell";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // Future components, data set — from the Claude Design "Future Components IV" concepts
 // (115 Anomaly ribbon, 117 Streaming table, 121 Threshold handles, 123 Uncertainty cells),

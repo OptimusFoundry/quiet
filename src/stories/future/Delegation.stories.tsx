@@ -7,7 +7,7 @@ import { IntentBar } from "../../components/future/IntentBar";
 import { RunScrubber } from "../../components/future/RunScrubber";
 import { ScopeGrant } from "../../components/future/ScopeGrant";
 import { UndoRiver } from "../../components/future/UndoRiver";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // Future components I, II + IV: handing work to agents — say it, scope it, leash it, replay it,
 // and take it back.

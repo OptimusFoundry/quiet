@@ -98,7 +98,7 @@ export function rovingKeyDown(
 	orientation: "horizontal" | "vertical" | "both" = "horizontal",
 	{ activate = false }: { activate?: boolean } = {},
 ) {
-	return (e: KeyboardEvent<HTMLElement>) => {
+	return (e: KeyboardEvent<Element>) => {
 		const next = ["ArrowRight", "ArrowDown"].filter((k) =>
 			orientation === "both"
 				? true
