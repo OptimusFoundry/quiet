@@ -1,0 +1,78 @@
+<!-- @dsCard group="App" viewport="1280x860" name="Settings" subtitle="200 nav + 640 form · app density" -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Optimus Foundry — Settings</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../ds-loader.js"></script>
+</head><body style="margin:0;overflow:hidden">
+<div id="root"></div>
+<script type="text/babel" src="AppShell.jsx"></script>
+<script type="text/babel">
+const SECTIONS = [{ label: 'Profile', value: 'profile' }, { label: 'Notifications', value: 'notifications' }, { label: 'Billing', value: 'billing' }, { label: 'Team', value: 'team', badge: 4 }, { label: 'Danger zone', value: 'danger' }];
+function Page() {
+  const { PageHero, Sidebar, SectionHeader, TextField, Dropdown, Avatar, Button, ButtonGroup, Switch, Rule, Table, Badge, List, DropdownMenu, Dialog, Toast, Text } = window.DS;
+  const [cur, setCur] = React.useState('profile');
+  const [del, setDel] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const go = v => { setCur(v); const el = document.getElementById(v); const m = document.getElementById('app-main'); if (el && m) m.scrollTo({ top: el.offsetTop - 48, behavior: 'smooth' }); };
+  React.useEffect(() => { const h = location.hash.slice(1); if (h) setTimeout(() => go(h), 300); }, []);
+  const save = () => { setSaved(true); setTimeout(() => setSaved(false), 4000); };
+  const sec = { display: 'flex', flexDirection: 'column', gap: 'var(--space-field)', scrollMarginTop: 48 };
+  return (
+    <AppShell active="settings" crumbs={[{ label: 'Account', href: '#' }, { label: 'Settings' }]}>
+      <PageHero size="md" ruled={false} style={{ padding: 0 }} title="Settings" description="Your profile, notifications, billing and team. Changes save per section." />
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--w-settings-nav) minmax(0, var(--w-form))', gap: 'var(--space-block)', alignItems: 'start' }}>
+        <Sidebar compact width={200} items={SECTIONS} value={cur} onChange={go} style={{ position: 'sticky', top: 0, border: 0, padding: 0 }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-section)' }}>
+          <section id="profile" style={sec}>
+            <SectionHeader size="sm" as="h2" title="Profile" description="How you appear to your team and on invoices." />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-stack)' }}><Avatar name="Ada Lovelace" size="sm" /><ButtonGroup><Button size="sm" variant="secondary">Upload photo</Button><Button size="sm" variant="ghost">Remove</Button></ButtonGroup></div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 'var(--space-field)' }}><TextField size="sm" label="First name" defaultValue="Ada" /><TextField size="sm" label="Last name" defaultValue="Lovelace" /></div>
+            <TextField size="sm" label="Email" type="email" defaultValue="ada@optimusfoundry.com" helperText="We send build and billing mail here." required />
+            <Dropdown size="sm" label="Time zone" fullWidth defaultValue="est" options={[{ value: 'est', label: 'Ottawa \u00b7 EST', description: 'UTC\u221205:00' }, { value: 'pst', label: 'Vancouver \u00b7 PST', description: 'UTC\u221208:00' }, { value: 'utc', label: 'UTC' }]} />
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 16 }}><Button size="sm" variant="secondary">Cancel</Button><Button size="sm" onClick={save}>Save profile</Button></div>
+          </section>
+          <section id="notifications" style={sec}>
+            <SectionHeader size="sm" as="h2" title="Notifications" description="Email only. No marketing, ever." />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {[['Build failures', 'The moment a build on main fails.', true], ['Weekly digest', 'One email, Fridays at 09:00.', true], ['New invoices', 'When an invoice is issued or paid.', false], ['Team changes', 'Invites, removals and role changes.', false]].map(([l, d, on], i) => (
+                <div key={l} style={{ padding: 'var(--space-stack) 0', borderTop: '1px solid ' + (i ? 'var(--rule-soft)' : 'var(--ink)') }}><Switch size="sm" label={l} description={d} defaultChecked={on} labelPosition="left" style={{ width: '100%' }} /></div>))}
+            </div>
+          </section>
+          <section id="billing" style={sec}>
+            <SectionHeader size="sm" as="h2" title="Billing" description="Temper plan \u00b7 $2,400 a month \u00b7 renews Nov 1." actions={<Button size="sm" variant="secondary">Change plan</Button>} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-stack)', padding: 'var(--space-card-pad)', border: '1px solid var(--rule-soft)', borderRadius: 'var(--radius-lg)' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--ink)', border: '1px solid var(--ink)', padding: '4px 8px', borderRadius: 'var(--radius-xs)' }}>VISA</span>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}><Text color="heading">Ending 4242</Text><Text size="sm" color="muted">Expires 11 / 26</Text></div>
+              <Button size="sm" variant="ghost" arrow>Update</Button>
+            </div>
+            <Table size="sm" caption="Invoices" columns={[{ key: 'no', header: 'Invoice' }, { key: 'date', header: 'Date' }, { key: 'status', header: 'Status', render: r => <Badge size="sm" variant={r.status === 'Paid' ? 'success' : 'warning'}>{r.status}</Badge> }, { key: 'amt', header: 'Amount', align: 'right' }]}
+              data={[{ id: 1, no: '0033', date: 'Oct 1', status: 'Due', amt: '$2,400' }, { id: 2, no: '0032', date: 'Sep 1', status: 'Paid', amt: '$2,400' }, { id: 3, no: '0031', date: 'Aug 1', status: 'Paid', amt: '$2,400' }]} />
+          </section>
+          <section id="team" style={sec}>
+            <SectionHeader size="sm" as="h2" title="Team" description="Four of ten seats used." actions={<Button size="sm" arrow>Invite</Button>} />
+            <List size="sm" items={[['Ada Lovelace', 'ada@optimusfoundry.com', 'Owner'], ['Linus Torvalds', 'linus@optimusfoundry.com', 'Admin'], ['Grace Hopper', 'grace@optimusfoundry.com', 'Editor'], ['Ken Thompson', 'ken@optimusfoundry.com', 'Pending']].map(([n, e, r]) => ({
+              primary: n, secondary: e, leading: <Avatar name={n} size="sm" />,
+              trailing: <><Badge size="sm" variant={r === 'Pending' ? 'warning' : r === 'Owner' ? 'primary' : 'default'}>{r}</Badge>{r !== 'Owner' && <DropdownMenu size="sm" align="end" width={180} trigger={<Button size="sm" variant="ghost" icon={'\u2026'} aria-label="Member actions" />} items={[{ label: 'Make admin' }, { label: 'Resend invite', disabled: r !== 'Pending' }, { divider: true }, { label: 'Remove', danger: true }]} />}</> }))} />
+          </section>
+          <section id="danger" style={sec}>
+            <SectionHeader size="sm" as="h2" title="Danger zone" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-stack)', padding: 'var(--space-card-pad)', border: '1px solid var(--molten)', borderRadius: 'var(--radius-lg)' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}><Text color="heading" weight="semibold">Delete workspace</Text><Text size="sm" color="muted">Removes 6 projects, 499 builds and all invoices. It can't be undone.</Text></div>
+              <Button size="sm" variant="destructive" onClick={() => setDel(true)}>Delete</Button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <Dialog open={del} onClose={() => setDel(false)} size="sm" icon="warning" title="Delete workspace" actions={<><Button size="sm" variant="secondary" onClick={() => setDel(false)}>Keep it</Button><Button size="sm" variant="destructive" onClick={() => setDel(false)}>Delete everything</Button></>}>
+        Six projects and 499 builds go with it. Type nothing, sign nothing; this button is the last step.
+      </Dialog>
+      {saved && <div style={{ position: 'fixed', right: 32, bottom: 32, zIndex: 200 }}><Toast variant="success" title="Profile saved." onClose={() => setSaved(false)} /></div>}
+    </AppShell>
+  );
+}
+loadDS('../../').then(d => { window.DS = d; ReactDOM.createRoot(document.getElementById('root')).render(<Page />); });
+</script>
+</body></html>

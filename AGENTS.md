@@ -1,26 +1,33 @@
 # quiet — agent guide
 
-Read [DESIGN.md](DESIGN.md) before writing any component or story; it is the spec. quiet ports
-the Optimus Foundry "Soft" system mirrored in `docs/reference/optimus-design/` — port a
-component from its `.jsx`/`.d.ts`/`.prompt.md` there, keep the prop API, and add it to the
-catalog story (`src/stories/Catalog.stories.tsx`) in the same group and order. The reference
-corpus it came from (per-post analysis of 1,384 liked UI posts) lives outside this repo in
-`~/Workspaces/x-likes/` (`ui_all.json`, `design-dna.md`), media in `s3://protoapp-x-likes-media`.
+quiet is a **1:1 copy** of the Optimus Foundry "Soft" design system in Claude Design. No drift:
+never hand-edit the copied files. Read [DESIGN.md](DESIGN.md) first.
 
-## Rules
+## What is copied, and from where
 
-- **Tokens only.** Every colour, size, space, radius, shadow, duration and easing comes from
-  `--q-*` in `src/tokens/tokens.scss`. Add a token rather than a literal.
-- **One folder per component:** `src/components/Name/Name.tsx`, `Name.module.scss`,
-  `Name.stories.tsx`. Export it from `src/index.ts`.
-- **React 19:** `ref` as a prop, no `forwardRef`. No barrel files besides `src/index.ts`.
-- **Behaviour is hand-rolled.** Use the shared hooks in `src/hooks/` (focus trap, roving focus,
-  dismiss, portal, positioning) instead of re-implementing them per component. Every interactive
-  component ships keyboard support, correct ARIA, and a Playwright test with axe in `tests/`.
-- **Motion:** eased, never bouncy (`--q-ease-soft`); layout morphs may use `motion`, hovers and
-  fades stay in CSS. Everything respects `prefers-reduced-motion`.
-- **Showcase stories:** components with motion get a `Showcase` story that runs a scripted
-  timeline (no real pointer) so it can be recorded as a social clip.
-- **Comments explain why, never what.** Keep them rare.
-- **Before finishing:** `npm run lint && npm run typecheck && npm run test`, and look at the story
-  in light and dark at 2x — check focus states and that nothing shifts between states.
+| quiet path | source | how |
+|---|---|---|
+| `src/components/<group>/*.jsx`, `*.d.ts` | `docs/reference/optimus-design/components/` | copied byte-for-byte |
+| `src/styles/styles.css`, `src/styles/tokens/` | `docs/reference/optimus-design/` | copied byte-for-byte |
+| `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
+| `src/stories/catalog.generated.jsx` | `components/index.html` App script | `npm run gen` |
+
+`docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Biome
+ignores all of the above so formatting can never change them.
+
+## Updating from Claude Design
+
+1. Change the design in Claude Design, not here.
+2. Re-mirror changed files into `docs/reference/optimus-design/` with DesignSync `get_file`
+   (main session only — subagents can't use DesignSync, forks can). Write content exactly;
+   keep `\uXXXX` escapes as escapes. Verify against the project before trusting the copy.
+3. Copy the changed files into `src/` (same paths), run `npm run gen`.
+4. `npm run test` — `tests/parity.spec.ts` must show the catalog pixel-identical to the
+   reference `components/index.html`.
+
+## quiet's own code
+
+Only `src/QuietRoot.tsx`, `src/styles/quiet-modes.css` (dark mode + accent), `src/jsx-global.d.ts`,
+`scripts/`, `tests/` and the Storybook config. Keep it that small.
+
+**Before finishing:** `npm run lint && npm run typecheck && npm run build && npm run test`.

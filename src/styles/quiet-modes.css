@@ -1,0 +1,38 @@
+/* quiet additions on top of the verbatim Optimus Foundry tokens (styles.css).
+   Dark mode is derived — the brand is light-only. Same grey ladder inverted: ink becomes the
+   light end, so ink fills (primary buttons) turn light. Applied by <QuietRoot mode="dark">. */
+.quiet[data-mode="dark"] {
+  --paper: #131316;
+  --paper-2: #1C1C20;
+  --rule-soft: #2A2A30;
+  --rule-strong: #3D3D45;
+  --muted-2: #6E6E76;
+  --muted: #9A9AA2;
+  --ink-2: #C9C9CF;
+  --ink: #F3F3F5;
+  --molten: #F06A33;
+  --overlay-scrim: rgba(0, 0, 0, 0.5);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 0 0 1px var(--rule-soft), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 0 0 1px var(--rule-soft), 0 24px 64px rgba(0, 0, 0, 0.6);
+  --ring-focus: 0 0 0 4px rgba(243, 243, 245, 0.12);
+  color-scheme: dark;
+}
+
+/* colors.css resolves its semantic aliases at :root; re-declare them on .quiet so they follow
+   the mode and accent overrides above instead of keeping the light :root values. */
+.quiet {
+  --surface-page: var(--paper);
+  --surface-alt: var(--paper-2);
+  --surface-inverse: var(--ink);
+  --text-heading: var(--ink);
+  --text-body: var(--ink-2);
+  --text-meta: var(--muted);
+  --text-quiet: var(--muted-2);
+  --text-on-inverse: var(--paper);
+  --border-hairline: var(--rule-soft);
+  --border-strong: var(--ink);
+  --accent: var(--molten);
+  background: var(--surface-page);
+  color: var(--text-body);
+}
