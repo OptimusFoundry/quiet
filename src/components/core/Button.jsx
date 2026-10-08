@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from './Spinner';
+import { useLinkElement } from '../../lib/link';
 import './Button.scss';
 
 const SPIN = { sm: 12, md: 14, lg: 16 };
@@ -7,6 +8,7 @@ const SPIN = { sm: 12, md: 14, lg: 16 };
 export function Button({ variant = 'primary', size = 'md', arrow = false, loading = false, disabled = false, fullWidth = false,
   leftIcon, rightIcon, icon, href, children, className, style, ...rest }) {
   const off = disabled || loading;
+  const A = useLinkElement(href);
   const iconOnly = icon != null && children == null;
   const named = rest['aria-label'] || rest['aria-labelledby'] || rest.title;
   React.useEffect(() => {
@@ -31,6 +33,6 @@ export function Button({ variant = 'primary', size = 'md', arrow = false, loadin
   const common = { className: cls, style, 'aria-busy': loading || undefined, ...rest,
     onClick: e => { if (off) { e.preventDefault(); return; } rest.onClick && rest.onClick(e); } };
   return href && !off
-    ? <a href={href} {...common}>{inner}</a>
+    ? <A href={href} {...common}>{inner}</A>
     : <button type="button" disabled={disabled} aria-disabled={(loading && !disabled) || undefined} {...common}>{inner}</button>;
 }

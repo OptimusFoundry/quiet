@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEscape, useFocusTrap, useModalBackground, usePresence } from '../../a11y/hooks';
+import { useLinkElement } from '../../lib/link';
 import './Sidebar.scss';
 
 const px = v => (typeof v === 'number' ? v + 'px' : v);
@@ -55,7 +56,8 @@ export function SidebarTrigger({ 'aria-label': ariaLabel = 'Open navigation', ch
 
 function SideItem({ it, on, collapsed, onPick }) {
   const off = it.disabled;
-  const El = it.href && !off ? 'a' : 'button';
+  const A = useLinkElement(it.href);
+  const El = it.href && !off ? A : 'button';
   return (
     <El href={it.href} className="q-sidebar__item" type={El === 'button' ? 'button' : undefined} disabled={El === 'button' ? off : undefined} title={collapsed ? (typeof it.label === 'string' ? it.label : undefined) : undefined}
       aria-current={on ? 'page' : undefined} onClick={e => { if (off) return; if (!it.href) e.preventDefault(); it.onClick && it.onClick(); onPick(it.value ?? it.label); }}>

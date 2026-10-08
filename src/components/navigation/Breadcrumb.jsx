@@ -1,11 +1,13 @@
 import React from 'react';
+import { useLinkElement } from '../../lib/link';
 import './Breadcrumb.scss';
 
 function Crumb({ it, current }) {
   const cls = 'q-breadcrumb__crumb' + ((it.href || it.onClick) ? ' q-breadcrumb__crumb--action' : '');
   const inner = <>{it.icon}{it.label}</>;
+  const A = useLinkElement(it.href);
   if (current) return <span aria-current="page" className={cls}>{inner}</span>;
-  if (it.href) return <a href={it.href} className={cls}>{inner}</a>;
+  if (it.href) return <A href={it.href} className={cls}>{inner}</A>;
   return <button type="button" onClick={it.onClick} className={cls}>{inner}</button>;
 }
 

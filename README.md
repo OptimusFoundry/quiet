@@ -37,6 +37,52 @@ import "@optimusfoundry/quiet/fonts.css";
 Import `fonts.css` when you use the `foundry` themes. A product whose theme sets other fonts
 (`--q-font-sans`, `--q-font-mono`) skips it and loads its own.
 
+## Router links
+
+Components that render an `<a>` from `href` (Link, ArrowLink, Button, Card, StatCard, List,
+Breadcrumb, NavBar, Sidebar) use the `linkComponent` set on `QuietRoot` (or `ThemeProvider`). It
+receives `href` plus the usual anchor props (`className`, `onClick`, `aria-*`, `children`, `ref`).
+Links a router can't handle stay plain `<a>`: `external` links, absolute URLs (`https:`,
+`mailto:`, `//host`) and in-page `#hash` links. With no `linkComponent`, every link is a plain `<a>`.
+
+```tsx
+import { Link } from "@tanstack/react-router";
+import { type LinkComponent, QuietRoot } from "@optimusfoundry/quiet";
+
+const RouterLink: LinkComponent = ({ href, ...p }) => <Link to={href} {...p} />;
+
+<QuietRoot linkComponent={RouterLink}>…</QuietRoot>;
+```
+
+`useLinkComponent()` returns the configured link (or `"a"`) for your own href-rendering components.
+
+## Coexisting with another design system
+
+`quiet.css` can load on a page that also runs another design system (for example Proto, which
+owns `<html data-theme>` and ships unlayered CSS). quiet styles only what it owns:
+
+- **Ownership is `[data-quiet]`.** `QuietRoot` renders `data-quiet` on its wrapper (alongside the
+  `quiet` class); `ThemeProvider` / `applyTheme` set it on `<html>`. quiet's element defaults
+  (body type, `a` colour, `::selection`, the themed-subtree background, the keyboard focus ring)
+  and the reference-compat names (`--space-*`, `--radius-*`, `--ease-*`, `--paper` …) apply only
+  inside `[data-quiet]`. Elements outside it, and another system's `[data-theme]`, are untouched.
+  quiet's own `--q-*` tokens are still declared at `:root`; they are namespaced, so they can't
+  collide.
+- **One owner of `<html data-theme>`.** While another system themes `<html>`, don't mount quiet's
+  `ThemeProvider`: render each quiet surface in a `QuietRoot`, which sets `data-theme` on its own
+  wrapper. Mount `ThemeProvider` only once quiet owns the whole document.
+- **Cascade layers.** quiet's rules live in `q.tokens, q.themes, q.base, q.components,
+  q.utilities`. Unlayered CSS beats every layer, so put the other system's global CSS (reset,
+  tokens) in a layer declared before quiet's, and declare the order before either stylesheet:
+
+```scss
+@layer proto, q.tokens, q.themes, q.base, q.components, q.utilities;
+@layer proto { /* the other system's reset, tokens and themes */ }
+@import "@optimusfoundry/quiet/style.css";
+```
+
+`tests/coexistence.spec.ts` checks this against the built `dist/quiet.css`.
+
 ## Develop
 
 ```bash

@@ -1,11 +1,13 @@
 import React from 'react';
+import { useLinkElement } from '../../lib/link';
 import './List.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
 
 function LI({ it, divided, first, i, animated }) {
   const interactive = !!(it.onClick || it.href) && !it.disabled;
-  const El = it.href ? 'a' : it.onClick ? 'button' : 'div';
+  const A = useLinkElement(it.disabled ? undefined : it.href);
+  const El = it.href ? A : it.onClick ? 'button' : 'div';
   const text = typeof it.trailing === 'string';
   const cls = ['q-list__item', divided && !first && 'q-list__item--divided', interactive && 'q-list__item--interactive',
     it.disabled && 'q-list__item--disabled', animated && 'q-list__item--animated'].filter(Boolean).join(' ');

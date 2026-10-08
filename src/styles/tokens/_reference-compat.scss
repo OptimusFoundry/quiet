@@ -1,8 +1,10 @@
 // The Optimus Foundry reference names, mapped onto quiet's tokens. Lets code written in Claude
 // Design (the catalog page, ui_kits, pasted components) run unchanged on any quiet theme.
 // quiet's own components never use these — only --q-*.
-:root,
-[data-theme] {
+// Declared only inside quiet-owned subtrees: names like --space-* and --radius-* are common to
+// other design systems, and declaring them at :root would re-space their screens.
+[data-quiet],
+[data-quiet] [data-theme] {
   --paper: var(--q-bg);
   --paper-2: var(--q-bg-subtle);
   --rule-soft: var(--q-border);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLinkElement } from '../../lib/link';
 import './StatCard.scss';
 
 const VARIANTS = ['outlined', 'filled', 'plain'];
@@ -27,7 +28,8 @@ export function StatCard({ label, value, format, delta, trend, period, previousV
   const glyph = { up: '\u2197', down: '\u2198', neutral: '\u2192' }[tr];
   const deltaText = typeof delta === 'number' ? (delta > 0 ? '+' : delta < 0 ? '\u2212' : '') + Math.abs(delta) + '%' : delta;
   const interactive = !!(onClick || href);
-  const El = href ? 'a' : onClick ? 'button' : 'div';
+  const A = useLinkElement(href);
+  const El = href ? A : onClick ? 'button' : 'div';
   const cls = ['q-stat-card', VARIANTS.includes(variant) && 'q-stat-card--' + variant, interactive && 'q-stat-card--interactive', className].filter(Boolean).join(' ');
   return (
     <El href={href} onClick={onClick} className={cls} style={style}>
