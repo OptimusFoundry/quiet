@@ -1,6 +1,6 @@
 {
 	"name": "@optimusfoundry/quiet",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "A design system built from 1,384 saved UI references. Quiet, precise, neutral.",
 	"type": "module",
 	"license": "UNLICENSED",
@@ -15,7 +15,8 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js"
 		},
-		"./style.css": "./dist/quiet.css"
+		"./style.css": "./dist/quiet.css",
+		"./fonts.css": "./dist/fonts.css"
 	},
 	"files": [
 		"dist",
@@ -26,6 +27,8 @@
 		"gen": "node scripts/gen.mjs",
 		"drift": "node scripts/drift.mjs",
 		"build": "node scripts/gen.mjs && vite build && tsc -p tsconfig.build.json && node scripts/copy-dts.mjs",
+		"prepare": "npm run build",
+		"check:package": "node scripts/check-package.mjs",
 		"build-storybook": "storybook build",
 		"lint": "biome check . && stylelint \"src/**/*.scss\"",
 		"typecheck": "tsc --noEmit",
