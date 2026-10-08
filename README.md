@@ -76,10 +76,16 @@ owns `<html data-theme>` and ships unlayered CSS). quiet styles only what it own
   tokens) in a layer declared before quiet's, and declare the order before either stylesheet:
 
 ```scss
+@use "sass:meta";
 @layer proto, q.tokens, q.themes, q.base, q.components, q.utilities;
 @layer proto { /* the other system's reset, tokens and themes */ }
-@import "@optimusfoundry/quiet/style.css";
+@include meta.load-css("@optimusfoundry/quiet/style.css");
 ```
+
+In Sass, load quiet with `meta.load-css`, not `@import`. Sass hoists a plain CSS `@import` above
+the `@layer` statement, which leaves the other system as the last, highest-priority layer. In
+plain CSS, load `style.css` after the stylesheet that declares the order (a later `<link>`, or a
+bundler import placed after that entry); quiet's rules already name their layers.
 
 `tests/coexistence.spec.ts` checks this against the built `dist/quiet.css`.
 
