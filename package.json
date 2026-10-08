@@ -1,0 +1,56 @@
+{
+	"name": "@optimusfoundry/quiet",
+	"version": "0.1.0",
+	"description": "A design system built from 1,384 saved UI references. Quiet, precise, neutral.",
+	"type": "module",
+	"license": "UNLICENSED",
+	"private": true,
+	"sideEffects": [
+		"**/*.css"
+	],
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./style.css": "./dist/quiet.css"
+	},
+	"files": [
+		"dist",
+		"DESIGN.md"
+	],
+	"scripts": {
+		"dev": "storybook dev -p 6020",
+		"build": "vite build && tsc -p tsconfig.build.json",
+		"build-storybook": "storybook build",
+		"lint": "biome check .",
+		"typecheck": "tsc --noEmit",
+		"test": "playwright test"
+	},
+	"peerDependencies": {
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
+	},
+	"dependencies": {
+		"motion": "^12.38.0"
+	},
+	"devDependencies": {
+		"@axe-core/playwright": "^4.11.2",
+		"@biomejs/biome": "2.4.12",
+		"@playwright/test": "^1.59.1",
+		"@storybook/addon-docs": "^10.4.6",
+		"@storybook/react-vite": "^10.4.6",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^6.0.1",
+		"lucide-react": "^1.8.0",
+		"react": "^19.2.5",
+		"react-dom": "^19.2.5",
+		"sass-embedded": "^1.99.0",
+		"storybook": "^10.4.6",
+		"typescript": "~6.0.3",
+		"vite": "^8.0.8"
+	}
+}

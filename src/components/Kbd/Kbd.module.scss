@@ -1,0 +1,23 @@
+.kbd {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 20px;
+	height: 20px;
+	padding: 0 var(--q-space-1);
+	border-radius: var(--q-radius-xs);
+	font-family: var(--q-font-mono);
+	font-size: var(--q-text-xs);
+	line-height: 1;
+}
+
+.default {
+	background: var(--q-surface-sunken);
+	color: var(--q-text-secondary);
+	box-shadow: var(--q-ring);
+}
+
+.inverse {
+	background: oklch(100% 0 0 / 0.14);
+	color: var(--q-text-on-strong);
+}
