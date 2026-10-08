@@ -13,7 +13,7 @@ reference itself, mirrored byte-for-byte in [`docs/reference/optimus-design/`](d
 ## What quiet adds (and nothing else)
 
 - **Dark mode** — `<QuietRoot mode="dark">`, derived from the same grey ladder inverted
-  (`src/styles/quiet-modes.css`). The brand itself is light-only; the Optimus Foundry site stays light.
+  (`src/styles/themes/_foundry-dark.scss`). The brand itself is light-only; the Optimus Foundry site stays light.
 - **Swappable accent** — `<QuietRoot accent="…">` replaces molten for another product. The rule
   doesn't change: the accent is punctuation only, never a fill.
 - **Density** — `<QuietRoot density="app">` sets the reference's own `data-density` modes.

@@ -10,12 +10,13 @@ hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESI
 | quiet path | source | how |
 |---|---|---|
 | `src/components/<group>/*.jsx`, `*.d.ts` | `docs/reference/optimus-design/components/` | copied, then the a11y + motion layer edited in (`npm run drift` lists every changed file) |
-| `src/styles/styles.css`, `src/styles/tokens/` | `docs/reference/optimus-design/` | copied byte-for-byte |
+| `src/styles/tokens/` | `docs/reference/optimus-design/tokens/` | rebuilt as 3-tier `--q-*` tokens with the same values; the reference names live in `tokens/_reference-compat.scss` |
+| `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest (parity tests) |
 | `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
 | `src/stories/catalog.generated.jsx` | `components/index.html` App script | `npm run gen` |
 
 `docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Biome
-ignores all of the above so formatting can never change them.
+ignores `src/components` and `src/styles` so formatting can never change copied code.
 
 ## Updating from Claude Design
 
@@ -32,12 +33,12 @@ ignores all of the above so formatting can never change them.
 
 - Shared behaviour lives in `src/a11y/hooks.ts` (focus trap/restore, Escape, outside click,
   roving arrow keys, presence for exit animations) — use it, don't re-implement per component.
-- Motion classes live in `src/styles/quiet-motion.css` (`q-anim-*` with `data-state`, `q-collapse`);
-  keyboard focus ring and `q-sr-only` in `src/styles/quiet-a11y.css`.
-- Motion follows the reference rules: slow and soft, `--ease-soft`/`--ease-forge`, never a bounce,
+- Motion classes live in `src/styles/utilities/_motion.scss` (`q-anim-*` with `data-state`, `q-collapse`);
+  keyboard focus ring and `q-sr-only` in `src/styles/utilities/_a11y.scss`.
+- Motion follows the reference rules: slow and soft, `--q-ease-soft`/`--q-ease-forge`, never a bounce,
   no press shrink, one moving thing per surface, reduced motion respected.
-- Keep edits minimal and in the reference's style (inline styles, `React.useState`); never change
-  what renders at rest. Colour contrast is a deliberate exception (exact colours kept).
+- Keep edits minimal and in the reference's style (`React.useState`, classes from the component's
+  `.scss`); never change what renders at rest. Colour contrast is a deliberate exception (exact colours kept).
 - Tests: `tests/a11y.spec.ts` (axe, light + dark) and `tests/a11y-<group>.spec.ts` (keyboard/ARIA).
 
 ## Styling conventions (BEM + tokens)
@@ -96,9 +97,33 @@ Single own components outside those folders (today `feedback/Toaster`) are appen
 `scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
 section, since the catalog is generated from the reference and must stay pixel-identical to it.
 
+## Harness (Claude Code)
+
+- **Skills** (`.claude/skills/`):
+  - `new-component`: add a component end to end.
+  - `port-future-concept`: judge fit and read a Claude Design concept through Chrome.
+  - `sync-from-claude-design`: update the reference copy, hash-verified, with parity.
+  - `review-component`: the pre-PR checklist.
+- **Agents** (`.claude/agents/`):
+  - `component-builder`: builds one component, write-scoped to its files.
+  - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
+  - `visual-reviewer`: screenshots stories in both themes against `docs/guidelines/checklist.md`.
+- **Scaffold:** `npm run new -- <future|charts|chat> <Name>` writes `<Name>.{jsx,d.ts,scss}` from convention templates. It refuses reference groups.
+- **Hook:** `.claude/settings.json` runs `.claude/hooks/lint-changed.sh` after every Edit or Write.
+  - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**` code outside `src/components` and `src/styles` (Biome ignores those), plus `tests/*.ts` and `scripts/*.mjs`.
+  - It only reports back; it never blocks.
+
+## Working alongside other agents
+
+- **PRs:** open them straight against `main`, never stacked. #5 was stacked on #3; #3 was squash-merged first, so #5 merged into the stale `feat/future-components` branch instead of main, and #6 had to redo it.
+- **Branches:** other sessions keep worktrees and branches of this repo. Re-check `git branch --show-current` and `git status` before committing. Never stash, reset or check out someone else's work.
+- **Shared working tree:** when several agents share one, each touches only its own files and nobody commits until all are done.
+- **Storybook:** restart it (`npm run dev -- --ci --no-open`) when a new story file is "not found". The running server doesn't always pick up new `*.stories.tsx` files.
+- **Overlapping test runs:** pass `--output <scratch-dir>` to `npx playwright test` so runs don't wipe each other's `test-results/`.
+
 ## quiet's own code
 
-`src/QuietRoot.tsx`, `src/a11y/`, `src/styles/quiet-*.css`, `src/jsx-global.d.ts`, `scripts/`,
+`src/QuietRoot.tsx`, `src/a11y/`, `src/styles/` (tokens, themes, base, utilities), `src/jsx-global.d.ts`, `scripts/`,
 `tests/` and the Storybook config.
 
 **Before finishing:** `npm run lint && npm run typecheck && npm run build && npm run test`.
