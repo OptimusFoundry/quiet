@@ -86,7 +86,7 @@ Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
 Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
 on quiet tokens + BEM with full keyboard/ARIA. Parity and drift don't apply to them; `npm run gen`
 exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…),
-tests: `tests/future-<set>.spec.ts`. Quiet has no green/red: done is ink, attention is molten.
+tests: `tests/future-<set>.spec.ts`. Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
 
 Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts molten is the primary data
 colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `src/components/chat/`

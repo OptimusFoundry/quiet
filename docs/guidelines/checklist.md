@@ -3,13 +3,17 @@
 Run this on every new or changed screen, in **foundry and foundry-dark**, at 1280 and at 390 wide. The
 visual-reviewer agent (`.claude/agents/`) uses this list. Every item should be a yes.
 
-## Structure
-- [ ] It starts from a template (shell, dashboard, list-detail, settings, billing, assistant, states).
-- [ ] There's one density (`app`, or `compact` for dense admin) and nothing marketing-sized on the page.
-- [ ] There's one page title (`PageHero size="md"`, `h1`) ending in the molten period.
-- [ ] Blocks open with `SectionHeader size="sm"` and the heading order is unbroken.
-- [ ] Content sits on the 12-column grid with spans 3/4/6/8/9/12 and fixed widths (240/200/360/400/640/1040).
-- [ ] Reading text ≤ 1040 and forms ≤ 640.
+## Layout and sections
+- [ ] The screen is one of the ten layouts in `layouts.md`, at its dimensions (main 48 / 32, max 1280).
+- [ ] Panes use the fixed widths (240 / 200 / 360 / 400 / 640 / 1040), never % or invented px.
+- [ ] Blocks sit on the 12-column grid with spans 3 / 4 / 6 / 8 / 9 / 12, and the column edges line up between rows.
+- [ ] Every `Grid` has `rowGap`; at 390 no two blocks touch.
+- [ ] There's one `PageHero size="md"` (`h1`); top-level sections use `SectionHeader size="sm" as="h2"`, and the heading order is unbroken.
+- [ ] Each section uses the lightest container (bare → divided → panel → well), with no card-in-card, no panel around a table, and no `SectionHeader` inside a panel.
+- [ ] Nesting is at most page → section → container.
+- [ ] One page status under the title; the lead block is first and widest; destructive actions come last.
+- [ ] Actions sit with what they act on: page actions in PageHero, section actions in SectionHeader, one primary each.
+- [ ] Reading text ≤ 1040, body measure and forms ≤ 640, left-aligned.
 
 ## Colour
 - [ ] There are no raw colours. Everything is a `--q-*` token.
@@ -20,9 +24,11 @@ visual-reviewer agent (`.claude/agents/`) uses this list. Every item should be a
 - [ ] It looks right in dark mode, with no light-only values.
 
 ## Type and spacing
-- [ ] It uses only the eight type roles (40 / 24 / 17 / 40 metric / 17 / 15 / 13 / 11 mono).
-- [ ] Mono caps are used for labels and metadata only.
-- [ ] Spacing uses the job tokens, with no 12/20/28 px gaps between blocks.
+- [ ] The only sizes are 11 / 13 / 15 / 17 / 24 / 40, each through a component prop, with no `font-size` in screen code.
+- [ ] Mono caps are used for labels and metadata only; numbers compared in columns are tabular and right-aligned.
+- [ ] Every gap is a job token: inline 8, stack 16, field 24, card-pad 24, block 32, section 48 (app).
+- [ ] There are no 12 / 20 / 28 px gaps between blocks and no margins on quiet components.
+- [ ] Gaps step up with structure (inline < stack < field < block < section), so the page doesn't read as one even list.
 - [ ] Every control is `size="sm"`, with no mixed sizes.
 
 ## Surfaces and motion

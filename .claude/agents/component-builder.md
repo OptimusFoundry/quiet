@@ -13,7 +13,7 @@ Scope:
 
 Steps:
 1. Scaffold the component: `npm run new -- <group> <Name>`.
-2. Build the component, then the story section and the test, as the skill describes. onChange passes the value. Ink and greys only; molten as punctuation (in charts it's the primary series); no green or red; soft, one-shot motion.
+2. Build the component, then its story section and test, as the skill describes.
 3. `npm run gen`, then `npx stylelint` on your scss, `npx biome check` on your story and test, `npm run typecheck`, and `npx playwright test tests/<your-spec>.spec.ts --output <scratch-dir>`. Iterate until everything is green.
    - Storybook runs on :6020. If your story is "not found", restart it with `npm run dev -- --ci --no-open` (in the background).
 4. Report: the files you touched, the props, the test results, and anything from the brief you dropped and why.

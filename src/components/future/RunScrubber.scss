@@ -31,6 +31,7 @@
 @layer q.components {
   .q-run-scrubber {
     display: grid;
+    grid-template-columns: minmax(0, 1fr); // never wider than its container
     gap: var(--q-run-scrubber-gap);
     font-family: var(--q-font-sans);
   }

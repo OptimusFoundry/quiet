@@ -59,7 +59,7 @@ function DoubtDemo() {
 	};
 	return (
 		<div style={{ display: "grid", gap: 16, maxWidth: 600 }}>
-			<p style={{ margin: 0, fontSize: "var(--q-text-lg)", lineHeight: 1.7 }}>
+			<p style={{ margin: 0, fontSize: "var(--q-text-lg)", lineHeight: "var(--q-leading-body)" }}>
 				Signups rose 12% this month.{" "}
 				<DoubtMarker
 					status={st[1] ?? "doubt"}

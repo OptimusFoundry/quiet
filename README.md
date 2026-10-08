@@ -116,15 +116,18 @@ The guidelines explain how to put the components together into product screens t
 
 | | |
 |---|---|
-| [foundations](docs/guidelines/foundations.md) | colour (molten is punctuation; in charts the primary series), type roles, spacing by job, radius, motion, density |
-| [layout](docs/guidelines/layout.md) | app shell, page anatomy, widths, 12-column grid, mobile |
-| [patterns](docs/guidelines/patterns.md) | dashboard, tables, list-detail, settings, billing, toasts, destructive actions, states, agents, chat |
-| [components](docs/guidelines/components.md) | "I need… → use…", and what never to reinvent |
+| [layouts](docs/guidelines/layouts.md) | the app shell and ten page layouts: dimensions, rules, what collapses |
+| [sections](docs/guidelines/sections.md) | containers, nesting, section headings, order |
+| [grid](docs/guidelines/grid.md) | fixed panes vs the 12-column grid, allowed splits |
+| [spacing](docs/guidelines/spacing.md) | what goes between what, per density |
+| [typography](docs/guidelines/typography.md) | the eight type roles and the prop that renders each |
+| [components](docs/guidelines/components.md) | choosing between similar components; feedback, destructive, states, agents |
+| [foundations](docs/guidelines/foundations.md) | colour, status, shape, motion |
 | [content](docs/guidelines/content.md) | voice, banned words, labels, numbers and dates |
 | [accessibility](docs/guidelines/accessibility.md) | what quiet guarantees, what the app must do |
-| [checklist](docs/guidelines/checklist.md) | screen review before shipping |
+| [checklist](docs/guidelines/checklist.md) | the review before shipping |
 
-Reference screens are in Storybook under **Patterns**.
+Reference screens are in Storybook under **Patterns**; measured specimens under **Guidelines**.
 
 ### Agent skill for product repos
 

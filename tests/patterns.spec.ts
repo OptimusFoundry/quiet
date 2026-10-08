@@ -75,6 +75,11 @@ test.describe("at 390px", () => {
 		await trigger.click();
 		const drawer = page.getByRole("dialog", { name: "Main" });
 		await expect(drawer.getByRole("navigation", { name: "Main" })).toBeVisible();
+		// The drawer's focus trap and Escape handler register in the same effect pass; wait for focus
+		// to land inside it, or the key can arrive before the handler exists.
+		await expect
+			.poll(() => page.evaluate(() => !!document.activeElement?.closest('[role="dialog"]')))
+			.toBe(true);
 		await page.keyboard.press("Escape");
 		await expect(drawer).toBeHidden();
 		await expect(trigger).toBeFocused();

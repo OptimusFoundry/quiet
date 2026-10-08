@@ -11,6 +11,16 @@ export function DoubtMarker({ children, reason, status = 'doubt', revision, conf
   const [open, setOpen] = React.useState(false);
   const t = React.useRef();
   const id = React.useId();
+  const bubble = React.useRef(null);
+  // Keep the open bubble inside the viewport: shift it left by however far it would overflow.
+  React.useLayoutEffect(() => {
+    const el = bubble.current;
+    if (!open || !el) return;
+    el.style.setProperty('--_shift', '0px');
+    const gutter = 16, r = el.getBoundingClientRect();
+    const over = r.right - (window.innerWidth - gutter);
+    if (over > 0) el.style.setProperty('--_shift', -Math.min(over, r.left - gutter) + 'px');
+  }, [open]);
   const show = () => { clearTimeout(t.current); setOpen(true); };
   // A short grace period lets the pointer cross onto the bubble without it vanishing (WCAG 1.4.13).
   const leave = () => { clearTimeout(t.current); t.current = setTimeout(() => setOpen(false), 120); };
@@ -36,7 +46,7 @@ export function DoubtMarker({ children, reason, status = 'doubt', revision, conf
         ? <button type="button" {...triggerProps} onClick={onRecheck}>{claim}<span className="q-sr-only">, {recheckLabel.toLowerCase()}</span></button>
         : <span {...triggerProps} tabIndex={0} aria-busy={status === 'checking' || undefined}>{claim}</span>}
       {status !== 'doubt' && <span aria-hidden="true" className="q-doubt-marker__tag">{head}</span>}
-      <span role="tooltip" id={id} className="q-doubt-marker__bubble" data-state={open ? 'open' : 'closed'}>
+      <span ref={bubble} role="tooltip" id={id} className="q-doubt-marker__bubble" data-state={open ? 'open' : 'closed'}>
         <span className="q-doubt-marker__status">
           {head}{pct != null && status === 'doubt' ? ' · ' + pct + '% sure' : ''}
         </span>

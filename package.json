@@ -10,6 +10,9 @@
 	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
+	"bin": {
+		"quiet-audit": "scripts/quiet-audit.mjs"
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -22,7 +25,10 @@
 		"dist",
 		"DESIGN.md",
 		"docs/guidelines",
-		"skills"
+		"skills",
+		"scripts/quiet-audit.mjs",
+		"scripts/quiet-audit-core.mjs",
+		"scripts/quiet-audit-core.d.mts"
 	],
 	"scripts": {
 		"dev": "storybook dev -p 6020",

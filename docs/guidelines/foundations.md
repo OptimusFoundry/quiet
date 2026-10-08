@@ -94,48 +94,11 @@ surface with `--q-status-*`, use the components' `variant`/`status` props, and n
 designed. Use `--q-fg-subtle` only for text that isn't needed (decorative serials, dimmed future
 items). Anything a user must read uses `--q-fg-muted` or darker.
 
-## Type
+## Type and spacing
 
-Two families: **Inter Tight** (`--q-font-sans`) for everything, and **JetBrains Mono** (`--q-font-mono`)
-for labels, serials and metadata. No serif. Emphasis is the italic of the same weight.
-
-App surfaces use **only these roles**:
-
-| Role | Size / line | Weight | Token | Use |
-|---|---|---|---|---|
-| page-title | 40 / 40 | 700 | `--q-text-4xl` | one per screen, molten period (`PageHero size="md"`) |
-| section-title | 24 / 32 | 600 | `--q-text-2xl` | block headings (`SectionHeader size="sm"`) |
-| card-title | 17 / 24 | 600 | `--q-text-lg` | cards, list headers, dialog sections |
-| metric | 40 / 40 | 700 tabular | `--q-text-4xl` | `StatCard` values |
-| body-lg | 17 / 28 | 400 | `--q-text-lg` | app intros under a page title |
-| body | 15 / 24 | 400 | `--q-text-md` | default app copy, inputs, lists, menus |
-| small | 13 / 20 | 400 | `--q-text-sm` | secondary lines, table cells, help |
-| label | 11 / 16 mono caps | 400 | `--q-text-2xs` | eyebrows, table headers, metadata |
-
-Marketing pages add `display` (clamp 56–128) and hero 68. **Never** use them in a product.
-
-Hierarchy per screen: one page title, then section titles, then card titles. Never skip
-levels, and never style body text bold to fake a heading. Use `Text` (`size`, `color="heading|muted|quiet"`,
-`mono`) for copy instead of hand-styled spans.
-
-## Spacing by job
-
-Set density on the root and use the job tokens. They change with density, raw steps don't.
-
-| Job | Token | app | compact |
-|---|---|---|---|
-| icon ↔ label, chip ↔ chip | `--q-space-inline` | 8 | 8 |
-| lines inside a card | `--q-space-stack` | 16 | 8 |
-| field ↔ field | `--q-space-field` | 24 | 16 |
-| card padding | `--q-space-card-pad` | 24 | 16 |
-| card ↔ card | `--q-space-card-gap` | 24 | 16 |
-| block ↔ block | `--q-space-block` | 32 | 24 |
-| section padding | `--q-space-section` | 48 | 32 |
-| grid gutter | `--q-grid-gutter` | 24 | 16 |
-
-Never put 12, 20 or 28 px between blocks. Inside a control, 4 px steps are fine. Every line height and
-control height is a multiple of 4. Controls are 32 / 40 / 48, fields 36 / 48 / 56, rows 32
-(compact) / 48.
+Moved to their own pages: [typography.md](typography.md) (the eight roles, the component for each,
+hierarchy, measure) and [spacing.md](spacing.md) (the scale, job tokens per density, what goes
+between what). Grid and page layouts: [grid.md](grid.md), [layouts.md](layouts.md), [sections.md](sections.md).
 
 ## Shape and depth
 

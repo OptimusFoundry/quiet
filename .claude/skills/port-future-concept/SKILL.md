@@ -53,7 +53,7 @@ Each concept has its `name`, `from`/`replaces` and `why` on its `<Concept …>` 
 
 | Proto | quiet |
 |---|---|
-| green success, red danger, amber warning | done is a solid ink dot, attention is molten, neutral is grey; there are no status fills |
+| green success, red danger, amber warning | `--q-status-*` tokens (foundry maps success to ink and warning/error to molten); no status fills |
 | accent fills, bevelled keys, glass, well shadows | hairline borders, `--q-bg-subtle`, quiet's Button/Badge |
 | `--ease-spring`, overshoot, looping pulses, drifting backgrounds | `--q-ease-soft`, one-shot transitions, nothing that moves at rest |
 | inline styles and `useState` hover | BEM SCSS with tokens; `:is(:hover, :focus-visible)` |
