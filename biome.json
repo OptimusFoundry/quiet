@@ -50,7 +50,7 @@
 					"suspicious": {
 						"noArrayIndexKey": "off",
 						"noAssignInExpressions": "off",
-						"noExplicitAny": "warn"
+						"noExplicitAny": "error"
 					},
 					"style": {
 						"noNonNullAssertion": "off"
@@ -59,7 +59,7 @@
 						"noCommaOperator": "off"
 					},
 					"correctness": {
-						"useExhaustiveDependencies": "warn"
+						"useExhaustiveDependencies": "error"
 					}
 				}
 			}

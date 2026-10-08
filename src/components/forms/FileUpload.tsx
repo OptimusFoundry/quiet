@@ -183,7 +183,7 @@ export function FileUpload({
 		setSaid(
 			[
 				items.length
-					? "Added " + items.map((i) => i.name + (i.error ? ` (${i.error})` : "")).join(", ") + "."
+					? `Added ${items.map((i) => i.name + (i.error ? ` (${i.error})` : "")).join(", ")}.`
 					: "",
 				limit || "",
 			]

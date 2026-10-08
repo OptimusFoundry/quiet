@@ -6,69 +6,70 @@ import "./Table.scss";
  * Data table. Mono caps header on an ink rule, soft row hairlines. Sorting, selection, expandable rows, striped, bordered, loading.
  * @startingPoint section="Data" subtitle="Sortable, selectable table" viewport="900x420"
  */
-export interface TableProps {
+export interface TableProps<Row = Record<string, unknown>, Key extends React.Key = React.Key> {
 	columns: Array<{
 		key: string;
 		header: React.ReactNode;
 		align?: "left" | "right" | "center";
 		width?: number | string;
 		sortable?: boolean;
-		sortValue?: (row: any) => any;
+		sortValue?: (row: Row) => unknown;
 		nowrap?: boolean;
-		render?: (row: any, index: number) => React.ReactNode;
+		render?: (row: Row, index: number) => React.ReactNode;
 		/** Cell spans this many columns for the row; the columns it covers are not rendered */
-		colSpan?: (row: any, index: number) => number | undefined;
+		colSpan?: (row: Row, index: number) => number | undefined;
 		/** Footer (totals) cell; a function receives the rows in display order */
-		footer?: React.ReactNode | ((rows: any[]) => React.ReactNode);
+		footer?: React.ReactNode | ((rows: Row[]) => React.ReactNode);
 		/** Footer cell spans this many columns */
 		footerColSpan?: number;
 	}>;
-	data: any[];
+	data: Row[];
 	/** Field name or getter; default 'id' */
-	rowKey?: string | ((row: any) => any);
+	rowKey?: string | ((row: Row) => Key);
 	size?: "sm" | "md" | "lg";
 	striped?: boolean;
 	bordered?: boolean;
 	caption?: React.ReactNode;
 	selectable?: boolean;
-	selected?: any[];
-	defaultSelected?: any[];
-	onSelectionChange?: (keys: any[]) => void;
+	selected?: Key[];
+	defaultSelected?: Key[];
+	onSelectionChange?: (keys: Key[]) => void;
 	sort?: { key: string; dir: "asc" | "desc" } | null;
 	defaultSort?: { key: string; dir: "asc" | "desc" };
 	onSortChange?: (sort: { key: string; dir: "asc" | "desc" } | null) => void;
 	/** Don't sort client-side; just report */
 	manualSort?: boolean;
 	/** Enables expandable rows */
-	renderExpanded?: (row: any) => React.ReactNode;
+	renderExpanded?: (row: Row) => React.ReactNode;
 	/** Expanded row keys (controlled) */
-	expanded?: any[];
-	defaultExpanded?: any[];
-	onExpandedChange?: (keys: any[]) => void;
+	expanded?: Key[];
+	defaultExpanded?: Key[];
+	onExpandedChange?: (keys: Key[]) => void;
 	/** Full-width footer row, after any columns[].footer row */
 	footer?: React.ReactNode;
 	loading?: boolean;
 	loadingRows?: number;
 	emptyText?: React.ReactNode;
-	onRowClick?: (row: any) => void;
+	onRowClick?: (row: Row) => void;
 	/** Scroll horizontally below this width */
 	minWidth?: number;
 	/** Accessible name when there is no caption */
 	label?: string;
 	/** Row name used in 'Select …' / 'Expand …' labels; default: first column's value */
-	rowLabel?: (row: any) => string;
+	rowLabel?: (row: Row) => string;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-type TableColumn = TableProps["columns"][number];
-type TableRow = TableProps["data"][number];
+type TableColumn<Row> = TableProps<Row>["columns"][number];
 type TableSort = { key: string; dir: "asc" | "desc" };
 
 const SIZES: string[] = ["sm", "md", "lg"];
+// Rows are the consumer's own type; a column reads its field by name.
+const field = (row: unknown, key: string): unknown => (row as Record<string, unknown>)[key];
 const len = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
 // Per-column width and alignment are dynamic, so they travel as --_* custom properties.
-const colVars = (c: TableColumn) => {
+const colVars = <Row,>(c: TableColumn<Row>) => {
 	const v: Record<string, string> = {};
 	if (c.width != null) v["--_width"] = len(c.width);
 	if (c.align) v["--_align"] = c.align;
@@ -76,8 +77,11 @@ const colVars = (c: TableColumn) => {
 };
 
 // Columns covered by an earlier cell's colSpan are dropped, so every row keeps the column count.
-const spans = (cols: TableColumn[], spanOf: (c: TableColumn) => number | undefined) => {
-	const out: Array<{ c: TableColumn; ci: number; span: number | undefined }> = [];
+const spans = <Row,>(
+	cols: TableColumn<Row>[],
+	spanOf: (c: TableColumn<Row>) => number | undefined,
+) => {
+	const out: Array<{ c: TableColumn<Row>; ci: number; span: number | undefined }> = [];
 	for (let ci = 0; ci < cols.length; ) {
 		const c = cols[ci]!;
 		const n = Math.max(1, Math.min(Math.floor(spanOf(c) || 1), cols.length - ci));
@@ -116,7 +120,7 @@ function Box({
 	);
 }
 
-function TR({
+function TR<Row>({
 	row,
 	cols,
 	i,
@@ -132,8 +136,8 @@ function TR({
 	name,
 	id,
 }: {
-	row: TableRow;
-	cols: TableColumn[];
+	row: Row;
+	cols: TableColumn<Row>[];
 	i: number;
 	striped: boolean;
 	selectable: boolean;
@@ -142,8 +146,8 @@ function TR({
 	expandable: boolean;
 	isOpen: boolean;
 	onOpen: () => void;
-	onRowClick?: (row: TableRow) => void;
-	renderExpanded?: (row: TableRow) => React.ReactNode;
+	onRowClick?: (row: Row) => void;
+	renderExpanded?: (row: Row) => React.ReactNode;
 	name: string;
 	id: string;
 }) {
@@ -210,7 +214,7 @@ function TR({
 							.filter(Boolean)
 							.join(" ")}
 					>
-						{c.render ? c.render(row, i) : row[c.key]}
+						{c.render ? c.render(row, i) : (field(row, c.key) as React.ReactNode)}
 					</td>
 				))}
 			</tr>
@@ -225,7 +229,7 @@ function TR({
 	);
 }
 
-export function Table({
+export function Table<Row = Record<string, unknown>, Key extends React.Key = React.Key>({
 	columns = [],
 	data = [],
 	rowKey = "id",
@@ -255,28 +259,28 @@ export function Table({
 	rowLabel,
 	className,
 	style,
-}: TableProps) {
+}: TableProps<Row, Key>) {
 	const [innerSel, setInnerSel] = React.useState(defaultSelected);
 	const [innerSort, setInnerSort] = React.useState<TableSort | null>(defaultSort || null);
 	const [innerOpen, setInnerOpen] = React.useState(defaultExpanded);
 	const sel = selected ?? innerSel;
 	const open = expanded ?? innerOpen;
-	const toggleOpen = (k: unknown) => {
+	const toggleOpen = (k: Key) => {
 		const next = open.includes(k) ? open.filter((x) => x !== k) : [...open, k];
 		setInnerOpen(next);
 		onExpandedChange?.(next);
 	};
 	const srt = sort !== undefined ? sort : innerSort;
-	const keyOf = (r: TableRow, i: number) =>
-		typeof rowKey === "function" ? rowKey(r) : (r[rowKey] ?? i);
-	const setSel = (s: unknown[]) => {
+	const keyOf = (r: Row, i: number) =>
+		typeof rowKey === "function" ? rowKey(r) : ((field(r, rowKey) ?? i) as Key);
+	const setSel = (s: Key[]) => {
 		setInnerSel(s);
 		onSelectionChange?.(s);
 	};
 	const rows = React.useMemo(() => {
 		if (!srt || manualSort) return data;
 		const col = columns.find((c) => c.key === srt.key);
-		const get = col?.sortValue ? col.sortValue : (r: TableRow) => r[srt.key];
+		const get = col?.sortValue ? col.sortValue : (r: Row) => field(r, srt.key);
 		return [...data].sort((a, b) => {
 			const x = get(a),
 				y = get(b);
@@ -288,7 +292,7 @@ export function Table({
 	const keys = rows.map(keyOf);
 	const all = keys.length > 0 && keys.every((k) => sel.includes(k));
 	const some = !all && keys.some((k) => sel.includes(k));
-	const clickSort = (c: TableColumn) => {
+	const clickSort = (c: TableColumn<Row>) => {
 		const next: TableSort | null =
 			!srt || srt.key !== c.key
 				? { key: c.key, dir: "asc" }
@@ -301,12 +305,13 @@ export function Table({
 	const extra = (selectable ? 1 : 0) + (renderExpanded ? 1 : 0);
 	const hasColFooter = columns.some((c) => c.footer !== undefined);
 	const uid = React.useId();
-	const nameOf = (r: TableRow, k: unknown) =>
+	const nameOf = (r: Row, k: Key) =>
 		rowLabel
 			? rowLabel(r)
 			: columns[0] &&
-					(typeof r[columns[0].key] === "string" || typeof r[columns[0].key] === "number")
-				? String(r[columns[0].key])
+					(typeof field(r, columns[0].key) === "string" ||
+						typeof field(r, columns[0].key) === "number")
+				? String(field(r, columns[0].key))
 				: `row ${k}`;
 	// Sort reorder: rows fade in softly after the order changes (never on mount).
 	const body = React.useRef<HTMLTableSectionElement>(null);

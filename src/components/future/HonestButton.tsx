@@ -11,7 +11,7 @@ export interface HonestButtonProps
 	/** Expected duration in seconds (e.g. the median of recent runs). Sets the length and the countdown. */
 	expected?: number;
 	/** Starts the work. Return a promise to finish when it settles; the fill holds short of full if it overruns. */
-	onPress?: () => void | Promise<unknown>;
+	onPress?: () => unknown;
 	children?: React.ReactNode;
 	doneLabel?: React.ReactNode;
 	/** How long "Done" shows before the button resets, in ms */

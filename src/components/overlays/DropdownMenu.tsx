@@ -2,28 +2,28 @@ import React from "react";
 import { rovingKeyDown, useEscape, useOutside, usePresence } from "../../a11y/hooks";
 import "./DropdownMenu.scss";
 
+/** One action in a DropdownMenu. `Item` is the item's own type, so its handlers receive it whole. */
+type DropdownMenuAction<Item> = {
+	label: React.ReactNode;
+	sublabel?: React.ReactNode;
+	icon?: React.ReactNode;
+	shortcut?: string;
+	onSelect?: (item: Item) => void;
+	disabled?: boolean;
+	danger?: boolean;
+	checked?: boolean;
+	active?: boolean;
+};
+interface DropdownMenuItem extends DropdownMenuAction<DropdownMenuItem> {}
+
 /**
  * Action menu: icons, shortcuts, checkbox items, group labels, header, caption, context-menu mode.
  * @startingPoint section="Overlays" subtitle="Action & context menus" viewport="600x440"
  */
-export interface DropdownMenuProps {
+export interface DropdownMenuProps<Item extends DropdownMenuAction<Item> = DropdownMenuItem> {
 	/** Clickable element that opens the menu */
 	trigger?: React.ReactNode;
-	items: Array<
-		| {
-				label: React.ReactNode;
-				sublabel?: React.ReactNode;
-				icon?: React.ReactNode;
-				shortcut?: string;
-				onSelect?: (item: any) => void;
-				disabled?: boolean;
-				danger?: boolean;
-				checked?: boolean;
-				active?: boolean;
-		  }
-		| { divider: true }
-		| { group: React.ReactNode }
-	>;
+	items: Array<Item | { divider: true } | { group: React.ReactNode }>;
 	/** e.g. account name + email */
 	header?: React.ReactNode;
 	/** Mono footer line */
@@ -34,28 +34,26 @@ export interface DropdownMenuProps {
 	/** Right-click children to open at the pointer */
 	contextMenu?: boolean;
 	children?: React.ReactNode;
-	onSelect?: (item: any) => void;
+	onSelect?: (item: Item) => void;
 	/** Accessible name for the menu; defaults to the trigger's text ("Context menu" in context-menu mode) */
 	label?: string;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-type MenuEntry = DropdownMenuProps["items"][number];
-type MenuAction = Extract<MenuEntry, { label: React.ReactNode }>;
-type MenuFlat = MenuAction & { divider?: true; group?: React.ReactNode };
+type MenuFlat<Item> = Item & { divider?: true; group?: React.ReactNode };
 
 const ITEM = '[role^="menuitem"]';
 const roving = rovingKeyDown(ITEM, "vertical");
 
-function MenuItem({
+function MenuItem<Item extends DropdownMenuAction<Item>>({
 	it,
 	size,
 	onPick,
 }: {
-	it: MenuAction;
+	it: Item;
 	size: string;
-	onPick: (it: MenuAction) => void;
+	onPick: (it: Item) => void;
 }) {
 	const armed = React.useRef(false);
 	const off = it.disabled;
@@ -109,7 +107,7 @@ function MenuItem({
 	);
 }
 
-export function DropdownMenu({
+export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMenuItem>({
 	trigger,
 	items = [],
 	header,
@@ -123,7 +121,7 @@ export function DropdownMenu({
 	label,
 	className,
 	style,
-}: DropdownMenuProps) {
+}: DropdownMenuProps<Item>) {
 	const [open, setOpen] = React.useState(false);
 	const [pt, setPt] = React.useState<{ x: number; y: number } | null>(null);
 	const ref = React.useRef<HTMLDivElement>(null);
@@ -175,7 +173,7 @@ export function DropdownMenu({
 		from.current = document.activeElement as HTMLElement | null;
 		setOpen(true);
 	};
-	const pick = (it: MenuAction) => {
+	const pick = (it: Item) => {
 		it.onSelect?.(it);
 		onSelect?.(it);
 		if (it.checked == null) close();
@@ -207,7 +205,7 @@ export function DropdownMenu({
 	// Items after a group label (up to the next divider or label) sit in a labelled role="group".
 	const body: React.ReactElement[] = [];
 	for (let i = 0; i < items.length; i++) {
-		const it = items[i] as MenuFlat;
+		const it = items[i] as MenuFlat<Item>;
 		if (it.divider)
 			body.push(<div key={i} role="separator" className="q-dropdown-menu__separator" />);
 		else if (it.group) {
@@ -215,10 +213,12 @@ export function DropdownMenu({
 			let j = i + 1;
 			for (
 				;
-				j < items.length && !(items[j] as MenuFlat).divider && !(items[j] as MenuFlat).group;
+				j < items.length &&
+				!(items[j] as MenuFlat<Item>).divider &&
+				!(items[j] as MenuFlat<Item>).group;
 				j++
 			)
-				kids.push(<MenuItem key={j} it={items[j] as MenuAction} size={size} onPick={pick} />);
+				kids.push(<MenuItem key={j} it={items[j] as Item} size={size} onPick={pick} />);
 			body.push(
 				<div key={i} role="group" aria-labelledby={`${id}-g${i}`}>
 					<div id={`${id}-g${i}`} role="presentation" className="q-dropdown-menu__group-label">

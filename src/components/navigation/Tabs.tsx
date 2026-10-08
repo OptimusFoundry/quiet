@@ -158,19 +158,24 @@ export function Tabs({
 		height: number;
 		go: boolean;
 	} | null>(null);
+	// Only a change of selection starts a slide; the variant and tab list are read as they are at that moment.
+	const isPill = React.useEffectEvent(() => variant === "pill");
+	const indexOf = React.useEffectEvent((v: string | undefined) =>
+		list.findIndex((t) => t.value === v),
+	);
 	React.useLayoutEffect(() => {
 		const from = prev.current;
 		prev.current = cur;
 		if (
 			from === cur ||
-			variant === "pill" ||
+			isPill() ||
 			!ref.current ||
 			window.matchMedia("(prefers-reduced-motion: reduce)").matches
 		)
 			return;
 		const els = ref.current.querySelectorAll('[role="tab"]');
-		const a = els[list.findIndex((t) => t.value === from)],
-			b = els[list.findIndex((t) => t.value === cur)];
+		const a = els[indexOf(from)],
+			b = els[indexOf(cur)];
 		if (!a || !b) return;
 		const r = ref.current.getBoundingClientRect();
 		const box = (el: Element) => {

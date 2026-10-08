@@ -59,7 +59,7 @@ function useCount(target: number | string, on: boolean, dur = 1200) {
 		};
 		raf = requestAnimationFrame(step);
 		return () => cancelAnimationFrame(raf);
-	}, [target, on]);
+	}, [target, on, dur]);
 	return v;
 }
 

@@ -11,12 +11,15 @@ import "./StreamingTable.scss";
  * Evolved from auto-refresh.
  * @startingPoint section="Future" subtitle="Streaming table" viewport="800x360"
  */
-export interface StreamingTableProps {
+export interface StreamingTableProps<
+	Row = Record<string, unknown>,
+	Key extends React.Key = React.Key,
+> {
 	/** The latest rows, newest first. Pass a new array as rows arrive. */
-	rows: any[];
-	columns: TableProps["columns"];
+	rows: Row[];
+	columns: TableProps<Row, Key>["columns"];
 	/** Field name or getter; default 'id' */
-	rowKey?: string | ((row: any) => any);
+	rowKey?: string | ((row: Row) => Key);
 	paused?: boolean;
 	defaultPaused?: boolean;
 	onPausedChange?: (paused: boolean) => void;
@@ -43,9 +46,7 @@ export interface StreamingTableProps {
 // A live table that never moves under your hand. New rows (newest first) arrive at the top, unless
 // you've paused, scrolled down or put focus inside the table — then they wait behind a
 // "N new" bar and come in all at once when you ask. Arrivals are announced politely, in batches.
-type StreamingRow = StreamingTableProps["rows"][number];
-
-export function StreamingTable({
+export function StreamingTable<Row = Record<string, unknown>, Key extends React.Key = React.Key>({
 	rows = [],
 	columns = [],
 	rowKey = "id",
@@ -65,9 +66,10 @@ export function StreamingTable({
 	announceEvery = 2000,
 	className,
 	style,
-}: StreamingTableProps) {
+}: StreamingTableProps<Row, Key>) {
 	const keyOf = React.useCallback(
-		(r: StreamingRow, i?: number) => (typeof rowKey === "function" ? rowKey(r) : (r[rowKey] ?? i)),
+		(r: Row, i?: number) =>
+			typeof rowKey === "function" ? rowKey(r) : ((r as Record<string, unknown>)[rowKey] ?? i),
 		[rowKey],
 	);
 	const [innerPaused, setInnerPaused] = React.useState(defaultPaused);
@@ -110,7 +112,7 @@ export function StreamingTable({
 	React.useEffect(() => () => clearTimeout(queue.current.timer!), []);
 
 	const letIn = React.useCallback(
-		(next: StreamingRow[]) => {
+		(next: Row[]) => {
 			setShown((prev) => {
 				const had = new Set(prev.map(keyOf));
 				fresh.current = next.filter((r, i) => !had.has(keyOf(r, i))).length;
@@ -135,12 +137,17 @@ export function StreamingTable({
 		if (added) announce("shown", added);
 	}, [rows, holding, keyOf, letIn, announce]);
 
-	// Stopped reading (and not paused): what waited comes in.
+	// Stopped reading (and not paused): what waited comes in. Only a change of `holding` lets rows in;
+	// rows arriving while not holding are handled above.
+	const letWaitingIn = React.useEffectEvent(() => {
+		if (waiting) letIn(rows);
+	});
 	React.useEffect(() => {
-		if (!holding && waiting) letIn(rows);
+		if (!holding) letWaitingIn();
 	}, [holding]);
 
 	// The rows that just arrived glow softly once, then settle.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: `shown` is the trigger — each new set of shown rows plays the glow for the `fresh.current` rows letIn counted.
 	React.useEffect(() => {
 		const n = fresh.current;
 		fresh.current = 0;

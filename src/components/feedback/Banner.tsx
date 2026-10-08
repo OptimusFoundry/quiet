@@ -38,6 +38,8 @@ export function Banner({
 	// quiet: dismiss collapses the strip's height (0 rest · 1 wrapped · 2 collapsing · 3 gone).
 	const [leave, setLeave] = React.useState(0);
 	const id = React.useId();
+	// The latest onDismiss runs when the collapse ends; a new handler identity doesn't restart the timer.
+	const dismissed = React.useEffectEvent(() => onDismiss?.());
 	React.useEffect(() => {
 		if (leave === 1) {
 			let r = requestAnimationFrame(() => {
@@ -50,7 +52,7 @@ export function Banner({
 		const t = setTimeout(
 			() => {
 				setLeave(3);
-				onDismiss?.();
+				dismissed();
 			},
 			reduce ? 0 : 280,
 		);

@@ -6,20 +6,23 @@ import "./CommandPalette.scss";
  * ⌘K palette. Filter-as-you-type, grouped results, full keyboard control.
  * @startingPoint section="Navigation" subtitle="⌘K command palette" viewport="900x600"
  */
-export interface CommandPaletteProps {
+export interface CommandPaletteItem {
+	id?: string;
+	label: string;
+	description?: string;
+	group?: string;
+	icon?: React.ReactNode;
+	shortcut?: string;
+	/** Receives the item itself (typed as the caller's item type when it extends this one) */
+	onSelect?: (item: this) => void;
+}
+
+export interface CommandPaletteProps<Item extends CommandPaletteItem = CommandPaletteItem> {
 	open: boolean;
 	onClose?: () => void;
 	/** Called on ⌘K / Ctrl+K when hotkey is on */
 	onOpen?: () => void;
-	items: Array<{
-		id?: string;
-		label: string;
-		description?: string;
-		group?: string;
-		icon?: React.ReactNode;
-		shortcut?: string;
-		onSelect?: (item: any) => void;
-	}>;
+	items: Item[];
 	placeholder?: string;
 	emptyText?: React.ReactNode;
 	hotkey?: boolean;
@@ -27,9 +30,7 @@ export interface CommandPaletteProps {
 	label?: string;
 }
 
-type CommandPaletteItem = CommandPaletteProps["items"][number];
-
-export function CommandPalette({
+export function CommandPalette<Item extends CommandPaletteItem = CommandPaletteItem>({
 	open,
 	onClose,
 	onOpen,
@@ -38,7 +39,7 @@ export function CommandPalette({
 	emptyText = "Nothing matches.",
 	hotkey = true,
 	label = "Command palette",
-}: CommandPaletteProps) {
+}: CommandPaletteProps<Item>) {
 	const [q, setQ] = React.useState("");
 	const [active, setActive] = React.useState(0);
 	const listRef = React.useRef<HTMLDivElement>(null);
@@ -78,7 +79,7 @@ export function CommandPalette({
 				.includes(ql),
 	);
 	const order: string[] = [];
-	const byGroup: Record<string, CommandPaletteItem[]> = {};
+	const byGroup: Record<string, Item[]> = {};
 	flat.forEach((it) => {
 		const g = it.group || "";
 		if (!byGroup[g]) {
@@ -88,17 +89,18 @@ export function CommandPalette({
 		byGroup[g]!.push(it);
 	});
 	const sorted = order.flatMap((g) => byGroup[g]!);
+	// Keep the active option in view as it moves.
 	React.useEffect(() => {
-		const el = listRef.current?.querySelector<HTMLElement>('[data-active="true"]');
-		if (el) {
-			const p = listRef.current!;
+		const el = document.getElementById(`${uid}o${active}`);
+		const p = listRef.current;
+		if (el && p) {
 			if (el.offsetTop < p.scrollTop) p.scrollTop = el.offsetTop;
 			else if (el.offsetTop + el.offsetHeight > p.scrollTop + p.clientHeight)
 				p.scrollTop = el.offsetTop + el.offsetHeight - p.clientHeight;
 		}
-	}, [active]);
+	}, [active, uid]);
 	if (!mounted) return null;
-	const run = (it: CommandPaletteItem | undefined) => {
+	const run = (it: Item | undefined) => {
 		it?.onSelect?.(it);
 		onClose?.();
 	};

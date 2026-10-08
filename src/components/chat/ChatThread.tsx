@@ -48,15 +48,17 @@ export function ChatThread({
 	};
 
 	// Content grows (new turns, streamed tokens, images loading): follow it only if we were at the bottom.
+	// One observer for the thread's lifetime: snapping down must not re-subscribe it.
+	const follow = React.useEffectEvent(() => toBottom(false));
 	React.useLayoutEffect(() => {
 		const el = content.current;
 		if (!el || typeof ResizeObserver === "undefined") return undefined;
 		const ro = new ResizeObserver(() => {
-			if (atBottom.current) toBottom(false);
+			if (atBottom.current) follow();
 			else setBehind(true);
 		});
 		ro.observe(el);
-		toBottom(false);
+		follow();
 		return () => ro.disconnect();
 	}, []);
 

@@ -6,7 +6,11 @@ import "./Link.scss";
  * Inline text link. Ink → molten on hover. For a standalone CTA link use ArrowLink.
  * @startingPoint section="Actions" subtitle="Inline text links" viewport="600x160"
  */
-export interface LinkProps {
+export interface LinkProps
+	extends Omit<
+		React.AnchorHTMLAttributes<HTMLAnchorElement>,
+		"href" | "children" | "className" | "style"
+	> {
 	href?: string;
 	variant?: "default" | "primary" | "muted";
 	size?: "inherit" | "sm" | "md" | "lg";
@@ -17,7 +21,6 @@ export interface LinkProps {
 	children?: React.ReactNode;
 	className?: string;
 	style?: React.CSSProperties;
-	[key: string]: any;
 }
 
 const SIZES: string[] = ["sm", "md", "lg"];

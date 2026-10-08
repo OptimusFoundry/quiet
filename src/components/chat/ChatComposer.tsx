@@ -109,6 +109,7 @@ export function ChatComposer({
 	};
 
 	// Grow with the text: measure, then cap at maxRows (CSS max-height scrolls beyond it).
+	// biome-ignore lint/correctness/useExhaustiveDependencies: `text` is the trigger — the textarea is re-measured from the DOM each time its value changes.
 	React.useLayoutEffect(() => {
 		const el = area.current;
 		if (!el) return;
@@ -175,6 +176,8 @@ export function ChatComposer({
 	};
 
 	const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		// keyCode 229 (deprecated, kept on purpose): Safari fires the Enter that commits an IME
+		// composition with isComposing false; without it, CJK input would send half-typed text.
 		if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing || e.keyCode === 229) return;
 		e.preventDefault();
 		submit();

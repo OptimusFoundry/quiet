@@ -4,6 +4,19 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 ## Unreleased
 
+### Changed
+
+- **Stricter, more useful prop types.** No `any` is left in a public type:
+  - Rest props are the HTML attributes of the element they land on (`ButtonProps`, `LinkProps`,
+    `SpinnerProps`, `TextFieldProps`, `TextAreaProps`, `HoldButtonProps`), so a misspelled prop is
+    now a type error.
+  - `Table`, `DataGrid` and `StreamingTable` are generic over the row (`Row`) and key (`Key`) types,
+    and `DropdownMenu` and `CommandPalette` over the item type. These are inferred from the data,
+    so `render: (row) => row.name` is typed.
+- **Effects use `useEffectEvent`** where a callback prop must not restart a timer or animation
+  (Alert, Banner, Toast, ChatThread, StreamingTable, Tabs, Popover). Toast's auto-dismiss now calls
+  the latest `onClose`.
+
 ### Added
 
 - **Token names are checked.** A renamed, removed or misspelled `--q-*` token used to fail

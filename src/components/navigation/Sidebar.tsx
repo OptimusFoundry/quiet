@@ -22,7 +22,7 @@ export interface SidebarProps {
 	/** Use instead of items for labelled sections. `collapsible` turns the label into a disclosure button (`defaultOpen` defaults to true) */
 	groups?: Array<{
 		label?: React.ReactNode;
-		items: Array<any>;
+		items: NonNullable<SidebarProps["items"]>;
 		collapsible?: boolean;
 		defaultOpen?: boolean;
 	}>;

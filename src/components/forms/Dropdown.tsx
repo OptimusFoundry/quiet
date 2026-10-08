@@ -102,8 +102,8 @@ export function Dropdown({
 	const uid = React.useId();
 	const listId = `${uid}list`,
 		labelId = `${uid}label`,
-		hintId = `${uid}hint`,
-		optId = (i: number) => `${uid}opt${i}`;
+		hintId = `${uid}hint`;
+	const optId = React.useCallback((i: number) => `${uid}opt${i}`, [uid]);
 	const presence = usePresence(open);
 	const cur = value ?? inner;
 	const opts = options.map(norm);
@@ -119,7 +119,7 @@ export function Dropdown({
 		if (!open || active < 0) return;
 		const el = document.getElementById(optId(active));
 		el?.scrollIntoView?.({ block: "nearest" });
-	}, [open, active]);
+	}, [open, active, optId]);
 	const pick = (o: DropdownOption) => {
 		if (o.disabled) return;
 		setInner(o.value);

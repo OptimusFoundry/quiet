@@ -7,7 +7,11 @@ import "./TextArea.scss";
  * Labelled multi-line input with resize control and optional counter.
  * @startingPoint section="Forms" subtitle="Multi-line input" viewport="600x280"
  */
-export interface TextAreaProps {
+export interface TextAreaProps
+	extends Omit<
+		React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+		"value" | "defaultValue" | "onChange" | "className" | "style"
+	> {
 	label?: React.ReactNode;
 	/** Keep label for screen readers only */
 	hideLabel?: boolean;
@@ -30,7 +34,6 @@ export interface TextAreaProps {
 	style?: React.CSSProperties;
 	/** Reaches the native <textarea> */
 	ref?: React.Ref<HTMLTextAreaElement>;
-	[key: string]: any;
 }
 
 const SIZES = ["sm", "md", "lg"];
