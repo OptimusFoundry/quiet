@@ -13,7 +13,8 @@
 			"stylelint/**",
 			"claude/**",
 			"*.ts",
-			"*.json"
+			"*.json",
+			"!!**/.claude/worktrees"
 		]
 	},
 	"formatter": {
