@@ -1,5 +1,6 @@
 import React from 'react';
-import { useFocusTrap, usePresence } from '../../a11y/hooks';
+import { useFocusTrap, useMergedRef, usePresence } from '../../a11y/hooks';
+import { FormValue } from '../../a11y/form';
 import './DatePicker.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
@@ -12,13 +13,15 @@ const defFmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeri
 
 const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 const addMonths = (d, n) => { const t = new Date(d.getFullYear(), d.getMonth() + n, 1); return new Date(t.getFullYear(), t.getMonth(), Math.min(d.getDate(), new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate())); };
+// Same wire format as <input type="date">: local YYYY-MM-DD.
+const isoDay = d => d ? d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') : '';
 const longFmt = d => d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
 function NavBtn({ children, onClick, label }) {
   return <button type="button" aria-label={label} onClick={onClick} className="q-date-picker__nav">{children}</button>;
 }
 
-export function DatePicker({ label, value, defaultValue, onChange, min, max, weekStartsOn = 0, format = defFmt, placeholder = 'Pick a date', size = 'md', disabled = false, helperText, error, className, style }) {
+export function DatePicker({ label, value, defaultValue, onChange, min, max, weekStartsOn = 0, format = defFmt, placeholder = 'Pick a date', size = 'md', disabled = false, helperText, error, name, required, form, ref: forwardedRef, className, style }) {
   const [inner, setInner] = React.useState(defaultValue || null);
   const cur = value !== undefined ? value : inner;
   const [open, setOpen] = React.useState(false);
@@ -27,6 +30,8 @@ export function DatePicker({ label, value, defaultValue, onChange, min, max, wee
   const [paged, setPaged] = React.useState(false); // month changed since opening: crossfade the days
   const ref = React.useRef(null);
   const dialog = React.useRef(null);
+  const trigger = React.useRef(null);
+  const triggerRef = useMergedRef(trigger, forwardedRef);
   const moveFocus = React.useRef(false);
   const uid = React.useId();
   const dialogId = uid + 'dialog', labelId = uid + 'label', valueId = uid + 'value', hintId = uid + 'hint', headId = uid + 'head';
@@ -73,7 +78,7 @@ export function DatePicker({ label, value, defaultValue, onChange, min, max, wee
   return (
     <div ref={ref} className={cls} style={style}>
       {label && <span id={labelId} className="q-date-picker__label">{label}</span>}
-      <button type="button" disabled={disabled} aria-haspopup="dialog" aria-expanded={open} aria-controls={open || presence.mounted ? dialogId : undefined}
+      <button ref={triggerRef} type="button" disabled={disabled} aria-haspopup="dialog" aria-expanded={open} aria-controls={open || presence.mounted ? dialogId : undefined}
         aria-labelledby={(label ? labelId + ' ' : '') + valueId} aria-describedby={error || helperText ? hintId : undefined} aria-invalid={error ? true : undefined} onClick={toggleOpen}
         className={'q-date-picker__trigger' + (cur ? '' : ' q-date-picker__trigger--placeholder') + (error ? ' q-date-picker__trigger--invalid' : '')}>
         <span id={valueId} className="q-date-picker__value">{cur ? format(cur) : placeholder}</span>
@@ -112,6 +117,7 @@ export function DatePicker({ label, value, defaultValue, onChange, min, max, wee
         </div>
       </div>}
       {(error || helperText) && <span id={hintId} className={'q-date-picker__hint' + (error ? ' q-date-picker__hint--error' : '')}>{error || helperText}</span>}
+      <FormValue name={name} value={isoDay(cur)} required={required} disabled={disabled} form={form} focusTarget={() => trigger.current} />
     </div>
   );
 }

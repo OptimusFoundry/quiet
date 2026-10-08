@@ -1,6 +1,7 @@
 // Table — sortable, selectable, expandable data table. BEM: .q-table (--sm/--md/--lg, --bordered),
 // __table, __caption, __head, __sort, __row (--clickable, --stripe), __cell (--first, --control),
-// __check, __expand, __detail, __skeleton-cell, __skeleton (--first), __empty.
+// __check, __expand, __detail, __skeleton-cell, __skeleton (--first), __empty,
+// __foot (--control, --nowrap, --numeric).
 @layer q.tokens {
   :root,
   [data-theme] {
@@ -57,6 +58,10 @@
     --q-table-skeleton-duration: var(--q-dur-pulse);
     --q-table-skeleton-ease: ease-in-out; // reference pulse curve; no tier-2 symmetric ease
     --q-table-skeleton-dim: 0.45;
+
+    --q-table-foot-border: var(--q-fg);
+    --q-table-foot-color: var(--q-fg);
+    --q-table-foot-weight: var(--q-weight-medium);
 
     --q-table-empty-padding-y: var(--q-space-6);
     --q-table-empty-padding-x: var(--q-space-2);
@@ -118,7 +123,8 @@
   }
 
   .q-table__head,
-  .q-table__cell {
+  .q-table__cell,
+  .q-table__foot {
     width: var(--_width);
     padding: var(--_py) var(--_px);
 
@@ -133,7 +139,8 @@
 
   // Control headers keep the user-agent's centred th alignment, as in the reference.
   .q-table__head:not(.q-table__head--control),
-  .q-table__cell {
+  .q-table__cell,
+  .q-table__foot {
     text-align: var(--_align);
   }
 
@@ -206,8 +213,23 @@
     }
   }
 
+  .q-table__foot {
+    border-top: var(--q-hairline) solid var(--q-table-foot-border);
+    color: var(--q-table-foot-color);
+    font-weight: var(--q-table-foot-weight);
+
+    &--nowrap {
+      white-space: nowrap;
+    }
+
+    &--numeric {
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
   .q-table__head--control,
-  .q-table__cell--control {
+  .q-table__cell--control,
+  .q-table__foot--control {
     width: var(--q-table-control-width);
   }
 

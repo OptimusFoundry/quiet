@@ -15,6 +15,16 @@ export interface SwitchProps {
   labelPosition?: 'left' | 'right';
   /** Accessible name when there is no visible label */
   'aria-label'?: string;
+  /** Submits through a hidden input when set, so a native <form> and FormData see it */
+  name?: string;
+  /** Submitted while on; default 'on' */
+  value?: string;
+  /** Blocks native submission while off; also sets aria-required */
+  required?: boolean;
+  /** id of a <form> elsewhere in the document, as on native controls */
+  form?: string;
+  /** Reaches the role="switch" element, so it can be focused */
+  ref?: React.Ref<HTMLSpanElement>;
   className?: string;
   style?: React.CSSProperties;
 }

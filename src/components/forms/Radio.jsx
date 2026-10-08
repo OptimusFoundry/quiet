@@ -1,10 +1,13 @@
 import React from 'react';
-import { rovingKeyDown } from '../../a11y/hooks';
+import { rovingKeyDown, useMergedRef } from '../../a11y/hooks';
+import { FormValue } from '../../a11y/form';
 import './Radio.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
 
-export function Radio({ name, label, 'aria-label': ariaLabel, options = [], value, defaultValue, onChange, direction = 'column', size = 'md', disabled = false, error, className, style }) {
+export function Radio({ name, label, 'aria-label': ariaLabel, options = [], value, defaultValue, onChange, direction = 'column', size = 'md', disabled = false, error, required, form, ref, className, style }) {
+  const tabStop = React.useRef(null);
+  const stopRef = useMergedRef(tabStop, ref);
   const first = options.find(o => !(o && o.disabled));
   const [inner, setInner] = React.useState(defaultValue ?? (first && (first.value ?? first)));
   const uid = React.useId();
@@ -15,7 +18,7 @@ export function Radio({ name, label, 'aria-label': ariaLabel, options = [], valu
   const cls = ['q-radio', 'q-radio--' + (SIZES.includes(size) ? size : 'md'), className].filter(Boolean).join(' ');
   return (
     <div role="radiogroup" aria-label={label ? undefined : ariaLabel} aria-labelledby={label ? uid + 'g' : undefined} aria-disabled={disabled || undefined}
-      aria-invalid={!!error || undefined} aria-describedby={typeof error === 'string' ? uid + 'e' : undefined} className={cls} style={style}>
+      aria-required={required || undefined} aria-invalid={!!error || undefined} aria-describedby={typeof error === 'string' ? uid + 'e' : undefined} className={cls} style={style}>
       {label && <div id={uid + 'g'} className="q-radio__label">{label}</div>}
       <div onKeyDown={rovingKeyDown('[role="radio"]', 'both', { activate: true })} className={'q-radio__options' + (direction === 'row' ? ' q-radio__options--row' : '')}
         style={direction === 'row' || direction === 'column' ? undefined : { '--_direction': direction }}>
@@ -26,7 +29,7 @@ export function Radio({ name, label, 'aria-label': ariaLabel, options = [], valu
           const pick = () => { if (off) return; setInner(v); onChange && onChange(v); };
           return (
             <label key={v} onClick={pick} className={'q-radio__option' + (off ? ' q-radio__option--disabled' : '')}>
-              <span role="radio" aria-checked={on} aria-labelledby={uid + i} aria-describedby={o && o.description ? uid + i + 'd' : undefined} aria-disabled={off || undefined}
+              <span ref={v === stop ? stopRef : undefined} role="radio" aria-checked={on} aria-labelledby={uid + i} aria-describedby={o && o.description ? uid + i + 'd' : undefined} aria-disabled={off || undefined}
                 tabIndex={v === stop ? 0 : -1} onKeyDown={e => e.key === ' ' && (e.preventDefault(), pick())} className="q-radio__control">
                 <span className="q-radio__dot" />
               </span>
@@ -39,6 +42,7 @@ export function Radio({ name, label, 'aria-label': ariaLabel, options = [], valu
         })}
       </div>
       {typeof error === 'string' && <span id={uid + 'e'} className="q-radio__error">{error}</span>}
+      <FormValue name={name} value={cur} required={required} disabled={disabled} form={form} focusTarget={() => tabStop.current} />
     </div>
   );
 }

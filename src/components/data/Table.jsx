@@ -12,6 +12,18 @@ const colVars = c => {
   return v;
 };
 
+// Columns covered by an earlier cell's colSpan are dropped, so every row keeps the column count.
+const spans = (cols, spanOf) => {
+  const out = [];
+  for (let ci = 0; ci < cols.length;) {
+    const c = cols[ci];
+    const n = Math.max(1, Math.min(Math.floor(spanOf(c) || 1), cols.length - ci));
+    out.push({ c, ci, span: n > 1 ? n : undefined });
+    ci += n;
+  }
+  return out;
+};
+
 function Box({ on, mixed, onClick, label }) {
   return <span role="checkbox" aria-checked={mixed ? 'mixed' : on} aria-label={label} tabIndex={0} onClick={e => { e.stopPropagation(); onClick(); }} onKeyDown={e => e.key === ' ' && (e.preventDefault(), onClick())}
     className="q-table__check">{mixed ? '\u2212' : on ? '\u2713' : ''}</span>;
@@ -28,7 +40,7 @@ function TR({ row, cols, i, striped, selectable, isSel, onSel, expandable, isOpe
         {selectable && <td className="q-table__cell q-table__cell--control"><Box on={isSel} onClick={onSel} label={'Select ' + name} /></td>}
         {expandable && <td className="q-table__cell q-table__cell--control"><button type="button" aria-label={(isOpen ? 'Collapse ' : 'Expand ') + name} aria-expanded={isOpen} aria-controls={id} onClick={e => { e.stopPropagation(); onOpen(); }}
           className="q-table__expand">+</button></td>}
-        {cols.map((c, ci) => <td key={c.key} style={colVars(c)}
+        {spans(cols, c => c.colSpan && c.colSpan(row, i)).map(({ c, ci, span }) => <td key={c.key} colSpan={span} style={colVars(c)}
           className={['q-table__cell', ci === 0 && 'q-table__cell--first', c.nowrap && 'q-table__cell--nowrap', c.align === 'right' && 'q-table__cell--numeric'].filter(Boolean).join(' ')}>
           {c.render ? c.render(row, i) : row[c.key]}</td>)}
       </tr>
@@ -38,11 +50,13 @@ function TR({ row, cols, i, striped, selectable, isSel, onSel, expandable, isOpe
 }
 
 export function Table({ columns = [], data = [], rowKey = 'id', size = 'md', striped = false, bordered = false, caption, selectable = false, selected, defaultSelected = [], onSelectionChange,
-  sort, defaultSort, onSortChange, manualSort = false, renderExpanded, loading = false, loadingRows = 5, emptyText = 'No rows.', onRowClick, minWidth, label, rowLabel, className, style }) {
+  sort, defaultSort, onSortChange, manualSort = false, renderExpanded, expanded, defaultExpanded = [], onExpandedChange, footer, loading = false, loadingRows = 5, emptyText = 'No rows.', onRowClick, minWidth, label, rowLabel, className, style }) {
   const [innerSel, setInnerSel] = React.useState(defaultSelected);
   const [innerSort, setInnerSort] = React.useState(defaultSort || null);
-  const [open, setOpen] = React.useState([]);
+  const [innerOpen, setInnerOpen] = React.useState(defaultExpanded);
   const sel = selected ?? innerSel;
+  const open = expanded ?? innerOpen;
+  const toggleOpen = k => { const next = open.includes(k) ? open.filter(x => x !== k) : [...open, k]; setInnerOpen(next); onExpandedChange && onExpandedChange(next); };
   const srt = sort !== undefined ? sort : innerSort;
   const keyOf = (r, i) => typeof rowKey === 'function' ? rowKey(r) : r[rowKey] ?? i;
   const setSel = s => { setInnerSel(s); onSelectionChange && onSelectionChange(s); };
@@ -57,6 +71,7 @@ export function Table({ columns = [], data = [], rowKey = 'id', size = 'md', str
   const some = !all && keys.some(k => sel.includes(k));
   const clickSort = c => { const next = !srt || srt.key !== c.key ? { key: c.key, dir: 'asc' } : srt.dir === 'asc' ? { key: c.key, dir: 'desc' } : null; setInnerSort(next); onSortChange && onSortChange(next); };
   const extra = (selectable ? 1 : 0) + (renderExpanded ? 1 : 0);
+  const hasColFooter = columns.some(c => c.footer !== undefined);
   const uid = React.useId();
   const nameOf = (r, k) => rowLabel ? rowLabel(r) : columns[0] && (typeof r[columns[0].key] === 'string' || typeof r[columns[0].key] === 'number') ? String(r[columns[0].key]) : 'row ' + k;
   // Sort reorder: rows fade in softly after the order changes (never on mount).
@@ -97,9 +112,18 @@ export function Table({ columns = [], data = [], rowKey = 'id', size = 'md', str
           ) : rows.map((r, i) => { const k = keyOf(r, i); return (
             <TR key={k} row={r} cols={columns} i={i} striped={striped} selectable={selectable} isSel={sel.includes(k)}
               onSel={() => setSel(sel.includes(k) ? sel.filter(x => x !== k) : [...sel, k])} expandable={!!renderExpanded} isOpen={open.includes(k)}
-              onOpen={() => setOpen(o => o.includes(k) ? o.filter(x => x !== k) : [...o, k])} onRowClick={onRowClick} renderExpanded={renderExpanded} name={nameOf(r, k)} id={uid + 'x' + i} />
+              onOpen={() => toggleOpen(k)} onRowClick={onRowClick} renderExpanded={renderExpanded} name={nameOf(r, k)} id={uid + 'x' + i} />
           ); })}
         </tbody>
+        {!loading && (hasColFooter || footer != null) && <tfoot>
+          {hasColFooter && <tr>
+            {Array.from({ length: extra }, (_, j) => <td key={'c' + j} className="q-table__foot q-table__foot--control" />)}
+            {spans(columns, c => c.footerColSpan).map(({ c, span }) => <td key={c.key} colSpan={span} style={colVars(c)}
+              className={['q-table__foot', c.nowrap && 'q-table__foot--nowrap', c.align === 'right' && 'q-table__foot--numeric'].filter(Boolean).join(' ')}>
+              {typeof c.footer === 'function' ? c.footer(rows) : c.footer}</td>)}
+          </tr>}
+          {footer != null && <tr><td colSpan={columns.length + extra} className="q-table__foot">{footer}</td></tr>}
+        </tfoot>}
       </table>
     </div>
   );

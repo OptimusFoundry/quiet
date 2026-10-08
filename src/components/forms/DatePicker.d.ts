@@ -18,6 +18,14 @@ export interface DatePickerProps {
   disabled?: boolean;
   helperText?: React.ReactNode;
   error?: React.ReactNode;
+  /** Submits the date as local YYYY-MM-DD (like <input type="date">), or "" when empty */
+  name?: string;
+  /** Blocks native submission while no date is picked */
+  required?: boolean;
+  /** id of a <form> elsewhere in the document, as on native controls */
+  form?: string;
+  /** Reaches the trigger button, so it can be focused */
+  ref?: React.Ref<HTMLButtonElement>;
   className?: string;
   style?: React.CSSProperties;
 }

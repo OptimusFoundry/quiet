@@ -4,7 +4,6 @@ import * as React from 'react';
  * @startingPoint section="Forms" subtitle="Radio groups" viewport="600x220"
  */
 export interface RadioProps {
-  name?: string;
   /** Mono caps group label */
   label?: React.ReactNode;
   options: Array<string | { value: string; label: React.ReactNode; description?: React.ReactNode; disabled?: boolean }>;
@@ -17,6 +16,14 @@ export interface RadioProps {
   error?: boolean | string;
   /** Group name when there is no visible label */
   'aria-label'?: string;
+  /** Submits through a hidden input when set, so a native <form> and FormData see it */
+  name?: string;
+  /** Blocks native submission while empty; also sets aria-required */
+  required?: boolean;
+  /** id of a <form> elsewhere in the document, as on native controls */
+  form?: string;
+  /** Reaches the radio that holds the tab stop, so it can be focused */
+  ref?: React.Ref<HTMLSpanElement>;
   className?: string;
   style?: React.CSSProperties;
 }

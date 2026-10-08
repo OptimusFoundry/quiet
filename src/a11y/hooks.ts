@@ -1,6 +1,14 @@
 // Shared behaviour for the a11y + motion layer added on top of the Optimus Foundry components.
 // Components import from here instead of re-implementing focus, keyboard and presence logic.
-import { type KeyboardEvent, type RefObject, useEffect, useRef, useState } from "react";
+import {
+	type KeyboardEvent,
+	type Ref,
+	type RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 
 const FOCUSABLE =
 	'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"]),[contenteditable="true"]';
@@ -170,4 +178,17 @@ export function useModalBackground(ref: RefObject<HTMLElement | null>, active: b
 			document.body.style.overflow = overflow;
 		};
 	}, [active, ref]);
+}
+
+/** One callback ref that feeds both refs, so a component can keep its own ref and forward the caller's. */
+export function useMergedRef<T>(own: Ref<T> | undefined, forwarded: Ref<T> | undefined) {
+	return useCallback(
+		(node: T | null) => {
+			for (const r of [own, forwarded]) {
+				if (typeof r === "function") r(node);
+				else if (r) (r as RefObject<T | null>).current = node;
+			}
+		},
+		[own, forwarded],
+	);
 }

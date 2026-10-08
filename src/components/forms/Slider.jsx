@@ -1,14 +1,18 @@
 import React from 'react';
+import { useMergedRef } from '../../a11y/hooks';
+import { FormValue } from '../../a11y/form';
 import './Slider.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
 
-export function Slider({ label, value, defaultValue, min = 0, max = 100, step = 1, onChange, showValue = true, formatValue, size = 'md', disabled = false, 'aria-label': ariaLabel, className, style }) {
+export function Slider({ label, value, defaultValue, min = 0, max = 100, step = 1, onChange, showValue = true, formatValue, size = 'md', disabled = false, name, form, ref, 'aria-label': ariaLabel, className, style }) {
   const [inner, setInner] = React.useState(defaultValue ?? min);
   const [glide, setGlide] = React.useState(false);
   const uid = React.useId();
   const cur = value ?? inner;
   const track = React.useRef(null);
+  const thumb = React.useRef(null);
+  const thumbRef = useMergedRef(thumb, ref);
   const pct = max === min ? 0 : ((cur - min) / (max - min)) * 100;
   const set = v => {
     const c = Math.min(max, Math.max(min, Math.round((v - min) / step) * step + min));
@@ -35,11 +39,12 @@ export function Slider({ label, value, defaultValue, min = 0, max = 100, step = 
       <div ref={track} onPointerDown={down} onPointerMove={move} className="q-slider__track" data-glide={glide || undefined}>
         <span className="q-slider__rail" />
         <span className="q-slider__fill" />
-        <span role="slider" tabIndex={disabled ? -1 : 0} aria-valuemin={min} aria-valuemax={max} aria-valuenow={cur}
+        <span ref={thumbRef} role="slider" tabIndex={disabled ? -1 : 0} aria-valuemin={min} aria-valuemax={max} aria-valuenow={cur}
           aria-valuetext={typeof text === 'string' || typeof text === 'number' ? String(text) : undefined} aria-orientation="horizontal" aria-disabled={disabled || undefined}
           aria-labelledby={label ? uid + 'l' : undefined} aria-label={label ? undefined : ariaLabel}
           onKeyDown={key} className="q-slider__thumb" />
       </div>
+      <FormValue name={name} value={String(cur)} disabled={disabled} form={form} focusTarget={() => thumb.current} />
     </div>
   );
 }
