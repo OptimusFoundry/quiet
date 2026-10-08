@@ -15,6 +15,7 @@ export interface PopoverProps {
   width?: number;
   /** Focus first focusable element on open */
   trapFocus?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Popover(props: PopoverProps): JSX.Element;

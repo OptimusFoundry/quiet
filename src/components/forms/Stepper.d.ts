@@ -19,6 +19,7 @@ export interface StepperProps {
   'aria-describedby'?: string;
   'aria-invalid'?: boolean;
   'aria-required'?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Stepper(props: StepperProps): JSX.Element;

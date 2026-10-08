@@ -14,6 +14,7 @@ export interface BannerProps {
   onDismiss?: () => void;
   /** Landmark name when there is no title; defaults to "Notice" */
   label?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Banner(props: BannerProps): JSX.Element;

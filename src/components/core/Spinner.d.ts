@@ -8,6 +8,7 @@ export interface SpinnerProps {
   tone?: 'default' | 'muted' | 'paper' | 'molten';
   /** Mono caps label beside the ring */
   label?: string;
+  className?: string;
   style?: React.CSSProperties;
   /** Other attributes go on the role="status" root */
   [key: string]: any;

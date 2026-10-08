@@ -17,6 +17,7 @@ export interface CheckboxProps {
   size?: 'sm' | 'md' | 'lg';
   /** Accessible name when there is no visible label */
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Checkbox(props: CheckboxProps): JSX.Element;

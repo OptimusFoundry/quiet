@@ -1,11 +1,6 @@
 import React from 'react';
 import { useEscape, useFocusTrap, usePresence } from '../../a11y/hooks';
-
-if (typeof document !== 'undefined' && !document.getElementById('of-kf-fade')) {
-  const s = document.createElement('style'); s.id = 'of-kf-fade';
-  s.textContent = '@media (prefers-reduced-motion: no-preference){@keyframes of-fade{from{opacity:0}to{opacity:1}}}';
-  document.head.appendChild(s);
-}
+import './CommandPalette.scss';
 
 export function CommandPalette({ open, onClose, onOpen, items = [], placeholder = 'Type a command or search', emptyText = 'Nothing matches.', hotkey = true, label = 'Command palette' }) {
   const [q, setQ] = React.useState('');
@@ -37,41 +32,39 @@ export function CommandPalette({ open, onClose, onOpen, items = [], placeholder 
     else if (e.key === 'Enter') { e.preventDefault(); run(sorted[active]); }
     else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); setActive(e.key === 'Home' ? 0 : Math.max(0, sorted.length - 1)); }
   };
-  const mono = { fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' };
   let idx = -1;
   return (
-    <div className="q-anim-fade" data-state={state} onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'var(--overlay-scrim)', zIndex: 110, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '15vh 24px 24px', pointerEvents: state === 'closing' ? 'none' : undefined }}>
-      <div ref={dlgRef} role="dialog" aria-modal="true" aria-label={label} className="q-anim-scale" data-state={state} onClick={e => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: 640, background: 'var(--paper)', border: '1px solid var(--rule-soft)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-3)', overflow: 'hidden', display: 'flex', flexDirection: 'column', maxHeight: '70vh' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '0 20px', borderBottom: '1px solid var(--rule-soft)' }}>
-          <span aria-hidden="true" style={{ ...mono, fontSize: 11, color: 'var(--ink)' }}>/</span>
+    <div className="q-command-palette q-anim-fade" data-state={state} onClick={onClose}>
+      <div ref={dlgRef} role="dialog" aria-modal="true" aria-label={label} className="q-command-palette__dialog q-anim-scale" data-state={state} onClick={e => e.stopPropagation()}>
+        <div className="q-command-palette__search">
+          <span aria-hidden="true" className="q-command-palette__slash">/</span>
           <input role="combobox" aria-expanded="true" aria-controls={uid + 'list'} aria-autocomplete="list" aria-activedescendant={sorted[active] ? uid + 'o' + active : undefined}
             value={q} onChange={e => { setQ(e.target.value); setActive(0); }} onKeyDown={key} placeholder={placeholder} aria-label="Search commands"
-            style={{ flex: 1, height: 56, border: 0, outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 19, color: 'var(--ink)' }} />
-          <span aria-hidden="true" style={mono}>Esc</span>
+            className="q-command-palette__input" />
+          <span aria-hidden="true" className="q-command-palette__hint">Esc</span>
         </div>
         <div className="q-sr-only" role="status">{q ? (sorted.length === 0 ? 'No results' : sorted.length + (sorted.length === 1 ? ' result' : ' results')) : ''}</div>
-        <div ref={listRef} id={uid + 'list'} role="listbox" aria-label="Commands" style={{ overflowY: 'auto', padding: '8px 0', position: 'relative' }}>
-          {sorted.length === 0 && <div style={{ padding: '32px 20px', textAlign: 'center', fontSize: 15, color: 'var(--muted)' }}>{emptyText}</div>}
+        <div ref={listRef} id={uid + 'list'} role="listbox" aria-label="Commands" className="q-command-palette__list">
+          {sorted.length === 0 && <div className="q-command-palette__empty">{emptyText}</div>}
           {order.map((g, gi) => (
             <div key={g || '_'} role={g ? 'group' : 'presentation'} aria-labelledby={g ? uid + 'g' + gi : undefined}>
-              {g && <div id={uid + 'g' + gi} role="presentation" style={{ ...mono, padding: '12px 20px 6px' }}>{g}</div>}
+              {g && <div id={uid + 'g' + gi} role="presentation" className="q-command-palette__group-label">{g}</div>}
               {byGroup[g].map(it => { idx++; const i = idx; const on = i === active; return (
                 <div key={it.id ?? it.label} id={uid + 'o' + i} role="option" aria-selected={on} data-active={on} onMouseMove={() => setActive(i)} onClick={() => run(it)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px', margin: '0 8px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', background: on ? 'var(--paper-2)' : 'transparent', transition: 'background var(--dur-hover) var(--ease-soft)' }}>
-                  {it.icon && <span aria-hidden="true" style={{ width: 20, display: 'inline-flex', justifyContent: 'center', color: 'var(--muted)' }}>{it.icon}</span>}
-                  <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <span style={{ fontSize: 15, color: 'var(--ink)' }}>{it.label}</span>
-                    {it.description && <span style={{ fontSize: 13, color: 'var(--muted)' }}>{it.description}</span>}
+                  className="q-command-palette__option">
+                  {it.icon && <span aria-hidden="true" className="q-command-palette__option-icon">{it.icon}</span>}
+                  <span className="q-command-palette__option-text">
+                    <span className="q-command-palette__option-label">{it.label}</span>
+                    {it.description && <span className="q-command-palette__option-description">{it.description}</span>}
                   </span>
-                  {it.shortcut && <span aria-hidden="true" style={mono}>{it.shortcut}</span>}
-                  {on && <span aria-hidden="true" style={{ color: 'var(--ink)', fontSize: 13 }}>{'\u21b5'}</span>}
+                  {it.shortcut && <span aria-hidden="true" className="q-command-palette__hint">{it.shortcut}</span>}
+                  {on && <span aria-hidden="true" className="q-command-palette__option-enter">{'\u21b5'}</span>}
                 </div>
               ); })}
             </div>
           ))}
         </div>
-        <div aria-hidden="true" style={{ display: 'flex', gap: 24, padding: '10px 20px', borderTop: '1px solid var(--rule-soft)', ...mono }}>
+        <div aria-hidden="true" className="q-command-palette__footer">
           <span>{'\u2191\u2193'} Navigate</span><span>{'\u21b5'} Select</span><span>Esc Close</span>
         </div>
       </div>

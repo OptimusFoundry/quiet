@@ -15,6 +15,7 @@ export interface SwitchProps {
   labelPosition?: 'left' | 'right';
   /** Accessible name when there is no visible label */
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Switch(props: SwitchProps): JSX.Element;

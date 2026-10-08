@@ -10,6 +10,7 @@ export interface FormHintProps {
   hidden?: boolean;
   id?: string;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function FormHint(props: FormHintProps): JSX.Element;

@@ -18,6 +18,7 @@ export interface DatePickerProps {
   disabled?: boolean;
   helperText?: React.ReactNode;
   error?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function DatePicker(props: DatePickerProps): JSX.Element;

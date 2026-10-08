@@ -18,6 +18,7 @@ export interface PageHeroProps {
   ruled?: boolean;
   /** Heading level of the title; default h1 */
   as?: 'h1' | 'h2' | 'h3';
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function PageHero(props: PageHeroProps): JSX.Element;

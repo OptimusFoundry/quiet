@@ -18,6 +18,7 @@ export interface TagProps {
   defaultSelected?: boolean;
   onSelect?: (selected: boolean) => void;
   disabled?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Tag(props: TagProps): JSX.Element;

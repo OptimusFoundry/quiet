@@ -1,0 +1,4307 @@
+{
+  "Avatar": {
+    "path": "webapp/src/proto-design-system/components/primitives/Avatar/Avatar.tsx",
+    "extends": "React.HTMLAttributes<HTMLDivElement>",
+    "props": {
+      "src": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Image source URL"
+      },
+      "alt": {
+        "type": "string",
+        "default": "\"\"",
+        "required": false,
+        "doc": "Alt text for the image"
+      },
+      "initials": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Fallback initials when no image is available"
+      },
+      "size": {
+        "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the avatar"
+      },
+      "variant": {
+        "type": "\"circle\" | \"rounded\" | \"square\"",
+        "default": "\"circle\"",
+        "required": false,
+        "doc": "Shape variant"
+      },
+      "fallback": {
+        "type": "React.ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Custom fallback element"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement>. Fallback chain: image (until onError) -> initials (first 2 chars uppercased) -> fallback node -> default person SVG. Shape is called `variant` here."
+  },
+  "Badge": {
+    "path": "webapp/src/proto-design-system/components/primitives/Badge/Badge.tsx",
+    "extends": "HTMLAttributes<HTMLSpanElement>",
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"primary\" | \"secondary\" | \"accent\" | \"success\" | \"warning\" | \"error\" | \"outline\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual style variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the badge"
+      },
+      "rounded": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Makes the badge rounded (pill shape)"
+      },
+      "dot": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Adds a dot indicator before the content"
+      },
+      "leftIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display before content"
+      },
+      "rightIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display after content"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Badge content"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLSpanElement>. Props in Badge.types.ts. Status colors folded into `variant` (success/warning/error)."
+  },
+  "Button": {
+    "path": "webapp/src/proto-design-system/components/primitives/Button/Button.tsx",
+    "extends": "ButtonHTMLAttributes<HTMLButtonElement>",
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"primary\" | \"secondary\" | \"accent\" | \"ghost\" | \"outline\" | \"destructive\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual style variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the button"
+      },
+      "isLoading": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Shows loading spinner and disables interaction"
+      },
+      "isFullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Makes button take full width of container"
+      },
+      "isIconOnly": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Renders button as icon-only (square aspect ratio)"
+      },
+      "leftIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display before button text"
+      },
+      "rightIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display after button text"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Button content"
+      },
+      "type": {
+        "type": "\"button\" | \"submit\" | \"reset\"",
+        "default": "\"button\"",
+        "required": false,
+        "doc": "(inherited HTML attr; default overridden)"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLButtonElement>; renders motion.button (hover scale 1.02 / tap 0.98, disabled under reduced motion). disabled || isLoading => disabled + aria-disabled; aria-busy=isLoading. Explicitly destructures/forwards common handlers, form* attrs and aria-* then spreads rest (undefined values filtered). className merged via cn(); style passed through. Types live in Button.types.ts (ButtonVariant, ButtonSize)."
+  },
+  "ButtonGroup": {
+    "path": "webapp/src/proto-design-system/components/primitives/Button/ButtonGroup.tsx",
+    "extends": "HTMLAttributes<HTMLDivElement>",
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Button group content (Button or LinkButton components)"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\" (ButtonSize)",
+        "default": null,
+        "required": false,
+        "doc": "Size applied to all buttons in the group"
+      },
+      "orientation": {
+        "type": "\"horizontal\" | \"vertical\"",
+        "default": "\"horizontal\"",
+        "required": false,
+        "doc": "Orientation of the button group"
+      },
+      "isAttached": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether buttons should be visually connected"
+      },
+      "isFullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the group should take full width"
+      },
+      "spacing": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"sm\"",
+        "required": false,
+        "doc": "Spacing between buttons when not attached"
+      },
+      "role": {
+        "type": "AriaRole",
+        "default": "\"group\"",
+        "required": false,
+        "doc": "(inherited HTML attr; default overridden)"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement>. size is applied via CSS class on the group (not cloned into children). Rest spread onto div."
+  },
+  "Link": {
+    "path": "webapp/src/proto-design-system/components/primitives/Button/Link.tsx",
+    "extends": "AnchorHTMLAttributes<HTMLAnchorElement>",
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"muted\" | \"primary\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual style variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the link"
+      },
+      "underlineOnHover": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether to show underline only on hover"
+      },
+      "leftIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display before text"
+      },
+      "rightIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display after text"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Link content"
+      },
+      "LinkComponent": {
+        "type": "ComponentType<{ to: string; className?: string; target?: string; rel?: string; children: ReactNode }>",
+        "default": null,
+        "required": false,
+        "doc": "Optional router-aware link component (e.g. TanStack Router's `Link`). When provided, renders this instead of a plain `<a>` and forwards `to` / `className` / `target` / `rel` so client-side navigation works."
+      },
+      "to": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Internal route path. Required when `LinkComponent` is provided; otherwise `href` is used."
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLAnchorElement> (ref only applied to the plain <a> path, NOT to LinkComponent). Router injection via LinkComponent+to (a light polymorphism alternative to `as`); rest props are dropped in the LinkComponent branch. target=\"_blank\" auto-appends rel=\"noopener noreferrer\"."
+  },
+  "LinkButton": {
+    "path": "webapp/src/proto-design-system/components/primitives/Button/LinkButton.tsx",
+    "extends": "AnchorHTMLAttributes<HTMLAnchorElement>",
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"primary\" | \"secondary\" | \"accent\" | \"ghost\" | \"outline\" | \"destructive\" (ButtonVariant)",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual style variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\" (ButtonSize)",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the button"
+      },
+      "isFullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Makes button take full width of container"
+      },
+      "isIconOnly": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Renders button as icon-only (square aspect ratio)"
+      },
+      "leftIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display before children"
+      },
+      "rightIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon to display after children"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Button content"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLAnchorElement>; motion.a with Button.module.scss styles. No isLoading/disabled. Auto rel=noopener noreferrer for target=_blank. No LinkComponent router support (unlike Link)."
+  },
+  "Icon": {
+    "path": "webapp/src/proto-design-system/components/primitives/Icon/Icon.tsx",
+    "extends": "React.SVGAttributes<SVGSVGElement>",
+    "props": {
+      "icon": {
+        "type": "LucideIcon",
+        "default": null,
+        "required": true,
+        "doc": "The Lucide icon component to render"
+      },
+      "size": {
+        "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the icon (maps to 12/16/20/24/32/48 px)"
+      },
+      "color": {
+        "type": "\"default\" | \"muted\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"error\" | \"inherit\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Color of the icon"
+      },
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Accessible label (sets aria-label, makes icon non-decorative)"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<SVGSVGElement>. Takes a component reference (icon={Home}), not an element. aria-hidden unless label given (then role=img). Coupled to lucide-react."
+  },
+  "Skeleton": {
+    "path": "webapp/src/proto-design-system/components/primitives/Skeleton/Skeleton.tsx",
+    "extends": "React.HTMLAttributes<HTMLDivElement>",
+    "props": {
+      "variant": {
+        "type": "\"text\" | \"circular\" | \"rectangular\" | \"rounded\"",
+        "default": "\"text\"",
+        "required": false,
+        "doc": "Shape variant"
+      },
+      "width": {
+        "type": "string | number",
+        "default": null,
+        "required": false,
+        "doc": "Width (CSS value)"
+      },
+      "height": {
+        "type": "string | number",
+        "default": null,
+        "required": false,
+        "doc": "Height (CSS value)"
+      },
+      "disableAnimation": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disable animation"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement>. Numeric width/height -> px, merged over style. Always aria-hidden."
+  },
+  "Spinner": {
+    "path": "webapp/src/proto-design-system/components/primitives/Spinner/Spinner.tsx",
+    "extends": "React.HTMLAttributes<HTMLDivElement>",
+    "props": {
+      "size": {
+        "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the spinner"
+      },
+      "variant": {
+        "type": "\"default\" | \"primary\" | \"secondary\" | \"white\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Color variant"
+      },
+      "label": {
+        "type": "string",
+        "default": "\"Loading\"",
+        "required": false,
+        "doc": "Accessible label for screen readers"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement>; role=status, aria-label=label plus visually-hidden text."
+  },
+  "Tag": {
+    "path": "webapp/src/proto-design-system/components/primitives/Tag/Tag.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Tag content"
+      },
+      "variant": {
+        "type": "\"default\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"error\" | \"info\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the tag"
+      },
+      "selectable": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the tag is selectable"
+      },
+      "selected": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Whether the tag is selected (controlled)"
+      },
+      "defaultSelected": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Default selected state (uncontrolled)"
+      },
+      "onSelectChange": {
+        "type": "(selected: boolean) => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when selection changes"
+      },
+      "removable": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the tag can be removed"
+      },
+      "onRemove": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when remove button is clicked"
+      },
+      "removeAriaLabel": {
+        "type": "string",
+        "default": "\"Remove tag\" (applied at render)",
+        "required": false,
+        "doc": "Accessible name for the remove button. Defaults to \"Remove tag\". Override when rendering multiple removable tags so each has a unique name."
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the tag is disabled"
+      },
+      "leftIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Left icon"
+      },
+      "avatar": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Avatar or image URL"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement> but does NOT extend/spread HTML attrs (no style, id, aria passthrough). Controlled/uncontrolled pair: selected/defaultSelected/onSelectChange(selected: boolean). role=button + aria-pressed when selectable; Delete/Backspace triggers onRemove. avatar wins over leftIcon."
+  },
+  "Text": {
+    "path": "webapp/src/proto-design-system/components/primitives/Text/Text.tsx",
+    "extends": "React.ComponentPropsWithoutRef<ElementType> (intersection with TextOwnProps)",
+    "props": {
+      "as": {
+        "type": "ElementType",
+        "default": "\"p\"",
+        "required": false,
+        "doc": "The HTML element to render"
+      },
+      "size": {
+        "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"3xl\" | \"4xl\" | \"5xl\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Font size"
+      },
+      "weight": {
+        "type": "\"normal\" | \"medium\" | \"semibold\" | \"bold\"",
+        "default": null,
+        "required": false,
+        "doc": "Font weight"
+      },
+      "color": {
+        "type": "\"default\" | \"muted\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"error\" | \"inherit\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Text color"
+      },
+      "align": {
+        "type": "\"left\" | \"center\" | \"right\" | \"justify\"",
+        "default": null,
+        "required": false,
+        "doc": "Text alignment"
+      },
+      "truncate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Truncate text with ellipsis"
+      },
+      "lineClamp": {
+        "type": "number",
+        "default": null,
+        "required": false,
+        "doc": "Limit to specific number of lines with ellipsis"
+      },
+      "italic": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Make text italic"
+      },
+      "underline": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Add underline"
+      },
+      "strikethrough": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Add strikethrough"
+      },
+      "transform": {
+        "type": "\"uppercase\" | \"lowercase\" | \"capitalize\" | \"none\"",
+        "default": null,
+        "required": false,
+        "doc": "Transform text case"
+      },
+      "nowrap": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Prevent text wrapping"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Text content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional class name"
+      },
+      "style": {
+        "type": "React.CSSProperties",
+        "default": null,
+        "required": false,
+        "doc": "Inline styles"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function (NO forwardRef). Polymorphic via `as` (loosely typed ElementType; Text.types.ts also exports a TextElement union and a public TextProps interface, but the component uses an internal TextOwnProps). lineClamp sets --line-clamp CSS var."
+  },
+  "Checkbox": {
+    "path": "webapp/src/proto-design-system/components/forms/Checkbox/Checkbox.tsx",
+    "extends": "Omit<React.InputHTMLAttributes<HTMLInputElement>, \"size\" | \"type\" | \"onKeyDown\">",
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Description text below label"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "indeterminate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Indeterminate state"
+      },
+      "isError": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Error state"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLInputElement> (merged callback ref also sets node.indeterminate). Native input: checked/defaultChecked/onChange(ChangeEvent) pass through. className goes on the outer container div, rest on <input>. Auto id via useId; description wired to aria-describedby. Enter key toggles."
+  },
+  "FormField": {
+    "path": "webapp/src/proto-design-system/components/forms/FormField/FormField.tsx",
+    "extends": null,
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "helperText": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Helper text below the field"
+      },
+      "errorMessage": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Error message (replaces helper text when present)"
+      },
+      "required": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the field is required"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "id": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Field ID for label association"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Form field content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, no ref, no HTML passthrough. Label htmlFor=id but does NOT inject id/aria-describedby into children - consumer must pass the same id to the child. Error rendered with role=alert."
+  },
+  "FormHint": {
+    "path": "webapp/src/proto-design-system/components/forms/FormHint/FormHint.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Hint text content"
+      },
+      "variant": {
+        "type": "\"default\" | \"error\" | \"success\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "showIcon": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Show icon prefix"
+      },
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Custom icon (overrides default)"
+      },
+      "id": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Associated input ID for aria-describedby"
+      },
+      "hidden": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Hidden state"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, no ref. Renders <p>; returns null when hidden. role=alert for error variant. Default icons Info/AlertCircle/CheckCircle2 per variant."
+  },
+  "Input": {
+    "path": "webapp/src/proto-design-system/components/forms/Input/Input.tsx",
+    "extends": "Omit<InputHTMLAttributes<HTMLInputElement>, \"size\">",
+    "props": {
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size of the input"
+      },
+      "variant": {
+        "type": "\"default\" | \"filled\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "leftElement": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon or element to display at the start"
+      },
+      "rightElement": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon or element to display at the end"
+      },
+      "isError": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Error state"
+      },
+      "isFullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Full width"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLInputElement>. className goes on the wrapper div; rest (value/defaultValue/onChange(ChangeEvent)) on <input>. Adornments named leftElement/rightElement (not *Icon) and are aria-hidden. aria-invalid=isError."
+  },
+  "Label": {
+    "path": "webapp/src/proto-design-system/components/forms/Label/Label.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Label text"
+      },
+      "subText": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Optional secondary/sub text"
+      },
+      "required": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the field is required"
+      },
+      "badge": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Optional badge content"
+      },
+      "action": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Optional trailing action (link or button)"
+      },
+      "htmlFor": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Associated input ID"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, no ref, no passthrough. subText rendered in parentheses."
+  },
+  "Radio": {
+    "path": "webapp/src/proto-design-system/components/forms/Radio/Radio.tsx",
+    "extends": "Omit<React.InputHTMLAttributes<HTMLInputElement>, \"size\" | \"type\" | \"onKeyDown\">",
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Description text below label"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "isError": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Error state"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLInputElement>. Single native radio; there is NO RadioGroup component - grouping via shared `name`, checked/onChange(ChangeEvent) native. className on container."
+  },
+  "Select": {
+    "path": "webapp/src/proto-design-system/components/forms/Select/Select.tsx",
+    "extends": "Omit<React.SelectHTMLAttributes<HTMLSelectElement>, \"size\">",
+    "props": {
+      "options": {
+        "type": "SelectOption[]  // { value: string; label: string; disabled?: boolean }",
+        "default": null,
+        "required": true,
+        "doc": "Select options"
+      },
+      "placeholder": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Placeholder text when no value selected"
+      },
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "helperText": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Helper text below select"
+      },
+      "errorMessage": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Error message"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "variant": {
+        "type": "\"default\" | \"filled\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "fullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Full width"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLSelectElement>; native <select>, value/defaultValue/onChange(ChangeEvent<HTMLSelectElement>). Data-driven options array. Uses `fullWidth` (not isFullWidth like Input). Built-in label/helper/error (field chrome baked in)."
+  },
+  "Slider": {
+    "path": "webapp/src/proto-design-system/components/forms/Slider/Slider.tsx",
+    "extends": "Omit<React.InputHTMLAttributes<HTMLInputElement>, \"size\" | \"type\">",
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "showValue": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Show current value"
+      },
+      "formatValue": {
+        "type": "(value: number) => string",
+        "default": "(v) => String(v)",
+        "required": false,
+        "doc": "Format the displayed value"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "fullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Full width"
+      },
+      "min": {
+        "type": "number | string",
+        "default": "0",
+        "required": false,
+        "doc": "(inherited HTML attr)"
+      },
+      "max": {
+        "type": "number | string",
+        "default": "100",
+        "required": false,
+        "doc": "(inherited HTML attr)"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLInputElement>; native range input. value/defaultValue/onChange(ChangeEvent) native. Displayed value only tracks the `value`/`defaultValue` prop (not live in uncontrolled mode)."
+  },
+  "Stepper": {
+    "path": "webapp/src/proto-design-system/components/forms/Stepper/Stepper.tsx",
+    "extends": null,
+    "props": {
+      "value": {
+        "type": "number",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "onChange": {
+        "type": "(value: number) => void",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "min": {
+        "type": "number",
+        "default": "Number.NEGATIVE_INFINITY",
+        "required": false,
+        "doc": null
+      },
+      "max": {
+        "type": "number",
+        "default": "Number.POSITIVE_INFINITY",
+        "required": false,
+        "doc": null
+      },
+      "step": {
+        "type": "number",
+        "default": "1",
+        "required": false,
+        "doc": null
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": null
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": null
+      },
+      "aria-label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, no ref. Controlled-only; onChange receives the clamped number (value, not event). Not a file-level component doc beyond 'numeric input rendered as [-] [value] [+]'."
+  },
+  "Switch": {
+    "path": "webapp/src/proto-design-system/components/forms/Switch/Switch.tsx",
+    "extends": "Omit<React.InputHTMLAttributes<HTMLInputElement>, \"size\" | \"type\" | \"onKeyDown\">",
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Description text below label"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "labelPosition": {
+        "type": "\"left\" | \"right\"",
+        "default": "\"right\"",
+        "required": false,
+        "doc": "Position label on the left"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLInputElement>; native checkbox (no role=switch). checked/defaultChecked/onChange(ChangeEvent) native. No isError."
+  },
+  "TextArea": {
+    "path": "webapp/src/proto-design-system/components/forms/TextArea/TextArea.tsx",
+    "extends": "React.TextareaHTMLAttributes<HTMLTextAreaElement>",
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "helperText": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Helper text shown below textarea"
+      },
+      "errorMessage": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Error message (also sets error state)"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "required": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Make the field required"
+      },
+      "hideLabel": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Hide the label visually (still accessible)"
+      },
+      "isError": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Error state"
+      },
+      "resize": {
+        "type": "\"none\" | \"vertical\" | \"horizontal\" | \"both\"",
+        "default": "\"vertical\"",
+        "required": false,
+        "doc": "Resize behavior"
+      },
+      "fullWidth": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Full width"
+      },
+      "rows": {
+        "type": "number",
+        "default": "4",
+        "required": false,
+        "doc": "(inherited HTML attr)"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLTextAreaElement>. Field chrome baked in (label/helper/error). `required` is consumed (only aria-required set, native required attr NOT forwarded). className on wrapper."
+  },
+  "TextField": {
+    "path": "webapp/src/proto-design-system/components/forms/TextField/TextField.tsx",
+    "extends": "InputProps (Input's props: Omit<InputHTMLAttributes<HTMLInputElement>, \"size\"> + size/variant/leftElement/rightElement/isError/isFullWidth)",
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Label text"
+      },
+      "helperText": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Helper text shown below input"
+      },
+      "errorMessage": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Error message (also sets error state)"
+      },
+      "required": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Make the field required"
+      },
+      "hideLabel": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Hide the label visually (still accessible)"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\" (via Input)",
+        "required": false,
+        "doc": "Size of the input"
+      },
+      "variant": {
+        "type": "\"default\" | \"filled\"",
+        "default": "\"default\" (via Input)",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "leftElement": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon or element to display at the start"
+      },
+      "rightElement": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon or element to display at the end"
+      },
+      "isError": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Error state"
+      },
+      "isFullWidth": {
+        "type": "boolean",
+        "default": "false (via Input)",
+        "required": false,
+        "doc": "Full width"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLInputElement> forwarded to inner Input. Composition of Input + label/helper/error. className on outer wrapper. required -> aria-required only."
+  },
+  "AspectRatio": {
+    "path": "webapp/src/proto-design-system/components/layout/AspectRatio/AspectRatio.tsx",
+    "extends": null,
+    "props": {
+      "ratio": {
+        "type": "number | \"square\" | \"video\" | \"portrait\" | \"wide\"",
+        "default": "\"video\"",
+        "required": false,
+        "doc": "Aspect ratio as width/height (e.g., 16/9) or preset"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Content to display"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, no ref, no passthrough. Presets: square 1, video 16/9, portrait 3/4, wide 21/9. Uses padding-bottom hack."
+  },
+  "Card": {
+    "path": "webapp/src/proto-design-system/components/layout/Card/Card.tsx",
+    "extends": null,
+    "props": {
+      "variant": {
+        "type": "\"elevated\" | \"outlined\" | \"filled\" | \"spec\"",
+        "default": "\"outlined\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "padding": {
+        "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Padding size"
+      },
+      "interactive": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Make card interactive (hover effects)"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Card content"
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"div\"",
+        "required": false,
+        "doc": "HTML element to render"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "style": {
+        "type": "CSSProperties",
+        "default": null,
+        "required": false,
+        "doc": "Inline styles"
+      },
+      "onClick": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Click handler for interactive cards"
+      },
+      "onContextMenu": {
+        "type": "(e: ReactMouseEvent) => void",
+        "default": null,
+        "required": false,
+        "doc": "Context-menu (right-click) handler — e.g. canvas nodes with a custom menu"
+      }
+    },
+    "subcomponents": [
+      "CardHeader",
+      "CardBody",
+      "CardFooter"
+    ],
+    "notes": "Plain function, no ref, no HTML passthrough (aria/id dropped). Polymorphic `as`. interactive => role=button + tabIndex=0 (but no keyboard activation handler). Sub-parts are separate named exports (CardHeader/CardBody/CardFooter), NOT dot-attached Card.Header."
+  },
+  "CardBody": {
+    "path": "webapp/src/proto-design-system/components/layout/Card/Card.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Card. Plain div."
+  },
+  "CardFooter": {
+    "path": "webapp/src/proto-design-system/components/layout/Card/Card.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Card. Plain div."
+  },
+  "CardHeader": {
+    "path": "webapp/src/proto-design-system/components/layout/Card/Card.tsx",
+    "extends": null,
+    "props": {
+      "name": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Editorial card name. When provided alongside `meta`, renders the spec-style header: serif name on the left (supports `<em>` accent), uppercase mono caption on the right. Falls back to `children` otherwise."
+      },
+      "meta": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Uppercase mono caption rendered on the right of the spec header."
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Card. Two render modes: spec header (name/meta) vs plain children."
+  },
+  "Container": {
+    "path": "webapp/src/proto-design-system/components/layout/Container/Container.tsx",
+    "extends": null,
+    "props": {
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"full\"",
+        "default": "\"lg\"",
+        "required": false,
+        "doc": "Container max-width size"
+      },
+      "centered": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Center the container"
+      },
+      "padded": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Add horizontal padding"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Container content"
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"div\"",
+        "required": false,
+        "doc": "HTML element to render"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "style": {
+        "type": "CSSProperties",
+        "default": null,
+        "required": false,
+        "doc": "Inline styles"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, polymorphic `as`, no ref, no rest passthrough."
+  },
+  "Divider": {
+    "path": "webapp/src/proto-design-system/components/layout/Divider/Divider.tsx",
+    "extends": null,
+    "props": {
+      "orientation": {
+        "type": "\"horizontal\" | \"vertical\"",
+        "default": "\"horizontal\"",
+        "required": false,
+        "doc": "Orientation"
+      },
+      "variant": {
+        "type": "\"solid\" | \"dashed\" | \"dotted\"",
+        "default": "\"solid\"",
+        "required": false,
+        "doc": "Line style"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Label text or content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function. Renders <hr> when horizontal and unlabeled, else div (vertical divider has no role=separator)."
+  },
+  "Grid": {
+    "path": "webapp/src/proto-design-system/components/layout/Grid/Grid.tsx",
+    "extends": null,
+    "props": {
+      "columns": {
+        "type": "Responsive<\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"12\" | \"auto\">  // Responsive<T> = T | Partial<Record<\"base\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\", T>>",
+        "default": "\"auto\"",
+        "required": false,
+        "doc": "Number of columns — supports responsive object e.g. `{{ base: 1, md: 3 }}`"
+      },
+      "gap": {
+        "type": "Responsive<\"0\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"3xl\" | \"4xl\">",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Gap between items — supports responsive object."
+      },
+      "rowGap": {
+        "type": "Responsive<\"0\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"3xl\" | \"4xl\">",
+        "default": null,
+        "required": false,
+        "doc": "Row gap (overrides gap for rows)."
+      },
+      "columnGap": {
+        "type": "Responsive<\"0\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"3xl\" | \"4xl\">",
+        "default": null,
+        "required": false,
+        "doc": "Column gap (overrides gap for columns)."
+      },
+      "containerQuery": {
+        "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\"",
+        "default": null,
+        "required": false,
+        "doc": "When set, the component applies container-type: inline-size and responsive CSS vars respond to @container queries at the given size threshold."
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Grid content"
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"div\"",
+        "required": false,
+        "doc": "HTML element to render"
+      },
+      "animate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable stagger animation for grid items"
+      },
+      "staggerDelay": {
+        "type": "number",
+        "default": "0.05",
+        "required": false,
+        "doc": "Stagger delay between items in seconds"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [
+      "Grid.Item"
+    ],
+    "notes": "Plain function, no ref, no style/rest passthrough. Polymorphic `as` (ignored when animate: renders motion.div wrapping each child). Responsive values become CSS custom props (--grid-columns-{bp}, --grid-gap-{bp}). columns typed as string literals though JSDoc example uses numbers. Grid.Item = GridItem (dot-attached)."
+  },
+  "Grid.Item": {
+    "path": "webapp/src/proto-design-system/components/layout/Grid/Grid.tsx",
+    "extends": "(alias of GridItem)",
+    "props": {},
+    "subcomponents": [],
+    "notes": "Static property `Grid.Item = GridItem`; same props as GridItem."
+  },
+  "GridItem": {
+    "path": "webapp/src/proto-design-system/components/layout/GridItem/GridItem.tsx",
+    "extends": "Record<string, unknown> (intersection; arbitrary props spread onto element)",
+    "props": {
+      "span": {
+        "type": "Responsive<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | \"full\">",
+        "default": null,
+        "required": false,
+        "doc": "Number of columns to span. \"full\" = span all 12 columns (1 / -1). Supports responsive object e.g. `{ base: 12, md: 6 }`"
+      },
+      "start": {
+        "type": "Responsive<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12>",
+        "default": null,
+        "required": false,
+        "doc": "Column start position (1-indexed). Supports responsive object."
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"div\"",
+        "required": false,
+        "doc": "HTML element to render"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Grid item content"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Also exposed as Grid.Item. Polymorphic `as`; rest spread (so aria-label etc. work) but style is overwritten by the span/start CSS vars. PageShell detects it via displayName === \"GridItem\"."
+  },
+  "PageHero": {
+    "path": "webapp/src/proto-design-system/components/layout/PageHero/PageHero.tsx",
+    "extends": null,
+    "props": {
+      "eyebrow": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Small mono label above the title (e.g. \"Campaigns · 04 total\")."
+      },
+      "title": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Main page heading. Accepts JSX so callers can inline `<em>` or `<br/>` accents."
+      },
+      "description": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Sublede paragraph shown below the title."
+      },
+      "actions": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Right-aligned action slot (usually a Button)."
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className on the root `<header>`."
+      },
+      "style": {
+        "type": "CSSProperties",
+        "default": null,
+        "required": false,
+        "doc": "Inline styles — useful for ad-hoc token overrides."
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function; <header> with <h1>. Slot props (eyebrow/title/description/actions); styled via --page-hero-* CSS vars."
+  },
+  "PageShell": {
+    "path": "webapp/src/proto-design-system/components/layout/PageShell/PageShell.tsx",
+    "extends": null,
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"narrow\" | \"full\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Layout variant. default — max-width 1280px; narrow — 1024px (auth-style); full — no max-width."
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"div\"",
+        "required": false,
+        "doc": "HTML element to render (defaults to \"div\")"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Page content. Direct children that are not GridItem are auto-wrapped in `<GridItem span={{ base: 12 }}>`."
+      },
+      "animate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable stagger animation for page sections"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Wraps Grid columns=\"12\"; auto-wraps non-GridItem children. Do not nest. `animate` here is a CSS fade class, not Grid's stagger."
+  },
+  "PageTransition": {
+    "path": "webapp/src/proto-design-system/components/layout/PageTransition/PageTransition.tsx",
+    "extends": null,
+    "props": {
+      "pageKey": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Unique key for the current page/content - change this to trigger transition"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Content to display"
+      },
+      "type": {
+        "type": "\"fade\" | \"slide\" | \"scale\" | \"slideUp\"",
+        "default": "\"fade\"",
+        "required": false,
+        "doc": "Transition type"
+      },
+      "duration": {
+        "type": "number",
+        "default": "motionTokens.duration.normal (theme token)",
+        "required": false,
+        "doc": "Transition duration in seconds. Defaults to the theme's normal duration token."
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className for the wrapper"
+      }
+    },
+    "subcomponents": [],
+    "notes": "AnimatePresence mode=wait + motion.div keyed by pageKey. Reduced motion => duration 0."
+  },
+  "SectionHeader": {
+    "path": "webapp/src/proto-design-system/components/layout/SectionHeader/SectionHeader.tsx",
+    "extends": null,
+    "props": {
+      "eyebrow": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Mono uppercase label above the title — e.g. \"CAMPAIGNS · 4 TOTAL\"."
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Section heading text. Rendered as an `<h2>` by default."
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Optional description line below the title. Max 62ch."
+      },
+      "actions": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Right-aligned action slot — usually a Button or Dropdown."
+      },
+      "size": {
+        "type": "\"sm\" | \"md\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant. md — title at --font-size-md (16px); sm — --font-size-base (15px)."
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"h2\"",
+        "required": false,
+        "doc": "Override the rendered heading element. Defaults to \"h2\"."
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional class name on the root element."
+      }
+    },
+    "subcomponents": [],
+    "notes": "`as` changes the HEADING element, not the root (<header>). Eyebrow aria-hidden. Unlike PageHero, slots are strings not ReactNode (except actions)."
+  },
+  "Stack": {
+    "path": "webapp/src/proto-design-system/components/layout/Stack/Stack.tsx",
+    "extends": null,
+    "props": {
+      "direction": {
+        "type": "Responsive<\"row\" | \"column\" | \"row-reverse\" | \"column-reverse\">  // Responsive<T> = T | Partial<Record<\"base\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\", T>>",
+        "default": "\"column\"",
+        "required": false,
+        "doc": "Flex direction — supports responsive object e.g. `{{ base: \"column\", md: \"row\" }}`"
+      },
+      "align": {
+        "type": "Responsive<\"start\" | \"center\" | \"end\" | \"stretch\" | \"baseline\">",
+        "default": null,
+        "required": false,
+        "doc": "Align items — supports responsive object"
+      },
+      "justify": {
+        "type": "Responsive<\"start\" | \"center\" | \"end\" | \"between\" | \"around\" | \"evenly\">",
+        "default": null,
+        "required": false,
+        "doc": "Justify content — supports responsive object"
+      },
+      "gap": {
+        "type": "Responsive<\"0\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"3xl\" | \"4xl\">",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Gap between items — supports responsive object"
+      },
+      "wrap": {
+        "type": "Responsive<boolean>",
+        "default": "false",
+        "required": false,
+        "doc": "Allow items to wrap — supports responsive object"
+      },
+      "containerQuery": {
+        "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\"",
+        "default": null,
+        "required": false,
+        "doc": "When set, the component applies container-type: inline-size and responsive CSS vars respond to @container queries at the given size threshold."
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Stack content"
+      },
+      "as": {
+        "type": "ElementType",
+        "default": "\"div\"",
+        "required": false,
+        "doc": "HTML element to render"
+      },
+      "animate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable stagger animation for stack items"
+      },
+      "staggerDelay": {
+        "type": "number",
+        "default": "0.1",
+        "required": false,
+        "doc": "Stagger delay between items in seconds"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "style": {
+        "type": "CSSProperties",
+        "default": null,
+        "required": false,
+        "doc": "Inline styles"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, no ref, no rest passthrough. Polymorphic `as` (ignored when animate). All layout props responsive via --stack-* CSS vars; style merged last."
+  },
+  "DataGrid": {
+    "path": "webapp/src/proto-design-system/components/data/DataGrid/DataGrid.tsx",
+    "extends": null,
+    "props": {
+      "data": {
+        "type": "T[]",
+        "default": null,
+        "required": true,
+        "doc": "Data rows"
+      },
+      "columns": {
+        "type": "DataGridColumn<T>[]  // { id: string; header: ReactNode; cell: (row: T) => ReactNode; width?: string | number; sortable?: boolean; sortFn?: (a: T, b: T) => number; align?: \"left\" | \"center\" | \"right\" }",
+        "default": null,
+        "required": true,
+        "doc": "Column definitions"
+      },
+      "getRowId": {
+        "type": "(row: T) => string | number",
+        "default": null,
+        "required": true,
+        "doc": "Row key accessor"
+      },
+      "pagination": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable pagination"
+      },
+      "pageSize": {
+        "type": "number",
+        "default": "10",
+        "required": false,
+        "doc": "Page size"
+      },
+      "selectable": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable row selection"
+      },
+      "selectedIds": {
+        "type": "Set<string | number>",
+        "default": "new Set()",
+        "required": false,
+        "doc": "Selected row IDs"
+      },
+      "onSelectionChange": {
+        "type": "(ids: Set<string | number>) => void",
+        "default": null,
+        "required": false,
+        "doc": "Selection change handler"
+      },
+      "onRowClick": {
+        "type": "(row: T) => void",
+        "default": null,
+        "required": false,
+        "doc": "Row click handler"
+      },
+      "loading": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Loading state"
+      },
+      "loadingMessage": {
+        "type": "string",
+        "default": "\"Loading...\"",
+        "required": false,
+        "doc": "Loading message"
+      },
+      "emptyState": {
+        "type": "ReactNode",
+        "default": "\"No data available\"",
+        "required": false,
+        "doc": "Empty state content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Generic <T>. Sort state and page state are INTERNAL (uncontrolled, no callbacks); selection is controlled-only via selectedIds Set + onSelectionChange(Set). Default sort compares String(cell(row)). Composes Checkbox, Pagination, Spinner. Exports its own SortDirection type (duplicate of Table's)."
+  },
+  "DataTable": {
+    "path": "webapp/src/proto-design-system/components/data/DataTable/DataTable.tsx",
+    "extends": null,
+    "props": {
+      "columns": {
+        "type": "DataTableColumn<T>[]  // { id: string; header: string; cell: (row: T, index: number) => ReactNode; width?: string; align?: \"left\" | \"right\" }",
+        "default": null,
+        "required": true,
+        "doc": "Column definitions"
+      },
+      "data": {
+        "type": "T[]",
+        "default": null,
+        "required": true,
+        "doc": "Row data"
+      },
+      "getRowKey": {
+        "type": "(row: T, index: number) => string",
+        "default": null,
+        "required": true,
+        "doc": "Unique key extractor"
+      },
+      "loading": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether to show a skeleton loading state"
+      },
+      "loadingRowCount": {
+        "type": "number",
+        "default": "3",
+        "required": false,
+        "doc": "Number of skeleton rows to render while loading"
+      },
+      "emptyState": {
+        "type": "ReactNode",
+        "default": "\"No data\" span",
+        "required": false,
+        "doc": "Content to render when data is empty and not loading"
+      },
+      "density": {
+        "type": "\"comfortable\" | \"compact\"",
+        "default": "\"comfortable\"",
+        "required": false,
+        "doc": "Row density"
+      },
+      "onRowClick": {
+        "type": "(row: T) => void",
+        "default": null,
+        "required": false,
+        "doc": "Optional click handler — rows become focusable buttons"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional class for the outer wrapper"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Generic <T>. Div-based ARIA table (role=table/row/cell) using CSS grid --dt-cols. Data-driven columns with cell render function. Clickable rows rendered as <button role=row>. Row key fn is `getRowKey` here vs `getRowId` in DataGrid; `density` concept only here."
+  },
+  "EmptyState": {
+    "path": "webapp/src/proto-design-system/components/data/EmptyState/EmptyState.tsx",
+    "extends": null,
+    "props": {
+      "icon": {
+        "type": "ReactNode",
+        "default": "<Inbox />",
+        "required": false,
+        "doc": "Icon to display"
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Title text"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Description text"
+      },
+      "action": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Action buttons/links"
+      },
+      "secondaryAction": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Secondary action"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function; title is an <h3>. Slot props."
+  },
+  "FilterTabs": {
+    "path": "webapp/src/proto-design-system/components/data/FilterTabs/FilterTabs.tsx",
+    "extends": null,
+    "props": {
+      "items": {
+        "type": "FilterTabItem[]  // { id: string; label: string; count?: number; icon?: ReactNode }",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "value": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "onChange": {
+        "type": "(id: string) => void",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": null
+      },
+      "aria-label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Controlled-only, onChange(value). role=tablist/tab without roving tabindex or arrow keys. Counts zero-padded to 2 digits."
+  },
+  "List": {
+    "path": "webapp/src/proto-design-system/components/data/List/List.tsx",
+    "extends": null,
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"divided\" | \"bordered\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "List variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "List size"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "List items"
+      },
+      "animate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable stagger animation for list items"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [
+      "ListItem",
+      "ListGroup"
+    ],
+    "notes": "Plain function, <ul>. Sub-parts are separate named exports. When animate, wraps each child in motion.div inside <ul> (invalid li nesting)."
+  },
+  "ListGroup": {
+    "path": "webapp/src/proto-design-system/components/data/List/List.tsx",
+    "extends": null,
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Group label"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Group items"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of List; <li> containing label + nested <ul>."
+  },
+  "ListItem": {
+    "path": "webapp/src/proto-design-system/components/data/List/List.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Item content"
+      },
+      "leading": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Leading element (icon, avatar, etc.)"
+      },
+      "trailing": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Trailing element (badge, action, etc.)"
+      },
+      "secondary": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Secondary text"
+      },
+      "selected": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Selected state"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "onClick": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Click handler"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of List. Interactive (role=button, tabIndex 0, Enter/Space) only when onClick provided. Slot naming leading/trailing (vs leftIcon/rightIcon elsewhere)."
+  },
+  "StatCard": {
+    "path": "webapp/src/proto-design-system/components/data/StatCard/StatCard.tsx",
+    "extends": null,
+    "props": {
+      "label": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Stat label/title"
+      },
+      "value": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Stat value"
+      },
+      "numericValue": {
+        "type": "number",
+        "default": null,
+        "required": false,
+        "doc": "Numeric value for count-up animation (overrides value when provided)"
+      },
+      "formatValue": {
+        "type": "(value: number) => string",
+        "default": null,
+        "required": false,
+        "doc": "Format function for numeric value (e.g., to add currency symbol)"
+      },
+      "previousValue": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Previous value or comparison"
+      },
+      "trend": {
+        "type": "\"up\" | \"down\" | \"neutral\"",
+        "default": null,
+        "required": false,
+        "doc": "Trend direction"
+      },
+      "trendValue": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Trend percentage"
+      },
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Optional icon"
+      },
+      "variant": {
+        "type": "\"default\" | \"outlined\" | \"filled\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional description"
+      },
+      "footer": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Optional footer content rendered below the value row"
+      },
+      "onClick": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Click handler"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Renders <button> when onClick given, else <div> (implicit polymorphism). `value` is required even when numericValue is used. Spring count-up via motion useSpring."
+  },
+  "Table": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Table size"
+      },
+      "variant": {
+        "type": "\"default\" | \"striped\" | \"bordered\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Table variant"
+      },
+      "loading": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the table is loading"
+      },
+      "loadingMessage": {
+        "type": "string",
+        "default": "\"Loading...\"",
+        "required": false,
+        "doc": "Loading message"
+      },
+      "minWidth": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Minimum width for responsive horizontal scroll"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Table content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [
+      "TableHeader",
+      "TableBody",
+      "TableFooter",
+      "TableRow",
+      "TableHead",
+      "TableCell",
+      "TableCaption",
+      "TableExpandedRow"
+    ],
+    "notes": "Composable semantic <table> wrapped in a scroll div with a Spinner loading overlay. className goes on <table>, not wrapper. Sub-parts are separate named exports (shadcn-style). Uses `loading` (not isLoading like Button)."
+  },
+  "TableBody": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "<tbody>. Sub-component of Table."
+  },
+  "TableCaption": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "<caption>. Sub-component of Table."
+  },
+  "TableCell": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": null
+      },
+      "align": {
+        "type": "\"left\" | \"center\" | \"right\"",
+        "default": "\"left\"",
+        "required": false,
+        "doc": "Text alignment"
+      },
+      "narrow": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the cell uses narrow horizontal padding — pair with TableHead narrow for checkbox/icon columns."
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Table (<td>). No colSpan/rowSpan passthrough."
+  },
+  "TableExpandedRow": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "colSpan": {
+        "type": "number",
+        "default": null,
+        "required": true,
+        "doc": "Number of columns to span"
+      },
+      "expanded": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Whether the row is expanded"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Table. TableExpandedRow displays expanded content spanning all columns; use with TableRow's expanded prop. CSS-animated collapse."
+  },
+  "TableFooter": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "<tfoot>. Sub-component of Table."
+  },
+  "TableHead": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": null
+      },
+      "sortDirection": {
+        "type": "\"asc\" | \"desc\" | null",
+        "default": null,
+        "required": false,
+        "doc": "Sort direction"
+      },
+      "onSort": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Sortable handler"
+      },
+      "width": {
+        "type": "string | number",
+        "default": null,
+        "required": false,
+        "doc": "Column width"
+      },
+      "narrow": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the column should use narrow width (for checkboxes, icons)"
+      },
+      "align": {
+        "type": "\"left\" | \"center\" | \"right\"",
+        "default": "\"left\"",
+        "required": false,
+        "doc": "Text alignment"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Table (<th>). Sortable when onSort present; controlled sortDirection; aria-sort set."
+  },
+  "TableHeader": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "<thead>. Sub-component of Table."
+  },
+  "TableRow": {
+    "path": "webapp/src/proto-design-system/components/data/Table/Table.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "selected": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Selected state"
+      },
+      "expandable": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the row is expandable"
+      },
+      "expanded": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Whether the row is expanded"
+      },
+      "onClick": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Click handler"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Table. Controlled-only expansion (expanded prop, no toggle callback beyond onClick). Focusable + Enter/Space when onClick."
+  },
+  "Alert": {
+    "path": "webapp/src/proto-design-system/components/feedback/Alert/Alert.tsx",
+    "extends": null,
+    "props": {
+      "variant": {
+        "type": "\"info\" | \"success\" | \"warning\" | \"error\"",
+        "default": "\"info\"",
+        "required": false,
+        "doc": "Alert variant"
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Alert title"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Alert content"
+      },
+      "icon": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show icon"
+      },
+      "customIcon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Custom icon"
+      },
+      "dismissible": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Dismissible alert"
+      },
+      "onDismiss": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Dismiss callback"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function, motion.div with role=alert (always, even for info). Note `icon` is a boolean toggle and the node goes in `customIcon` (inconsistent with Banner/FormHint where `icon` is the node)."
+  },
+  "Banner": {
+    "path": "webapp/src/proto-design-system/components/feedback/Banner/Banner.tsx",
+    "extends": null,
+    "props": {
+      "type": {
+        "type": "\"info\" | \"success\" | \"warning\" | \"error\" | \"feature\"",
+        "default": "\"info\"",
+        "required": false,
+        "doc": "Banner type"
+      },
+      "variant": {
+        "type": "\"filled\" | \"light\" | \"lighter\" | \"stroke\"",
+        "default": "\"light\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Title text"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Description text"
+      },
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Custom icon"
+      },
+      "action": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Action element (button or link)"
+      },
+      "dismissible": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Whether the banner can be dismissed"
+      },
+      "onDismiss": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when dismissed"
+      },
+      "animate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable enter/exit animations"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Two axes: `type` = semantic intent, `variant` = fill style (unlike Alert where variant = intent). dismissible defaults TRUE (Alert defaults false). role=alert."
+  },
+  "BannerCenterProvider": {
+    "path": "webapp/src/proto-design-system/components/feedback/BannerCenter/BannerCenter.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Context provider + display. Imperative API via exported hook useBannerCenter(): { addBanner(banner: Omit<BannerItem,\"id\"> & { id?: string }) => string; removeBanner(id: string) => void; clearDismissible() => void; clearAll() => void }. BannerItem = { id; type?; variant?; title; description?; icon?; action?; dismissible? }. Shows non-dismissible banners in a row and only the newest dismissible one with skeleton stack hints."
+  },
+  "Progress": {
+    "path": "webapp/src/proto-design-system/components/feedback/Progress/Progress.tsx",
+    "extends": null,
+    "props": {
+      "value": {
+        "type": "number",
+        "default": null,
+        "required": true,
+        "doc": "Current progress value (0-100)"
+      },
+      "max": {
+        "type": "number",
+        "default": "100",
+        "required": false,
+        "doc": "Maximum value"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "variant": {
+        "type": "\"default\" | \"success\" | \"warning\" | \"error\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Color variant"
+      },
+      "showLabel": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Show percentage label"
+      },
+      "indeterminate": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Indeterminate loading state"
+      },
+      "aria-label": {
+        "type": "string",
+        "default": "`Progress: ${pct}%` (computed)",
+        "required": false,
+        "doc": "Accessible label"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Plain function. value required even when indeterminate. Uses visually-hidden native <progress> for a11y."
+  },
+  "Toast": {
+    "path": "webapp/src/proto-design-system/components/feedback/Toast/Toast.tsx",
+    "extends": null,
+    "props": {
+      "variant": {
+        "type": "\"default\" | \"success\" | \"warning\" | \"error\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Toast variant"
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Toast title"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Toast content"
+      },
+      "closable": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show close button"
+      },
+      "onClose": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Close callback"
+      },
+      "action": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Action button"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "memo()-wrapped, motion.output aria-live=polite. No toast() imperative API/queue/auto-dismiss — consumer manages list and timing. Close naming: closable/onClose (vs Alert/Banner dismissible/onDismiss)."
+  },
+  "ToastContainer": {
+    "path": "webapp/src/proto-design-system/components/feedback/Toast/Toast.tsx",
+    "extends": null,
+    "props": {
+      "position": {
+        "type": "\"top-right\" | \"top-left\" | \"bottom-right\" | \"bottom-left\" | \"top-center\" | \"bottom-center\"",
+        "default": "\"bottom-right\"",
+        "required": false,
+        "doc": "Position of toasts"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Toast items"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Portals to document.body; SSR-safe (returns null without document)."
+  },
+  "Accordion": {
+    "path": "webapp/src/proto-design-system/components/composite/Accordion/Accordion.tsx",
+    "extends": null,
+    "props": {
+      "items": {
+        "type": "AccordionItemData[]  // { id: string; title: string; description?: string; content: ReactNode; disabled?: boolean; icon?: ReactNode }",
+        "default": null,
+        "required": true,
+        "doc": "Array of accordion items"
+      },
+      "multiple": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Allow multiple items to be expanded simultaneously"
+      },
+      "defaultExpanded": {
+        "type": "string[]",
+        "default": "[]",
+        "required": false,
+        "doc": "Default expanded item IDs"
+      },
+      "expanded": {
+        "type": "string[]",
+        "default": null,
+        "required": false,
+        "doc": "Controlled expanded state"
+      },
+      "onExpandedChange": {
+        "type": "(expanded: string[]) => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when expansion changes"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Data-driven (items array), not compound; internal AccordionItem is NOT exported. Controlled/uncontrolled: expanded / defaultExpanded / onExpandedChange(string[]). Arrow/Home/End roving between headers. Panel has role=region but no aria-controls/labelledby link."
+  },
+  "DatePicker": {
+    "path": "webapp/src/proto-design-system/components/composite/DatePicker/DatePicker.tsx",
+    "extends": null,
+    "props": {
+      "value": {
+        "type": "Date | null",
+        "default": null,
+        "required": false,
+        "doc": "Selected date"
+      },
+      "onChange": {
+        "type": "(date: Date | null) => void",
+        "default": null,
+        "required": false,
+        "doc": "Date change handler"
+      },
+      "placeholder": {
+        "type": "string",
+        "default": "\"Select date...\"",
+        "required": false,
+        "doc": "Placeholder text"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Date picker size"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "minDate": {
+        "type": "Date",
+        "default": null,
+        "required": false,
+        "doc": "Minimum selectable date"
+      },
+      "maxDate": {
+        "type": "Date",
+        "default": null,
+        "required": false,
+        "doc": "Maximum selectable date"
+      },
+      "formatDate": {
+        "type": "(date: Date) => string",
+        "default": "defaultFormatDate (en-US, 'MMM d, yyyy')",
+        "required": false,
+        "doc": "Format function for display"
+      },
+      "firstDayOfWeek": {
+        "type": "0 | 1",
+        "default": "0",
+        "required": false,
+        "doc": "First day of week (0 = Sunday, 1 = Monday)"
+      },
+      "inline": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Render the calendar always-open, with no trigger button."
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Value effectively controlled-only (no defaultValue; selection not stored internally). onChange(value) not event. Open state is internal only (no open/onOpenChange). No label/name/form integration. Full keyboard grid nav (arrows, PageUp/Down, Shift+Page for year, Home/End)."
+  },
+  "FileUpload": {
+    "path": "webapp/src/proto-design-system/components/composite/FileUpload/FileUpload.tsx",
+    "extends": null,
+    "props": {
+      "variant": {
+        "type": "\"dropzone\" | \"button\"",
+        "default": "\"dropzone\"",
+        "required": false,
+        "doc": "Upload variant"
+      },
+      "accept": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Accepted file types (e.g., \"image/*,.pdf\")"
+      },
+      "multiple": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Allow multiple files"
+      },
+      "maxSize": {
+        "type": "number",
+        "default": null,
+        "required": false,
+        "doc": "Maximum file size in bytes"
+      },
+      "maxFiles": {
+        "type": "number",
+        "default": null,
+        "required": false,
+        "doc": "Maximum number of files"
+      },
+      "files": {
+        "type": "UploadedFile[]  // { file: File; id: string; progress?: number; error?: string }",
+        "default": "[]",
+        "required": false,
+        "doc": "Uploaded files"
+      },
+      "onFilesChange": {
+        "type": "(files: UploadedFile[]) => void",
+        "default": null,
+        "required": false,
+        "doc": "File change handler"
+      },
+      "existingFiles": {
+        "type": "ExistingFile[]  // { id: string; name: string; size: number; contentType?: string; url?: string }",
+        "default": "[]",
+        "required": false,
+        "doc": "Already-persisted files — rendered above the pending uploads."
+      },
+      "onRemoveExisting": {
+        "type": "(id: string) => void",
+        "default": null,
+        "required": false,
+        "doc": "Called when the X on an existing file row is clicked."
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "label": {
+        "type": "string",
+        "default": "\"Drag & drop files here\"",
+        "required": false,
+        "doc": "Dropzone label"
+      },
+      "description": {
+        "type": "string",
+        "default": "\"or click to browse\"",
+        "required": false,
+        "doc": "Dropzone description"
+      },
+      "showFileList": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show file list"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Controlled-only file list (files + onFilesChange(full next array)); oversize files are added with an `error` string rather than rejected. Progress is consumer-driven via UploadedFile.progress. Hard-coded 'Choose files' text in button variant."
+  },
+  "MultiSelect": {
+    "path": "webapp/src/proto-design-system/components/composite/MultiSelect/MultiSelect.tsx",
+    "extends": null,
+    "props": {
+      "items": {
+        "type": "MultiSelectItem[]  // { id: string; label: ReactNode; description?: string; icon?: ReactNode; disabled?: boolean; divider?: boolean }",
+        "default": null,
+        "required": true,
+        "doc": "MultiSelect items"
+      },
+      "value": {
+        "type": "Set<string>",
+        "default": "new Set()",
+        "required": false,
+        "doc": "Selected item IDs"
+      },
+      "onChange": {
+        "type": "(ids: Set<string>) => void",
+        "default": null,
+        "required": false,
+        "doc": "Selection change handler"
+      },
+      "placeholder": {
+        "type": "string",
+        "default": "\"Select...\"",
+        "required": false,
+        "doc": "Placeholder text"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "MultiSelect size"
+      },
+      "variant": {
+        "type": "\"default\" | \"outline\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "MultiSelect variant"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "fullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Full width"
+      },
+      "align": {
+        "type": "\"start\" | \"end\"",
+        "default": "\"start\"",
+        "required": false,
+        "doc": "Align dropdown menu"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Controlled-only (value Set + onChange(Set)); no defaultValue. Trigger shows 'N selected'. Clear-all button. Menu not portaled. Item shape mirrors Dropdown's item shape (id/label/description/icon/disabled/divider)."
+  },
+  "ThemeSwitcherGrid": {
+    "path": "webapp/src/proto-design-system/components/composite/ThemeSwitcherGrid/ThemeSwitcherGrid.tsx",
+    "extends": null,
+    "props": {
+      "value": {
+        "type": "ThemeName  // union of theme keys from themes/themes.ts",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "onChange": {
+        "type": "(theme: ThemeName) => void",
+        "default": null,
+        "required": true,
+        "doc": null
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": null
+      }
+    },
+    "subcomponents": [],
+    "notes": "Controlled-only, onChange(value). role=radiogroup of role=radio buttons (no arrow-key roving). Iterates all registered themes."
+  },
+  "Breadcrumb": {
+    "path": "webapp/src/proto-design-system/components/navigation/Breadcrumb/Breadcrumb.tsx",
+    "extends": null,
+    "props": {
+      "items": {
+        "type": "BreadcrumbItem[]  // { label: ReactNode; href?: string; icon?: ReactNode }",
+        "default": null,
+        "required": true,
+        "doc": "Breadcrumb items"
+      },
+      "separator": {
+        "type": "ReactNode",
+        "default": "<ChevronRight />",
+        "required": false,
+        "doc": "Separator element"
+      },
+      "showHomeIcon": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show home icon"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size"
+      },
+      "maxItems": {
+        "type": "number",
+        "default": null,
+        "required": false,
+        "doc": "Max items to show (rest collapsed)"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Data-driven. Plain <a href> only (no LinkComponent/router injection). Last item gets aria-current=page."
+  },
+  "CommandPalette": {
+    "path": "webapp/src/proto-design-system/components/navigation/CommandPalette/CommandPalette.tsx",
+    "extends": null,
+    "props": {
+      "isOpen": {
+        "type": "boolean",
+        "default": null,
+        "required": true,
+        "doc": "Whether the palette is open"
+      },
+      "onClose": {
+        "type": "() => void",
+        "default": null,
+        "required": true,
+        "doc": "Close callback"
+      },
+      "items": {
+        "type": "CommandItem[]  // { id: string; label: string; description?: string; icon?: ReactNode; shortcut?: string[]; group?: string; disabled?: boolean; onSelect?: () => void }",
+        "default": null,
+        "required": true,
+        "doc": "Command items"
+      },
+      "placeholder": {
+        "type": "string",
+        "default": "\"Type a command or search...\"",
+        "required": false,
+        "doc": "Placeholder text"
+      },
+      "emptyText": {
+        "type": "string",
+        "default": "\"No results found\"",
+        "required": false,
+        "doc": "Empty state text"
+      },
+      "filterFn": {
+        "type": "(item: CommandItem, query: string) => boolean",
+        "default": "defaultFilterFn (case-insensitive label/description includes)",
+        "required": false,
+        "doc": "Filter function"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Native <dialog> showModal. Open state controlled-only via isOpen/onClose (no onOpenChange, no global ⌘K hotkey). Query state internal. Per-item onSelect callback; items grouped by `group`. Disabled items are hidden, not shown disabled."
+  },
+  "NavLink": {
+    "path": "webapp/src/proto-design-system/components/navigation/Navbar/Navbar.tsx",
+    "extends": null,
+    "props": {
+      "href": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Link href"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Link content"
+      },
+      "active": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Active state"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Companion of Navbar (separate named export). Plain <a>, aria-current=page when active. No router injection."
+  },
+  "Navbar": {
+    "path": "webapp/src/proto-design-system/components/navigation/Navbar/Navbar.tsx",
+    "extends": null,
+    "props": {
+      "brand": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Brand/Logo element"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Navigation links"
+      },
+      "actions": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Right side content (buttons, avatar, etc.)"
+      },
+      "variant": {
+        "type": "\"default\" | \"transparent\" | \"filled\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "sticky": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Sticky positioning"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [
+      "NavLink"
+    ],
+    "notes": "<header>; mobile menu open state internal only. children rendered twice (desktop + mobile)."
+  },
+  "Pagination": {
+    "path": "webapp/src/proto-design-system/components/navigation/Pagination/Pagination.tsx",
+    "extends": null,
+    "props": {
+      "page": {
+        "type": "number",
+        "default": null,
+        "required": true,
+        "doc": "Current page (1-indexed)"
+      },
+      "totalPages": {
+        "type": "number",
+        "default": null,
+        "required": true,
+        "doc": "Total number of pages"
+      },
+      "onPageChange": {
+        "type": "(page: number) => void",
+        "default": null,
+        "required": true,
+        "doc": "Page change callback"
+      },
+      "siblings": {
+        "type": "number",
+        "default": "1",
+        "required": false,
+        "doc": "Number of sibling pages to show"
+      },
+      "showFirstLast": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show first/last page buttons"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size"
+      },
+      "variant": {
+        "type": "\"default\" | \"outline\" | \"ghost\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Variant"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Controlled-only (page/onPageChange(number)). Returns null when totalPages <= 1. Arrow/Home/End on the nav."
+  },
+  "Sidebar": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "collapsed": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Collapsed state (icon-only) - controlled mode"
+      },
+      "onCollapsedChange": {
+        "type": "(collapsed: boolean) => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when collapsed state changes"
+      },
+      "variant": {
+        "type": "\"default\" | \"compact\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "responsive": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable responsive auto-collapse on mobile"
+      },
+      "mobileBreakpoint": {
+        "type": "number",
+        "default": "768",
+        "required": false,
+        "doc": "Custom breakpoint for mobile collapse (default: 768px)"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Sidebar content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [
+      "SidebarHeader",
+      "SidebarLogo",
+      "SidebarToggle",
+      "SidebarMobileTrigger",
+      "SidebarSection",
+      "SidebarItem",
+      "SidebarGroup",
+      "SidebarDivider"
+    ],
+    "notes": "Context-based compound (separate named exports). Three modes: standalone uncontrolled, controlled (collapsed/onCollapsedChange — no defaultCollapsed), or inside SidebarProvider (provider state wins; onCollapsedChange NOT called on toggle via provider). <aside><nav aria-label=Primary>."
+  },
+  "SidebarDivider": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "<hr>."
+  },
+  "SidebarGroup": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Group icon"
+      },
+      "label": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Group label"
+      },
+      "defaultExpanded": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Default expanded state"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Group items"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Uncontrolled-only collapsible (defaultExpanded; no expanded/onExpandedChange). When sidebar collapsed, renders children flat."
+  },
+  "SidebarHeader": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Header content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Header section for the sidebar, typically contains logo and toggle button. Reads collapsed from context."
+  },
+  "SidebarItem": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Item icon"
+      },
+      "href": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Item href (renders as link)"
+      },
+      "target": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Anchor target (e.g. \"_blank\" for external links)"
+      },
+      "rel": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Anchor rel attribute"
+      },
+      "active": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Active state"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "badge": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Badge content"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Item content"
+      },
+      "onClick": {
+        "type": "() => void",
+        "default": null,
+        "required": false,
+        "doc": "Click handler"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "LinkComponent": {
+        "type": "React.ComponentType<{ to: string; className?: string; \"aria-current\"?: \"page\" | undefined; onClick?: () => void; children: ReactNode }>",
+        "default": null,
+        "required": false,
+        "doc": "Custom link component for client-side routing (e.g., TanStack Router's Link)"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Renders LinkComponent (to=href) / <a> / <button> depending on href+LinkComponent+disabled. Auto-closes mobile drawer on navigation. Label/badge hidden when collapsed (no tooltip)."
+  },
+  "SidebarLogo": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Logo content (hidden when collapsed)"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Logo component that auto-hides (returns null) when sidebar is collapsed."
+  },
+  "SidebarMobileTrigger": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Hamburger menu button for opening the sidebar on mobile. Only renders when in responsive mobile mode (needs SidebarProvider to be used outside Sidebar)."
+  },
+  "SidebarProvider": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "responsive": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Enable responsive behavior"
+      },
+      "mobileBreakpoint": {
+        "type": "number",
+        "default": "768",
+        "required": false,
+        "doc": "Custom breakpoint for mobile (default: 768px)"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Children to render"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Provider for Sidebar context. Wrap your entire layout with this to allow SidebarMobileTrigger to work from outside the Sidebar. Owns collapsed/mobileOpen state (no controlled props). Also exports hook useSidebarContext(): { collapsed, variant, isMobile, mobileOpen, toggleCollapsed, toggleMobileOpen, closeMobile }. Locks body scroll + Escape closes when mobile open."
+  },
+  "SidebarSection": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Section title"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Section items"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Arrow/Home/End focus roving across links/buttons inside. Title hidden when collapsed."
+  },
+  "SidebarToggle": {
+    "path": "webapp/src/proto-design-system/components/navigation/Sidebar/Sidebar.tsx",
+    "extends": null,
+    "props": {
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Toggle button for collapsing/expanding the sidebar. On mobile, this becomes a close button. No custom icon/label props."
+  },
+  "StepIndicator": {
+    "path": "webapp/src/proto-design-system/components/navigation/StepIndicator/StepIndicator.tsx",
+    "extends": null,
+    "props": {
+      "steps": {
+        "type": "StepData[]  // { id: string; label: string; description?: string; status?: \"pending\" | \"active\" | \"completed\" | \"error\"; clickable?: boolean }",
+        "default": null,
+        "required": true,
+        "doc": "Array of steps"
+      },
+      "currentStep": {
+        "type": "number",
+        "default": "0",
+        "required": false,
+        "doc": "Current active step index (0-based)"
+      },
+      "orientation": {
+        "type": "\"horizontal\" | \"vertical\"",
+        "default": "\"horizontal\"",
+        "required": false,
+        "doc": "Orientation"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "onStepClick": {
+        "type": "(stepIndex: number, step: StepData) => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when a step is clicked"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement> but no HTML passthrough. Status derived from currentStep unless step.status overrides. Steps clickable only when onStepClick provided and step.clickable !== false."
+  },
+  "Tab": {
+    "path": "webapp/src/proto-design-system/components/navigation/Tabs/Tabs.tsx",
+    "extends": null,
+    "props": {
+      "id": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Tab ID"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Tab label"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Icon before label"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Tabs. Uses `id` as the tab value (not `value`); DOM id is derived `${baseId}-tab-${id}`. Roving tabIndex."
+  },
+  "TabList": {
+    "path": "webapp/src/proto-design-system/components/navigation/Tabs/Tabs.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Tab triggers"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "aria-label": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Aria label for the tab list"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Tabs. role=tablist; Arrow/Home/End/Enter/Space handling; renders indicator."
+  },
+  "TabPanel": {
+    "path": "webapp/src/proto-design-system/components/navigation/Tabs/Tabs.tsx",
+    "extends": null,
+    "props": {
+      "id": {
+        "type": "string",
+        "default": null,
+        "required": true,
+        "doc": "Panel ID (must match Tab id)"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Panel content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Tabs. Unmounts when inactive (no forceMount/keepMounted)."
+  },
+  "TabPanels": {
+    "path": "webapp/src/proto-design-system/components/navigation/Tabs/Tabs.tsx",
+    "extends": null,
+    "props": {
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Tab panels"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Sub-component of Tabs. Plain wrapper div."
+  },
+  "Tabs": {
+    "path": "webapp/src/proto-design-system/components/navigation/Tabs/Tabs.tsx",
+    "extends": null,
+    "props": {
+      "defaultTab": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Default active tab"
+      },
+      "activeTab": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Controlled active tab"
+      },
+      "onTabChange": {
+        "type": "(tabId: string) => void",
+        "default": null,
+        "required": false,
+        "doc": "Tab change callback"
+      },
+      "variant": {
+        "type": "\"line\" | \"enclosed\" | \"pill\"",
+        "default": "\"line\"",
+        "required": false,
+        "doc": "Visual variant"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Children"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [
+      "TabList",
+      "Tab",
+      "TabPanels",
+      "TabPanel"
+    ],
+    "notes": "Context-based compound (separate named exports; sub-parts throw outside Tabs). Controlled/uncontrolled: activeTab / defaultTab / onTabChange(id) (non-standard names vs value/defaultValue/onValueChange). Animated sliding indicator for `line` variant (motion spring). Automatic activation (arrow keys move focus AND select)."
+  },
+  "Drawer": {
+    "path": "webapp/src/proto-design-system/components/overlays/Drawer/Drawer.tsx",
+    "extends": null,
+    "props": {
+      "isOpen": {
+        "type": "boolean",
+        "default": null,
+        "required": true,
+        "doc": "Whether the drawer is open"
+      },
+      "onClose": {
+        "type": "() => void",
+        "default": null,
+        "required": true,
+        "doc": "Close callback"
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Drawer title"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Drawer description"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Width (desktop). Maps to CSS variable for the side drawer."
+      },
+      "showCloseButton": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show close button in header"
+      },
+      "dismissible": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Dismissible on backdrop click / Escape"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Body content"
+      },
+      "footer": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Footer content (usually action buttons)"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Drawer — side panel on desktop (>=768px, slides from right), bottom sheet on mobile. Portals to body; role=dialog aria-modal but no focus trap / focus restore. Controlled-only open (isOpen/onClose). No `side` prop. No displayName set."
+  },
+  "Dropdown": {
+    "path": "webapp/src/proto-design-system/components/overlays/Dropdown/Dropdown.tsx",
+    "extends": null,
+    "props": {
+      "items": {
+        "type": "DropdownItem[]  // { id: string; label: ReactNode; description?: string; icon?: ReactNode; disabled?: boolean; danger?: boolean; divider?: boolean }",
+        "default": null,
+        "required": true,
+        "doc": "Dropdown items"
+      },
+      "value": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Selected item ID"
+      },
+      "onChange": {
+        "type": "(id: string) => void",
+        "default": null,
+        "required": false,
+        "doc": "Selection change handler"
+      },
+      "trigger": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Trigger content"
+      },
+      "placeholder": {
+        "type": "string",
+        "default": "\"Select...\"",
+        "required": false,
+        "doc": "Placeholder text"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Dropdown size"
+      },
+      "variant": {
+        "type": "\"default\" | \"outline\" | \"ghost\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Dropdown variant"
+      },
+      "disabled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Disabled state"
+      },
+      "fullWidth": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Full width"
+      },
+      "align": {
+        "type": "\"start\" | \"end\"",
+        "default": "\"start\"",
+        "required": false,
+        "doc": "Align dropdown menu"
+      },
+      "placement": {
+        "type": "\"top\" | \"bottom\"",
+        "default": "\"bottom\"",
+        "required": false,
+        "doc": "Whether the menu opens above or below the trigger"
+      },
+      "triggerAriaLabel": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Accessible label for the trigger button (use when trigger has no visible text)"
+      },
+      "iconOnly": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Remove min-width from trigger — use when trigger is icon-only"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Custom single-select (listbox semantics but items use role=menuitem — mixed). value controlled-only, onChange(id) (no defaultValue). Open state internal. `trigger` replaces trigger CONTENT inside its own <button> (not asChild). Not portaled; CSS-positioned."
+  },
+  "DropdownMenu": {
+    "path": "webapp/src/proto-design-system/components/overlays/DropdownMenu/DropdownMenu.tsx",
+    "extends": null,
+    "props": {
+      "items": {
+        "type": "MenuItem[]  // MenuItemData { id: string; label: string; sublabel?: string; state?: \"default\" | \"active\" | \"disabled\"; leftIcon?: ReactNode; rightIcon?: ReactNode; checkbox?: boolean; checked?: boolean; shortcut?: string; onClick?: () => void } | MenuDivider { type: \"divider\"; label?: string }",
+        "default": null,
+        "required": true,
+        "doc": "Array of menu items"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Size variant"
+      },
+      "caption": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Caption text at the bottom"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      },
+      "open": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Whether the menu is open. Defaults to `true` — most callers (e.g. `Popover`) already mount/unmount `DropdownMenu` conditionally. Pass it explicitly when mounted once and toggled in place, so its own enter/exit animation has something to react to."
+      },
+      "onItemClick": {
+        "type": "(item: MenuItemData) => void",
+        "default": null,
+        "required": false,
+        "doc": "Callback when an item is clicked"
+      }
+    },
+    "subcomponents": [],
+    "notes": "forwardRef<HTMLDivElement> (ref on the motion.div menu surface). A menu SURFACE only — no trigger; compose inside Popover (unstyled). Item state is an enum `state` instead of disabled/active booleans. Per-item onClick plus menu-level onItemClick. Checkbox items are display-only (checked is consumer-driven)."
+  },
+  "Modal": {
+    "path": "webapp/src/proto-design-system/components/overlays/Modal/Modal.tsx",
+    "extends": null,
+    "props": {
+      "isOpen": {
+        "type": "boolean",
+        "default": null,
+        "required": true,
+        "doc": "Whether the modal is open"
+      },
+      "onClose": {
+        "type": "() => void",
+        "default": null,
+        "required": true,
+        "doc": "Close callback"
+      },
+      "title": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Modal title"
+      },
+      "description": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Modal description/subtitle"
+      },
+      "icon": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Header icon"
+      },
+      "iconVariant": {
+        "type": "\"default\" | \"success\" | \"warning\" | \"error\" | \"info\"",
+        "default": "\"default\"",
+        "required": false,
+        "doc": "Icon variant for styling"
+      },
+      "size": {
+        "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"full\"",
+        "default": "\"md\"",
+        "required": false,
+        "doc": "Modal size"
+      },
+      "showCloseButton": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Show close button"
+      },
+      "dismissible": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Whether the modal can be dismissed by clicking overlay or pressing Escape"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Modal content"
+      },
+      "footer": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Footer content"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className"
+      }
+    },
+    "subcomponents": [],
+    "notes": "Native <dialog>.showModal() (browser focus trap + top layer); close deferred until exit animation completes. Controlled-only (isOpen/onClose). Hard-coded ids 'modal-title'/'modal-description' (collide with multiple modals). Close button hidden when !dismissible. Slot props title/description/icon/footer, no compound parts."
+  },
+  "Popover": {
+    "path": "webapp/src/proto-design-system/components/overlays/Popover/Popover.tsx",
+    "extends": null,
+    "props": {
+      "trigger": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Trigger element"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Popover content"
+      },
+      "placement": {
+        "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+        "default": "\"bottom\"",
+        "required": false,
+        "doc": "Placement relative to trigger"
+      },
+      "align": {
+        "type": "\"start\" | \"center\" | \"end\"",
+        "default": "\"center\"",
+        "required": false,
+        "doc": "Alignment relative to trigger"
+      },
+      "showClose": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Show close button"
+      },
+      "title": {
+        "type": "ReactNode",
+        "default": null,
+        "required": false,
+        "doc": "Popover title"
+      },
+      "open": {
+        "type": "boolean",
+        "default": null,
+        "required": false,
+        "doc": "Controlled open state"
+      },
+      "onOpenChange": {
+        "type": "(open: boolean) => void",
+        "default": null,
+        "required": false,
+        "doc": "Open state change handler"
+      },
+      "closeOnClickOutside": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Close on click outside"
+      },
+      "closeOnEscape": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Close on escape key"
+      },
+      "trapFocus": {
+        "type": "boolean",
+        "default": "true",
+        "required": false,
+        "doc": "Trap focus inside popover"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className for popover"
+      },
+      "triggerClassName": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className for trigger wrapper"
+      },
+      "unstyled": {
+        "type": "boolean",
+        "default": "false",
+        "required": false,
+        "doc": "Skip Popover's own card chrome (background/border/shadow/radius) and the body's padding. Use when `children` is already a fully-surfaced component (e.g. `DropdownMenu`)."
+      }
+    },
+    "subcomponents": [],
+    "notes": "Controlled/uncontrolled: open / onOpenChange(boolean), no defaultOpen. Trigger: if a valid element, cloneElement injects ref/onClick/onKeyDown/aria-* (asChild-like, overrides trigger's ref); otherwise wrapped in a <button>. CSS-positioned, not portaled, no collision handling. trapFocus only focuses first element (not a real trap). Close naming: showClose (vs showCloseButton in Modal/Drawer)."
+  },
+  "Tooltip": {
+    "path": "webapp/src/proto-design-system/components/overlays/Tooltip/Tooltip.tsx",
+    "extends": null,
+    "props": {
+      "content": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Tooltip content"
+      },
+      "position": {
+        "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+        "default": "\"top\"",
+        "required": false,
+        "doc": "Position of tooltip"
+      },
+      "children": {
+        "type": "ReactNode",
+        "default": null,
+        "required": true,
+        "doc": "Trigger element"
+      },
+      "className": {
+        "type": "string",
+        "default": null,
+        "required": false,
+        "doc": "Additional className for tooltip"
+      }
+    },
+    "subcomponents": [],
+    "notes": "CSS-only (hover/focus-within). No delay, no controlled open, no aria-describedby wiring to trigger. Uses `position` (Popover uses `placement`)."
+  }
+}

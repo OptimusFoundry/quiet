@@ -1,29 +1,26 @@
 import React from 'react';
 import { Label } from './Label';
 import { FormHint } from './FormHint';
+import './TextArea.scss';
 
-const SIZES = { sm: { fs: 15, p: '8px 12px' }, md: { fs: 17, p: '12px 16px' }, lg: { fs: 19, p: '16px 20px' } };
+const SIZES = ['sm', 'md', 'lg'];
 let ofTaId = 0;
 
-export function TextArea({ label, required, helperText, error, size = 'md', rows = 4, resize = 'vertical', maxLength, disabled, id, style, ...rest }) {
-  const [focus, setFocus] = React.useState(false);
+export function TextArea({ label, required, helperText, error, size = 'md', rows = 4, resize = 'vertical', maxLength, disabled, id, className, style, ...rest }) {
   const [len, setLen] = React.useState((rest.value ?? rest.defaultValue ?? '').length);
   const [auto] = React.useState(() => 'of-ta-' + (++ofTaId));
   const fid = id || auto;
-  const sz = SIZES[size] || SIZES.md;
+  const cls = ['q-text-area', 'q-text-area--' + (SIZES.includes(size) ? size : 'md'), disabled && 'q-text-area--disabled'].filter(Boolean).join(' ');
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: disabled ? 0.4 : 1, ...style }}>
+    <div className={cls} style={style}>
       {label && <Label htmlFor={fid} required={required} size={size}>{label}</Label>}
       <textarea id={fid} rows={rows} disabled={disabled} required={required} maxLength={maxLength} aria-invalid={!!error || undefined}
         aria-describedby={[(error || helperText) && fid + '-hint', maxLength && fid + '-count'].filter(Boolean).join(' ') || undefined} {...rest}
         onChange={e => { setLen(e.target.value.length); rest.onChange && rest.onChange(e); }}
-        onFocus={e => { setFocus(true); rest.onFocus && rest.onFocus(e); }} onBlur={e => { setFocus(false); rest.onBlur && rest.onBlur(e); }}
-        style={{ fontFamily: 'var(--font-sans)', fontSize: sz.fs, lineHeight: 1.55, color: 'var(--ink)', background: 'var(--paper)', padding: sz.p, boxSizing: 'border-box', width: '100%',
-          border: '1px solid ' + (error ? 'var(--molten)' : focus ? 'var(--ink)' : 'var(--rule-soft)'), borderRadius: 'var(--radius-md)', boxShadow: focus ? 'var(--ring-focus)' : 'none', outline: 'none', resize,
-          cursor: disabled ? 'not-allowed' : undefined, transition: 'border-color var(--dur-hover) var(--ease-soft)' }} />
-      {(error || helperText || maxLength) && <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
+        className={['q-text-area__input', error && 'q-text-area__input--invalid', className].filter(Boolean).join(' ')} style={{ '--_resize': resize }} />
+      {(error || helperText || maxLength) && <div className="q-text-area__footer">
         <FormHint id={fid + '-hint'} variant={error ? 'error' : 'default'}>{error || helperText}</FormHint>
-        {maxLength && <span id={fid + '-count'} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', marginLeft: 'auto' }}>{len} / {maxLength}</span>}
+        {maxLength && <span id={fid + '-count'} className="q-text-area__count">{len} / {maxLength}</span>}
       </div>}
     </div>
   );

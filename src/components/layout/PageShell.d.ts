@@ -15,6 +15,7 @@ export interface PageShellProps {
   animated?: boolean;
   /** Root element; pass 'main' when the shell is the page's main landmark */
   as?: 'div' | 'main' | 'section' | 'article';
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function PageShell(props: PageShellProps): JSX.Element;

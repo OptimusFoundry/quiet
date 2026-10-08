@@ -1,14 +1,15 @@
 import React from 'react';
+import './Stack.scss';
 
-if (typeof document !== 'undefined' && !document.getElementById('of-kf-rise')) {
-  const s = document.createElement('style'); s.id = 'of-kf-rise';
-  s.textContent = '@media (prefers-reduced-motion: no-preference){@keyframes of-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}';
-  document.head.appendChild(s);
-}
-const GAPS = { none: 0, xs: 8, sm: 16, md: 24, lg: 32, xl: 48, '2xl': 64 };
+const GAPS = ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+const DIRS = ['row', 'column', 'row-reverse', 'column-reverse'];
+const px = v => (typeof v === 'number' ? v + 'px' : v);
 
-export function Stack({ direction = 'column', gap = 'sm', align, justify, wrap = false, animated = false, as = 'div', children, style }) {
+export function Stack({ direction = 'column', gap = 'sm', align, justify, wrap = false, animated = false, as = 'div', children, className, style }) {
   const Tag = as;
-  const kids = animated ? React.Children.toArray(children).map((c, i) => <div key={i} style={{ animation: 'of-rise 0.4s var(--ease-forge) both', animationDelay: i * 60 + 'ms' }}>{c}</div>) : children;
-  return <Tag style={{ display: 'flex', flexDirection: direction, gap: GAPS[gap] ?? gap, alignItems: align, justifyContent: justify, flexWrap: wrap ? 'wrap' : 'nowrap', minWidth: 0, ...style }}>{kids}</Tag>;
+  const named = GAPS.includes(gap);
+  const cls = ['q-stack', DIRS.includes(direction) && 'q-stack--' + direction, named && 'q-stack--gap-' + gap, wrap && 'q-stack--wrap', className].filter(Boolean).join(' ');
+  const vars = { ...(!named && { '--_gap': px(gap) }), ...(align && { '--_align': align }), ...(justify && { '--_justify': justify }) };
+  const kids = animated ? React.Children.toArray(children).map((c, i) => <div key={i} className="q-stack__item" style={{ '--_i': i }}>{c}</div>) : children;
+  return <Tag className={cls} style={{ ...vars, ...style }}>{kids}</Tag>;
 }

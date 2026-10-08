@@ -10,6 +10,7 @@ export interface PageTransitionProps {
   /** ms; default 400 */
   duration?: number;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function PageTransition(props: PageTransitionProps): JSX.Element;

@@ -12,6 +12,7 @@ export interface LinkProps {
   external?: boolean;
   rightIcon?: React.ReactNode;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
   [key: string]: any;
 }

@@ -22,6 +22,7 @@ export interface DataGridProps {
   emptyTitle?: React.ReactNode;
   emptyDescription?: React.ReactNode;
   emptyActions?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
   /** Any other Table prop (striped, bordered, defaultSort, renderExpanded…) */
   [key: string]: any;

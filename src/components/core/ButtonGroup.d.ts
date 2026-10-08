@@ -12,6 +12,7 @@ export interface ButtonGroupProps {
   fullWidth?: boolean;
   /** Accessible name for the role="group" (e.g. "Text formatting") */
   label?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function ButtonGroup(props: ButtonGroupProps): JSX.Element;

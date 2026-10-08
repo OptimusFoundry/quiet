@@ -17,6 +17,7 @@ export interface SkeletonProps {
   loading?: boolean;
   /** Content shown when loading is false (a single element gets the fade-in) */
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Skeleton(props: SkeletonProps): JSX.Element;

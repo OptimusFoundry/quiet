@@ -14,6 +14,7 @@ export interface LabelProps {
   action?: React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Label(props: LabelProps): JSX.Element;

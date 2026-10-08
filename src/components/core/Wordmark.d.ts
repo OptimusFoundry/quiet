@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface WordmarkProps {
   /** nav = 15px, footer = 28px, or a number */
   size?: 'nav' | 'footer' | number;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Wordmark(props: WordmarkProps): JSX.Element;

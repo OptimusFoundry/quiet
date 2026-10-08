@@ -143,3 +143,11 @@ export function usePresence(open: boolean, exitMs = 160) {
 	}, [open, exitMs, mounted]);
 	return { mounted, state };
 }
+
+/** Reads a motion token for the Web Animations API: durations in ms, easings as strings. */
+export function motionToken(el: Element, name: `--q-${string}`): string | number {
+	const raw = getComputedStyle(el).getPropertyValue(name).trim();
+	const ms = raw.match(/^([\d.]+)(m?s)$/);
+	if (ms) return Number(ms[1]) * (ms[2] === "s" ? 1000 : 1);
+	return raw;
+}

@@ -26,6 +26,7 @@ export interface SidebarProps {
   /** Accessible name for the nav landmark. Defaults to "Sidebar: <group labels>" or "Sidebar" */
   label?: string;
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Sidebar(props: SidebarProps): JSX.Element;

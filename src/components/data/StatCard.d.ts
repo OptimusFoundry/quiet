@@ -21,6 +21,7 @@ export interface StatCardProps {
   animate?: boolean;
   onClick?: () => void;
   href?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function StatCard(props: StatCardProps): JSX.Element;

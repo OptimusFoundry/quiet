@@ -5,6 +5,7 @@ export interface EyebrowProps {
   index?: string;
   tone?: 'muted' | 'ink';
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Eyebrow(props: EyebrowProps): JSX.Element;

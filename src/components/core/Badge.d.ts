@@ -14,6 +14,7 @@ export interface BadgeProps {
   count?: number;
   max?: number;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Badge(props: BadgeProps): JSX.Element;

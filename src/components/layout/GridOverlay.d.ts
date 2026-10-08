@@ -16,5 +16,7 @@ export interface GridOverlayProps {
   rhythm?: boolean;
   /** px to skip on the left, e.g. the sidebar width */
   offsetLeft?: number;
+  className?: string;
+  style?: React.CSSProperties;
 }
 export declare function GridOverlay(props: GridOverlayProps): JSX.Element;

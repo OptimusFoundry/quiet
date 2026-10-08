@@ -14,6 +14,7 @@ export interface FormFieldProps {
   size?: 'sm' | 'md' | 'lg';
   /** The control */
   children: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function FormField(props: FormFieldProps): JSX.Element;

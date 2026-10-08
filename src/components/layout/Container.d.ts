@@ -10,6 +10,7 @@ export interface ContainerProps {
   centered?: boolean;
   as?: keyof JSX.IntrinsicElements;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Container(props: ContainerProps): JSX.Element;

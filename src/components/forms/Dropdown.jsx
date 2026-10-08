@@ -1,11 +1,12 @@
 import React from 'react';
 import { usePresence } from '../../a11y/hooks';
+import './Dropdown.scss';
 
-const SIZES = { sm: { h: 36, fs: 15, px: 12 }, md: { h: 48, fs: 17, px: 16 }, lg: { h: 56, fs: 19, px: 20 } };
+const SIZES = ['sm', 'md', 'lg'];
 const norm = o => typeof o === 'string' ? { value: o, label: o } : o;
 const text = o => typeof o.label === 'string' || typeof o.label === 'number' ? String(o.label) : String(o.value ?? '');
 
-export function Dropdown({ label, options = [], value, defaultValue, onChange, placeholder = 'Select', size = 'md', variant = 'default', fullWidth = false, align = 'start', disabled = false, helperText, error, style }) {
+export function Dropdown({ label, options = [], value, defaultValue, onChange, placeholder = 'Select', size = 'md', variant = 'default', fullWidth = false, align = 'start', disabled = false, helperText, error, className, style }) {
   const [open, setOpen] = React.useState(false);
   const [inner, setInner] = React.useState(defaultValue);
   const [active, setActive] = React.useState(-1);
@@ -17,7 +18,6 @@ export function Dropdown({ label, options = [], value, defaultValue, onChange, p
   const cur = value ?? inner;
   const opts = options.map(norm);
   const sel = opts.find(o => !o.divider && o.value === cur);
-  const sz = SIZES[size] || SIZES.md;
   React.useEffect(() => {
     if (!open) return;
     const h = e => ref.current && !ref.current.contains(e.target) && setOpen(false);
@@ -58,39 +58,34 @@ export function Dropdown({ label, options = [], value, defaultValue, onChange, p
     else if (k === 'Enter' || (k === ' ' && Date.now() - typed.current.t > 500)) { e.preventDefault(); if (active >= 0) pick(opts[active]); else setOpen(false); }
     else ahead(e);
   };
-  const filled = variant === 'filled';
+  const cls = ['q-dropdown', 'q-dropdown--' + (SIZES.includes(size) ? size : 'md'), variant === 'filled' && 'q-dropdown--filled', fullWidth && 'q-dropdown--full',
+    error && 'q-dropdown--invalid', disabled && 'q-dropdown--disabled', className].filter(Boolean).join(' ');
   return (
-    <div ref={ref} style={{ position: 'relative', display: fullWidth ? 'flex' : 'inline-flex', flexDirection: 'column', gap: 8, minWidth: 220, opacity: disabled ? 0.4 : 1, ...style }}>
-      {label && <span id={labelId} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>{label}</span>}
+    <div ref={ref} className={cls} style={style}>
+      {label && <span id={labelId} className="q-dropdown__label">{label}</span>}
       <button type="button" disabled={disabled} role="combobox" aria-haspopup="listbox" aria-expanded={open} aria-controls={presence.mounted || open ? listId : undefined}
         aria-activedescendant={open && active >= 0 ? optId(active) : undefined} aria-labelledby={label ? labelId : undefined} aria-label={label ? undefined : placeholder}
         aria-describedby={error || helperText ? hintId : undefined} aria-invalid={error ? true : undefined}
-        onClick={() => (open ? setOpen(false) : show())} onKeyDown={key}
-        style={{ display: 'flex', alignItems: 'center', gap: 12, height: sz.h, padding: '0 ' + sz.px + 'px', boxSizing: 'border-box', width: '100%', textAlign: 'left',
-          background: filled && !open ? 'var(--paper-2)' : 'var(--paper)', border: '1px solid ' + (error ? 'var(--molten)' : open ? 'var(--ink)' : filled ? 'var(--paper-2)' : 'var(--rule-soft)'),
-          borderRadius: 'var(--radius-md)', boxShadow: open ? 'var(--ring-focus)' : 'none', fontFamily: 'var(--font-sans)', fontSize: sz.fs, color: sel ? 'var(--ink)' : 'var(--muted-2)', cursor: disabled ? 'not-allowed' : 'pointer', outline: 'none',
-          transition: 'border-color var(--dur-hover) var(--ease-soft)' }}>
-        {sel && sel.icon && <span style={{ display: 'inline-flex', color: 'var(--muted)' }}>{sel.icon}</span>}
-        <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sel ? sel.label : placeholder}</span>
-        <span aria-hidden="true" style={{ color: 'var(--muted)', transition: 'transform var(--dur-hover) var(--ease-soft)', transform: open ? 'rotate(180deg)' : 'none' }}>{'\u2193'}</span>
+        onClick={() => (open ? setOpen(false) : show())} onKeyDown={key} className={'q-dropdown__trigger' + (sel ? '' : ' q-dropdown__trigger--placeholder')}>
+        {sel && sel.icon && <span className="q-dropdown__icon">{sel.icon}</span>}
+        <span className="q-dropdown__value">{sel ? sel.label : placeholder}</span>
+        <span aria-hidden="true" className="q-dropdown__chevron">{'\u2193'}</span>
       </button>
-      {(open || presence.mounted) && <div id={listId} role="listbox" aria-labelledby={label ? labelId : undefined} className="q-anim-drop" data-state={open ? 'open' : presence.state}
-        onMouseDown={e => e.preventDefault()} style={{ pointerEvents: open ? undefined : 'none', position: 'absolute', top: '100%', [align === 'end' ? 'right' : 'left']: 0, marginTop: 4, minWidth: '100%', maxHeight: 300, overflowY: 'auto',
-        background: 'var(--paper)', border: '1px solid var(--rule-soft)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-2)', zIndex: 40, padding: 6, boxSizing: 'border-box' }}>
+      {(open || presence.mounted) && <div id={listId} role="listbox" aria-labelledby={label ? labelId : undefined} className={'q-dropdown__list q-anim-drop' + (align === 'end' ? ' q-dropdown__list--end' : '')} data-state={open ? 'open' : presence.state}
+        onMouseDown={e => e.preventDefault()}>
         {opts.map((o, i) => o.divider
-          ? <div key={'d' + i} style={{ borderTop: '1px solid var(--rule-soft)', margin: '4px 0' }} />
-          : <div key={o.value} id={optId(i)} role="option" aria-selected={o.value === cur} aria-disabled={o.disabled || undefined} onMouseEnter={() => setActive(i)} onClick={() => pick(o)}
-              style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '10px 12px', borderRadius: 'var(--radius-sm)', cursor: o.disabled ? 'not-allowed' : 'pointer', opacity: o.disabled ? 0.4 : 1,
-                background: active === i && !o.disabled ? 'var(--paper-2)' : 'transparent', fontSize: 15, color: 'var(--ink)', transition: 'background var(--dur-hover) var(--ease-soft)' }}>
-              {o.icon && <span style={{ display: 'inline-flex', color: 'var(--muted)', paddingTop: 2 }}>{o.icon}</span>}
-              <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          ? <div key={'d' + i} className="q-dropdown__divider" />
+          : <div key={o.value} id={optId(i)} role="option" aria-selected={o.value === cur} aria-disabled={o.disabled || undefined} data-active={active === i || undefined} onMouseEnter={() => setActive(i)} onClick={() => pick(o)}
+              className="q-dropdown__option">
+              {o.icon && <span className="q-dropdown__option-icon">{o.icon}</span>}
+              <span className="q-dropdown__option-text">
                 <span>{o.label}</span>
-                {o.description && <span style={{ fontSize: 13, color: 'var(--muted)' }}>{o.description}</span>}
+                {o.description && <span className="q-dropdown__option-description">{o.description}</span>}
               </span>
-              <span aria-hidden="true" style={{ width: 12, color: 'var(--ink)' }}>{o.value === cur ? '\u2713' : ''}</span>
+              <span aria-hidden="true" className="q-dropdown__check">{o.value === cur ? '\u2713' : ''}</span>
             </div>)}
       </div>}
-      {(error || helperText) && <span id={hintId} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', color: error ? 'var(--molten)' : 'var(--muted)' }}>{error || helperText}</span>}
+      {(error || helperText) && <span id={hintId} className={'q-dropdown__hint' + (error ? ' q-dropdown__hint--error' : '')}>{error || helperText}</span>}
     </div>
   );
 }

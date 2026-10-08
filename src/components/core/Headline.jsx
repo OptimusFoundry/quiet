@@ -1,21 +1,17 @@
 import React from 'react';
+import './Headline.scss';
 
-const SIZES = {
-  display: { fontSize: 'var(--type-display-size)', lineHeight: 0.92, letterSpacing: '-0.045em', fontWeight: 700 },
-  h2: { fontSize: 'var(--type-h2-size)', lineHeight: 1, letterSpacing: '-0.04em', fontWeight: 700 },
-  h3: { fontSize: 'var(--type-h3-size)', lineHeight: 1.1, letterSpacing: '-0.025em', fontWeight: 600 },
-  h4: { fontSize: 'var(--type-h4-size)', lineHeight: 1.15, letterSpacing: '-0.02em', fontWeight: 600 },
-};
 const TAGS = { display: 'h1', h2: 'h2', h3: 'h3', h4: 'h4' };
 
-export function Headline({ size = 'h2', as, lead, accent, after, period = true, moltenAccent = false, style }) {
+export function Headline({ size = 'h2', as, lead, accent, after, period = true, moltenAccent = false, className, style }) {
   const Tag = as || TAGS[size];
+  const cls = ['q-headline', TAGS[size] && 'q-headline--' + size, className].filter(Boolean).join(' ');
   return (
-    <Tag style={{ margin: 0, fontFamily: 'var(--font-sans)', color: 'var(--ink)', textWrap: 'balance', ...SIZES[size], ...style }}>
+    <Tag className={cls} style={style}>
       {lead}{lead && accent ? ' ' : ''}
-      {accent && <em style={{ fontStyle: 'italic', color: moltenAccent ? 'var(--molten)' : 'inherit' }}>{accent}</em>}
+      {accent && <em className={['q-headline__accent', moltenAccent && 'q-headline__accent--molten'].filter(Boolean).join(' ')}>{accent}</em>}
       {after ? (accent ? ' ' : '') + after : ''}
-      {period && <span style={{ color: 'var(--molten)' }}>.</span>}
+      {period && <span className="q-headline__period">.</span>}
     </Tag>
   );
 }

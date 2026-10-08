@@ -15,6 +15,7 @@ export interface ColProps {
   rowSpan?: number;
   as?: keyof JSX.IntrinsicElements;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Col(props: ColProps): JSX.Element;

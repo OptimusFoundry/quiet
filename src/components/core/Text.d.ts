@@ -20,6 +20,7 @@ export interface TextProps {
   lineClamp?: number;
   align?: 'left' | 'center' | 'right';
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Text(props: TextProps): JSX.Element;

@@ -17,6 +17,7 @@ export interface EmptyStateProps {
   align?: 'center' | 'start';
   /** Heading level for the title; default 3 */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function EmptyState(props: EmptyStateProps): JSX.Element;

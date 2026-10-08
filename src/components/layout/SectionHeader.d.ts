@@ -13,6 +13,7 @@ export interface SectionHeaderProps {
   size?: 'md' | 'sm';
   /** Heading level, e.g. h3 for nested sections */
   as?: 'h2' | 'h3' | 'h4';
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function SectionHeader(props: SectionHeaderProps): JSX.Element;

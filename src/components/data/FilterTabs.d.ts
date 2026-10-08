@@ -12,6 +12,7 @@ export interface FilterTabsProps {
   showCounts?: boolean;
   /** Accessible name of the radio group; default 'Filter' */
   label?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function FilterTabs(props: FilterTabsProps): JSX.Element;

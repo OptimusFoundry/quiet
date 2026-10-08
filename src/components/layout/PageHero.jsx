@@ -1,15 +1,19 @@
 import React from 'react';
 import { Eyebrow } from '../core/Eyebrow';
 import { Headline } from '../core/Headline';
+import './PageHero.scss';
 
-export function PageHero({ index, eyebrow, title, accent, after, description, actions, size = 'lg', ruled = true, as = 'h1', style }) {
+// Headline only takes `style`, so the md title's type scale goes in as token references.
+
+export function PageHero({ index, eyebrow, title, accent, after, description, actions, size = 'lg', ruled = true, as = 'h1', className, style }) {
   const lg = size === 'lg';
+  const cls = ['q-page-hero', 'q-page-hero--' + (lg ? 'lg' : 'md'), ruled && 'q-page-hero--ruled', className].filter(Boolean).join(' ');
   return (
-    <header style={{ display: 'flex', flexDirection: 'column', gap: lg ? 24 : 16, padding: lg ? '96px 0 64px' : '48px 0 32px', borderBottom: ruled ? '1px solid var(--rule-soft)' : 'none', ...style }}>
+    <header className={cls} style={style}>
       {(eyebrow || index) && <Eyebrow index={index}>{eyebrow}</Eyebrow>}
-      <Headline size={lg ? 'h2' : 'h3'} as={as} lead={title} accent={accent} after={after} style={lg ? undefined : { fontSize: 40, fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1 }} />
-      {description && <p style={{ margin: 0, maxWidth: 640, fontSize: lg ? 19 : 17, lineHeight: 1.55, color: 'var(--ink-2)', textWrap: 'pretty' }}>{description}</p>}
-      {actions && <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center', marginTop: 8 }}>{actions}</div>}
+      <Headline size={lg ? 'h2' : 'h3'} as={as} lead={title} accent={accent} after={after} className={lg ? 'q-page-hero__title' : 'q-page-hero__title q-page-hero__title--md'} />
+      {description && <p className="q-page-hero__description">{description}</p>}
+      {actions && <div className="q-page-hero__actions">{actions}</div>}
     </header>
   );
 }

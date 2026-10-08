@@ -1,19 +1,25 @@
 import React from 'react';
+import './Icon.scss';
 
 const GLYPHS = {
-  'arrow-right': '\u2192', 'arrow-left': '\u2190', 'arrow-up': '\u2191', 'arrow-down': '\u2193', expand: '\u2198', external: '\u2197',
-  close: '\u00d7', check: '\u2713', plus: '+', minus: '\u2212', dot: '\u00b7', more: '\u2026', slash: '/', command: '\u2318', enter: '\u21b5',
-  info: 'i', warning: '!', help: '?', first: '\u00ab', last: '\u00bb', sort: '\u2195', prev: '\u2039', next: '\u203a',
+  'arrow-right': '→', 'arrow-left': '←', 'arrow-up': '↑', 'arrow-down': '↓', expand: '↘', external: '↗',
+  close: '×', check: '✓', plus: '+', minus: '−', dot: '·', more: '…', slash: '/', command: '⌘', enter: '↵',
+  info: 'i', warning: '!', help: '?', first: '«', last: '»', sort: '↕', prev: '‹', next: '›',
 };
-const SIZES = { xs: 10, sm: 12, md: 15, lg: 19, xl: 24, '2xl': 32 };
-const COLORS = { default: 'var(--ink)', muted: 'var(--muted)', quiet: 'var(--muted-2)', primary: 'var(--molten)', success: 'var(--ink)', warning: 'var(--molten)', error: 'var(--molten)', inherit: 'inherit' };
+const SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+const COLORS = ['default', 'muted', 'quiet', 'primary', 'success', 'warning', 'error', 'inherit'];
 
-export function Icon({ name = 'arrow-right', glyph, size = 'md', color = 'inherit', label, style }) {
-  const px = typeof size === 'number' ? size : SIZES[size] || 15;
+export function Icon({ name = 'arrow-right', glyph, size = 'md', color = 'inherit', label, className, style }) {
+  const numeric = typeof size === 'number';
+  const knownColor = COLORS.includes(color);
+  const vars = {};
+  if (numeric) vars['--_size'] = size + 'px';
+  if (!knownColor) vars['--_color'] = color;
+  const cls = ['q-icon', numeric ? 'q-icon--custom-size' : 'q-icon--' + (SIZES.includes(size) ? size : 'md'),
+    'q-icon--' + (knownColor ? color : 'custom-color'), className].filter(Boolean).join(' ');
   return (
     <span role={label ? 'img' : undefined} aria-label={label} aria-hidden={label ? undefined : true}
-      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1em', height: '1em', flex: 'none',
-        fontSize: px, lineHeight: 1, fontFamily: 'var(--font-sans)', fontWeight: 500, fontStyle: 'normal', color: COLORS[color] || color, ...style }}>
+      className={cls} style={numeric || !knownColor ? { ...vars, ...style } : style}>
       {glyph ?? GLYPHS[name] ?? name}
     </span>
   );

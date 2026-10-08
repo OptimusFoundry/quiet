@@ -9,6 +9,7 @@ export interface AspectRatioProps {
   /** Placeholder label when empty, e.g. "Product shot" */
   label?: React.ReactNode;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function AspectRatio(props: AspectRatioProps): JSX.Element;

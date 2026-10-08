@@ -1,20 +1,17 @@
 import React from 'react';
 import { Wordmark } from '../core/Wordmark.jsx';
 import { Button } from '../core/Button.jsx';
+import './NavBar.scss';
 
 function NavLink({ href, current, children }) {
-  const [h, setH] = React.useState(false);
-  return <a href={href} aria-current={current ? 'page' : undefined} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-    onFocus={e => e.currentTarget.matches(':focus-visible') && setH(true)} onBlur={() => setH(false)}
-    style={{ fontSize: 15, fontWeight: 500, color: h ? 'var(--molten)' : 'var(--ink)', textDecoration: 'none', transition: 'color var(--dur-hover) var(--ease-soft)' }}>{children}</a>;
+  return <a href={href} aria-current={current ? 'page' : undefined} className="q-nav-bar__link">{children}</a>;
 }
 
-export function NavBar({ links = [], cta = 'Start a project', ctaHref = '#contact', onCta, mark, label = 'Main', homeLabel, style }) {
+export function NavBar({ links = [], cta = 'Start a project', ctaHref = '#contact', onCta, mark, label = 'Main', homeLabel, className, style }) {
   return (
-    <nav aria-label={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px 32px', padding: '16px 32px', background: 'var(--paper)',
-      borderBottom: '1px solid var(--rule-soft)', ...style }}>
-      <a href="#" aria-label={homeLabel} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>{mark}<Wordmark size="nav" /></a>
-      <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+    <nav aria-label={label} className={className ? 'q-nav-bar ' + className : 'q-nav-bar'} style={style}>
+      <a href="#" aria-label={homeLabel} className="q-nav-bar__home">{mark}<Wordmark size="nav" /></a>
+      <div className="q-nav-bar__links">
         {links.map(l => <NavLink key={l.label} href={l.href} current={l.current}>{l.label}</NavLink>)}
       </div>
       <Button size="sm" arrow href={onCta ? undefined : ctaHref} onClick={onCta}>{cta}</Button>
