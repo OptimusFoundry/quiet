@@ -1,0 +1,83 @@
+// MorphingTooltip — one shared tooltip for a group of triggers. BEM: .q-morphing-tooltip (group),
+// __trigger ([data-active]), __panel ([data-state="open|closed"], [data-placement="top|bottom"]),
+// __content, __sizer (an invisible copy of the active content, measured so the panel can animate
+// to an explicit size). motion drives the panel's position, size and opacity and the content
+// slide; the durations, easing and slide distance below are read from here.
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-morphing-tooltip-z: var(--q-z-popover);
+    --q-morphing-tooltip-offset: var(--q-space-1);
+    --q-morphing-tooltip-max-width: 280px;
+    --q-morphing-tooltip-padding: var(--q-space-2);
+    --q-morphing-tooltip-bg: var(--q-bg);
+    --q-morphing-tooltip-fg: var(--q-fg-body);
+    --q-morphing-tooltip-border: var(--q-border);
+    --q-morphing-tooltip-radius: var(--q-radius-md);
+    --q-morphing-tooltip-shadow: var(--q-shadow-2);
+    --q-morphing-tooltip-font-size: var(--q-text-sm);
+    --q-morphing-tooltip-leading: var(--q-leading-compact);
+    --q-morphing-tooltip-trigger-radius: var(--q-radius-2xs);
+    --q-morphing-tooltip-dur: var(--q-dur-expand);
+    --q-morphing-tooltip-fade-dur: var(--q-dur-enter);
+    --q-morphing-tooltip-ease: var(--q-ease-soft);
+    --q-morphing-tooltip-slide: 40%; // of the content's width
+  }
+}
+
+@layer q.components {
+  .q-morphing-tooltip {
+    position: relative;
+  }
+
+  .q-morphing-tooltip__trigger {
+    cursor: default;
+    border-radius: var(--q-morphing-tooltip-trigger-radius);
+  }
+
+  .q-morphing-tooltip__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    max-width: var(--q-morphing-tooltip-max-width);
+    padding: var(--q-morphing-tooltip-padding);
+    color: var(--q-morphing-tooltip-fg);
+    font-size: var(--q-morphing-tooltip-font-size);
+    line-height: var(--q-morphing-tooltip-leading);
+    text-align: left;
+  }
+
+  .q-morphing-tooltip__sizer {
+    width: max-content;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .q-morphing-tooltip__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--q-morphing-tooltip-z);
+    box-sizing: content-box;
+    overflow: hidden;
+    visibility: hidden;
+    border: var(--q-hairline) solid var(--q-morphing-tooltip-border);
+    border-radius: var(--q-morphing-tooltip-radius);
+    background: var(--q-morphing-tooltip-bg);
+    box-shadow: var(--q-morphing-tooltip-shadow);
+    opacity: 0;
+
+    &[data-placement="bottom"] {
+      translate: 0 var(--q-morphing-tooltip-offset);
+    }
+
+    &[data-placement="top"] {
+      translate: 0 calc(var(--q-morphing-tooltip-offset) * -1);
+    }
+
+    &[data-state="closed"] {
+      pointer-events: none;
+    }
+  }
+}
