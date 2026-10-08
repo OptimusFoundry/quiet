@@ -1,0 +1,76 @@
+// A product theme written the way a product writes one in its own repo (see DESIGN.md, "Product
+// themes"). Repeating quiet's layer order first keeps it correct whichever stylesheet loads first.
+@layer q.tokens, q.themes, q.base, q.components, q.utilities;
+
+@layer q.themes {
+  [data-theme="acme"] {
+    --q-gray-0: #fff;
+    --q-gray-50: #f5f7fa;
+    --q-gray-100: #e4e8ee;
+    --q-gray-200: #cdd4de;
+    --q-gray-400: #8a94a3;
+    --q-gray-500: #5f6b7a;
+    --q-gray-800: #2b3441;
+    --q-gray-900: #111827;
+    --q-molten-500: #4f46e5;
+    --q-shadow-rgb: 17 24 39;
+
+    --q-status-info-fg: #1d4ed8;
+    --q-status-info-bg: #eff6ff;
+    --q-status-info-border: #bfdbfe;
+    --q-status-success-fg: #15803d;
+    --q-status-success-bg: #f0fdf4;
+    --q-status-success-border: #bbf7d0;
+    --q-status-warning-fg: #b45309;
+    --q-status-warning-bg: #fffbeb;
+    --q-status-warning-border: #fde68a;
+    --q-status-error-fg: #b91c1c;
+    --q-status-error-bg: #fef2f2;
+    --q-status-error-border: #fecaca;
+
+    --q-radius-md: 8px;
+    --q-dur-hover: 0.18s;
+
+    color-scheme: light;
+  }
+
+  [data-theme="acme-dark"] {
+    --q-gray-0: #0f141b;
+    --q-gray-50: #161c25;
+    --q-gray-100: #232b36;
+    --q-gray-200: #343e4b;
+    --q-gray-400: #5f6b7a;
+    --q-gray-500: #8a94a3;
+    --q-gray-800: #cdd4de;
+    --q-gray-900: #f3f5f8;
+    --q-molten-500: #818cf8;
+    --q-shadow-rgb: 0 0 0;
+
+    --q-status-info-fg: #93c5fd;
+    --q-status-info-bg: #0f1d33;
+    --q-status-info-border: #1e3a8a;
+    --q-status-success-fg: #86efac;
+    --q-status-success-bg: #0c2416;
+    --q-status-success-border: #166534;
+    --q-status-warning-fg: #fcd34d;
+    --q-status-warning-bg: #2a1d07;
+    --q-status-warning-border: #92400e;
+    --q-status-error-fg: #fca5a5;
+    --q-status-error-bg: #2b1010;
+    --q-status-error-border: #991b1b;
+
+    --q-radius-md: 8px;
+    --q-dur-hover: 0.18s;
+    --q-shadow-2: 0 0 0 1px var(--q-border), 0 12px 32px rgb(0 0 0 / 45%);
+
+    color-scheme: dark;
+  }
+
+  // quiet zeroes durations under reduced motion on :root only, so a theme that sets them repeats it.
+  @media (prefers-reduced-motion: reduce) {
+    [data-theme="acme"],
+    [data-theme="acme-dark"] {
+      --q-dur-hover: 0s;
+    }
+  }
+}

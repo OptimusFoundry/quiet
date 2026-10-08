@@ -32,15 +32,18 @@
     --q-badge-outline-bg: transparent;
     --q-badge-outline-fg: var(--q-fg);
     --q-badge-outline-border: var(--q-fg);
-    --q-badge-success-bg: var(--q-bg-subtle);
+    --q-badge-success-bg: var(--q-status-success-bg);
     --q-badge-success-fg: var(--q-fg);
-    --q-badge-success-border: var(--q-bg-subtle);
-    --q-badge-warning-bg: var(--q-bg-subtle);
+    --q-badge-success-border: var(--q-status-success-border);
+    --q-badge-success-dot: var(--q-status-success-fg);
+    --q-badge-warning-bg: var(--q-status-warning-bg);
     --q-badge-warning-fg: var(--q-fg);
-    --q-badge-warning-border: var(--q-bg-subtle);
-    --q-badge-error-bg: var(--q-bg);
+    --q-badge-warning-border: var(--q-status-warning-border);
+    --q-badge-warning-dot: var(--q-status-warning-fg);
+    --q-badge-error-bg: var(--q-status-error-bg);
     --q-badge-error-fg: var(--q-fg);
-    --q-badge-error-border: var(--q-accent);
+    --q-badge-error-border: var(--q-status-error-border);
+    --q-badge-error-dot: var(--q-status-error-fg);
 
     --q-badge-dot-solid-ink: var(--q-fg);
     --q-badge-dot-paper: var(--q-bg);
@@ -112,6 +115,18 @@
     &--hollow {
       border: var(--q-hairline) solid var(--q-badge-dot-hollow-border);
       background: transparent;
+    }
+
+    .q-badge--success > & {
+      background: var(--q-badge-success-dot);
+    }
+
+    .q-badge--warning > & {
+      border-color: var(--q-badge-warning-dot);
+    }
+
+    .q-badge--error > & {
+      background: var(--q-badge-error-dot);
     }
   }
 }

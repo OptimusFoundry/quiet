@@ -32,4 +32,20 @@
   --q-ring-soft: 0 0 0 4px rgb(var(--q-shadow-rgb) / 8%);
   --q-selection-bg: var(--q-bg-inverse);
   --q-selection-fg: var(--q-fg-on-inverse);
+
+  // Status: fg = glyphs, icons, fills and status text · bg = a status surface · border = its edge.
+  // The defaults are the brand's: no status hues, only greys and the accent, so warning and error
+  // are hot and info and success stay neutral. A product theme sets real hues here (q.themes).
+  --q-status-info-fg: var(--q-fg-muted);
+  --q-status-info-bg: var(--q-bg);
+  --q-status-info-border: var(--q-border);
+  --q-status-success-fg: var(--q-fg);
+  --q-status-success-bg: var(--q-bg);
+  --q-status-success-border: var(--q-fg);
+  --q-status-warning-fg: var(--q-accent);
+  --q-status-warning-bg: var(--q-bg);
+  --q-status-warning-border: var(--q-border);
+  --q-status-error-fg: var(--q-accent);
+  --q-status-error-bg: var(--q-bg);
+  --q-status-error-border: var(--q-accent);
 }

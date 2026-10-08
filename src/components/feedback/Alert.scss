@@ -6,7 +6,6 @@
     --q-alert-gap: var(--q-space-2);
     --q-alert-py: var(--q-space-2);
     --q-alert-px: var(--q-space-2-5);
-    --q-alert-bg: var(--q-bg);
     --q-alert-radius: var(--q-radius-md);
     --q-alert-content-gap: var(--q-space-0-5);
     --q-alert-glyph-size: var(--q-space-2-5);
@@ -25,23 +24,28 @@
     --q-alert-dismiss-fg: var(--q-fg-muted);
     --q-alert-dismiss-size: 18px; // the × glyph; between --q-text-lg and --q-text-xl
 
-    --q-alert-info-border: var(--q-border);
-    --q-alert-info-ring: var(--q-fg-subtle);
-    --q-alert-info-glyph: var(--q-fg-muted);
-    --q-alert-success-border: var(--q-fg);
-    --q-alert-success-ring: var(--q-fg);
-    --q-alert-success-glyph: var(--q-fg);
-    --q-alert-warning-border: var(--q-border);
-    --q-alert-warning-ring: var(--q-accent);
-    --q-alert-warning-glyph: var(--q-accent);
-    --q-alert-error-border: var(--q-accent);
-    --q-alert-error-ring: var(--q-accent);
-    --q-alert-error-glyph: var(--q-accent);
+    --q-alert-info-bg: var(--q-status-info-bg);
+    --q-alert-info-border: var(--q-status-info-border);
+    --q-alert-info-ring: var(--q-status-info-fg);
+    --q-alert-info-glyph: var(--q-status-info-fg);
+    --q-alert-success-bg: var(--q-status-success-bg);
+    --q-alert-success-border: var(--q-status-success-border);
+    --q-alert-success-ring: var(--q-status-success-fg);
+    --q-alert-success-glyph: var(--q-status-success-fg);
+    --q-alert-warning-bg: var(--q-status-warning-bg);
+    --q-alert-warning-border: var(--q-status-warning-border);
+    --q-alert-warning-ring: var(--q-status-warning-fg);
+    --q-alert-warning-glyph: var(--q-status-warning-fg);
+    --q-alert-error-bg: var(--q-status-error-bg);
+    --q-alert-error-border: var(--q-status-error-border);
+    --q-alert-error-ring: var(--q-status-error-fg);
+    --q-alert-error-glyph: var(--q-status-error-fg);
   }
 }
 
 @layer q.components {
   .q-alert {
+    --_bg: var(--q-alert-info-bg);
     --_border: var(--q-alert-info-border);
     --_ring: var(--q-alert-info-ring);
     --_glyph: var(--q-alert-info-glyph);
@@ -52,21 +56,24 @@
     padding: var(--q-alert-py) var(--q-alert-px);
     border: var(--q-hairline) solid var(--_border);
     border-radius: var(--q-alert-radius);
-    background: var(--q-alert-bg);
+    background: var(--_bg);
 
     &--success {
+      --_bg: var(--q-alert-success-bg);
       --_border: var(--q-alert-success-border);
       --_ring: var(--q-alert-success-ring);
       --_glyph: var(--q-alert-success-glyph);
     }
 
     &--warning {
+      --_bg: var(--q-alert-warning-bg);
       --_border: var(--q-alert-warning-border);
       --_ring: var(--q-alert-warning-ring);
       --_glyph: var(--q-alert-warning-glyph);
     }
 
     &--error {
+      --_bg: var(--q-alert-error-bg);
       --_border: var(--q-alert-error-border);
       --_ring: var(--q-alert-error-ring);
       --_glyph: var(--q-alert-error-glyph);

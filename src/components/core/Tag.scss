@@ -1,5 +1,6 @@
 // Tag — mono caps pill; removable and selectable. BEM: .q-tag, __icon, __remove;
-// --sm, --ink, --selectable, --with-avatar, --disabled; selected = [aria-pressed="true"].
+// --sm, --ink, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
+// selected = [aria-pressed="true"].
 @layer q.tokens {
   :root,
   [data-theme] {
@@ -21,6 +22,18 @@
     --q-tag-ink-fg: var(--q-fg);
     --q-tag-ink-border: var(--q-fg);
     --q-tag-selected-bg: var(--q-fg);
+    --q-tag-info-fg: var(--q-status-info-fg);
+    --q-tag-info-bg: var(--q-status-info-bg);
+    --q-tag-info-border: var(--q-status-info-border);
+    --q-tag-success-fg: var(--q-status-success-fg);
+    --q-tag-success-bg: var(--q-status-success-bg);
+    --q-tag-success-border: var(--q-status-success-border);
+    --q-tag-warning-fg: var(--q-status-warning-fg);
+    --q-tag-warning-bg: var(--q-status-warning-bg);
+    --q-tag-warning-border: var(--q-status-warning-border);
+    --q-tag-error-fg: var(--q-status-error-fg);
+    --q-tag-error-bg: var(--q-status-error-bg);
+    --q-tag-error-border: var(--q-status-error-border);
     --q-tag-selected-fg: var(--q-bg);
     --q-tag-disabled-opacity: 0.4;
     --q-tag-remove-font-size: var(--q-text-sm);
@@ -64,6 +77,15 @@
     &--selectable:is(:hover, :focus-visible):not(:disabled, [aria-pressed="true"]) {
       border-color: var(--q-tag-ink-border);
       color: var(--q-tag-ink-fg);
+    }
+
+    // After --ink so status wins over tone; hover and selected still win on specificity.
+    @each $status in info, success, warning, error {
+      &--#{$status} {
+        border-color: var(--q-tag-#{$status}-border);
+        background: var(--q-tag-#{$status}-bg);
+        color: var(--q-tag-#{$status}-fg);
+      }
     }
 
     &--selectable {

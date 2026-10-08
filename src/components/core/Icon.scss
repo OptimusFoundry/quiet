@@ -7,9 +7,9 @@
     --q-icon-muted-fg: var(--q-fg-muted);
     --q-icon-quiet-fg: var(--q-fg-subtle);
     --q-icon-primary-fg: var(--q-accent);
-    --q-icon-success-fg: var(--q-fg);
-    --q-icon-warning-fg: var(--q-accent);
-    --q-icon-error-fg: var(--q-accent);
+    --q-icon-success-fg: var(--q-status-success-fg);
+    --q-icon-warning-fg: var(--q-status-warning-fg);
+    --q-icon-error-fg: var(--q-status-error-fg);
   }
 }
 

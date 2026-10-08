@@ -1,10 +1,10 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 import { type LinkComponent, LinkProvider } from "./lib/link";
 import "./styles/index.scss";
-import { defaultTheme, type ThemeName, themes } from "./styles/themes/themes";
+import { defaultTheme, getTheme, type ThemeName } from "./styles/themes/themes";
 
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
-	/** Any registered theme (styles/themes/themes.ts). Scopes to this subtree. */
+	/** Any registered theme (built-in, or added with defineThemes). Unregistered names fall back to defaultTheme. Scopes to this subtree. */
 	theme?: ThemeName;
 	/** marketing = the website · app = dashboards & settings · compact = tables, inspectors, admin. */
 	density?: "marketing" | "app" | "compact";
@@ -28,17 +28,18 @@ export function QuietRoot({
 	ref,
 	...props
 }: QuietRootProps) {
+	const resolved = getTheme(theme);
 	return (
 		<LinkProvider value={linkComponent}>
 			<div
 				ref={ref}
 				className={className ? `quiet ${className}` : "quiet"}
 				data-quiet=""
-				data-theme={theme}
+				data-theme={resolved.name}
 				data-density={density}
 				style={
 					{
-						colorScheme: themes[theme].colorScheme,
+						colorScheme: resolved.colorScheme,
 						...(accent ? { "--q-accent": accent } : {}),
 						...style,
 					} as CSSProperties

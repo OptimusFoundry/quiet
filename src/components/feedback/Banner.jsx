@@ -16,8 +16,7 @@ export function Banner({ variant = 'paper', status = 'info', title, children, ac
     return () => clearTimeout(t);
   }, [leave]);
   if (leave === 3) return null;
-  const hot = status === 'warning' || status === 'error';
-  const cls = ['q-banner', VARIANTS.includes(variant) && 'q-banner--' + variant, hot && 'q-banner--hot', className].filter(Boolean).join(' ');
+  const cls = ['q-banner', VARIANTS.includes(variant) && 'q-banner--' + variant, GLYPH[status] && 'q-banner--' + status, className].filter(Boolean).join(' ');
   const box = (
     <div role={status === 'error' ? 'alert' : 'region'} aria-labelledby={title ? id : undefined} aria-label={title ? undefined : label || 'Notice'} className={cls} style={style}>
       <div className="q-banner__inner">

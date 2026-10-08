@@ -18,6 +18,7 @@
 @layer q.themes {
   @include meta.load-css("themes/foundry");
   @include meta.load-css("themes/foundry-dark");
+  @include meta.load-css("themes/foundry-status");
 }
 
 @layer q.base {

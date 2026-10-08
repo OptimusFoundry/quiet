@@ -6,6 +6,8 @@ import * as React from 'react';
 export interface TagProps {
   children?: React.ReactNode;
   tone?: 'default' | 'ink';
+  /** quiet addition: semantic status colour, from the theme's --q-status-* tokens */
+  status?: 'info' | 'success' | 'warning' | 'error';
   size?: 'sm' | 'md';
   icon?: React.ReactNode;
   /** Small Avatar (size 'xs') rendered flush left */

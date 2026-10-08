@@ -40,7 +40,15 @@ async function load(page: Page, quiet: boolean, hostCss: boolean) {
 	await page.setContent(
 		`<!doctype html><html data-theme="paper"><head>${hostCss ? `<style>${HOST}</style>` : ""}</head><body>${BODY}</body></html>`,
 	);
-	if (quiet) await page.addStyleTag({ path: DIST });
+	if (quiet) {
+		await page.addStyleTag({ path: DIST });
+		// Links transition colour over --q-dur-hover, so probing straight after injection can read
+		// the browser default mid-transition. Flush styles, then let running transitions finish.
+		await page.evaluate(async () => {
+			void document.body.offsetWidth;
+			await Promise.all(document.getAnimations().map((a) => a.finished));
+		});
+	}
 }
 
 function probe(page: Page, selectors: string[]) {
