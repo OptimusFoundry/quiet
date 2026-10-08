@@ -16,6 +16,7 @@ export interface GridProps {
   breakpoints?: [number, number];
   as?: keyof JSX.IntrinsicElements;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Grid(props: GridProps): JSX.Element;

@@ -1,19 +1,23 @@
 import React from 'react';
 import { Eyebrow } from '../core/Eyebrow';
 import { Headline } from '../core/Headline';
+import './SectionHeader.scss';
 
-export function SectionHeader({ index, eyebrow, title, accent, description, actions, size = 'md', as = 'h2', style }) {
+// Headline only takes `style`, so the md title's type scale goes in as token references.
+
+export function SectionHeader({ index, eyebrow, title, accent, description, actions, size = 'md', as = 'h2', className, style }) {
   const md = size === 'md';
   const right = description || actions;
+  const cls = ['q-section-header', 'q-section-header--' + (md ? 'md' : 'sm'), right && 'q-section-header--split', className].filter(Boolean).join(' ');
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: right ? 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))' : '1fr', gap: md ? 32 : 16, alignItems: 'end', paddingTop: md ? 32 : 16, borderTop: '1px solid var(--ink)', ...style }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: md ? 16 : 8 }}>
+    <div className={cls} style={style}>
+      <div className="q-section-header__heading">
         {(eyebrow || index) && <Eyebrow index={index}>{eyebrow}</Eyebrow>}
-        <Headline size={md ? 'h3' : 'h4'} as={as} lead={title} accent={accent} style={md ? { fontSize: 40, fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1 } : undefined} />
+        <Headline size={md ? 'h3' : 'h4'} as={as} lead={title} accent={accent} className={md ? 'q-section-header__title q-section-header__title--md' : 'q-section-header__title'} />
       </div>
-      {right && <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
-        {description && <p style={{ margin: 0, fontSize: md ? 17 : 15, lineHeight: 1.55, color: 'var(--ink-2)', maxWidth: 520, textWrap: 'pretty' }}>{description}</p>}
-        {actions && <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>{actions}</div>}
+      {right && <div className="q-section-header__aside">
+        {description && <p className="q-section-header__description">{description}</p>}
+        {actions && <div className="q-section-header__actions">{actions}</div>}
       </div>}
     </div>
   );

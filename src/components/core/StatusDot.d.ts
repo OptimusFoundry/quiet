@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface StatusDotProps {
   status?: 'live' | 'prototype' | 'archived';
   label?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function StatusDot(props: StatusDotProps): JSX.Element;

@@ -19,6 +19,8 @@ export interface TextAreaProps {
   defaultValue?: string;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  /** Merged onto the native control (it is passed through with the other input props) */
+  className?: string;
   style?: React.CSSProperties;
   [key: string]: any;
 }

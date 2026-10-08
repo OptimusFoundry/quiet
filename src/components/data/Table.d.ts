@@ -33,6 +33,7 @@ export interface TableProps {
   label?: string;
   /** Row name used in 'Select …' / 'Expand …' labels; default: first column's value */
   rowLabel?: (row: any) => string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Table(props: TableProps): JSX.Element;

@@ -12,6 +12,7 @@ export interface IconProps {
   color?: 'inherit' | 'default' | 'muted' | 'quiet' | 'primary' | 'success' | 'warning' | 'error' | string;
   /** Accessible label; omit for decorative glyphs */
   label?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Icon(props: IconProps): JSX.Element;

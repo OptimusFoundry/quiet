@@ -17,6 +17,7 @@ export interface PaginationProps {
   /** Accessible name for the nav landmark. Defaults to "Pagination, page <n> of <total>" */
   label?: string;
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Pagination(props: PaginationProps): JSX.Element;

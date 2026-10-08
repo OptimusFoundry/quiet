@@ -15,6 +15,7 @@ export interface TabsProps {
   /** Accessible name for the tablist */
   label?: string;
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Tabs(props: TabsProps): JSX.Element;

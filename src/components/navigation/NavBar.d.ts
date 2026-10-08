@@ -15,6 +15,7 @@ export interface NavBarProps {
   label?: string;
   /** Accessible name for the wordmark home link (defaults to the wordmark text) */
   homeLabel?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function NavBar(props: NavBarProps): JSX.Element;

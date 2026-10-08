@@ -1,4 +1,7 @@
 import React from 'react';
+import './StatCard.scss';
+
+const VARIANTS = ['outlined', 'filled', 'plain'];
 
 // Counts up from 0 on mount when `on`; later numeric changes ease from the previous value (600ms).
 function useCount(target, on, dur = 1200) {
@@ -17,8 +20,7 @@ function useCount(target, on, dur = 1200) {
   return v;
 }
 
-export function StatCard({ label, value, format, delta, trend, period, previousValue, icon, variant = 'outlined', animate = false, onClick, href, style }) {
-  const [h, setH] = React.useState(false);
+export function StatCard({ label, value, format, delta, trend, period, previousValue, icon, variant = 'outlined', animate = false, onClick, href, className, style }) {
   const shown = useCount(value, animate && typeof value === 'number');
   const fmt = format || (v => typeof v === 'number' ? Math.round(v).toLocaleString('en-US') : v);
   const tr = trend || (typeof delta === 'number' ? (delta > 0 ? 'up' : delta < 0 ? 'down' : 'neutral') : typeof delta === 'string' ? (delta.trim().startsWith('-') || delta.trim().startsWith('\u2212') ? 'down' : 'up') : 'neutral');
@@ -26,24 +28,17 @@ export function StatCard({ label, value, format, delta, trend, period, previousV
   const deltaText = typeof delta === 'number' ? (delta > 0 ? '+' : delta < 0 ? '\u2212' : '') + Math.abs(delta) + '%' : delta;
   const interactive = !!(onClick || href);
   const El = href ? 'a' : onClick ? 'button' : 'div';
-  const v = {
-    outlined: { borderRadius: 'var(--radius-lg)', background: 'var(--paper)', border: '1px solid ' + (interactive && h ? 'var(--rule-strong)' : 'var(--rule-soft)') },
-    filled: { borderRadius: 'var(--radius-lg)', background: 'var(--paper-2)', border: '1px solid ' + (interactive && h ? 'var(--rule-strong)' : 'var(--paper-2)') },
-    plain: { background: 'transparent', border: '1px solid transparent', borderTop: '1px solid var(--ink)' },
-  }[variant];
+  const cls = ['q-stat-card', VARIANTS.includes(variant) && 'q-stat-card--' + variant, interactive && 'q-stat-card--interactive', className].filter(Boolean).join(' ');
   return (
-    <El href={href} onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      onFocus={interactive ? e => e.currentTarget.matches(':focus-visible') && setH(true) : undefined} onBlur={interactive ? () => setH(false) : undefined}
-      style={{ display: 'flex', flexDirection: 'column', gap: 16, padding: variant === 'plain' ? '24px 0 0' : 24, boxSizing: 'border-box', textAlign: 'left', textDecoration: 'none', font: 'inherit', color: 'inherit', borderRadius: 0,
-        cursor: interactive ? 'pointer' : 'default', transition: 'border-color var(--dur-hover) var(--ease-soft)', ...v, ...style }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>{label}</span>
-        {icon && <span aria-hidden="true" style={{ width: 32, height: 32, borderRadius: 999, border: '1px solid var(--rule-soft)', display: 'grid', placeItems: 'center', color: 'var(--ink)', fontSize: 15 }}>{icon}</span>}
+    <El href={href} onClick={onClick} className={cls} style={style}>
+      <div className="q-stat-card__head">
+        <span className="q-stat-card__label">{label}</span>
+        {icon && <span aria-hidden="true" className="q-stat-card__icon">{icon}</span>}
       </div>
-      <div style={{ fontWeight: 700, fontSize: 40, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--ink)', fontVariantNumeric: 'tabular-nums', minWidth: 0, overflowWrap: 'anywhere' }}><span aria-hidden="true">{fmt(shown)}</span><span className="q-sr-only">{fmt(value)}</span></div>
-      {(delta != null || period || previousValue != null) && <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', color: 'var(--muted)' }}>
-        {delta != null && <span style={{ display: 'inline-flex', gap: 4, color: 'var(--ink)' }}><span aria-hidden="true" style={{ color: tr === 'down' ? 'var(--molten)' : 'var(--ink)' }}>{glyph}</span><span className="q-sr-only">{{ up: 'Up', down: 'Down', neutral: 'Unchanged' }[tr]} </span>{deltaText}</span>}
-        {period && <span style={{ textTransform: 'uppercase', letterSpacing: '0.08em' }}>{period}</span>}
+      <div className="q-stat-card__value"><span aria-hidden="true">{fmt(shown)}</span><span className="q-sr-only">{fmt(value)}</span></div>
+      {(delta != null || period || previousValue != null) && <div className="q-stat-card__meta">
+        {delta != null && <span className="q-stat-card__delta"><span aria-hidden="true" className={'q-stat-card__glyph' + (tr === 'down' ? ' q-stat-card__glyph--down' : '')}>{glyph}</span><span className="q-sr-only">{{ up: 'Up', down: 'Down', neutral: 'Unchanged' }[tr]} </span>{deltaText}</span>}
+        {period && <span className="q-stat-card__period">{period}</span>}
         {previousValue != null && <span>Prev {fmt(previousValue)}</span>}
       </div>}
     </El>

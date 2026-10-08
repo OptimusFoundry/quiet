@@ -10,6 +10,7 @@ export interface RuleProps {
   /** Mono caps label set into the line */
   label?: React.ReactNode;
   labelAlign?: 'center' | 'start';
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Rule(props: RuleProps): JSX.Element;

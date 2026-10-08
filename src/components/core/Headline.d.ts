@@ -17,6 +17,7 @@ export interface HeadlineProps {
   period?: boolean;
   /** Color the italic phrase molten (then drop other molten on the surface) */
   moltenAccent?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Headline(props: HeadlineProps): JSX.Element;

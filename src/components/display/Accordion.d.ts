@@ -12,6 +12,7 @@ export interface AccordionProps {
   onChange?: (expanded: Array<string | number>) => void;
   /** Heading level wrapping each header button; default 3 */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Accordion(props: AccordionProps): JSX.Element;

@@ -22,6 +22,8 @@ export interface TextFieldProps {
   defaultValue?: string;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Merged onto the native control (it is passed through with the other input props) */
+  className?: string;
   style?: React.CSSProperties;
   inputStyle?: React.CSSProperties;
   [key: string]: any;

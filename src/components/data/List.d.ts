@@ -12,6 +12,7 @@ export interface ListProps {
   bordered?: boolean;
   /** Rows rise in on mount, 60ms apart */
   animated?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function List(props: ListProps): JSX.Element;

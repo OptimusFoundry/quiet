@@ -12,6 +12,7 @@ export interface AvatarProps {
   /** circle = full round · square = soft rounded-rect (--radius-md) */
   shape?: 'circle' | 'square';
   fallback?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Avatar(props: AvatarProps): JSX.Element;

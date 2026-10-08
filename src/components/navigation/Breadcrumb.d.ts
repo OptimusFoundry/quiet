@@ -12,6 +12,7 @@ export interface BreadcrumbProps {
   /** Accessible name for the nav landmark. Defaults to "Breadcrumb: <current page>" */
   label?: string;
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Breadcrumb(props: BreadcrumbProps): JSX.Element;

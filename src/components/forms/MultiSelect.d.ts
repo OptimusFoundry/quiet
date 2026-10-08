@@ -20,6 +20,7 @@ export interface MultiSelectProps {
   disabled?: boolean;
   helperText?: React.ReactNode;
   error?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function MultiSelect(props: MultiSelectProps): JSX.Element;

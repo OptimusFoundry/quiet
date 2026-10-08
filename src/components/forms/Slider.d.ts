@@ -17,6 +17,7 @@ export interface SliderProps {
   disabled?: boolean;
   /** Accessible name when there is no visible label */
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Slider(props: SliderProps): JSX.Element;

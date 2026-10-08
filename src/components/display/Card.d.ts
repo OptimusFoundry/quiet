@@ -15,6 +15,7 @@ export interface CardProps {
   footer?: React.ReactNode;
   href?: string;
   onClick?: () => void;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Card(props: CardProps): JSX.Element;

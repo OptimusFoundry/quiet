@@ -40,6 +40,37 @@ ignores all of the above so formatting can never change them.
   what renders at rest. Colour contrast is a deliberate exception (exact colours kept).
 - Tests: `tests/a11y.spec.ts` (axe, light + dark) and `tests/a11y-<group>.spec.ts` (keyboard/ARIA).
 
+## Styling conventions (BEM + tokens)
+
+Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
+
+- **One stylesheet per component**, next to it: `src/components/<group>/<Name>.scss`, imported by
+  `<Name>.jsx` (`import './<Name>.scss'`). No inline styles except truly dynamic values, passed as
+  custom properties (`style={{ '--_progress': pct + '%' }}`); consumers' `className`/`style` still merge.
+- **BEM under the `q-` namespace**: block `.q-dropdown-menu`, element `.q-dropdown-menu__item`,
+  modifier `.q-dropdown-menu__item--danger`. Variants and sizes are modifiers. States use native
+  pseudo-classes and ARIA/data attributes (`:hover`, `:focus-visible`, `[aria-expanded="true"]`,
+  `[aria-selected="true"]`, `[data-state="open"]`) — no `is-*` classes, no JS hover state.
+  Hover affordances apply to keyboard focus too: `:is(:hover, :focus-visible)`.
+- **Tokens, three tiers** (all `--q-*`):
+  1. palette — `--q-gray-*`, `--q-molten-*` … only in `src/styles/themes/_<theme>.scss`;
+  2. semantic — `--q-bg*`, `--q-fg*`, `--q-border*`, `--q-accent`, `--q-text-*`, `--q-leading-*`,
+     `--q-tracking-*`, `--q-space-*`, `--q-control-*`, `--q-radius-*`, `--q-shadow-*`,
+     `--q-ease-*`, `--q-dur-*`, `--q-z-*` in `src/styles/tokens/`;
+  3. component — `--q-{block}-{element?}-{modifier?}-{property}-{state?}`, declared at the top of
+     the component's own .scss in `@layer q.tokens { :root, [data-theme] { … } }`, defaulting to
+     tier 2. A value unique to one component may be set here directly.
+  Component rules use only tier-2/3 tokens; `--_name` locals carry size/variant plumbing.
+- **Cascade layers**: `q.tokens, q.themes, q.base, q.components, q.utilities`. Component rules go in
+  `@layer q.components`, so they never need to out-specify base styles.
+- **Themes**: `src/styles/themes/_<name>.scss` sets the palette (and may override any token) under
+  `[data-theme="<name>"]`; register it in `themes.ts`. `QuietRoot theme` scopes a subtree,
+  `ThemeProvider` themes the app.
+- The reference names (`--ink`, `--paper`, `--molten` …) exist only in
+  `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
+- Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
+  values in component rules). `npm run lint` runs Biome + Stylelint.
+
 ## quiet's own code
 
 `src/QuietRoot.tsx`, `src/a11y/`, `src/styles/quiet-*.css`, `src/jsx-global.d.ts`, `scripts/`,

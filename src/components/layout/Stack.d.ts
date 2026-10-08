@@ -14,6 +14,7 @@ export interface StackProps {
   animated?: boolean;
   as?: keyof JSX.IntrinsicElements;
   children?: React.ReactNode;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Stack(props: StackProps): JSX.Element;

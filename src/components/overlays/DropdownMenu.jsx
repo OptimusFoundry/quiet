@@ -1,34 +1,31 @@
 import React from 'react';
 import { rovingKeyDown, useEscape, useOutside, usePresence } from '../../a11y/hooks';
+import './DropdownMenu.scss';
 
 const ITEM = '[role^="menuitem"]';
 const roving = rovingKeyDown(ITEM, 'vertical');
 
 function MenuItem({ it, size, onPick }) {
-  const [h, setH] = React.useState(false);
   const armed = React.useRef(false);
   const off = it.disabled;
+  const cls = ['q-dropdown-menu__item', size === 'sm' && 'q-dropdown-menu__item--sm', it.active && 'q-dropdown-menu__item--active', it.danger && 'q-dropdown-menu__item--danger'].filter(Boolean).join(' ');
   return (
-    <div role={it.checked != null ? 'menuitemcheckbox' : 'menuitem'} aria-checked={it.checked} aria-disabled={off || undefined} tabIndex={-1}
+    <div role={it.checked != null ? 'menuitemcheckbox' : 'menuitem'} aria-checked={it.checked} aria-disabled={off || undefined} tabIndex={-1} className={cls}
       onClick={() => !off && onPick(it)} onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), armed.current = e.key === ' ', e.key === 'Enter' && !off && onPick(it))}
-      onKeyUp={e => e.key === ' ' && armed.current && (armed.current = false, !off && onPick(it))}
-      onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onFocus={() => setH(true)} onBlur={() => setH(false)}
-      style={{ display: 'flex', alignItems: 'center', gap: 12, padding: size === 'sm' ? '6px 10px' : '10px 12px', borderRadius: 'var(--radius-sm)', cursor: off ? 'not-allowed' : 'pointer', opacity: off ? 0.4 : 1, outline: 'none',
-        background: (h || it.active) && !off ? 'var(--paper-2)' : 'transparent', fontSize: size === 'sm' ? 13 : 15, fontWeight: it.active ? 600 : 400,
-        color: it.danger && h ? 'var(--molten)' : 'var(--ink)', transition: 'color var(--dur-hover) var(--ease-soft), background var(--dur-hover) var(--ease-soft)' }}>
+      onKeyUp={e => e.key === ' ' && armed.current && (armed.current = false, !off && onPick(it))}>
       {it.checked != null
-        ? <span aria-hidden="true" style={{ width: 14, height: 14, flex: 'none', borderRadius: 4, border: '1px solid var(--ink)', boxSizing: 'border-box', display: 'grid', placeItems: 'center', background: it.checked ? 'var(--ink)' : 'transparent', color: 'var(--paper)', fontSize: 10, lineHeight: 1 }}>{it.checked ? '✓' : ''}</span>
-        : it.icon && <span aria-hidden="true" style={{ display: 'inline-flex', width: 16, justifyContent: 'center', color: 'var(--muted)' }}>{it.icon}</span>}
-      <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+        ? <span aria-hidden="true" className="q-dropdown-menu__check">{it.checked ? '✓' : ''}</span>
+        : it.icon && <span aria-hidden="true" className="q-dropdown-menu__icon">{it.icon}</span>}
+      <span className="q-dropdown-menu__label">
         <span>{it.label}</span>
-        {it.sublabel && <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--muted)' }}>{it.sublabel}</span>}
+        {it.sublabel && <span className="q-dropdown-menu__sublabel">{it.sublabel}</span>}
       </span>
-      {it.shortcut && <span aria-hidden="true" style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', color: 'var(--muted)' }}>{it.shortcut}</span>}
+      {it.shortcut && <span aria-hidden="true" className="q-dropdown-menu__shortcut">{it.shortcut}</span>}
     </div>
   );
 }
 
-export function DropdownMenu({ trigger, items = [], header, caption, size = 'md', align = 'start', width = 240, contextMenu = false, children, onSelect, label, style }) {
+export function DropdownMenu({ trigger, items = [], header, caption, size = 'md', align = 'start', width = 240, contextMenu = false, children, onSelect, label, className, style }) {
   const [open, setOpen] = React.useState(false);
   const [pt, setPt] = React.useState(null);
   const ref = React.useRef(null);
@@ -78,42 +75,42 @@ export function DropdownMenu({ trigger, items = [], header, caption, size = 'md'
     if (e.key === 'ArrowUp' && document.activeElement === e.currentTarget) { e.preventDefault(); const all = e.currentTarget.querySelectorAll(ITEM); all.length && all[all.length - 1].focus(); return; }
     roving(e);
   };
-  const mono = { fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' };
   // Items after a group label (up to the next divider or label) sit in a labelled role="group".
   const body = [];
   for (let i = 0; i < items.length; i++) {
     const it = items[i];
-    if (it.divider) body.push(<div key={i} role="separator" style={{ borderTop: '1px solid var(--rule-soft)', margin: '4px 0' }} />);
+    if (it.divider) body.push(<div key={i} role="separator" className="q-dropdown-menu__separator" />);
     else if (it.group) {
       const kids = [];
       let j = i + 1;
       for (; j < items.length && !items[j].divider && !items[j].group; j++) kids.push(<MenuItem key={j} it={items[j]} size={size} onPick={pick} />);
-      body.push(<div key={i} role="group" aria-labelledby={id + '-g' + i}><div id={id + '-g' + i} role="presentation" style={{ ...mono, padding: '10px 16px 4px' }}>{it.group}</div>{kids}</div>);
+      body.push(<div key={i} role="group" aria-labelledby={id + '-g' + i}><div id={id + '-g' + i} role="presentation" className="q-dropdown-menu__group-label">{it.group}</div>{kids}</div>);
       i = j - 1;
     } else body.push(<MenuItem key={i} it={it} size={size} onPick={pick} />);
   }
   const menu = mounted && (
-    <div ref={list} id={id} role="menu" tabIndex={-1} aria-label={label || (contextMenu ? 'Context menu' : undefined)} aria-labelledby={label || contextMenu ? undefined : btn ? btn.id : id + '-b'} onKeyDown={onMenuKey} className="q-anim-drop" data-state={state} style={{ position: 'absolute', zIndex: 60, width, boxSizing: 'border-box', background: 'var(--paper)', border: '1px solid var(--rule-soft)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-2)', padding: 6, outline: 'none',
-      ...(pt ? { left: pt.x, top: pt.y } : { top: '100%', marginTop: 4, [align === 'end' ? 'right' : 'left']: 0 }) }}>
-      {header && <div role="presentation" style={{ padding: '12px 16px', borderBottom: '1px solid var(--rule-soft)', marginBottom: 4 }}>{header}</div>}
+    <div ref={list} id={id} role="menu" tabIndex={-1} aria-label={label || (contextMenu ? 'Context menu' : undefined)} aria-labelledby={label || contextMenu ? undefined : btn ? btn.id : id + '-b'} onKeyDown={onMenuKey}
+      className={'q-dropdown-menu__menu q-anim-drop' + (pt ? ' q-dropdown-menu__menu--at-point' : align === 'end' ? ' q-dropdown-menu__menu--end' : '')} data-state={state}
+      style={{ '--_width': typeof width === 'number' ? width + 'px' : width, ...(pt ? { '--_x': pt.x + 'px', '--_y': pt.y + 'px' } : null) }}>
+      {header && <div role="presentation" className="q-dropdown-menu__header">{header}</div>}
       {body}
-      {caption && <div role="presentation" style={{ ...mono, padding: '10px 16px 6px', borderTop: '1px solid var(--rule-soft)', marginTop: 4 }}>{caption}</div>}
+      {caption && <div role="presentation" className="q-dropdown-menu__caption">{caption}</div>}
     </div>
   );
   if (contextMenu) {
     return (
       <div ref={ref} onContextMenu={e => { e.preventDefault(); const r = ref.current.getBoundingClientRect(); setPt({ x: e.clientX - r.left, y: e.clientY - r.top }); show('menu'); }}
-        style={{ position: 'relative', ...style }}>{children}{menu}</div>
+        className={'q-dropdown-menu q-dropdown-menu--context' + (className ? ' ' + className : '')} style={style}>{children}{menu}</div>
     );
   }
   const own = btn ? {} : { id: id + '-b', role: 'button', tabIndex: 0, 'aria-haspopup': 'menu', 'aria-expanded': open, 'aria-controls': open && mounted ? id : undefined };
   return (
-    <span ref={ref} style={{ position: 'relative', display: 'inline-flex', ...style }}>
+    <span ref={ref} className={className ? 'q-dropdown-menu ' + className : 'q-dropdown-menu'} style={style}>
       <span ref={trig} onClick={e => { setPt(null); if (open) setOpen(false); else show(e.detail === 0 ? 'first' : 'menu'); }} {...own}
         onKeyDown={e => {
           if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setPt(null); show(e.key === 'ArrowUp' ? 'last' : 'first'); }
           else if (!btn && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setPt(null); if (open) setOpen(false); else show('first'); }
-        }} style={{ display: 'inline-flex' }}>{trigger}</span>
+        }} className="q-dropdown-menu__trigger">{trigger}</span>
       {menu}
     </span>
   );

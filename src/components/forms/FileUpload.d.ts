@@ -21,6 +21,7 @@ export interface FileUploadProps {
   /** Demo only — animates progress for new files */
   simulateUpload?: boolean;
   buttonLabel?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function FileUpload(props: FileUploadProps): JSX.Element;

@@ -13,6 +13,7 @@ export interface AlertProps {
   action?: React.ReactNode;
   /** Shows × */
   onDismiss?: () => void;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Alert(props: AlertProps): JSX.Element;

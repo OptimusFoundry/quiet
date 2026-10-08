@@ -1,13 +1,14 @@
 import React from 'react';
+import './Wordmark.scss';
 
 const SIZES = { nav: 15, footer: 28 };
 
-export function Wordmark({ size = 'nav', style }) {
-  const fs = typeof size === 'number' ? size : SIZES[size];
+export function Wordmark({ size = 'nav', className, style }) {
+  const custom = typeof size === 'number';
+  const cls = ['q-wordmark', custom ? 'q-wordmark--custom' : SIZES[size] && 'q-wordmark--' + size, className].filter(Boolean).join(' ');
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--font-sans)', fontWeight: 700, fontStyle: 'italic',
-      textTransform: 'uppercase', letterSpacing: '-0.02em', fontSize: fs, lineHeight: 1, color: 'var(--ink)', whiteSpace: 'nowrap', ...style }}>
-      Optimus Foundry<span style={{ color: 'var(--molten)' }}>.</span>
+    <span className={cls} style={custom ? { '--_size': size + 'px', ...style } : style}>
+      Optimus Foundry<span className="q-wordmark__period">.</span>
     </span>
   );
 }

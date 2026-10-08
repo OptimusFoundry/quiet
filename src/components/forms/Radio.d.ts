@@ -17,6 +17,7 @@ export interface RadioProps {
   error?: boolean | string;
   /** Group name when there is no visible label */
   'aria-label'?: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 export declare function Radio(props: RadioProps): JSX.Element;

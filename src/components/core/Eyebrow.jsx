@@ -1,10 +1,10 @@
 import React from 'react';
+import './Eyebrow.scss';
 
-export function Eyebrow({ index, children, tone = 'muted', style }) {
+export function Eyebrow({ index, children, tone = 'muted', className, style }) {
   return (
-    <div style={{ display: 'flex', gap: 16, alignItems: 'baseline', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em',
-      textTransform: 'uppercase', color: tone === 'ink' ? 'var(--ink)' : 'var(--muted)', ...style }}>
-      {index != null && <span style={{ color: 'var(--ink)' }}>{index}</span>}
+    <div className={['q-eyebrow', tone === 'ink' && 'q-eyebrow--ink', className].filter(Boolean).join(' ')} style={style}>
+      {index != null && <span className="q-eyebrow__index">{index}</span>}
       <span>{children}</span>
     </div>
   );

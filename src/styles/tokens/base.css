@@ -1,5 +1,0 @@
-html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-body { margin: 0; background: var(--surface-page); color: var(--text-body); font-family: var(--font-sans); font-size: var(--type-body); line-height: var(--type-body-leading); }
-a { color: var(--ink); text-decoration: none; transition: color var(--dur-hover) var(--ease-linear); }
-a:hover { color: var(--molten); }
-::selection { background: var(--ink); color: var(--paper); }

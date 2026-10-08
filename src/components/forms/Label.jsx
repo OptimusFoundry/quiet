@@ -1,17 +1,20 @@
 import React from 'react';
+import './Label.scss';
 
-export function Label({ children, htmlFor, required = false, subText, badge, action, size = 'md', disabled = false, style }) {
-  const fs = { sm: 10, md: 11, lg: 12 }[size] || 11;
+const SIZES = ['sm', 'md', 'lg'];
+
+export function Label({ children, htmlFor, required = false, subText, badge, action, size = 'md', disabled = false, className, style }) {
+  const cls = ['q-label', 'q-label--' + (SIZES.includes(size) ? size : 'md'), className].filter(Boolean).join(' ');
   return (
-    <div aria-disabled={disabled || undefined} style={{ display: 'flex', flexDirection: 'column', gap: 4, opacity: disabled ? 0.4 : 1, ...style }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-        <label htmlFor={htmlFor} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: fs, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-          <span>{children}{required && <span aria-hidden="true" style={{ color: 'var(--molten)', marginLeft: 2 }}>*</span>}{required && <span className="q-sr-only"> (required)</span>}</span>
+    <div aria-disabled={disabled || undefined} className={cls} style={style}>
+      <div className="q-label__row">
+        <label htmlFor={htmlFor} className="q-label__text">
+          <span>{children}{required && <span aria-hidden="true" className="q-label__required">*</span>}{required && <span className="q-sr-only"> (required)</span>}</span>
           {badge}
         </label>
         {action}
       </div>
-      {subText && <span style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--muted)' }}>{subText}</span>}
+      {subText && <span className="q-label__sub">{subText}</span>}
     </div>
   );
 }
