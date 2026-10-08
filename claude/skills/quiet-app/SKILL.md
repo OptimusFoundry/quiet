@@ -66,5 +66,5 @@ If quiet lacks something, build it in the product on quiet tokens and BEM, and f
    justify it in the PR.
 2. Look at both themes at 1280 and 390 against `checklist.md`: hierarchy, one lead, sectioning, slop,
    copy. For a whole screen, hand this to the `quiet-screen-reviewer` agent.
-3. `document.title` per route, focus after navigation, named landmarks, axe clean. The
-   `quiet-a11y-reviewer` agent checks the app's duties.
+3. `document.title` per route, focus after navigation, named landmarks, axe clean: the app's duties
+   in `accessibility.md`, "What the app must do".

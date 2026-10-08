@@ -7,9 +7,12 @@
 // sync copies quiet's source (no stories, tests or reference mirror) into the app, replacing what
 // was there, and writes a package.json whose exports point at that source, so the app depends on
 // it with "@optimusfoundry/quiet": "file:./vendor/quiet" and imports stay `@optimusfoundry/quiet`.
-// It also places quiet's app-facing Claude assets where Claude Code reads them (claude/skills/* →
-// .claude/skills/, claude/agents/* → .claude/agents/) and registers claude/hooks/quiet-guard.mjs in
-// .claude/settings.json, which blocks edits to the copy and lints changed CSS. Only quiet's own
+// It also places quiet's app-facing Claude assets where Claude Code reads them (claude/skills/** →
+// .claude/skills/, claude/agents/** → .claude/agents/, sub-folders kept, e.g. agents/qa/) and
+// registers claude/hooks/quiet-guard.mjs in .claude/settings.json, which blocks edits to the copy and
+// lints changed CSS. In a monorepo (app in webapp/, .claude/ at the repo root) they go to the project
+// root: the nearest folder from the app up to the git root that has a .claude/ (else the git root),
+// or --claude-root <dir>. Only quiet's own
 // entries are added or replaced; files quiet no longer ships are removed on the next sync.
 // The copy is read-only: fixes go to the quiet repo, then sync again. check fails when a vendored
 // or placed file was edited, added or removed since the last sync (quiet.manifest.json holds the
@@ -86,6 +89,8 @@ function sync() {
 	const dirty = git("status", "--porcelain", "--", ...COPY) !== "";
 	const app = process.cwd();
 	const where = relative(app, target) || ".";
+	const root = projectRoot(app);
+	const fromRoot = relative(root, target);
 	const previous = existsSync(join(target, MANIFEST))
 		? JSON.parse(readFileSync(join(target, MANIFEST), "utf8"))
 		: null;
@@ -126,13 +131,14 @@ function sync() {
 			"\t",
 		)}\n`,
 	);
-	const placed = place(app, previous?.placed ?? {});
-	const hooks = registerHooks(app, where);
+	const placed = place(root, previous?.placed ?? {});
+	const hooks = registerHooks(root, fromRoot);
 	const manifest = {
 		version: pkg.version,
 		commit: git("rev-parse", "HEAD") || null,
 		dirty,
 		files: Object.fromEntries(files(target).map((f) => [f, sha(join(target, f))])),
+		claudeRoot: relative(app, root) || ".",
 		placed,
 	};
 	writeFileSync(join(target, MANIFEST), `${JSON.stringify(manifest, null, "\t")}\n`);
@@ -140,10 +146,11 @@ function sync() {
 	console.log(
 		`quiet ${pkg.version} (${manifest.commit?.slice(0, 7) ?? "no git"}) → ${where}: ${Object.keys(manifest.files).length} files`,
 	);
-	console.log(`Claude: ${Object.keys(placed).join(", ")}`);
+	const claudeDir = relative(app, join(root, ".claude")) || ".claude";
+	console.log(`Claude (${claudeDir}): ${Object.keys(placed).join(", ")}`);
 	console.log(
 		hooks
-			? `Claude: ${SETTINGS} runs ${GUARD} (blocks edits to ${where}, lints changed CSS)`
+			? `Claude: ${relative(app, join(root, SETTINGS))} runs ${GUARD} (blocks edits to ${where}, lints changed CSS)`
 			: `Claude: couldn't parse ${SETTINGS}; add the ${GUARD} hooks by hand (see ${where}/claude/hooks/${GUARD})`,
 	);
 	if (dirty)
@@ -159,10 +166,28 @@ First sync only, in the app:
                   (devDependencies: stylelint, stylelint-declaration-strict-value)
   biome/eslint    ignore ${where}/**
   CI              npx quiet check
-Commit the sync on its own: git add ${where} .claude && git commit -m "chore: quiet ${pkg.version}"`);
+  claude rules    if the project routes skills by path (.claude/rules/*.md), list quiet-app there for UI work
+Commit the sync on its own: git add ${where} ${claudeDir} && git commit -m "chore: quiet ${pkg.version}"`);
 }
 
-/** Copies the vendored claude/<kind>/** into the app's .claude/<kind>/, removing ones quiet dropped. */
+/** Where the app's Claude Code config lives: --claude-root, else the nearest folder from the app up
+ * to the git root that has a .claude/ (never above it: ~/.claude is the user's), else the git root. */
+function projectRoot(app) {
+	const explicit = flag("--claude-root", null);
+	if (explicit) return resolve(explicit);
+	let top = app;
+	try {
+		top = execFileSync("git", ["-C", app, "rev-parse", "--show-toplevel"], {
+			encoding: "utf8",
+		}).trim();
+	} catch {}
+	for (let dir = app; ; dir = dirname(dir)) {
+		if (existsSync(join(dir, ".claude"))) return dir;
+		if (dir === top || dir === dirname(dir)) return top;
+	}
+}
+
+/** Copies the vendored claude/<kind>/** into <root>/.claude/<kind>/, removing ones quiet dropped. */
 function place(app, before) {
 	const placed = {};
 	const from = join(target, "claude");
@@ -226,6 +251,7 @@ function check() {
 	const path = join(target, MANIFEST);
 	if (!existsSync(path)) fail(`no ${relative(process.cwd(), path)}; run quiet sync first`);
 	const manifest = JSON.parse(readFileSync(path, "utf8"));
+	const root = resolve(manifest.claudeRoot ?? ".");
 	const now = files(target);
 	const problems = [
 		...now.filter((f) => !(f in manifest.files)).map((f) => `added    ${f}`),
@@ -235,10 +261,18 @@ function check() {
 		...now
 			.filter((f) => f in manifest.files && manifest.files[f] !== sha(join(target, f)))
 			.map((f) => `edited   ${f}`),
-		...Object.entries(manifest.placed ?? {}).flatMap(([f, hash]) =>
-			!existsSync(f) ? [`removed  ${f}`] : sha(f) !== hash ? [`edited   ${f}`] : [],
-		),
-		...(hooksRegistered(process.cwd()) ? [] : [`missing  ${GUARD} hooks in ${SETTINGS}`]),
+		...Object.entries(manifest.placed ?? {}).flatMap(([f, hash]) => {
+			const at = join(root, f);
+			const shown = relative(process.cwd(), at);
+			return !existsSync(at)
+				? [`removed  ${shown}`]
+				: sha(at) !== hash
+					? [`edited   ${shown}`]
+					: [];
+		}),
+		...(hooksRegistered(root)
+			? []
+			: [`missing  ${GUARD} hooks in ${relative(process.cwd(), join(root, SETTINGS))}`]),
 	];
 	if (problems.length) {
 		console.error(problems.join("\n"));

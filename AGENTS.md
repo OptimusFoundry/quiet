@@ -124,7 +124,7 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - `sync-from-claude-design`: update the reference copy, hash-verified, with parity.
   - `review-component`: the pre-PR checklist.
   - App-facing (shipped to apps by `quiet sync`, see "Vendoring"): `claude/skills/quiet-app`,
-    `claude/agents/quiet-screen-reviewer.md`, `claude/agents/quiet-a11y-reviewer.md`, `claude/hooks/quiet-guard.mjs`.
+    `claude/agents/qa/quiet-screen-reviewer.md`, `claude/hooks/quiet-guard.mjs`.
 - **Agents** (`.claude/agents/`):
   - `component-builder`: builds one component, write-scoped to its files.
   - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
@@ -147,7 +147,10 @@ must build in an app's bundler, not only in this repo's:
 - **App-facing Claude assets live in `claude/`**, not `.claude/` (which is for developing quiet).
   `claude/skills/*` and `claude/agents/*` are placed in the app's `.claude/`, and
   `claude/hooks/quiet-guard.mjs` is registered in its settings. They must work in any app: no quiet
-  Storybook, quiet tests or quiet paths. Name new ones `quiet-*`.
+  Storybook, quiet tests or quiet paths. Name new ones `quiet-*`, put agents in a department folder
+  (`agents/qa/` for reviewers, as in saas-template), and give them `model`, `color` and
+  `skills: [quiet-app]` frontmatter. Ship what an app lacks (measuring rendered screens), not
+  duplicates of what an app's harness already has (its own a11y or code reviewers).
 
 ## Working alongside other agents
 

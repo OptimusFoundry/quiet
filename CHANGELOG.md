@@ -12,9 +12,9 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   fails in CI if the copy was edited. Apps compile quiet themselves and ship CSS only for the
   components they use.
 - **Claude Code assets for apps (`claude/`)**, placed by `quiet sync`: the `quiet-app` skill (moved
-  from `skills/`), the `quiet-screen-reviewer` and `quiet-a11y-reviewer` agents, and the
-  `quiet-guard` hook, which blocks edits to `vendor/quiet` and lints changed app CSS. Sync leaves
-  the app's own Claude config alone.
+  from `skills/`), the `qa/quiet-screen-reviewer` agent, and the `quiet-guard` hook,
+  which blocks edits to `vendor/quiet` and lints changed app CSS. Sync leaves the app's own Claude
+  config alone. In a monorepo they go to the project root's `.claude/`.
 - **`@optimusfoundry/quiet/stylelint/config`:** quiet's CSS rules for an app's own stylesheets
   (tokens only, `quiet/known-tokens`, `--app-*` custom properties).
 

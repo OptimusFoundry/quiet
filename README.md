@@ -201,9 +201,15 @@ reads them, and overwrites them on every sync like the rest of the copy:
 | From | To | What it does |
 |---|---|---|
 | `claude/skills/quiet-app` | `.claude/skills/quiet-app` | how to set up, lay out and check a screen on quiet |
-| `claude/agents/quiet-screen-reviewer.md` | `.claude/agents/` | measures a running screen with `quiet-audit`, screenshots both themes, judges it against the checklist |
-| `claude/agents/quiet-a11y-reviewer.md` | `.claude/agents/` | reviews what the app owns for accessibility (titles, h1, landmarks, route focus, labels, errors), and runs axe if the app has it |
+| `claude/agents/qa/quiet-screen-reviewer.md` | `.claude/agents/qa/` | measures a running screen with `quiet-audit`, screenshots both themes, judges it against the checklist |
 | `claude/hooks/quiet-guard.mjs` | registered in `.claude/settings.json` | **blocks** any edit inside `vendor/quiet`, and lints each changed app stylesheet with quiet's rules |
+
+In a monorepo (the app in `webapp/`, `.claude/` at the repo root), they go to the project root: the
+nearest folder from the app up to the git root that has a `.claude/`, or `--claude-root <dir>`.
+Agents keep their department folder (`qa/`); Claude Code finds agents recursively by `name`. For
+accessibility, the app's own a11y agents and rules cover what the app owns; point them at
+`docs/guidelines/accessibility.md` ("What the app must do"). If the project routes skills by path
+(`.claude/rules/*.md`), add `quiet-app` there for UI work; sync doesn't edit rules or routing.
 
 Sync only adds or replaces quiet's own entries. The app's other skills, agents, hooks and settings are
 left alone, and a file quiet stops shipping is removed on the next sync. `quiet check` also fails if a
