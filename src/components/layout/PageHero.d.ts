@@ -16,6 +16,8 @@ export interface PageHeroProps {
   size?: 'lg' | 'md';
   /** Soft rule under the hero */
   ruled?: boolean;
+  /** Heading level of the title; default h1 */
+  as?: 'h1' | 'h2' | 'h3';
   style?: React.CSSProperties;
 }
 export declare function PageHero(props: PageHeroProps): JSX.Element;

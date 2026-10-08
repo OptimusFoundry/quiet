@@ -1,6 +1,8 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 import "./styles/styles.css";
 import "./styles/quiet-modes.css";
+import "./styles/quiet-a11y.css";
+import "./styles/quiet-motion.css";
 
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 	/** quiet addition: dark is derived from the same greys; the brand itself is light-only. */

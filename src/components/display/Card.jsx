@@ -6,6 +6,8 @@ export function Card({ eyebrow, title, accent, children, meta, footer, href, onC
   const El = href ? 'a' : 'div';
   return (
     <El href={href} onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+      onFocus={interactive ? e => e.currentTarget.matches(':focus-visible') && setH(true) : undefined} onBlur={interactive ? () => setH(false) : undefined}
+      {...(!href && onClick ? { role: 'button', tabIndex: 0, onKeyDown: e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onClick(e); } } } : {})}
       style={{ display: 'flex', flexDirection: 'column', gap: 16, padding: 32, background: 'var(--paper)', borderRadius: 'var(--radius-lg)', textDecoration: 'none',
         border: '1px solid ' + (interactive && h ? 'var(--rule-strong)' : 'var(--rule-soft)'), boxShadow: interactive && h ? 'var(--shadow-2)' : 'none', color: 'var(--ink-2)', cursor: interactive ? 'pointer' : 'default',
         transition: 'border-color var(--dur-hover) var(--ease-soft), box-shadow var(--dur-hover) var(--ease-soft)', ...style }}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ButtonGroup({ children, attached = false, vertical = false, spacing = 'sm', fullWidth = false, style }) {
+export function ButtonGroup({ children, attached = false, vertical = false, spacing = 'sm', fullWidth = false, label, style, ...rest }) {
   const gap = { sm: 8, md: 16, lg: 24 }[spacing] ?? spacing;
   const kids = React.Children.toArray(children).filter(Boolean);
   const items = kids.map((c, i) => {
@@ -15,7 +15,7 @@ export function ButtonGroup({ children, attached = false, vertical = false, spac
     return React.cloneElement(c, { style: { ...(c.props.style || {}), ...extra } });
   });
   return (
-    <div role="group" style={{ display: fullWidth ? 'flex' : 'inline-flex', flexDirection: vertical ? 'column' : 'row', gap: attached ? 0 : gap,
+    <div role="group" aria-label={label} {...rest} style={{ display: fullWidth ? 'flex' : 'inline-flex', flexDirection: vertical ? 'column' : 'row', gap: attached ? 0 : gap,
       ...(attached ? { border: '1px solid var(--ink)', borderRadius: vertical ? 'var(--radius-lg)' : 999, overflow: 'hidden' } : {}), ...style }}>
       {items}
     </div>

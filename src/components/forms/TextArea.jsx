@@ -14,15 +14,16 @@ export function TextArea({ label, required, helperText, error, size = 'md', rows
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: disabled ? 0.4 : 1, ...style }}>
       {label && <Label htmlFor={fid} required={required} size={size}>{label}</Label>}
-      <textarea id={fid} rows={rows} disabled={disabled} required={required} maxLength={maxLength} aria-invalid={!!error || undefined} {...rest}
+      <textarea id={fid} rows={rows} disabled={disabled} required={required} maxLength={maxLength} aria-invalid={!!error || undefined}
+        aria-describedby={[(error || helperText) && fid + '-hint', maxLength && fid + '-count'].filter(Boolean).join(' ') || undefined} {...rest}
         onChange={e => { setLen(e.target.value.length); rest.onChange && rest.onChange(e); }}
         onFocus={e => { setFocus(true); rest.onFocus && rest.onFocus(e); }} onBlur={e => { setFocus(false); rest.onBlur && rest.onBlur(e); }}
         style={{ fontFamily: 'var(--font-sans)', fontSize: sz.fs, lineHeight: 1.55, color: 'var(--ink)', background: 'var(--paper)', padding: sz.p, boxSizing: 'border-box', width: '100%',
           border: '1px solid ' + (error ? 'var(--molten)' : focus ? 'var(--ink)' : 'var(--rule-soft)'), borderRadius: 'var(--radius-md)', boxShadow: focus ? 'var(--ring-focus)' : 'none', outline: 'none', resize,
           cursor: disabled ? 'not-allowed' : undefined, transition: 'border-color var(--dur-hover) var(--ease-soft)' }} />
       {(error || helperText || maxLength) && <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
-        <FormHint variant={error ? 'error' : 'default'}>{error || helperText}</FormHint>
-        {maxLength && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', marginLeft: 'auto' }}>{len} / {maxLength}</span>}
+        <FormHint id={fid + '-hint'} variant={error ? 'error' : 'default'}>{error || helperText}</FormHint>
+        {maxLength && <span id={fid + '-count'} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', marginLeft: 'auto' }}>{len} / {maxLength}</span>}
       </div>}
     </div>
   );

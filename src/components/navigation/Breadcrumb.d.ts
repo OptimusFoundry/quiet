@@ -9,6 +9,9 @@ export interface BreadcrumbProps {
   /** Collapse to first + … + last (maxItems-1) */
   maxItems?: number;
   size?: 'sm' | 'md' | 'lg';
+  /** Accessible name for the nav landmark. Defaults to "Breadcrumb: <current page>" */
+  label?: string;
+  'aria-label'?: string;
   style?: React.CSSProperties;
 }
 export declare function Breadcrumb(props: BreadcrumbProps): JSX.Element;

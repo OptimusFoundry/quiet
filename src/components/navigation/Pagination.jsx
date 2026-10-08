@@ -21,19 +21,20 @@ function PageBtn({ children, on, disabled, onClick, variant, h, label }) {
   }[variant];
   return (
     <button type="button" aria-label={label} aria-current={on ? 'page' : undefined} disabled={disabled} onClick={onClick} onMouseEnter={() => setHv(true)} onMouseLeave={() => setHv(false)}
+      onFocus={e => e.currentTarget.matches(':focus-visible') && setHv(true)} onBlur={() => setHv(false)}
       style={{ minWidth: h, height: h, padding: '0 8px', boxSizing: 'border-box', borderRadius: 999, fontFamily: 'var(--font-mono)', fontSize: h > 40 ? 13 : 12, fontVariantNumeric: 'tabular-nums',
-        cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.3 : 1, transition: 'background var(--dur-hover) var(--ease-soft), color var(--dur-hover) var(--ease-soft)', ...st }}>{children}</button>
+        cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.3 : 1, transition: 'background var(--dur-hover) var(--ease-soft), color var(--dur-hover) var(--ease-soft), border-color var(--dur-hover) var(--ease-soft), opacity var(--dur-hover) var(--ease-soft)', ...st }}>{children}</button>
   );
 }
 
-export function Pagination({ page, defaultPage = 1, total = 1, onChange, siblings = 1, showFirstLast = true, variant = 'default', size = 'md', disabled = false, style }) {
+export function Pagination({ page, defaultPage = 1, total = 1, onChange, siblings = 1, showFirstLast = true, variant = 'default', size = 'md', disabled = false, label, 'aria-label': ariaLabel, style }) {
   const [inner, setInner] = React.useState(defaultPage);
   const cur = page ?? inner;
   const h = SIZES[size] || 40;
   const go = p => { if (p < 1 || p > total || p === cur) return; setInner(p); onChange && onChange(p); };
   const b = (k, ch, p, lab, on) => <PageBtn key={k} h={h} variant={variant} on={on} label={lab} disabled={disabled || (!on && (p < 1 || p > total || p === cur))} onClick={() => go(p)}>{ch}</PageBtn>;
   return (
-    <nav aria-label="Pagination" style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap', ...style }}>
+    <nav aria-label={ariaLabel ?? label ?? 'Pagination, page ' + cur + ' of ' + total} style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap', ...style }}>
       {showFirstLast && b('f', '\u00ab', 1, 'First page')}
       {b('p', '\u2190', cur - 1, 'Previous page')}
       {range(cur, total, siblings).map(p => typeof p === 'string'

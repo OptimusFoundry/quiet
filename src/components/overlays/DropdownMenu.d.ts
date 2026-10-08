@@ -18,6 +18,8 @@ export interface DropdownMenuProps {
   contextMenu?: boolean;
   children?: React.ReactNode;
   onSelect?: (item: any) => void;
+  /** Accessible name for the menu; defaults to the trigger's text ("Context menu" in context-menu mode) */
+  label?: string;
   style?: React.CSSProperties;
 }
 export declare function DropdownMenu(props: DropdownMenuProps): JSX.Element;

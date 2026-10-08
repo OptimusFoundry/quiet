@@ -5,7 +5,7 @@ export function GridOverlay({ visible, defaultVisible = false, columns = 12, max
   const on = visible ?? inner;
   React.useEffect(() => {
     if (!hotkey) return;
-    const k = e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'g') { e.preventDefault(); setInner(v => !v); } };
+    const k = e => { const t = e.target; if (t && t.closest && t.closest('input,textarea,select,[contenteditable=""],[contenteditable="true"]')) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'g') { e.preventDefault(); setInner(v => !v); } };
     window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k);
   }, [hotkey]);
   if (!on) return null;

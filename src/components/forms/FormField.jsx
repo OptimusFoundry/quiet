@@ -7,8 +7,9 @@ export function FormField({ label, id, required, subText, helperText, error, siz
   const [auto] = React.useState(() => 'of-field-' + (++ofFieldId));
   const fid = id || auto;
   const hintId = fid + '-hint';
-  const child = React.isValidElement(children) && typeof children.type === 'string'
-    ? React.cloneElement(children, { id: fid, 'aria-invalid': !!error || undefined, 'aria-describedby': error || helperText ? hintId : undefined })
+  const described = [children && children.props && children.props['aria-describedby'], error || helperText ? hintId : null].filter(Boolean).join(' ') || undefined;
+  const child = React.isValidElement(children) && (typeof children.type === 'string' || children.type.fieldControl)
+    ? React.cloneElement(children, { id: fid, 'aria-invalid': !!error || undefined, 'aria-describedby': described, 'aria-required': required || undefined })
     : children;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, ...style }}>

@@ -9,5 +9,7 @@ export interface SpinnerProps {
   /** Mono caps label beside the ring */
   label?: string;
   style?: React.CSSProperties;
+  /** Other attributes go on the role="status" root */
+  [key: string]: any;
 }
 export declare function Spinner(props: SpinnerProps): JSX.Element;

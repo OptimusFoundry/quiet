@@ -6,10 +6,19 @@ const SIZES = { sm: { h: 32, px: 16, fontSize: 13, spin: 12 }, md: { h: 40, px: 
 export function Button({ variant = 'primary', size = 'md', arrow = false, loading = false, disabled = false, fullWidth = false,
   leftIcon, rightIcon, icon, href, children, style, ...rest }) {
   const [hover, setHover] = React.useState(false);
+  const [focus, setFocus] = React.useState(false);
   const off = disabled || loading;
-  const h = hover && !off;
+  const h = (hover || focus) && !off;
   const sz = SIZES[size] || SIZES.md;
   const iconOnly = icon != null && children == null;
+  const named = rest['aria-label'] || rest['aria-labelledby'] || rest.title;
+  React.useEffect(() => {
+    if (iconOnly && !named && (typeof process === 'undefined' || process.env.NODE_ENV !== 'production')) console.warn('Button: icon-only buttons need an aria-label.');
+  }, [iconOnly, named]);
+  // The spinner fades in when loading starts after mount; a button that mounts loading just shows it.
+  const loadingAtMount = React.useRef(loading);
+  if (!loading) loadingAtMount.current = false;
+  const fadeSpin = loading && !loadingAtMount.current;
   const variants = {
     primary: { background: h ? 'var(--ink-2)' : 'var(--ink)', color: 'var(--paper)', border: '1px solid var(--ink)' },
     secondary: { background: h ? 'var(--paper-2)' : 'transparent', color: 'var(--ink)', border: '1px solid var(--ink)' },
@@ -27,15 +36,21 @@ export function Button({ variant = 'primary', size = 'md', arrow = false, loadin
   };
   const inner = (
     <>
-      {loading ? <Spinner size={sz.spin} tone={variant === 'primary' ? 'paper' : 'default'} label={null} /> : leftIcon}
+      {loading ? <Spinner size={sz.spin} tone={variant === 'primary' ? 'paper' : 'default'} label={null} aria-hidden="true"
+        className={fadeSpin ? 'q-anim-fade' : undefined} data-state={fadeSpin ? 'open' : undefined} /> : leftIcon}
       {iconOnly && !loading ? icon : null}
       {children}
       {rightIcon}
       {arrow && <span aria-hidden="true" style={{ display: 'inline-block', transition: 'transform var(--dur-hover) var(--ease-soft)', transform: h ? 'translateX(4px)' : 'none' }}>{'\u2192'}</span>}
     </>
   );
-  const common = { style: s, 'aria-busy': loading || undefined, onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false), ...rest };
+  const common = { style: s, 'aria-busy': loading || undefined, ...rest,
+    onMouseEnter: e => { setHover(true); rest.onMouseEnter && rest.onMouseEnter(e); },
+    onMouseLeave: e => { setHover(false); rest.onMouseLeave && rest.onMouseLeave(e); },
+    onFocus: e => { setFocus(e.currentTarget.matches(':focus-visible')); rest.onFocus && rest.onFocus(e); },
+    onBlur: e => { setFocus(false); rest.onBlur && rest.onBlur(e); },
+    onClick: e => { if (off) { e.preventDefault(); return; } rest.onClick && rest.onClick(e); } };
   return href && !off
     ? <a href={href} {...common}>{inner}</a>
-    : <button type="button" disabled={off} {...common}>{inner}</button>;
+    : <button type="button" disabled={disabled} aria-disabled={(loading && !disabled) || undefined} {...common}>{inner}</button>;
 }

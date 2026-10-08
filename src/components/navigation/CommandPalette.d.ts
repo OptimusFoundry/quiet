@@ -12,5 +12,7 @@ export interface CommandPaletteProps {
   placeholder?: string;
   emptyText?: React.ReactNode;
   hotkey?: boolean;
+  /** Accessible name for the dialog */
+  label?: string;
 }
 export declare function CommandPalette(props: CommandPaletteProps): JSX.Element;

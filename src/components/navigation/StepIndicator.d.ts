@@ -12,6 +12,8 @@ export interface StepIndicatorProps {
   numerals?: 'roman' | 'arabic';
   /** Makes completed steps clickable */
   onStepClick?: (index: number) => void;
+  /** Accessible name for the step list, e.g. "Checkout progress" */
+  label?: string;
   style?: React.CSSProperties;
 }
 export declare function StepIndicator(props: StepIndicatorProps): JSX.Element;

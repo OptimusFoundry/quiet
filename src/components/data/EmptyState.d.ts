@@ -15,6 +15,8 @@ export interface EmptyStateProps {
   /** Dashed placeholder frame */
   bordered?: boolean;
   align?: 'center' | 'start';
+  /** Heading level for the title; default 3 */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
   style?: React.CSSProperties;
 }
 export declare function EmptyState(props: EmptyStateProps): JSX.Element;

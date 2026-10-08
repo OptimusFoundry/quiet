@@ -12,6 +12,8 @@ export interface ProgressProps {
   indeterminate?: boolean;
   label?: React.ReactNode;
   showValue?: boolean;
+  /** Accessible name when there is no label; defaults to "Progress" */
+  'aria-label'?: string;
   style?: React.CSSProperties;
 }
 export declare function Progress(props: ProgressProps): JSX.Element;

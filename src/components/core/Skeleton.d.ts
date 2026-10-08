@@ -11,6 +11,12 @@ export interface SkeletonProps {
   lines?: number;
   gap?: number;
   animate?: boolean;
+  /** Announces loading: the placeholder becomes role="status" aria-busy with this name instead of aria-hidden */
+  label?: string;
+  /** false renders children instead; content that replaces a visible skeleton fades in */
+  loading?: boolean;
+  /** Content shown when loading is false (a single element gets the fade-in) */
+  children?: React.ReactNode;
   style?: React.CSSProperties;
 }
 export declare function Skeleton(props: SkeletonProps): JSX.Element;

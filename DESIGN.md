@@ -18,6 +18,9 @@ reference itself, mirrored byte-for-byte in [`docs/reference/optimus-design/`](d
   doesn't change: the accent is punctuation only, never a fill.
 - **Density** — `<QuietRoot density="app">` sets the reference's own `data-density` modes.
 
-Everything else — component code, tokens, the catalog page — is the reference, unchanged. Known
-gaps in the reference (e.g. `--muted-2` text at 2.98:1, hover-only states, no visible keyboard
-focus on most controls) are kept as-is on purpose; fix them in Claude Design, then re-sync.
+- **Accessibility + motion layer** — keyboard operation and focus management per WAI-ARIA patterns,
+  visible keyboard focus, accessible names and states, and eased open/close/state motion in the
+  reference's own motion language. It never changes the at-rest look (pixel parity is tested).
+
+Everything else — tokens, styling, the catalog page — is the reference, unchanged. Colour contrast
+is a deliberate exception: `--muted-2` (2.98:1) and small molten text are kept exactly as designed.

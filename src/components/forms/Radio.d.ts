@@ -15,6 +15,8 @@ export interface RadioProps {
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   error?: boolean | string;
+  /** Group name when there is no visible label */
+  'aria-label'?: string;
   style?: React.CSSProperties;
 }
 export declare function Radio(props: RadioProps): JSX.Element;

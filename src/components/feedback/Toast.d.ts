@@ -15,6 +15,8 @@ export interface ToastProps {
   action?: React.ReactNode;
   /** Omit to make it not closable */
   onClose?: () => void;
+  /** ms before it closes itself (needs onClose); paused while hovered or focused */
+  duration?: number;
   style?: React.CSSProperties;
 }
 export declare function Toast(props: ToastProps): JSX.Element;

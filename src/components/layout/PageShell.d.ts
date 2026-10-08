@@ -13,6 +13,8 @@ export interface PageShellProps {
   children?: React.ReactNode;
   gap?: number;
   animated?: boolean;
+  /** Root element; pass 'main' when the shell is the page's main landmark */
+  as?: 'div' | 'main' | 'section' | 'article';
   style?: React.CSSProperties;
 }
 export declare function PageShell(props: PageShellProps): JSX.Element;

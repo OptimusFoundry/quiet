@@ -17,6 +17,10 @@ export function Badge({ variant = 'default', size = 'md', dot, leftIcon, rightIc
   const dotKind = v.dot || (variant === 'primary' ? 'paper' : 'solid-ink');
   const isCount = count != null;
   const label = isCount ? (count > max ? max + '+' : count) : children;
+  // A changed count rises in softly; the first render is static.
+  const prev = React.useRef(label);
+  const [tick, setTick] = React.useState(0);
+  React.useEffect(() => { if (isCount && prev.current !== label) setTick(t => t + 1); prev.current = label; }, [isCount, label]);
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, height: sz.h, minWidth: isCount ? sz.h : undefined,
       padding: '0 ' + (isCount ? 6 : sz.px) + 'px', boxSizing: 'border-box', borderRadius: 999, border: '1px solid ' + v.b, background: v.bg, color: v.c,
@@ -25,7 +29,7 @@ export function Badge({ variant = 'default', size = 'md', dot, leftIcon, rightIc
       {showDot && <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: 999, boxSizing: 'border-box', flex: 'none',
         background: dotKind === 'molten' ? 'var(--molten)' : dotKind === 'hollow' ? 'transparent' : dotKind === 'paper' ? 'var(--paper)' : 'var(--ink)',
         border: dotKind === 'hollow' ? '1px solid var(--molten)' : 'none' }} />}
-      {leftIcon}{label}{rightIcon}
+      {leftIcon}{tick ? <span key={tick} className="q-anim-rise" data-state="open">{label}</span> : label}{rightIcon}
     </span>
   );
 }

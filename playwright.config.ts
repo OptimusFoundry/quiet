@@ -12,7 +12,7 @@ export default defineConfig({
 			reuseExistingServer: true,
 		},
 		{
-			command: "python3 -m http.server 8791 --bind 127.0.0.1 -d docs/reference/optimus-design",
+			command: "python3 scripts/serve-reference.py 8791",
 			url: "http://127.0.0.1:8791/components/index.html",
 			reuseExistingServer: true,
 		},

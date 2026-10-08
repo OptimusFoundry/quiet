@@ -1,6 +1,6 @@
 import * as React from 'react';
 /**
- * Label + any control + hint/error. Wire native controls automatically (id, aria).
+ * Label + any control + hint/error. Wires native controls and Stepper automatically (id, aria-invalid, aria-describedby, aria-required).
  * @startingPoint section="Forms" subtitle="Label · control · hint" viewport="600x240"
  */
 export interface FormFieldProps {

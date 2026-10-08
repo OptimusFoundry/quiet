@@ -17,7 +17,7 @@ export interface StatCardProps {
   previousValue?: number | string;
   icon?: React.ReactNode;
   variant?: 'outlined' | 'filled' | 'plain';
-  /** Count up from 0 (ease-in-out, 1.2s) */
+  /** Count up from 0 (ease-in-out, 1.2s). Later numeric value changes always ease from the old value (0.6s). */
   animate?: boolean;
   onClick?: () => void;
   href?: string;

@@ -13,6 +13,8 @@ export interface SwitchProps {
   size?: 'sm' | 'md' | 'lg';
   /** left = settings-row layout */
   labelPosition?: 'left' | 'right';
+  /** Accessible name when there is no visible label */
+  'aria-label'?: string;
   style?: React.CSSProperties;
 }
 export declare function Switch(props: SwitchProps): JSX.Element;

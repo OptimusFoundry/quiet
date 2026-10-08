@@ -15,6 +15,8 @@ export interface CheckboxProps {
   /** true = molten edge; string = edge + message */
   error?: boolean | string;
   size?: 'sm' | 'md' | 'lg';
+  /** Accessible name when there is no visible label */
+  'aria-label'?: string;
   style?: React.CSSProperties;
 }
 export declare function Checkbox(props: CheckboxProps): JSX.Element;

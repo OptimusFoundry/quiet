@@ -15,6 +15,8 @@ export interface SliderProps {
   formatValue?: (value: number) => React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
+  /** Accessible name when there is no visible label */
+  'aria-label'?: string;
   style?: React.CSSProperties;
 }
 export declare function Slider(props: SliderProps): JSX.Element;

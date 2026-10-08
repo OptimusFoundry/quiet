@@ -7,7 +7,8 @@ if (typeof document !== 'undefined' && !document.getElementById('of-kf-indet')) 
 }
 const SIZES = { sm: 1, md: 2, lg: 4 };
 
-export function Progress({ value = 0, max = 100, size = 'md', variant = 'default', indeterminate = false, label, showValue = false, style }) {
+export function Progress({ value = 0, max = 100, size = 'md', variant = 'default', indeterminate = false, label, showValue = false, 'aria-label': ariaLabel, style }) {
+  const id = React.useId();
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   const h = SIZES[size] || 2;
   const fill = variant === 'error' || variant === 'warning' || variant === 'heat' ? 'var(--molten)' : 'var(--ink)';
@@ -15,10 +16,10 @@ export function Progress({ value = 0, max = 100, size = 'md', variant = 'default
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, ...style }}>
       {(label || showValue) && <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-        <span>{label}</span>
+        <span id={id}>{label}</span>
         {showValue && !indeterminate && <span style={{ color: variant === 'error' ? 'var(--molten)' : 'var(--ink)', fontVariantNumeric: 'tabular-nums' }}>{done && variant === 'success' ? '\u2713 ' : ''}{Math.round(pct)}%</span>}
       </div>}
-      <div role="progressbar" aria-valuemin={0} aria-valuemax={max} aria-valuenow={indeterminate ? undefined : value} aria-label={typeof label === 'string' ? label : undefined}
+      <div role="progressbar" aria-valuemin={0} aria-valuemax={max} aria-valuenow={indeterminate ? undefined : value} aria-labelledby={label && !ariaLabel ? id : undefined} aria-label={label && !ariaLabel ? undefined : ariaLabel || 'Progress'} aria-valuetext={indeterminate ? undefined : Math.round(pct) + '%'}
         style={{ position: 'relative', height: h, background: 'var(--rule-soft)', borderRadius: 999, overflow: 'hidden' }}>
         <span style={indeterminate
           ? { position: 'absolute', top: 0, bottom: 0, left: 0, width: '30%', borderRadius: 999, background: fill, animation: 'of-indet 1.6s var(--ease-forge) infinite' }
