@@ -71,6 +71,14 @@ Canonical example: `src/components/core/Button.jsx` + `Button.scss`.
 - Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
   values in component rules). `npm run lint` runs Biome + Stylelint.
 
+## Future components (quiet's own)
+
+`src/components/future/` holds components that are **not** in the reference: concepts from the
+Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
+on quiet tokens + BEM with full keyboard/ARIA. Parity and drift don't apply to them; `npm run gen`
+exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…),
+tests: `tests/future-<set>.spec.ts`. Quiet has no green/red: done is ink, attention is molten.
+
 ## quiet's own code
 
 `src/QuietRoot.tsx`, `src/a11y/`, `src/styles/quiet-*.css`, `src/jsx-global.d.ts`, `scripts/`,
