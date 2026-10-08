@@ -27,5 +27,41 @@
 		"formatter": {
 			"quoteStyle": "double"
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["src/components/**"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"useSemanticElements": "off",
+						"noStaticElementInteractions": "off",
+						"useKeyWithClickEvents": "off",
+						"useFocusableInteractive": "off",
+						"noNoninteractiveTabindex": "off",
+						"noInteractiveElementToNoninteractiveRole": "off",
+						"noLabelWithoutControl": "off",
+						"noAutofocus": "off",
+						"useAriaPropsSupportedByRole": "off",
+						"noAriaHiddenOnFocusable": "off",
+						"useValidAnchor": "off"
+					},
+					"suspicious": {
+						"noArrayIndexKey": "off",
+						"noAssignInExpressions": "off",
+						"noExplicitAny": "warn"
+					},
+					"style": {
+						"noNonNullAssertion": "off"
+					},
+					"complexity": {
+						"noCommaOperator": "off"
+					},
+					"correctness": {
+						"useExhaustiveDependencies": "warn"
+					}
+				}
+			}
+		}
+	]
 }

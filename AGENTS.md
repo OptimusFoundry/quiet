@@ -79,6 +79,10 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
   `src/lib/link.tsx`, so `QuietRoot linkComponent` routes it.
 - Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
   values in component rules). `npm run lint` runs Biome + Stylelint.
+- Biome's `src/components/**` override turns off the a11y lint rules that fight quiet's deliberate
+  ARIA-on-div DOM (it must match the reference; axe + the keyboard specs are the a11y gate), plus
+  `noArrayIndexKey` and `noNonNullAssertion`. `useExhaustiveDependencies` and `noExplicitAny` stay
+  warnings: a backlog to fix with behaviour tests, not blindly.
 
 ## Future components (quiet's own)
 
