@@ -1,6 +1,7 @@
 // Sidebar — app navigation rail. BEM: .q-sidebar, __header, __toggle, __body, __group,
 // __group-label, __group-toggle, __chevron, __list, __item, __icon, __label, __badge, __footer;
-// --collapsed, --compact, --dividers; __icon--initials. Current item: [aria-current="page"].
+// --collapsed, --compact, --dividers, --drawer; __icon--initials. Current item: [aria-current="page"].
+// Mobile drawer: .q-sidebar-drawer, __scrim, __panel. External opener: .q-sidebar-trigger.
 @layer q.tokens {
   :root,
   [data-theme] {
@@ -57,6 +58,27 @@
     --q-sidebar-badge-font-size: var(--q-text-2xs);
     --q-sidebar-badge-fg: var(--q-fg-muted);
     --q-sidebar-footer-pt: var(--q-space-2);
+
+    --q-sidebar-drawer-z: var(--q-z-overlay);
+    --q-sidebar-drawer-scrim: var(--q-scrim);
+    --q-sidebar-drawer-width: var(--q-sidebar-width);
+    --q-sidebar-drawer-gutter: var(--q-space-6); // scrim left showing at the narrowest widths
+    --q-sidebar-drawer-shadow: var(--q-shadow-3);
+
+    --q-sidebar-trigger-size: var(--q-control-sm);
+    --q-sidebar-trigger-radius: var(--q-radius-pill);
+    --q-sidebar-trigger-border: var(--q-border);
+    --q-sidebar-trigger-bg: var(--q-bg);
+    --q-sidebar-trigger-bg-hover: var(--q-bg-subtle);
+    --q-sidebar-trigger-fg: var(--q-fg);
+    --q-sidebar-trigger-font-size: var(--q-text-md);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root,
+    [data-theme] {
+      --q-sidebar-width-dur: 0s;
+    }
   }
 }
 
@@ -253,5 +275,53 @@
   .q-sidebar__footer {
     padding-top: var(--q-sidebar-footer-pt);
     border-top: var(--q-hairline) solid var(--q-sidebar-border);
+  }
+
+  .q-sidebar--drawer {
+    width: min(var(--_width, var(--q-sidebar-drawer-width)), calc(100vw - var(--q-sidebar-drawer-gutter)));
+    height: 100%;
+    transition: none;
+  }
+
+  .q-sidebar-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--q-sidebar-drawer-z);
+  }
+
+  .q-sidebar-drawer__scrim {
+    position: absolute;
+    inset: 0;
+    background: var(--q-sidebar-drawer-scrim);
+  }
+
+  .q-sidebar-drawer__panel {
+    position: absolute;
+    inset: 0 auto 0 0;
+    display: flex;
+    box-shadow: var(--q-sidebar-drawer-shadow);
+    outline: none;
+  }
+
+  .q-sidebar-trigger {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--q-sidebar-trigger-size);
+    height: var(--q-sidebar-trigger-size);
+    padding: 0;
+    border: var(--q-hairline) solid var(--q-sidebar-trigger-border);
+    border-radius: var(--q-sidebar-trigger-radius);
+    background: var(--q-sidebar-trigger-bg);
+    color: var(--q-sidebar-trigger-fg);
+    font-size: var(--q-sidebar-trigger-font-size);
+    line-height: var(--q-leading-none);
+    cursor: pointer;
+    transition: background var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-sidebar-trigger-bg-hover);
+    }
   }
 }
