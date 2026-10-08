@@ -1,0 +1,35 @@
+// Tier 2 — semantic colour. Components use only these; themes (themes/_*.scss) set them from
+// their palette. Named by job: bg = surfaces, fg = text/icons, border = lines, accent = punctuation.
+// Declared on every [data-theme] element too: custom properties resolve where they are declared,
+// so a themed subtree must re-resolve these against its own palette.
+:root,
+[data-theme] {
+  --q-bg: var(--q-gray-0);                    // page and card ground
+  --q-bg-subtle: var(--q-gray-50);            // alternate sections, hover fills
+  --q-bg-inverse: var(--q-gray-900);          // strong fills: primary button, selected chip
+  --q-bg-inverse-hover: var(--q-gray-800);
+
+  --q-fg: var(--q-gray-900);                  // headings, primary text, icons
+  --q-fg-body: var(--q-gray-800);             // body copy
+  --q-fg-muted: var(--q-gray-500);            // labels, metadata
+  --q-fg-subtle: var(--q-gray-400);           // quiet emphasis — 2.98:1, non-essential only
+  --q-fg-on-inverse: var(--q-gray-0);         // text on --q-bg-inverse
+  --q-fg-on-inverse-muted: color-mix(in srgb, var(--q-fg-on-inverse) 72%, transparent);
+
+  --q-border: var(--q-gray-100);              // hairlines, card edges
+  --q-border-strong: var(--q-gray-200);       // hover edges
+  --q-border-emphasis: var(--q-gray-900);     // section tops, outlines that matter
+  --q-border-on-inverse: color-mix(in srgb, var(--q-fg-on-inverse) 24%, transparent);
+  --q-border-on-inverse-strong: color-mix(in srgb, var(--q-fg-on-inverse) 40%, transparent);
+  --q-track-on-inverse: color-mix(in srgb, var(--q-fg-on-inverse) 28%, transparent);
+
+  // The one accent: punctuation only — never a fill, never a button, never a section.
+  --q-accent: var(--q-molten-500);
+
+  --q-scrim: rgb(var(--q-shadow-rgb) / 0.24);
+  --q-glow: radial-gradient(closest-side, color-mix(in srgb, var(--q-accent) 18%, transparent), transparent 100%);
+  --q-focus-ring-color: var(--q-fg);
+  --q-ring-soft: 0 0 0 4px rgb(var(--q-shadow-rgb) / 0.08);
+  --q-selection-bg: var(--q-bg-inverse);
+  --q-selection-fg: var(--q-fg-on-inverse);
+}

@@ -1,0 +1,36 @@
+// Global element defaults from the reference base.css. :where() keeps specificity at zero so any
+// component class wins without a fight.
+:where(html) {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:where(body) {
+  margin: 0;
+  background: var(--q-bg);
+  color: var(--q-fg-body);
+  font-family: var(--q-font-sans);
+  font-size: var(--q-text-lg);
+  line-height: var(--q-leading-body);
+}
+
+:where(a) {
+  color: var(--q-fg);
+  text-decoration: none;
+  transition: color var(--q-dur-hover) var(--q-ease-linear);
+}
+
+:where(a:hover) {
+  color: var(--q-accent);
+}
+
+::selection {
+  background: var(--q-selection-bg);
+  color: var(--q-selection-fg);
+}
+
+// A themed subtree paints its own ground, so a dark section reads as dark.
+:where([data-theme]) {
+  background: var(--q-bg);
+  color: var(--q-fg-body);
+}

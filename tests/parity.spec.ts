@@ -27,11 +27,11 @@ test("catalog is pixel-identical to the Claude Design master page", async ({ bro
 	expect(quiet.png.equals(ref.png)).toBe(true);
 });
 
-test("dark mode renders without errors", async ({ page }) => {
+test("foundry-dark theme renders without errors", async ({ page }) => {
 	const errors: string[] = [];
 	page.on("pageerror", (e) => errors.push(e.message));
-	await page.goto(`${QUIET}&globals=mode:dark`);
+	await page.goto(`${QUIET}&globals=theme:foundry-dark`);
 	await page.waitForFunction(() => document.querySelectorAll("section").length > 50);
-	await expect(page.locator(".quiet[data-mode=dark]")).toHaveCount(1);
+	await expect(page.locator(".quiet[data-theme=foundry-dark]")).toHaveCount(1);
 	expect(errors).toEqual([]);
 });

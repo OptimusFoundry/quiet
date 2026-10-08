@@ -14,7 +14,9 @@ writeFileSync(
 	"src/index.ts",
 	`${HEADER}/// <reference path="./jsx-global.d.ts" />\n${files
 		.map((f) => `export * from "./components/${f}";`)
-		.join("\n")}\nexport { QuietRoot, type QuietRootProps } from "./QuietRoot";\n`,
+		.join(
+			"\n",
+		)}\nexport { QuietRoot, type QuietRootProps } from "./QuietRoot";\nexport { applyTheme, defaultTheme, type ThemeName, themeNames, themes } from "./styles/themes/themes";\nexport { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";\n`,
 );
 
 const html = readFileSync(`${REF}/components/index.html`, "utf8");

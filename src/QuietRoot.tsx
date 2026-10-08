@@ -1,23 +1,21 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
-import "./styles/styles.css";
-import "./styles/quiet-modes.css";
-import "./styles/quiet-a11y.css";
-import "./styles/quiet-motion.css";
+import "./styles/index.scss";
+import { defaultTheme, type ThemeName, themes } from "./styles/themes/themes";
 
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
-	/** quiet addition: dark is derived from the same greys; the brand itself is light-only. */
-	mode?: "light" | "dark";
+	/** Any registered theme (styles/themes/themes.ts). Scopes to this subtree. */
+	theme?: ThemeName;
 	/** marketing = the website · app = dashboards & settings · compact = tables, inspectors, admin. */
 	density?: "marketing" | "app" | "compact";
-	/** quiet addition: replaces molten. Still punctuation only — never a fill. */
+	/** Overrides the theme's accent (any CSS colour). Still punctuation only — never a fill. */
 	accent?: string;
 	children: ReactNode;
 	ref?: Ref<HTMLDivElement>;
 }
 
-/** Scopes mode, density and accent. The Optimus Foundry tokens themselves load globally. */
+/** Scopes a theme, density and accent to its subtree. For app-wide theming use <ThemeProvider>. */
 export function QuietRoot({
-	mode = "light",
+	theme = defaultTheme,
 	density = "marketing",
 	accent,
 	className,
@@ -30,9 +28,15 @@ export function QuietRoot({
 		<div
 			ref={ref}
 			className={className ? `quiet ${className}` : "quiet"}
-			data-mode={mode}
+			data-theme={theme}
 			data-density={density}
-			style={accent ? ({ "--molten": accent, ...style } as CSSProperties) : style}
+			style={
+				{
+					colorScheme: themes[theme].colorScheme,
+					...(accent ? { "--q-accent": accent } : {}),
+					...style,
+				} as CSSProperties
+			}
 			{...props}
 		>
 			{children}

@@ -1,14 +1,13 @@
-/* quiet addition: visible keyboard focus. The reference removes or never draws focus on most
-   controls; this ring only appears for keyboard focus, so nothing changes at rest. Text fields
-   keep the reference's own focus treatment (ink border + --ring-focus). */
+// Visible keyboard focus for every interactive element (keyboard only, so nothing changes at
+// rest; text fields keep their own ink-border + --q-ring-soft treatment), and .q-sr-only.
 :where(button, a[href], summary, [role="button"], [role="switch"], [role="checkbox"], [role="radio"],
   [role="tab"], [role="option"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"],
   [role="slider"], [role="treeitem"], [role="gridcell"], [tabindex]:not([tabindex="-1"])):focus-visible {
-  outline: 2px solid var(--ink) !important;
+  outline: 2px solid var(--q-focus-ring-color) !important;
   outline-offset: 2px !important;
 }
 
-/* Visually hidden but announced. */
+// Visually hidden but announced.
 .q-sr-only {
   position: absolute !important;
   width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;

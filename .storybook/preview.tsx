@@ -1,8 +1,9 @@
 import type { Decorator, Preview } from "@storybook/react-vite";
 import { QuietRoot } from "../src/QuietRoot";
+import { defaultTheme, type ThemeName, themeNames, themes } from "../src/styles/themes/themes";
 
 const withQuiet: Decorator = (Story, ctx) => (
-	<QuietRoot mode={ctx.globals.mode === "dark" ? "dark" : "light"}>
+	<QuietRoot theme={(ctx.globals.theme as ThemeName) ?? defaultTheme}>
 		<Story />
 	</QuietRoot>
 );
@@ -10,12 +11,16 @@ const withQuiet: Decorator = (Story, ctx) => (
 const preview: Preview = {
 	decorators: [withQuiet],
 	globalTypes: {
-		mode: {
-			description: "Colour mode (quiet addition; the reference is light-only)",
-			toolbar: { icon: "mirror", items: ["light", "dark"], dynamicTitle: true },
+		theme: {
+			description: "Theme",
+			toolbar: {
+				icon: "paintbrush",
+				items: themeNames.map((value) => ({ value, title: themes[value].label })),
+				dynamicTitle: true,
+			},
 		},
 	},
-	initialGlobals: { mode: "light" },
+	initialGlobals: { theme: defaultTheme },
 	parameters: { layout: "fullscreen" },
 };
 

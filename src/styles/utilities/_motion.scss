@@ -1,0 +1,37 @@
+// Motion utilities: enter/exit (.q-anim-* with data-state="open"|"closing", paired with
+// usePresence) and height expand (.q-collapse). Built on the motion tokens; nothing animates at rest.
+@keyframes q-fade-in { from { opacity: 0; } }
+@keyframes q-fade-out { to { opacity: 0; } }
+@keyframes q-rise-in { from { opacity: 0; transform: translateY(4px); } }
+@keyframes q-rise-out { to { opacity: 0; transform: translateY(4px); } }
+@keyframes q-drop-in { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes q-drop-out { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes q-scale-in { from { opacity: 0; transform: scale(0.98); } }
+@keyframes q-scale-out { to { opacity: 0; transform: scale(0.98); } }
+@keyframes q-slide-in-right { from { transform: translateX(100%); } }
+@keyframes q-slide-out-right { to { transform: translateX(100%); } }
+@keyframes q-slide-in-left { from { transform: translateX(-100%); } }
+@keyframes q-slide-out-left { to { transform: translateX(-100%); } }
+
+.q-anim-fade[data-state="open"] { animation: q-fade-in var(--q-dur-enter) var(--q-ease-soft); }
+.q-anim-fade[data-state="closing"] { animation: q-fade-out var(--q-dur-exit) var(--q-ease-soft) forwards; }
+.q-anim-rise[data-state="open"] { animation: q-rise-in var(--q-dur-enter) var(--q-ease-soft); }
+.q-anim-rise[data-state="closing"] { animation: q-rise-out var(--q-dur-exit) var(--q-ease-soft) forwards; }
+.q-anim-drop[data-state="open"] { animation: q-drop-in var(--q-dur-enter) var(--q-ease-soft); }
+.q-anim-drop[data-state="closing"] { animation: q-drop-out var(--q-dur-exit) var(--q-ease-soft) forwards; }
+.q-anim-scale[data-state="open"] { animation: q-scale-in var(--q-dur-enter) var(--q-ease-soft); }
+.q-anim-scale[data-state="closing"] { animation: q-scale-out var(--q-dur-exit) var(--q-ease-soft) forwards; }
+.q-anim-slide-right[data-state="open"] { animation: q-slide-in-right var(--q-dur-expand) var(--q-ease-forge); }
+.q-anim-slide-right[data-state="closing"] { animation: q-slide-out-right var(--q-dur-exit) var(--q-ease-forge) forwards; }
+.q-anim-slide-left[data-state="open"] { animation: q-slide-in-left var(--q-dur-expand) var(--q-ease-forge); }
+.q-anim-slide-left[data-state="closing"] { animation: q-slide-out-left var(--q-dur-exit) var(--q-ease-forge) forwards; }
+
+/* Height expand without measuring: wrap content in .q-collapse > .q-collapse-inner. */
+.q-collapse { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--q-dur-expand) var(--q-ease-soft); }
+.q-collapse[data-open="true"] { grid-template-rows: 1fr; }
+.q-collapse > .q-collapse-inner { min-height: 0; overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="q-anim-"] { animation: none !important; }
+  .q-collapse { transition: none; }
+}

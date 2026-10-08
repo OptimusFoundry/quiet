@@ -1,0 +1,7 @@
+// Tier 3 — component tokens: per-component override hooks, named in BEM order
+// --q-{block}-{element?}-{modifier?}-{property}-{state?}. They default to tier-2 tokens; a value
+// used by only one component may be set here directly (still one source of truth).
+// Components read these, never raw values. Each component's tokens are grouped under its name.
+:root,
+[data-theme] {
+}
