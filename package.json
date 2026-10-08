@@ -1,6 +1,6 @@
 {
 	"name": "@optimusfoundry/quiet",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"description": "A design system built from 1,384 saved UI references. Quiet, precise, neutral.",
 	"type": "module",
 	"license": "UNLICENSED",
@@ -45,7 +45,7 @@
 		"check:package": "node scripts/check-package.mjs",
 		"build-storybook": "storybook build",
 		"lint": "biome check . && stylelint \"src/**/*.scss\" && node scripts/check-tokens.mjs",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.app-compat.json",
 		"test": "playwright test"
 	},
 	"peerDependencies": {
@@ -62,6 +62,7 @@
 		"@playwright/test": "^1.59.1",
 		"@storybook/addon-docs": "^10.4.6",
 		"@storybook/react-vite": "^10.4.6",
+		"@types/node": "^26.6.4",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.0.1",

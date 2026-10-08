@@ -140,6 +140,8 @@ Apps don't install quiet. `node ../quiet/scripts/quiet.mjs sync` copies it into 
 `vendor/quiet` (see README, "Install"), and the app compiles the source. So everything under `src/`
 must build in an app's bundler, not only in this repo's:
 - **No global ambient types.** Dev checks use `isDev()` from `src/lib/env.ts`.
+- **Typecheck runs twice:** `npm run typecheck` also checks `src/` with `@types/node`
+  (`tsconfig.app-compat.json`). Type timers as `ReturnType<typeof setTimeout>`, never `number`.
 - **Styles first:** `src/index.ts` imports `./styles/index.scss` before any component, so the
   `@layer` order holds after a minifier drops the order statement. `check:package` asserts the order.
 - **The copy list** is `COPY` in `scripts/quiet.mjs`. Add a path there when apps need it.
