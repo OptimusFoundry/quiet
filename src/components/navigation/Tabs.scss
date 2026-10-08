@@ -2,6 +2,7 @@
 // --{variant} (line, enclosed, pill), --{size}, --full. Selected tab: [aria-selected="true"].
 // While the sliding indicator moves (FLIP between two selections) the tablist carries
 // [data-sliding]; the indicator's geometry comes in as --_left/--_top/--_width/--_height.
+// .q-tab-panel is the tabpanel Tabs renders when given `panels` (or TabPanel on its own).
 @layer q.tokens {
   :root,
   [data-theme] {
@@ -49,6 +50,8 @@
     --q-tabs-pill-bg-hover: var(--q-bg-subtle);
     --q-tabs-pill-fg-selected: var(--q-fg-on-inverse);
     --q-tabs-pill-bg-selected: var(--q-bg-inverse);
+
+    --q-tab-panel-pt: var(--q-space-3);
   }
 }
 
@@ -235,5 +238,9 @@
       background: var(--q-tabs-enclosed-bg-selected);
       box-shadow: var(--q-tabs-enclosed-shadow-selected);
     }
+  }
+
+  .q-tab-panel {
+    padding-top: var(--q-tab-panel-pt);
   }
 }
