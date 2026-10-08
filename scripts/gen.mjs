@@ -27,7 +27,7 @@ writeFileSync(
 		.map((f) => `export * from "./components/${f}";`)
 		.join(
 			"\n",
-		)}\nexport { QuietRoot, type QuietRootProps } from "./QuietRoot";\nexport { applyTheme, defaultTheme, type ThemeName, themeNames, themes } from "./styles/themes/themes";\nexport { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";\nexport { type LinkComponent, type LinkComponentProps, useLinkComponent } from "./lib/link";\n`,
+		)}\nexport { QuietRoot, type QuietRootProps } from "./QuietRoot";\nexport { applyTheme, type BuiltInTheme, defaultTheme, defineThemes, getTheme, resolveTheme, type ThemeDefinition, type ThemeName, themeNames, themes } from "./styles/themes/themes";\nexport { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";\nexport { type LinkComponent, type LinkComponentProps, useLinkComponent } from "./lib/link";\n`,
 );
 
 const html = readFileSync(`${REF}/components/index.html`, "utf8");

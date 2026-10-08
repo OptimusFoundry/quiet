@@ -108,6 +108,6 @@ export * from "./components/chat/PromptSuggestions";
 export * from "./components/chat/ToolCall";
 export * from "./components/feedback/Toaster";
 export { QuietRoot, type QuietRootProps } from "./QuietRoot";
-export { applyTheme, defaultTheme, type ThemeName, themeNames, themes } from "./styles/themes/themes";
+export { applyTheme, type BuiltInTheme, defaultTheme, defineThemes, getTheme, resolveTheme, type ThemeDefinition, type ThemeName, themeNames, themes } from "./styles/themes/themes";
 export { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";
 export { type LinkComponent, type LinkComponentProps, useLinkComponent } from "./lib/link";

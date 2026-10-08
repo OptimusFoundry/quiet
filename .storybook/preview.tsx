@@ -16,7 +16,7 @@ const preview: Preview = {
 			description: "Theme",
 			toolbar: {
 				icon: "paintbrush",
-				items: themeNames.map((value) => ({ value, title: themes[value].label })),
+				items: themeNames.map((value) => ({ value, title: themes[value]?.label ?? value })),
 				dynamicTitle: true,
 			},
 		},

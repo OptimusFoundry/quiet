@@ -1,6 +1,6 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { type LinkComponent, LinkProvider } from "../../lib/link";
-import { applyTheme, defaultTheme, type ThemeName, themes } from "./themes";
+import { applyTheme, defaultTheme, resolveTheme, type ThemeName, themes } from "./themes";
 
 const STORAGE_KEY = "quiet-theme";
 
@@ -14,13 +14,16 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 function stored(): ThemeName | null {
 	try {
 		const t = localStorage.getItem(STORAGE_KEY);
-		return t && t in themes ? (t as ThemeName) : null;
+		return t && Object.hasOwn(themes, t) ? t : null;
 	} catch {
 		return null;
 	}
 }
 
-/** App-level theme: marks <html> as quiet-owned, applies data-theme and remembers the choice. */
+/**
+ * App-level theme: marks <html> as quiet-owned, applies data-theme and remembers the choice.
+ * Accepts any registered theme (defineThemes); an unregistered name falls back to defaultTheme.
+ */
 export function ThemeProvider({
 	defaultValue = defaultTheme,
 	linkComponent,
@@ -31,12 +34,15 @@ export function ThemeProvider({
 	linkComponent?: LinkComponent;
 	children: ReactNode;
 }) {
-	const [theme, setThemeState] = useState<ThemeName>(() => stored() ?? defaultValue);
-	useEffect(() => applyTheme(theme), [theme]);
+	const [theme, setThemeState] = useState<ThemeName>(() => stored() ?? resolveTheme(defaultValue));
+	useEffect(() => {
+		applyTheme(theme);
+	}, [theme]);
 	const setTheme = useCallback((next: ThemeName) => {
-		setThemeState(next);
+		const resolved = resolveTheme(next);
+		setThemeState(resolved);
 		try {
-			localStorage.setItem(STORAGE_KEY, next);
+			localStorage.setItem(STORAGE_KEY, resolved);
 		} catch {
 			// Storage can be unavailable (private mode); the theme still applies for this session.
 		}
