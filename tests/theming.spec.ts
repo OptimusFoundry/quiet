@@ -104,14 +104,19 @@ test("ThemeProvider and useTheme work with registered external themes", async ({
 	const { errors } = await open(page, "with-theme-provider");
 	const html = page.locator("html");
 	const current = page.getByTestId("current-theme");
+	// A QuietRoot without a theme prop follows the provider instead of resetting to the default.
+	const inner = page.getByTestId("inherits");
 	await expect(html).toHaveAttribute("data-theme", "acme");
+	await expect(inner).toHaveAttribute("data-theme", "acme");
 	await expect(current).toHaveText("acme");
 	expect(await css(html, "--q-status-success-fg")).toBe("#15803d");
 
 	await page.getByRole("button", { name: "Acme dark" }).click();
 	await expect(html).toHaveAttribute("data-theme", "acme-dark");
+	await expect(inner).toHaveAttribute("data-theme", "acme-dark");
 	await expect(current).toHaveText("acme-dark");
 	expect(await css(html, "color-scheme")).toBe("dark");
+	expect(await css(inner, "color-scheme")).toBe("dark");
 	expect(await page.evaluate(() => localStorage.getItem("quiet-theme"))).toBe("acme-dark");
 
 	await page.reload();

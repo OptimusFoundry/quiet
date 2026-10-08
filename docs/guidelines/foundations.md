@@ -75,7 +75,7 @@ surface with `--q-status-*`, use the components' `variant`/`status` props, and n
 
 - Themes are `[data-theme]` blocks: `foundry` (default) and `foundry-dark`, plus one per product.
   Set the theme app-wide with `<ThemeProvider>` (it writes `data-theme` on `<html>`), or for a subtree with
-  `<QuietRoot theme>`.
+  `<QuietRoot theme>`. A QuietRoot without `theme` follows the enclosing ThemeProvider.
 - A product theme lives in the **product's repo**: register it before the first render with
   `defineThemes({ acme: { label: "Acme", colorScheme: "light" } })`, and style it in `@layer q.themes`
   (`[data-theme="acme"] { --q-gray-0…900, --q-molten-500, --q-shadow-rgb, --q-status-*, color-scheme }`,

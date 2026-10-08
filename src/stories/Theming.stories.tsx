@@ -106,7 +106,9 @@ function ThemeSwitch() {
 export const WithThemeProvider: StoryObj = {
 	render: () => (
 		<ThemeProvider defaultValue="acme">
-			<ThemeSwitch />
+			<QuietRoot density="app" data-testid="inherits">
+				<ThemeSwitch />
+			</QuietRoot>
 		</ThemeProvider>
 	),
 };

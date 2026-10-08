@@ -54,6 +54,11 @@ export function ThemeProvider({
 	);
 }
 
+/** The enclosing ThemeProvider's theme, or null outside one. */
+export function useProviderTheme(): ThemeName | null {
+	return useContext(ThemeContext)?.theme ?? null;
+}
+
 export function useTheme(): ThemeContextValue {
 	const ctx = useContext(ThemeContext);
 	if (!ctx) throw new Error("useTheme must be used inside <ThemeProvider>");

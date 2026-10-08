@@ -1,10 +1,11 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 import { type LinkComponent, LinkProvider } from "./lib/link";
 import "./styles/index.scss";
+import { useProviderTheme } from "./styles/themes/ThemeProvider";
 import { defaultTheme, getTheme, type ThemeName } from "./styles/themes/themes";
 
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
-	/** Any registered theme (built-in, or added with defineThemes). Unregistered names fall back to defaultTheme. Scopes to this subtree. */
+	/** Any registered theme (built-in, or added with defineThemes). Unregistered names fall back to defaultTheme. Scopes to this subtree. Omitted: the enclosing ThemeProvider's theme, else defaultTheme. */
 	theme?: ThemeName;
 	/** marketing = the website · app = dashboards & settings · compact = tables, inspectors, admin. */
 	density?: "marketing" | "app" | "compact";
@@ -18,7 +19,7 @@ export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 
 /** Scopes a theme, density and accent to its subtree. For app-wide theming use <ThemeProvider>. */
 export function QuietRoot({
-	theme = defaultTheme,
+	theme,
 	density = "marketing",
 	accent,
 	linkComponent,
@@ -28,7 +29,8 @@ export function QuietRoot({
 	ref,
 	...props
 }: QuietRootProps) {
-	const resolved = getTheme(theme);
+	const inherited = useProviderTheme();
+	const resolved = getTheme(theme ?? inherited ?? defaultTheme);
 	return (
 		<LinkProvider value={linkComponent}>
 			<div
