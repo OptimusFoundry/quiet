@@ -34,7 +34,7 @@ agent skill. It writes `vendor/quiet/package.json`, whose exports point at that 
 | Stylelint | `extends: ["@optimusfoundry/quiet/stylelint/config"]`, `ignoreFiles: ["vendor/quiet/**"]` (see "Styling your own pages") |
 | Biome / ESLint | ignore `vendor/quiet/**` (quiet's own checks already passed) |
 | CI | `npx quiet check` fails if a vendored file was edited, added or removed since the sync |
-| Agents | copy `vendor/quiet/skills/quiet-app` to `.claude/skills/` |
+| Claude Code | automatic: see "Claude Code in product repos" |
 
 The app compiles quiet's source with its own bundler, so it ships the CSS for only the components it
 uses.
@@ -193,16 +193,24 @@ newer quiet) and any `--q-*` your app invents: `--q-` is quiet's namespace, so n
 `--app-*`. A product theme may still set quiet's tokens (`--q-accent`, the palette, `--q-status-*`).
 After building, `npx quiet-audit` measures the running page for off-token values.
 
-### Agent skill for product repos
+### Claude Code in product repos
 
-The package ships a Claude Code skill, `quiet-app`, that points agents at these guidelines when they build
-UI. Install it in a product repo:
+quiet's app-facing Claude assets live in [`claude/`](claude/). `quiet sync` puts them where Claude Code
+reads them, and overwrites them on every sync like the rest of the copy:
 
-```bash
-mkdir -p .claude/skills && cp -r node_modules/@optimusfoundry/quiet/skills/quiet-app .claude/skills/
-# or keep it in sync with the installed version:
-ln -s ../../node_modules/@optimusfoundry/quiet/skills/quiet-app .claude/skills/quiet-app
-```
+| From | To | What it does |
+|---|---|---|
+| `claude/skills/quiet-app` | `.claude/skills/quiet-app` | how to set up, lay out and check a screen on quiet |
+| `claude/agents/quiet-screen-reviewer.md` | `.claude/agents/` | measures a running screen with `quiet-audit`, screenshots both themes, judges it against the checklist |
+| `claude/agents/quiet-a11y-reviewer.md` | `.claude/agents/` | reviews what the app owns for accessibility (titles, h1, landmarks, route focus, labels, errors), and runs axe if the app has it |
+| `claude/hooks/quiet-guard.mjs` | registered in `.claude/settings.json` | **blocks** any edit inside `vendor/quiet`, and lints each changed app stylesheet with quiet's rules |
+
+Sync only adds or replaces quiet's own entries. The app's other skills, agents, hooks and settings are
+left alone, and a file quiet stops shipping is removed on the next sync. `quiet check` also fails if a
+placed file was edited or the hook was unregistered.
+
+Installed as a package instead? Copy `node_modules/@optimusfoundry/quiet/claude/skills/quiet-app`
+into `.claude/skills/` yourself.
 
 ## Develop
 

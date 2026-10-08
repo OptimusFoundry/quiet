@@ -30,7 +30,7 @@
 		"stylelint",
 		"DESIGN.md",
 		"docs/guidelines",
-		"skills",
+		"claude",
 		"scripts/quiet-audit.mjs",
 		"scripts/quiet-audit-core.mjs",
 		"scripts/quiet-audit-core.d.mts",
