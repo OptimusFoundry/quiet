@@ -1,0 +1,100 @@
+{
+	"patterns-app-shell@1280": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-app-shell@390": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-dashboard@1280": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-dashboard@390": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-records@1280": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 2
+	},
+	"patterns-records@390": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 2
+	},
+	"patterns-settings@1280": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-settings@390": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-billing@1280": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-billing@390": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-assistant@1280": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-assistant@390": {
+		"spacing": 0,
+		"type": 1,
+		"radius": 0,
+		"colour": 0,
+		"derived": 0
+	},
+	"patterns-states@1280": {
+		"spacing": 0,
+		"type": 2,
+		"radius": 0,
+		"colour": 0,
+		"derived": 1
+	},
+	"patterns-states@390": {
+		"spacing": 0,
+		"type": 2,
+		"radius": 0,
+		"colour": 0,
+		"derived": 1
+	}
+}

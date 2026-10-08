@@ -58,6 +58,8 @@
     border: var(--q-hairline) solid var(--q-anomaly-ribbon-mark-ring);
     border-radius: var(--q-radius-pill);
     background: var(--q-anomaly-ribbon-mark-bg);
+    color: inherit;
+    font: inherit;
     outline: none;
     cursor: pointer;
     transform: translate(-50%, -50%);

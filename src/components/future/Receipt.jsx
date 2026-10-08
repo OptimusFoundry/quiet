@@ -35,7 +35,7 @@ export function Receipt({ actor, time, reference, reason, lines = [], onUndo, un
                 {off && <span className="q-sr-only"> ({undoneLabel.toLowerCase()})</span>}
               </span>
               {off ? <span aria-hidden="true" className="q-receipt__mark">{undoneLabel}</span>
-                : l.undoable === false ? <span aria-hidden="true" className="q-receipt__mark">{'—'}</span>
+                : !l.undoable ? <span aria-hidden="true" className="q-receipt__mark">{'—'}</span>
                   : <button type="button" className="q-receipt__undo" onClick={() => undo(l, i)} aria-label={undoLabel + ': ' + what}>{undoLabel}</button>}
             </li>
           );

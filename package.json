@@ -10,6 +10,9 @@
 	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
+	"bin": {
+		"quiet-audit": "scripts/quiet-audit.mjs"
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -20,12 +23,18 @@
 	},
 	"files": [
 		"dist",
-		"DESIGN.md"
+		"DESIGN.md",
+		"docs/guidelines",
+		"skills",
+		"scripts/quiet-audit.mjs",
+		"scripts/quiet-audit-core.mjs",
+		"scripts/quiet-audit-core.d.mts"
 	],
 	"scripts": {
 		"dev": "storybook dev -p 6020",
 		"gen": "node scripts/gen.mjs",
 		"drift": "node scripts/drift.mjs",
+		"new": "node scripts/new-component.mjs",
 		"build": "node scripts/gen.mjs && vite build && tsc -p tsconfig.build.json && node scripts/copy-dts.mjs",
 		"prepare": "npm run build",
 		"check:package": "node scripts/check-package.mjs",

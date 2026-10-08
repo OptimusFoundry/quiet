@@ -102,12 +102,11 @@
     top: 100%;
     left: 0;
     z-index: var(--q-doubt-marker-bubble-z);
-    display: grid;
+    display: none; // closed bubbles take no layout, so they can't widen the page
     gap: var(--q-space-0-75);
-    visibility: hidden;
     box-sizing: border-box;
     width: var(--q-doubt-marker-bubble-width);
-    max-width: 90vw;
+    max-width: calc(100vw - 2 * var(--q-space-2));
     margin-top: var(--q-doubt-marker-bubble-offset);
     padding: var(--q-doubt-marker-bubble-padding);
     border: var(--q-hairline) solid var(--q-doubt-marker-bubble-border);
@@ -121,16 +120,18 @@
     letter-spacing: var(--q-tracking-none);
     text-align: left;
     white-space: normal;
-    opacity: 0;
-    pointer-events: none;
+    transform: translateX(var(--_shift, 0));
     transition:
       opacity var(--q-dur-hover) var(--q-ease-soft),
-      visibility var(--q-dur-hover);
+      display var(--q-dur-hover) allow-discrete;
 
     &[data-state="open"] {
-      visibility: visible;
+      display: grid;
       opacity: 1;
-      pointer-events: auto;
+
+      @starting-style {
+        opacity: 0;
+      }
     }
   }
 

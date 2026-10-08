@@ -21,13 +21,15 @@ export function ClaudeMark({ size = 'md', className }) {
 // plain prose under a small name row — no bubble. While `status="streaming"` a soft caret trails the
 // text and assistive tech hears "Claude is responding" once, not every token.
 export function ChatMessage({ from = 'assistant', name, avatar, children, attachments = [], status = 'done', error,
-  onRetry, onEdit, actions, copyText: copyTextProp, showCopy, time, className, style }) {
+  onRetry, onEdit, actions, copyText: copyTextProp, showCopy, time, headingLevel = 3, className, style }) {
   const isUser = from === 'user';
   const isSystem = from === 'system';
   const who = name ?? (isUser ? 'You' : 'Claude');
   const body = React.useRef(null);
   const [copyState, copy] = useCopy();
   const uid = React.useId();
+  // The speaker is a heading so screen-reader users can jump turn to turn; its level follows the page.
+  const H = 'h' + Math.min(6, Math.max(2, headingLevel));
   const stamp = fmtTime(time);
   const streaming = status === 'streaming';
   const failed = status === 'error';
@@ -71,11 +73,11 @@ export function ChatMessage({ from = 'assistant', name, avatar, children, attach
   return (
     <article className={cls} style={style} aria-labelledby={uid + 'n'}>
       {isUser ? (
-        <h3 id={uid + 'n'} className="q-sr-only">{who + ' said'}</h3>
+        <H id={uid + 'n'} className="q-sr-only">{who + ' said'}</H>
       ) : (
         <header className="q-chat-message__header">
           {avatar ?? <ClaudeMark />}
-          <h3 id={uid + 'n'} className="q-chat-message__name">{who}</h3>
+          <H id={uid + 'n'} className="q-chat-message__name">{who}</H>
           {stamp && <time className="q-chat-message__time" dateTime={stamp.iso}>{stamp.text}</time>}
         </header>
       )}

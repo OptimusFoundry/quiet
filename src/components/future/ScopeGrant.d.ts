@@ -24,7 +24,10 @@ export interface ScopeGrantDuration {
   expires?: string;
 }
 export interface ScopeGrantProps {
-  /** Mark for the agent (e.g. an Avatar); decorative */
+  /**
+   * Mark for the agent; decorative (the title carries the name). A string renders as a square
+   * Avatar with its initials, e.g. `agent="Meerkat"`; pass a node for anything else.
+   */
   agent?: React.ReactNode;
   title: React.ReactNode;
   /** Mono line under the title, e.g. "Scoped to this workspace" */

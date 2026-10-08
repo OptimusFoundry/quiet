@@ -14,7 +14,7 @@ export function FuturePage({ title, intro, children }) {
 			style={{
 				maxWidth: 1120,
 				margin: "0 auto",
-				padding: "64px 40px 120px",
+				padding: "var(--q-space-8) var(--q-space-page-x) var(--q-space-16)",
 				background: "var(--q-bg)",
 				color: "var(--q-fg)",
 				fontFamily: "var(--q-font-sans)",
@@ -74,23 +74,28 @@ export function Concept({ id, index, name, from, idea, children }) {
 }
 
 export function Spec({ label, children, col }) {
+	// Flex-wrap instead of a fixed 160px grid column: on narrow screens the label folds above the
+	// content, so specimens never force sideways scroll.
 	return (
 		<div
 			style={{
-				display: "grid",
-				gridTemplateColumns: "160px minmax(0,1fr)",
-				gap: 24,
-				padding: "24px 0",
-				borderTop: "1px solid var(--q-border)",
+				display: "flex",
+				flexWrap: "wrap",
+				gap: "var(--q-space-3)",
+				padding: "var(--q-space-3) 0",
+				borderTop: "var(--q-hairline) solid var(--q-border)",
 				alignItems: col ? "start" : "center",
 			}}
 		>
-			<div style={{ ...mono, paddingTop: col ? 4 : 0 }}>{label}</div>
+			<div style={{ ...mono, flex: "0 0 160px", paddingTop: col ? "var(--q-space-0-5)" : 0 }}>
+				{label}
+			</div>
 			<div
 				style={{
+					flex: "1 1 320px",
 					display: "flex",
 					flexDirection: col ? "column" : "row",
-					gap: 16,
+					gap: "var(--q-space-2)",
 					flexWrap: col ? "nowrap" : "wrap",
 					alignItems: col ? "stretch" : "center",
 					minWidth: 0,

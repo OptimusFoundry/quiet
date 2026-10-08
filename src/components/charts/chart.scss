@@ -50,6 +50,7 @@
 @layer q.components {
   .q-chart {
     position: relative;
+    margin: 0; // <figure> default margin
     display: grid;
     gap: var(--q-space-1-5);
     min-width: 0;

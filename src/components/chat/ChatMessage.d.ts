@@ -30,6 +30,8 @@ export interface ChatMessageProps {
   /** Default on for replies, off for user turns */
   showCopy?: boolean;
   time?: Date | string | number;
+  /** Level of the speaker heading ("Claude", "You said"), 2–6. Default 3: a thread under a page h1 and a section h2 */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
   className?: string;
   style?: React.CSSProperties;
 }
