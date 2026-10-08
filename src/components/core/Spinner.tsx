@@ -3,17 +3,17 @@ import "./Spinner.scss";
 
 /**
  * Hairline ring spinner. Linear, 0.9s, stops under reduced motion.
+ * Other attributes go on the role="status" root.
  * @startingPoint section="Feedback" subtitle="Hairline loading ring" viewport="600x140"
  */
-export interface SpinnerProps {
+export interface SpinnerProps
+	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> {
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | number;
 	tone?: "default" | "muted" | "paper" | "molten";
 	/** Mono caps label beside the ring (null hides it) */
 	label?: string | null;
 	className?: string;
 	style?: React.CSSProperties;
-	/** Other attributes go on the role="status" root */
-	[key: string]: any;
 }
 
 const SIZES = { xs: 12, sm: 16, md: 24, lg: 32, xl: 48 };

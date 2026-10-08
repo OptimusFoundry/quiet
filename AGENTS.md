@@ -94,8 +94,10 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
   values in component rules). `npm run lint` runs Biome + Stylelint.
 - Biome's `src/components/**` override turns off the a11y lint rules that fight quiet's deliberate
   ARIA-on-div DOM (it must match the reference; axe + the keyboard specs are the a11y gate), plus
-  `noArrayIndexKey` and `noNonNullAssertion`. `useExhaustiveDependencies` and `noExplicitAny` stay
-  warnings: a backlog to fix with behaviour tests, not blindly.
+  `noArrayIndexKey` and `noNonNullAssertion`. `useExhaustiveDependencies` and `noExplicitAny` are
+  errors: a callback an effect must not restart on goes through `useEffectEvent`; a deliberate extra
+  dependency gets a `biome-ignore` saying what it triggers. Rest props are typed as the HTML
+  attributes of the element they land on, and row/item data is generic (`Table<Row, Key>`).
 
 ## Future components (quiet's own)
 

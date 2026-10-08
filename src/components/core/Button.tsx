@@ -7,7 +7,18 @@ import "./Button.scss";
  * Pill button. Ink primary, hairline secondary/outline, text ghost, ink→molten destructive. Never molten-filled.
  * @startingPoint section="Actions" subtitle="Pill buttons — variants, sizes, states" viewport="700x200"
  */
-export interface ButtonProps {
+type ButtonHost = HTMLButtonElement | HTMLAnchorElement;
+/** Native attributes: the button's, plus the anchor's for when `href` renders a link. */
+type ButtonHostAttributes = Omit<
+	React.ButtonHTMLAttributes<ButtonHost>,
+	"children" | "style" | "disabled" | "onClick"
+> &
+	Omit<
+		React.AnchorHTMLAttributes<ButtonHost>,
+		keyof React.ButtonHTMLAttributes<ButtonHost> | "href"
+	>;
+
+export interface ButtonProps extends ButtonHostAttributes {
 	variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
 	size?: "sm" | "md" | "lg";
 	/** Trailing → that nudges 4px on hover */
@@ -25,7 +36,6 @@ export interface ButtonProps {
 	onClick?: React.MouseEventHandler;
 	children?: React.ReactNode;
 	style?: React.CSSProperties;
-	[key: string]: any;
 }
 
 const SPIN = { sm: 12, md: 14, lg: 16 };

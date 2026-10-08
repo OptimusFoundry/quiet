@@ -58,9 +58,12 @@ export function Toast({
 			reduce ? 0 : 160,
 		);
 	};
+	// The timer restarts only on duration/pause/closing; a new onClose identity (an inline handler each render) must not reset it.
+	const closable = React.useEffectEvent(() => !!onClose);
+	const autoClose = React.useEffectEvent(() => close());
 	React.useEffect(() => {
-		if (!duration || !onClose || paused || closing) return;
-		const t = setTimeout(close, duration);
+		if (!duration || !closable() || paused || closing) return;
+		const t = setTimeout(() => autoClose(), duration);
 		return () => clearTimeout(t);
 	}, [duration, paused, closing]);
 	const kind = variant || (status === "neutral" ? "neutral" : "default");

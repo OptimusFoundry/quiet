@@ -1,17 +1,31 @@
 import React from "react";
 import { Pagination } from "../navigation/Pagination";
 import { EmptyState } from "./EmptyState";
-import { Table } from "./Table";
+import { Table, type TableProps } from "./Table";
 import "./DataGrid.scss";
 
 /**
  * Table + title bar, filter box, pagination, selection count, loading and empty states.
+ * Any other Table prop (striped, bordered, defaultSort, renderExpanded…) passes through to the Table.
  * @startingPoint section="Data" subtitle="Table with toolbar & pages" viewport="900x520"
  */
-export interface DataGridProps {
-	columns: Array<any>;
-	data: any[];
-	rowKey?: string | ((row: any) => any);
+export interface DataGridProps<Row = Record<string, unknown>, Key extends React.Key = React.Key>
+	extends Omit<
+		TableProps<Row, Key>,
+		| "columns"
+		| "data"
+		| "rowKey"
+		| "selectable"
+		| "onSelectionChange"
+		| "onRowClick"
+		| "loading"
+		| "size"
+		| "className"
+		| "style"
+	> {
+	columns: TableProps<Row, Key>["columns"];
+	data: Row[];
+	rowKey?: string | ((row: Row) => Key);
 	title?: React.ReactNode;
 	actions?: React.ReactNode;
 	/** Client-side contains-filter across column fields */
@@ -20,8 +34,8 @@ export interface DataGridProps {
 	/** 0 disables paging */
 	pageSize?: number;
 	selectable?: boolean;
-	onSelectionChange?: (keys: any[]) => void;
-	onRowClick?: (row: any) => void;
+	onSelectionChange?: (keys: Key[]) => void;
+	onRowClick?: (row: Row) => void;
 	loading?: boolean;
 	size?: "sm" | "md" | "lg";
 	emptyTitle?: React.ReactNode;
@@ -29,11 +43,9 @@ export interface DataGridProps {
 	emptyActions?: React.ReactNode;
 	className?: string;
 	style?: React.CSSProperties;
-	/** Any other Table prop (striped, bordered, defaultSort, renderExpanded…) */
-	[key: string]: any;
 }
 
-export function DataGrid({
+export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = React.Key>({
 	columns = [],
 	data = [],
 	rowKey = "id",
@@ -53,17 +65,17 @@ export function DataGrid({
 	className,
 	style,
 	...tableProps
-}: DataGridProps) {
+}: DataGridProps<Row, Key>) {
 	const [q, setQ] = React.useState("");
 	const [page, setPage] = React.useState(1);
-	const [sel, setSel] = React.useState<unknown[]>([]);
+	const [sel, setSel] = React.useState<Key[]>([]);
 	const filtered = React.useMemo(
 		() =>
 			!q
 				? data
 				: data.filter((r) =>
 						columns.some((c) =>
-							String(r[c.key] ?? "")
+							String((r as Record<string, unknown>)[c.key] ?? "")
 								.toLowerCase()
 								.includes(q.toLowerCase()),
 						),

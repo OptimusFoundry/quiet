@@ -162,7 +162,7 @@ export function DatePicker({
 		moveFocus.current = false;
 		const b = dialog.current?.querySelector<HTMLElement>(`[data-day="${focus.getTime()}"]`);
 		b?.focus();
-	}, [open, focus, view]);
+	}, [open, focus]);
 	const pick = (d: Date | null) => {
 		setInner(d);
 		onChange?.(d);

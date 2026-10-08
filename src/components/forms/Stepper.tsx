@@ -145,7 +145,7 @@ export function Stepper({
 				onKeyDown={key}
 				onChange={(e) => {
 					const n = parseFloat(e.target.value);
-					if (!isNaN(n)) set(n);
+					if (!Number.isNaN(n)) set(n);
 				}}
 				className="q-stepper__field"
 				style={{ "--_chars": String(cur).length } as React.CSSProperties}

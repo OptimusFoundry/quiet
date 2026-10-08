@@ -18,7 +18,7 @@ export interface ListProps {
 		disabled?: boolean;
 		selected?: boolean;
 	}>;
-	groups?: Array<{ label?: React.ReactNode; items: Array<any> }>;
+	groups?: Array<{ label?: React.ReactNode; items: NonNullable<ListProps["items"]> }>;
 	size?: "sm" | "md" | "lg";
 	divided?: boolean;
 	/** Boxed with a soft hairline */

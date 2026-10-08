@@ -33,6 +33,8 @@ export function Alert({
 }: AlertProps) {
 	// quiet: dismiss collapses the alert's height (0 rest · 1 wrapped · 2 collapsing · 3 gone), then calls onDismiss.
 	const [leave, setLeave] = React.useState(0);
+	// The latest onDismiss runs when the collapse ends; a new handler identity doesn't restart the timer.
+	const dismissed = React.useEffectEvent(() => onDismiss?.());
 	React.useEffect(() => {
 		if (leave === 1) {
 			let r = requestAnimationFrame(() => {
@@ -45,7 +47,7 @@ export function Alert({
 		const t = setTimeout(
 			() => {
 				setLeave(3);
-				onDismiss?.();
+				dismissed();
 			},
 			reduce ? 0 : 280,
 		);

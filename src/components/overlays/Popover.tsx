@@ -80,8 +80,10 @@ export function Popover({
 	};
 	useEscape(cur && closeOnEscape, dismiss);
 	useOutside(refs, cur && closeOnClickOutside, () => set(false));
+	// Focus moves in when the panel opens; toggling trapFocus while it's open must not pull focus back.
+	const movesFocus = React.useEffectEvent(() => trapFocus);
 	React.useEffect(() => {
-		if (!cur || !mounted || !trapFocus || !panel.current) return;
+		if (!cur || !mounted || !movesFocus() || !panel.current) return;
 		const f = focusables(panel.current)[0];
 		f?.focus();
 	}, [cur, mounted]);

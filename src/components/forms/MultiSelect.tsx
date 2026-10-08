@@ -102,8 +102,8 @@ export function MultiSelect({
 	const listId = `${uid}list`,
 		labelId = `${uid}label`,
 		hintId = `${uid}hint`,
-		sumId = `${uid}sum`,
-		optId = (i: number) => `${uid}opt${i}`;
+		sumId = `${uid}sum`;
+	const optId = React.useCallback((i: number) => `${uid}opt${i}`, [uid]);
 	const presence = usePresence(open);
 	const cur = value ?? inner;
 	const opts = options.map(norm);
@@ -119,7 +119,7 @@ export function MultiSelect({
 		if (!open || active < 0) return;
 		const el = document.getElementById(optId(active));
 		el?.scrollIntoView?.({ block: "nearest" });
-	}, [open, active]);
+	}, [open, active, optId]);
 	const set = (next: string[]) => {
 		setInner(next);
 		onChange?.(next);

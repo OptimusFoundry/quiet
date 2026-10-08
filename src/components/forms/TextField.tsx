@@ -7,7 +7,11 @@ import "./TextField.scss";
  * Labelled text input — icons, filled variant, sizes, hint and error. The full-featured Input.
  * @startingPoint section="Forms" subtitle="Labelled input with icons" viewport="600x260"
  */
-export interface TextFieldProps {
+export interface TextFieldProps
+	extends Omit<
+		React.InputHTMLAttributes<HTMLInputElement>,
+		"size" | "value" | "defaultValue" | "onChange" | "className" | "style"
+	> {
 	label?: React.ReactNode;
 	/** Keep label for screen readers only */
 	hideLabel?: boolean;
@@ -32,7 +36,6 @@ export interface TextFieldProps {
 	inputStyle?: React.CSSProperties;
 	/** Reaches the native <input> */
 	ref?: React.Ref<HTMLInputElement>;
-	[key: string]: any;
 }
 
 const SIZES = ["sm", "md", "lg"];
