@@ -151,3 +151,23 @@ export function motionToken(el: Element, name: `--q-${string}`): string | number
 	if (ms) return Number(ms[1]) * (ms[2] === "s" ? 1000 : 1);
 	return raw;
 }
+
+/** While active: everything outside `ref`'s branch is inert and the page doesn't scroll. */
+export function useModalBackground(ref: RefObject<HTMLElement | null>, active: boolean) {
+	useEffect(() => {
+		if (!active || !ref.current) return;
+		const done: HTMLElement[] = [];
+		for (let n = ref.current; n.parentElement && n !== document.body; n = n.parentElement)
+			for (const sib of n.parentElement.children)
+				if (sib instanceof HTMLElement && sib !== n && !sib.inert && sib.tagName !== "SCRIPT") {
+					sib.inert = true;
+					done.push(sib);
+				}
+		const overflow = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		return () => {
+			for (const sib of done) sib.inert = false;
+			document.body.style.overflow = overflow;
+		};
+	}, [active, ref]);
+}

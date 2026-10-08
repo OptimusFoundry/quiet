@@ -1,19 +1,8 @@
 import React from 'react';
-import { useEscape, useFocusTrap, usePresence } from '../../a11y/hooks';
+import { useEscape, useFocusTrap, useModalBackground, usePresence } from '../../a11y/hooks';
 import './Drawer.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
-// quiet: while a modal is open, everything outside it is inert and the page doesn't scroll.
-function useModalBackground(ref, active) {
-  React.useEffect(() => {
-    if (!active || !ref.current) return;
-    const done = [];
-    for (let n = ref.current; n.parentElement && n !== document.body; n = n.parentElement)
-      for (const sib of n.parentElement.children) if (sib !== n && !sib.inert && sib.tagName !== 'SCRIPT') { sib.inert = true; done.push(sib); }
-    const overflow = document.body.style.overflow; document.body.style.overflow = 'hidden';
-    return () => { done.forEach(sib => { sib.inert = false; }); document.body.style.overflow = overflow; };
-  }, [active, ref]);
-}
 
 export function Drawer({ open, onClose, eyebrow, title, accent, description, children, footer, side = 'right', size = 'md', dismissible = true }) {
   const { mounted, state } = usePresence(open, 160);
