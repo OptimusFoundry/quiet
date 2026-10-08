@@ -1,0 +1,23 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Display" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../ds-loader.js"></script>
+</head><body style="margin:0;padding:24px;background:var(--paper);">
+<div id="root"></div>
+<script type="text/babel">
+loadDS('../../').then(DS => {
+const { Card, Stat, ProcessStep } = DS;
+function App(){ const [s,setS]=React.useState(1); React.useEffect(()=>{const t=setInterval(()=>setS(x=>(x+1)%4),2500);return()=>clearInterval(t)},[]);
+return <div style={{display:'flex',flexDirection:'column',gap:24}}>
+  <div style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:24}}>
+    <Card eyebrow="01 / 14" title="Anvil" accent="iOS" meta="Product · AI · iOS" footer={<span>→</span>} href="#">Personal CRM for people who hate CRMs. Voice notes in, structured contacts out.</Card>
+    <div style={{display:'flex',flexDirection:'column',gap:24,justifyContent:'center'}}><Stat value="14" label="Pieces shipped"/><Stat value="3.2m" label="Daily users served"/></div>
+  </div>
+  <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16}}>{['Brief','Cast','Temper','Stamp'].map((t,i)=><ProcessStep key={t} numeral={['i','ii','iii','iv'][i]} title={t} hot={i<=s}/>)}</div>
+</div>}
+ReactDOM.createRoot(root).render(<App/>);
+});
+</script></body></html>

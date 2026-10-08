@@ -23,7 +23,9 @@
 	],
 	"scripts": {
 		"dev": "storybook dev -p 6020",
-		"build": "vite build && tsc -p tsconfig.build.json",
+		"gen": "node scripts/gen.mjs",
+		"drift": "node scripts/drift.mjs",
+		"build": "node scripts/gen.mjs && vite build && tsc -p tsconfig.build.json && node scripts/copy-dts.mjs",
 		"build-storybook": "storybook build",
 		"lint": "biome check .",
 		"typecheck": "tsc --noEmit",

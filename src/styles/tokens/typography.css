@@ -1,0 +1,41 @@
+:root {
+  --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Display · 700 · −0.035em (softened from −0.045) */
+  --type-display-size: clamp(56px, 9vw, 128px);
+  --type-display-leading: 0.92;
+  --type-display-tracking: -0.035em;
+  /* H2 · 700 · 68 / 52 / 40 */
+  --type-h2-size: 68px;
+  --type-h2-size-md: 52px;
+  --type-h2-size-sm: 40px;
+  --type-h2-leading: 1;
+  --type-h2-tracking: -0.032em;
+  /* H3 · 600 · 30 */
+  --type-h3-size: 30px;
+  --type-h3-leading: 1.1;
+  --type-h3-tracking: -0.025em;
+  /* H4 · 600 · 24 */
+  --type-h4-size: 24px;
+  --type-h4-leading: 1.15;
+  --type-h4-tracking: -0.02em;
+  /* Body · 400 · 15–19 */
+  --type-body-lg: 19px;
+  --type-body: 17px;
+  --type-body-sm: 15px;
+  --type-body-leading: 1.55;
+  /* Mono · 400 · 10–12 */
+  --type-mono-lg: 12px;
+  --type-mono: 11px;
+  --type-mono-sm: 10px;
+  --type-mono-tracking: 0.08em;
+
+  /* Wordmark · 700 italic caps */
+  --wordmark-tracking: -0.02em;
+}

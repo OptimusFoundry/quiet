@@ -1,32 +1,29 @@
 # quiet
 
-A design system built from the ground up from 1,384 saved UI references. Quiet, precise, neutral:
-grey chrome with one accent, Inter at 400/500 on a small tight scale, a 4px grid, 8/12px radii,
-hairlines for resting surfaces and soft shadows only for things that float, and motion with real
-springs and morphs.
-
-- **Rules:** [DESIGN.md](DESIGN.md) — the constraints every component and screen follows.
-- **Stack:** React 19, CSS Modules + CSS-variable tokens, [Motion](https://motion.dev) for springs
-  and layout animation. Behaviour and accessibility are hand-rolled (no headless library) and
-  covered by keyboard + axe tests.
+The Optimus Foundry "Soft" design system from Claude Design, as a React package — a **1:1 copy**:
+68 components, tokens and the master catalog page, byte-for-byte from the Claude Design project,
+plus a derived dark mode and a swappable accent. See [DESIGN.md](DESIGN.md) and
+[AGENTS.md](AGENTS.md).
 
 ## Use
 
 ```tsx
-import { QuietRoot, Button } from "@optimusfoundry/quiet";
+import { QuietRoot, Button, Headline } from "@optimusfoundry/quiet";
 import "@optimusfoundry/quiet/style.css";
 
-<QuietRoot mode="light" accent={{ hue: 255 }}>
-	<Button variant="primary">Continue</Button>
+<QuietRoot mode="light" density="app">
+	<Headline size="h2" lead="Heavy software," accent="quietly made" />
+	<Button arrow>Start a project</Button>
 </QuietRoot>;
 ```
 
 ## Develop
 
 ```bash
-npm run dev        # Storybook on :6020
-npm run lint       # Biome
+npm run dev        # Storybook on :6020 — Catalog = the Claude Design master page
+npm run gen        # regenerate src/index.ts + the catalog from docs/reference/optimus-design
+npm run lint       # Biome (copied files are excluded)
 npm run typecheck
-npm run test       # Playwright keyboard + axe tests against Storybook
-npm run build      # dist/index.js, dist/quiet.css, types
+npm run build
+npm run test       # pixel parity with the reference master page + dark-mode smoke
 ```

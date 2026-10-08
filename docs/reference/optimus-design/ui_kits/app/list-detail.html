@@ -1,0 +1,75 @@
+<!-- @dsCard group="App" viewport="1280x860" name="List + detail" subtitle="360 list pane + flexible detail · app density" -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Optimus Foundry — List + detail</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../ds-loader.js"></script>
+</head><body style="margin:0;overflow:hidden">
+<div id="root"></div>
+<script type="text/babel" src="AppShell.jsx"></script>
+<script type="text/babel">
+const PROJECTS = [
+  { id: 'anvil', name: 'Anvil', kind: 'Personal CRM \u00b7 iOS', status: 'live', mrr: 18400, seats: 120, builds: 214 },
+  { id: 'bellows', name: 'Bellows', kind: 'Event pipeline \u00b7 Go', status: 'live', mrr: 12100, seats: 64, builds: 88 },
+  { id: 'cinder', name: 'Cinder', kind: 'Log search \u00b7 Web', status: 'live', mrr: 9800, seats: 51, builds: 31 },
+  { id: 'meerkat', name: 'Meerkat', kind: 'Agentic QA \u00b7 Web', status: 'prototype', mrr: 0, seats: 6, builds: 17 },
+  { id: 'tick', name: 'TickUpToks', kind: 'Scheduling \u00b7 iOS', status: 'prototype', mrr: 0, seats: 3, builds: 9 },
+  { id: 'plinth', name: 'Plinth', kind: 'Static hosting \u00b7 Edge', status: 'archived', mrr: 0, seats: 0, builds: 140 },
+];
+const buildsFor = p => Array.from({ length: 9 }, (_, i) => ({ id: i, build: '#' + (p.builds - i), branch: ['main', 'release/2.4', 'fix/sync'][i % 3], status: i === 2 ? 'Failed' : 'Live', dur: (3 + (i * 7) % 5) + 'm ' + String((i * 13) % 60).padStart(2, '0') + 's', when: i === 0 ? 'Today' : i + 'd ago' }));
+function Page() {
+  const { TextField, FilterTabs, List, StatusDot, PageHero, Badge, Button, DropdownMenu, Tabs, Grid, Col, StatCard, DataGrid, PageTransition, EmptyState, Switch, Rule } = window.DS;
+  const [sel, setSel] = React.useState('anvil');
+  const [filter, setFilter] = React.useState('all');
+  const [q, setQ] = React.useState('');
+  const [tab, setTab] = React.useState('Overview');
+  const shown = PROJECTS.filter(p => (filter === 'all' || p.status === filter) && p.name.toLowerCase().includes(q.toLowerCase()));
+  const p = PROJECTS.find(x => x.id === sel);
+  const count = s => PROJECTS.filter(x => s === 'all' || x.status === s).length;
+  return (
+    <AppShell active="projects" mainPadding={false} crumbs={[{ label: 'Workspace', href: 'dashboard.html' }, { label: 'Projects', href: '#' }, { label: p ? p.name : '\u2014' }]}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--w-list-pane) minmax(0, 1fr)', minHeight: '100%' }}>
+        <aside style={{ borderRight: '1px solid var(--rule-soft)', padding: 'var(--space-card-pad)', display: 'flex', flexDirection: 'column', gap: 'var(--space-stack)' }}>
+          <TextField label="Search projects" hideLabel size="sm" leftIcon="/" placeholder="Search projects" value={q} onChange={e => setQ(e.target.value)} />
+          <FilterTabs size="sm" value={filter} onChange={setFilter} items={[{ value: 'all', label: 'All', count: count('all') }, { value: 'live', label: 'Live', count: count('live') }, { value: 'prototype', label: 'Proto', count: count('prototype') }]} />
+          {shown.length ? <List size="sm" items={shown.map(x => ({ id: x.id, primary: x.name, secondary: x.kind, selected: x.id === sel, onClick: () => { setSel(x.id); setTab('Overview'); }, trailing: <StatusDot status={x.status} label="" /> }))} />
+            : <EmptyState size="sm" icon="?" title="Nothing matches" description="Try another name." />}
+        </aside>
+        <section style={{ padding: 'var(--space-section) var(--space-page-x)', display: 'flex', flexDirection: 'column', gap: 'var(--space-block)', minWidth: 0, maxWidth: 'var(--w-content)' }}>
+          {p && <>
+            <PageHero size="md" ruled={false} style={{ padding: 0 }} index={String(PROJECTS.indexOf(p) + 1).padStart(2, '0') + ' / ' + String(PROJECTS.length).padStart(2, '0')} eyebrow={p.kind} title={p.name}
+              actions={<><Badge size="sm" variant={p.status === 'live' ? 'success' : p.status === 'prototype' ? 'warning' : 'secondary'}>{p.status}</Badge><Button size="sm" variant="secondary" rightIcon={'\u2197'}>Open repo</Button>
+                <DropdownMenu size="sm" align="end" trigger={<Button size="sm" variant="ghost" icon={'\u2026'} aria-label="More" />} items={[{ label: 'Rename' }, { label: 'Duplicate' }, { divider: true }, { label: 'Archive', danger: true }]} /></>} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-block)' }}>
+              <Tabs size="sm" tabs={['Overview', 'Builds', 'Settings']} value={tab} onChange={setTab} />
+              <PageTransition transitionKey={sel + tab} variant="slideUp" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-block)' }}>
+                {tab === 'Overview' && <>
+                  <Grid columns={12} gap="var(--grid-gutter)">
+                    <Col span={4}><StatCard label="MRR" value={p.mrr} format={v => '$' + Math.round(v).toLocaleString('en-US')} delta={p.mrr ? 6.2 : undefined} variant="filled" /></Col>
+                    <Col span={4}><StatCard label="Seats" value={p.seats} variant="filled" /></Col>
+                    <Col span={4}><StatCard label="Builds" value={p.builds} variant="filled" /></Col>
+                  </Grid>
+                  <DataGrid title="Recent builds" size="sm" pageSize={5} columns={[{ key: 'build', header: 'Build' }, { key: 'branch', header: 'Branch' }, { key: 'status', header: 'Status', render: r => <Badge size="sm" variant={r.status === 'Live' ? 'success' : 'error'}>{r.status}</Badge> }, { key: 'dur', header: 'Duration', align: 'right' }, { key: 'when', header: 'When', align: 'right' }]} data={buildsFor(p)} />
+                </>}
+                {tab === 'Builds' && <DataGrid searchable selectable size="sm" pageSize={8} columns={[{ key: 'build', header: 'Build', sortable: true }, { key: 'branch', header: 'Branch', sortable: true }, { key: 'status', header: 'Status', render: r => <Badge size="sm" variant={r.status === 'Live' ? 'success' : 'error'}>{r.status}</Badge> }, { key: 'dur', header: 'Duration', align: 'right' }]} data={buildsFor(p)} />}
+                {tab === 'Settings' && <div style={{ maxWidth: 'var(--w-form)', display: 'flex', flexDirection: 'column', gap: 'var(--space-field)' }}>
+                  <TextField size="sm" label="Name" defaultValue={p.name} />
+                  <TextField size="sm" label="Repository" defaultValue={'github.com/optimusfoundry/' + p.id} />
+                  <Rule />
+                  <Switch size="sm" labelPosition="left" style={{ width: '100%' }} label="Auto-deploy main" description="Ship every green build on main." defaultChecked />
+                  <Switch size="sm" labelPosition="left" style={{ width: '100%' }} label="Preview builds" description="One URL per branch." />
+                  <div style={{ display: 'flex', gap: 16, justifyContent: 'flex-end' }}><Button variant="secondary" size="sm">Cancel</Button><Button size="sm">Save</Button></div>
+                </div>}
+              </PageTransition>
+            </div>
+          </>}
+        </section>
+      </div>
+    </AppShell>
+  );
+}
+loadDS('../../').then(d => { window.DS = d; ReactDOM.createRoot(document.getElementById('root')).render(<Page />); });
+</script>
+</body></html>

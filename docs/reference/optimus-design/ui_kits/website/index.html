@@ -1,0 +1,40 @@
+<!-- @dsCard group="Website" viewport="1280x900" name="Marketing site" subtitle="optimusfoundry.com — home" -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Optimus Foundry — Website kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>@keyframes of-marquee { from { transform: translateX(0) } to { transform: translateX(-33.333%) } } @media (prefers-reduced-motion: reduce) { * { animation: none !important } }</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../ds-loader.js"></script>
+</head><body>
+<div id="root"></div>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="Sections.jsx"></script>
+<script type="text/babel" src="CommissionDialog.jsx"></script>
+<script type="text/babel">
+function App() {
+  const { NavBar, Toast } = window.DS;
+  const [open, setOpen] = React.useState(false);
+  const [toast, setToast] = React.useState(false);
+  const send = () => { setOpen(false); setToast(true); setTimeout(() => setToast(false), 4000); };
+  return (
+    <>
+      <NavBar style={{ position: 'sticky', top: 0, zIndex: 50 }} onCta={() => setOpen(true)}
+        links={[{ label: 'Work', href: '#work' }, { label: 'Capabilities', href: '#capabilities' }, { label: 'Studio', href: '#philosophy' }, { label: 'Process', href: '#process' }]} />
+      <Hero onCommission={() => setOpen(true)} />
+      <Marquee />
+      <Studio />
+      <Capabilities />
+      <Work />
+      <Process />
+      <Contact onCommission={() => setOpen(true)} />
+      <Footer />
+      <CommissionDialog open={open} onClose={() => setOpen(false)} onSent={send} />
+      {toast && <div style={{ position: 'fixed', right: 32, bottom: 32, zIndex: 200 }}><Toast title="Brief received." meta="We reply within two days" onClose={() => setToast(false)} /></div>}
+    </>
+  );
+}
+loadDS('../../').then(DS => { window.DS = DS; ReactDOM.createRoot(document.getElementById('root')).render(<App />); });
+</script>
+</body></html>

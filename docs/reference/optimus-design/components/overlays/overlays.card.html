@@ -1,0 +1,18 @@
+<!-- @dsCard group="Components" viewport="700x380" name="Overlays" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../ds-loader.js"></script>
+</head><body style="margin:0;padding:24px;background:var(--paper);">
+<div id="root"></div>
+<script type="text/babel">
+loadDS('../../').then(DS => {
+const { Popover, DropdownMenu, Button } = DS;
+ReactDOM.createRoot(root).render(<div style={{display:'flex',gap:24,alignItems:'flex-start',height:320}}>
+  <DropdownMenu trigger={<Button variant="secondary" size="sm" rightIcon="\u2193">Project</Button>} items={[{group:'Anvil'},{label:'Rename',shortcut:'\u2318R'},{label:'Duplicate',shortcut:'\u2318D'},{label:'Show archived',checked:true},{divider:true},{label:'Delete',danger:true}]} />
+  <Popover defaultOpen trigger={<Button variant="outline" size="sm">Share</Button>} title="Share this build" align="start">Anyone with the link can view build 14. Links expire in 7 days.</Popover>
+</div>);
+});
+</script></body></html>

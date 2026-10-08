@@ -1,0 +1,23 @@
+<!-- @dsCard group="Components" viewport="700x330" name="Forms" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../ds-loader.js"></script>
+</head><body style="margin:0;padding:24px;background:var(--paper);">
+<div id="root"></div>
+<script type="text/babel">
+loadDS('../../').then(DS => {
+const { Input, Select, Checkbox, Radio, Switch } = DS;
+ReactDOM.createRoot(root).render(<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
+  <Input label="Email" placeholder="you@studio.com" />
+  <Select label="Practice" options={['Full-stack apps','iOS apps','Backends','Agentic workflows','Design systems']} />
+  <Input label="Budget" defaultValue="Under 10k" error="We start at 25k." />
+  <div style={{display:'flex',flexDirection:'column',gap:16,paddingTop:24}}>
+    <Radio options={['Web','iOS','Both']} direction="row" />
+    <div style={{display:'flex',gap:24}}><Checkbox label="Send the journal" defaultChecked /><Switch label="Reduced motion" defaultChecked /></div>
+  </div>
+</div>);
+});
+</script></body></html>

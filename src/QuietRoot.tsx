@@ -1,30 +1,24 @@
-import { type HTMLAttributes, type ReactNode, type Ref, useEffect } from "react";
-import "./tokens/tokens.scss";
-
-const FONTS_HREF =
-	"https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..600&family=Geist+Mono:wght@400;500&display=swap";
-
-// Fonts are injected once per document so consumers don't need a <link> of their own.
-function ensureFonts() {
-	if (document.querySelector("link[data-quiet-fonts]")) return;
-	const link = document.createElement("link");
-	link.rel = "stylesheet";
-	link.href = FONTS_HREF;
-	link.dataset.quietFonts = "";
-	document.head.append(link);
-}
+import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
+import "./styles/styles.css";
+import "./styles/quiet-modes.css";
+import "./styles/quiet-a11y.css";
+import "./styles/quiet-motion.css";
 
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
+	/** quiet addition: dark is derived from the same greys; the brand itself is light-only. */
 	mode?: "light" | "dark";
-	/** Accent hue (oklch degrees) and chroma; each product sets its own. */
-	accent?: { hue: number; chroma?: number };
+	/** marketing = the website · app = dashboards & settings · compact = tables, inspectors, admin. */
+	density?: "marketing" | "app" | "compact";
+	/** quiet addition: replaces molten. Still punctuation only — never a fill. */
+	accent?: string;
 	children: ReactNode;
 	ref?: Ref<HTMLDivElement>;
 }
 
-/** Applies quiet's tokens, colour mode and accent to its subtree. */
+/** Scopes mode, density and accent. The Optimus Foundry tokens themselves load globally. */
 export function QuietRoot({
 	mode = "light",
+	density = "marketing",
 	accent,
 	className,
 	style,
@@ -32,19 +26,13 @@ export function QuietRoot({
 	ref,
 	...props
 }: QuietRootProps) {
-	useEffect(ensureFonts, []);
-	const accentVars = accent
-		? {
-				"--q-accent-h": accent.hue,
-				...(accent.chroma === undefined ? {} : { "--q-accent-c": accent.chroma }),
-			}
-		: {};
 	return (
 		<div
 			ref={ref}
 			className={className ? `quiet ${className}` : "quiet"}
 			data-mode={mode}
-			style={{ ...accentVars, ...style }}
+			data-density={density}
+			style={accent ? ({ "--molten": accent, ...style } as CSSProperties) : style}
 			{...props}
 		>
 			{children}
