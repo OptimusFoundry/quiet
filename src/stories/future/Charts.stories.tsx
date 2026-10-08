@@ -5,7 +5,7 @@ import { DonutChart } from "../../components/charts/DonutChart";
 import { LineChart } from "../../components/charts/LineChart";
 import { NarratedChart } from "../../components/charts/NarratedChart";
 import { Sparkline } from "../../components/charts/Sparkline";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // quiet's chart set: hand-rolled SVG, molten carries the data (series 1), ink and greys compare.
 // Narrated chart is Future concept 21, rebuilt on quiet.

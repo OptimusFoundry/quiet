@@ -8,9 +8,7 @@ rel=${file#"$PWD"/}
 case "$rel" in
   src/*.scss|src/*/*.scss|src/*/*/*.scss|src/*/*/*/*.scss)
     out=$(npx --no-install stylelint "$rel" 2>&1) || { printf 'stylelint %s\n%s\n' "$rel" "$out" >&2; exit 2; } ;;
-  # Biome ignores src/components and src/styles (copied reference files); lint the rest of src/.
-  src/components/*|src/styles/*) ;;
-  src/*.jsx|src/*.tsx|src/*.ts|src/*/*.jsx|src/*/*.tsx|src/*/*.ts|src/*/*/*.jsx|src/*/*/*.tsx|src/*/*/*.ts|tests/*.ts|scripts/*.mjs)
+  src/*.tsx|src/*.ts|src/*/*.tsx|src/*/*.ts|src/*/*/*.tsx|src/*/*/*.ts|src/*/*/*/*.tsx|src/*/*/*/*.ts|tests/*.ts|scripts/*.mjs)
     out=$(npx --no-install biome check "$rel" 2>&1) || { printf 'biome %s\n%s\n' "$rel" "$out" >&2; exit 2; } ;;
 esac
 exit 0

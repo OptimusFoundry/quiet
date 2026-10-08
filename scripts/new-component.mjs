@@ -1,8 +1,8 @@
-// Scaffolds a quiet component: <Name>.jsx, <Name>.d.ts and <Name>.scss, following AGENTS.md
+// Scaffolds a quiet component: <Name>.tsx and <Name>.scss, following AGENTS.md
 // (BEM block from the kebab name, component tokens at the top, @layer q.components).
 //   node scripts/new-component.mjs <group> <Name>      (or: npm run new -- <group> <Name>)
-// Only quiet's own groups are allowed: the reference groups are a byte-for-byte copy of Claude
-// Design and change only through the sync workflow.
+// Only quiet's own groups are allowed: the reference groups mirror Claude Design and change only
+// through the sync workflow.
 import { existsSync, writeFileSync } from "node:fs";
 
 const OWN = ["future", "charts", "chat"];
@@ -16,7 +16,7 @@ function fail(msg) {
 if (!group || !name) fail("usage: node scripts/new-component.mjs <group> <Name>");
 if (!OWN.includes(group)) {
 	fail(
-		`"${group}" is not one of quiet's own groups (${OWN.join(", ")}). Reference groups are copied from Claude Design — change them there and re-sync.`,
+		`"${group}" is not one of quiet's own groups (${OWN.join(", ")}). Reference groups mirror Claude Design — change them there and re-sync.`,
 	);
 }
 if (!/^[A-Z][A-Za-z0-9]*$/.test(name)) fail(`"${name}" must be PascalCase, e.g. TrustMeter`);
@@ -24,49 +24,61 @@ if (!/^[A-Z][A-Za-z0-9]*$/.test(name)) fail(`"${name}" must be PascalCase, e.g. 
 const dir = `src/components/${group}`;
 const kebab = name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 const block = `q-${kebab}`;
-const files = [`${dir}/${name}.jsx`, `${dir}/${name}.d.ts`, `${dir}/${name}.scss`];
+const files = [`${dir}/${name}.tsx`, `${dir}/${name}.scss`];
 for (const f of files) if (existsSync(f)) fail(`${f} already exists`);
 
-const jsx = `import React from 'react';
-import './${name}.scss';
+const tsx = `import React from "react";
+import "./${name}.scss";
 
-const SIZES = ['sm', 'md', 'lg'];
-
-// ${name} — TODO: one sentence on what it is and the job it replaces.
-export function ${name}({ value, defaultValue, onChange, label, size = 'md', disabled = false, className, style, children }) {
-  const [inner, setInner] = React.useState(defaultValue);
-  const cur = value !== undefined ? value : inner;
-  const set = v => { if (disabled) return; setInner(v); onChange && onChange(v); };
-  const cls = ['${block}', '${block}--' + (SIZES.includes(size) ? size : 'md'), className].filter(Boolean).join(' ');
-  return (
-    <div className={cls} style={style} aria-disabled={disabled || undefined} data-value={cur}>
-      {label && <span className="${block}__label">{label}</span>}
-      {children}
-    </div>
-  );
-}
-`;
-
-const dts = `import * as React from 'react';
 /**
  * TODO: what it is, in one or two sentences — the design agent and consumers read this.
  * @startingPoint section="${group[0].toUpperCase() + group.slice(1)}" subtitle="TODO" viewport="700x200"
  */
 export interface ${name}Props {
-  /** Controlled value */
-  value?: unknown;
-  /** Uncontrolled starting value */
-  defaultValue?: unknown;
-  /** Called with the new value (not the event) */
-  onChange?: (value: unknown) => void;
-  label?: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
+	/** Controlled value */
+	value?: string;
+	/** Uncontrolled starting value */
+	defaultValue?: string;
+	/** Called with the new value (not the event) */
+	onChange?: (value: string) => void;
+	label?: React.ReactNode;
+	size?: "sm" | "md" | "lg";
+	disabled?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+	style?: React.CSSProperties;
 }
-export declare function ${name}(props: ${name}Props): JSX.Element;
+
+const SIZES = ["sm", "md", "lg"];
+
+export function ${name}({
+	value,
+	defaultValue,
+	onChange,
+	label,
+	size = "md",
+	disabled = false,
+	className,
+	style,
+	children,
+}: ${name}Props) {
+	const [inner, setInner] = React.useState(defaultValue);
+	const cur = value !== undefined ? value : inner;
+	const _set = (v: string) => {
+		if (disabled) return;
+		setInner(v);
+		onChange?.(v);
+	};
+	const cls = ["${block}", \`${block}--\${SIZES.includes(size) ? size : "md"}\`, className]
+		.filter(Boolean)
+		.join(" ");
+	return (
+		<div className={cls} style={style} aria-disabled={disabled || undefined} data-value={cur}>
+			{label && <span className="${block}__label">{label}</span>}
+			{children}
+		</div>
+	);
+}
 `;
 
 const scss = `// ${name} — TODO: one line.
@@ -120,9 +132,8 @@ const scss = `// ${name} — TODO: one line.
 }
 `;
 
-writeFileSync(files[0], jsx);
-writeFileSync(files[1], dts);
-writeFileSync(files[2], scss);
+writeFileSync(files[0], tsx);
+writeFileSync(files[1], scss);
 console.log(`Created ${files.join(", ")}
 
 Next:

@@ -7,7 +7,7 @@ import { ChatDivider, ChatThread } from "../../components/chat/ChatThread";
 import { CodeBlock } from "../../components/chat/CodeBlock";
 import { PromptSuggestions } from "../../components/chat/PromptSuggestions";
 import { ToolCall } from "../../components/chat/ToolCall";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // Chat — quiet's AI chat set: thread, messages, rich composer, attachments, tool calls, code.
 // UI only. The demo fakes Claude's streamed reply with a timer; a product wires onSubmit to the API.

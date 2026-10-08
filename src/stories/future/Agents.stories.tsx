@@ -6,7 +6,7 @@ import { Approval } from "../../components/future/Approval";
 import { CostMeter } from "../../components/future/CostMeter";
 import { DraftDiff } from "../../components/future/DraftDiff";
 import { HoldButton } from "../../components/future/HoldButton";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // Future components I + IV: interfaces for apps that act on your behalf.
 const STEPS = [

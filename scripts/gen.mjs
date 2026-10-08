@@ -1,7 +1,7 @@
 // Generates the parts of quiet that are derived mechanically from the Optimus Foundry mirror
 // (docs/reference/optimus-design), so they can never drift by hand:
 //   src/index.ts                         — one export per component, in ds-loader.js order
-//   src/stories/catalog.generated.jsx    — the App from components/index.html, verbatim
+//   src/stories/catalog.generated.tsx    — the App from components/index.html, verbatim (untyped)
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const REF = "docs/reference/optimus-design";
@@ -16,14 +16,14 @@ const files = JSON.parse(loader.match(/var FILES = (\[[^\]]*\])/)[1]);
 const own = ["future", "charts", "chat"]
 	.flatMap((group) =>
 		readdirSync(`src/components/${group}`)
-			.filter((f) => f.endsWith(".jsx"))
+			.filter((f) => f.endsWith(".tsx"))
 			.map((f) => `${group}/${f.slice(0, -4)}`)
 			.sort(),
 	)
 	.concat(["feedback/Toaster"]);
 writeFileSync(
 	"src/index.ts",
-	`${HEADER}/// <reference path="./jsx-global.d.ts" />\n${[...files, ...own]
+	`${HEADER}${[...files, ...own]
 		.map((f) => `export * from "./components/${f}";`)
 		.join(
 			"\n",
@@ -35,12 +35,10 @@ const script = html.match(/<script type="text\/babel">\n([\s\S]*)<\/script>/)[1]
 const boot =
 	/let DS;\nloadDS\('\.\.\/'\)\.then\(d => \{ DS = d; ReactDOM\.createRoot\(document\.getElementById\('root'\)\)\.render\(<App \/>\); \}\);\n$/;
 if (!boot.test(script)) throw new Error("index.html boot line changed — update gen.mjs");
+// The App is the reference's untyped Babel script, kept verbatim so the catalog stays
+// pixel-identical to it; it is checked by tests/parity.spec.ts, not by tsc.
 writeFileSync(
-	"src/stories/catalog.generated.jsx",
-	`${HEADER}import React from "react";\nimport * as DS from "../index";\n\n${script.replace(boot, "")}\nexport default App;\n`,
-);
-writeFileSync(
-	"src/stories/catalog.generated.d.ts",
-	`${HEADER}export default function App(): import("react").JSX.Element;\n`,
+	"src/stories/catalog.generated.tsx",
+	`${HEADER}// @ts-nocheck\nimport React from "react";\nimport * as DS from "../index";\n\n${script.replace(boot, "")}\nexport default App;\n`,
 );
 console.log(`index.ts: ${files.length} components; catalog: ${script.split("\n").length} lines`);

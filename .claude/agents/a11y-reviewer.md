@@ -13,7 +13,7 @@ You review accessibility in quiet. You do not edit files. You report findings wi
    - Only the reference colours in `ACCEPTED_LOW_CONTRAST` are exempt from contrast: foundry `#95959c`, `#e0531a`; foundry-dark `#6e6e76`, `#f06a33`.
    - Any other violation is a finding.
    - A test that skips or excludes a region needs a written reason in the spec.
-2. Read each changed `.jsx` against the WAI-ARIA Authoring Practices pattern for its role:
+2. Read each changed `.tsx` against the WAI-ARIA Authoring Practices pattern for its role:
    - **Name, role, state:** every interactive element has an accessible name and the right role; states are exposed (`aria-pressed`, `aria-expanded`, `aria-checked`, `aria-current`, `aria-busy`, `aria-valuenow`/`aria-valuetext`); there's no `role` on a non-interactive element without a reason.
    - **Keyboard:** everything is reachable; composite widgets have one tab stop plus arrows, Home/End and PageUp/PageDown where they apply; Enter/Space activate; Escape dismisses; nothing is pointer-only.
    - **Focus:** overlays trap and restore focus (`useFocusTrap`); after removing or undoing an item, focus moves to a sensible neighbour, never `body`; focus stays visible (outlines come from `src/styles/utilities/_a11y.scss`).

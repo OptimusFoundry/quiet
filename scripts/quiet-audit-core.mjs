@@ -9,7 +9,7 @@ export function auditInPage(opts) {
 	const findings = [];
 	const add = (rule, owner, value, el) => findings.push({ rule, owner, value, example: sel(el) });
 	function sel(el) {
-		if (!el || el.nodeType !== 1) return "";
+		if (el?.nodeType !== 1) return "";
 		const cls = [...el.classList]
 			.slice(0, 2)
 			.map((c) => `.${c}`)
@@ -146,7 +146,7 @@ export function auditInPage(opts) {
 				"margin-left",
 			]) {
 				const v = map.get(p);
-				if (!v || v.unit !== "px" || v.value === 0) continue;
+				if (v?.unit !== "px" || v.value === 0) continue;
 				if (p.endsWith("gap") && !/flex|grid/.test(cs.display)) continue;
 				const px = `${+v.value.toFixed(2)}px`;
 				const key = `${p.replace(/-(top|right|bottom|left)$/, "")} ${px}`;

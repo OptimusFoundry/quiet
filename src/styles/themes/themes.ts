@@ -55,7 +55,9 @@ export function resolveTheme(theme: ThemeName | null | undefined): ThemeName {
 }
 
 /** The resolved name and definition for `theme` (see resolveTheme). */
-export function getTheme(theme: ThemeName | null | undefined): ThemeDefinition & { name: ThemeName } {
+export function getTheme(
+	theme: ThemeName | null | undefined,
+): ThemeDefinition & { name: ThemeName } {
 	const name = resolveTheme(theme);
 	return { name, ...(themes[name] ?? builtInThemes[defaultTheme]) };
 }

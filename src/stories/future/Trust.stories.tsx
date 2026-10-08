@@ -5,7 +5,7 @@ import { type Checkpoint, Checkpoints } from "../../components/future/Checkpoint
 import { DoubtMarker } from "../../components/future/DoubtMarker";
 import { LineageChip } from "../../components/future/LineageChip";
 import { Receipt } from "../../components/future/Receipt";
-import { Concept, FuturePage, Spec } from "./Concept.jsx";
+import { Concept, FuturePage, Spec } from "./Concept";
 
 // Future components, trust set — from the Claude Design "Future Components" concepts
 // (04 Checkpoints, 66 Doubt marker, 67 Receipt, 122 Lineage chip), rebuilt on quiet tokens.

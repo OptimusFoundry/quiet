@@ -11,7 +11,7 @@ Read them first. This skill covers only the order of work and the mistakes that 
 ## 1. Decide whether it should exist
 
 - **Groups:** reference groups (`core forms display data navigation feedback overlays layout`) are a
-  1:1 copy. Never add to them; change Claude Design, then use the `sync-from-claude-design` skill.
+  port of Claude Design. Never add to them; change Claude Design, then use the `sync-from-claude-design` skill.
 - **Existing components:** `ls src/components/*/`. Extending an existing quiet component beats adding
   a near-duplicate.
 - **One product only:** if only one product needs it, it belongs in that product's repo, built on
@@ -34,12 +34,12 @@ Mistakes that got past review before:
 - **Data:** no demo data in the component. Data comes in through props; the story holds it.
 - **Hooks:** use the ones in `src/a11y/hooks.ts`. Don't hand-roll focus traps, outside-click or roving focus.
 - **Motion:** one-shot only. No spring overshoot, nothing moving at rest, and respect reduced motion.
-- **`.d.ts`:** matches the props the `.jsx` actually reads, with JSDoc on each one.
+- **Props interface:** exported from the `.tsx` next to the component, matching the props it actually reads, with JSDoc on each one. No `@ts-ignore` or new `any`.
 
 ## 4. Story and test
 
 - **Story:** add the story to the set's file in `src/stories/future/` (`Concept` + `Spec` from
-  `./Concept.jsx`; `id` = kebab name). Import the component from its own file. Show every state
+  `./Concept`; `id` = kebab name). Import the component from its own file. Show every state
   someone would design against, and nothing decorative.
 - **Test:** `tests/<set>.spec.ts`, copied from `tests/future-display.spec.ts`. Axe runs in `foundry` and
   `foundry-dark`, and only `ACCEPTED_LOW_CONTRAST` is exempt. Add keyboard and ARIA assertions per behaviour.

@@ -8,7 +8,6 @@
 			"Bash(npm run test)",
 			"Bash(npm run test:*)",
 			"Bash(npm run gen)",
-			"Bash(npm run drift)",
 			"Bash(npm run new:*)",
 			"Bash(npx playwright test:*)",
 			"Bash(npx stylelint:*)",

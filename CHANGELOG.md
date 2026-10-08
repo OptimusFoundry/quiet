@@ -2,6 +2,18 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Changed
+
+- **Every component is TypeScript.** `src/components/**` is typed `.tsx` (strict,
+  `noUncheckedIndexedAccess`); each props interface lives next to its component and the shipped
+  `.d.ts` files are emitted by tsc. Public prop types are unchanged, except where the old `.d.ts`
+  was narrower than what the code accepts (e.g. `Spinner label` takes `null`).
+- TypeScript 7 (native compiler), Biome 2.5, React 19.3. Biome now formats and lints all of `src/`.
+- Removed `npm run drift` and `src/jsx-global.d.ts`: the reference groups are now a typed port of
+  the Claude Design mirror, kept honest by the parity tests.
+
 ## 0.3.0
 
 ### Added
