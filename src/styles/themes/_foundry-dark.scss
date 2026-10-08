@@ -13,10 +13,10 @@
   --q-shadow-rgb: 0 0 0;
 
   // Dark surfaces need heavier shadows and a hairline to separate floating panels.
-  --q-scrim: rgb(0 0 0 / 0.5);
-  --q-shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
-  --q-shadow-2: 0 0 0 1px var(--q-border), 0 12px 32px rgb(0 0 0 / 0.45);
-  --q-shadow-3: 0 0 0 1px var(--q-border), 0 24px 64px rgb(0 0 0 / 0.6);
+  --q-scrim: rgb(0 0 0 / 50%);
+  --q-shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+  --q-shadow-2: 0 0 0 1px var(--q-border), 0 12px 32px rgb(0 0 0 / 45%);
+  --q-shadow-3: 0 0 0 1px var(--q-border), 0 24px 64px rgb(0 0 0 / 60%);
   --q-ring-soft: 0 0 0 4px color-mix(in srgb, var(--q-fg) 12%, transparent);
 
   color-scheme: dark;

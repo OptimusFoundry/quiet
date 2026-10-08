@@ -2,8 +2,8 @@
 // sizes its components actually use). Components never use a size outside these scales; a size
 // unique to one component lives in tokens/_components.scss.
 :root {
-  --q-font-sans: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --q-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --q-font-sans: "Inter Tight", "Helvetica Neue", helvetica, arial, sans-serif;
+  --q-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", menlo, monospace;
 
   --q-weight-regular: 400;
   --q-weight-medium: 500;

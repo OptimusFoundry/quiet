@@ -26,10 +26,10 @@
   // The one accent: punctuation only — never a fill, never a button, never a section.
   --q-accent: var(--q-molten-500);
 
-  --q-scrim: rgb(var(--q-shadow-rgb) / 0.24);
+  --q-scrim: rgb(var(--q-shadow-rgb) / 24%);
   --q-glow: radial-gradient(closest-side, color-mix(in srgb, var(--q-accent) 18%, transparent), transparent 100%);
   --q-focus-ring-color: var(--q-fg);
-  --q-ring-soft: 0 0 0 4px rgb(var(--q-shadow-rgb) / 0.08);
+  --q-ring-soft: 0 0 0 4px rgb(var(--q-shadow-rgb) / 8%);
   --q-selection-bg: var(--q-bg-inverse);
   --q-selection-fg: var(--q-fg-on-inverse);
 }

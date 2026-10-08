@@ -3,8 +3,7 @@
 // quiet stylesheet entry. Cascade layers make the order explicit: later layers win regardless
 // of selector specificity, so a component never has to out-specify base styles.
 @layer q.tokens, q.themes, q.base, q.components, q.utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap";
 
 @layer q.tokens {
   @include meta.load-css("tokens/typography");
@@ -14,7 +13,6 @@
   @include meta.load-css("tokens/motion");
   @include meta.load-css("tokens/elevation");
   @include meta.load-css("tokens/color");
-  @include meta.load-css("tokens/components");
   @include meta.load-css("tokens/reference-compat");
 }
 
