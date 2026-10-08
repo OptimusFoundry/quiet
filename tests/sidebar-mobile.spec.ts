@@ -21,6 +21,24 @@ const trigger = (page: Page) => page.getByRole("button", { name: "Open navigatio
 const drawer = (page: Page) => page.getByRole("dialog", { name: "Primary" });
 const state = (page: Page) => page.getByTestId("sidebar-state");
 
+// A click on the scrim that lands right after the modal is committed, before any later task runs:
+// what happens on a loaded machine, where the first click can beat React's passive effects. The
+// blur stands in for the scrim mousedown's default action (focus moves to <body>).
+const clickScrimOnCommit = (page: Page, scrim: string) =>
+	page.evaluate((sel) => {
+		new MutationObserver((records, obs) => {
+			const el = records
+				.flatMap((r) => [...r.addedNodes])
+				.find((n): n is HTMLElement => n instanceof HTMLElement && n.matches(sel));
+			if (!el) return;
+			obs.disconnect();
+			(document.activeElement as HTMLElement | null)?.blur();
+			(el.querySelector(".q-sidebar-drawer__scrim") ?? el).dispatchEvent(
+				new MouseEvent("click", { bubbles: true }),
+			);
+		}).observe(document.body, { subtree: true, childList: true });
+	}, scrim);
+
 async function axe(page: Page, theme: string) {
 	const { violations } = await new AxeBuilder({ page }).include("#storybook-root").analyze();
 	const accepted = ACCEPTED_LOW_CONTRAST[theme] ?? [];
@@ -112,6 +130,17 @@ test.describe("mobile viewport", () => {
 		await page.mouse.click(PHONE.width - 10, PHONE.height / 2);
 		await expect(drawer(page)).toHaveCount(0);
 		await expect(trigger(page)).toBeFocused();
+	});
+
+	test("a scrim click right after the drawer opens still returns focus to the trigger", async ({
+		page,
+	}) => {
+		await open(page);
+		await clickScrimOnCommit(page, ".q-sidebar-drawer");
+		await trigger(page).click();
+		await expect(drawer(page)).toHaveCount(0);
+		await expect(trigger(page)).toBeFocused();
+		await expect(trigger(page)).toHaveAttribute("aria-expanded", "false");
 	});
 
 	test("the close button closes", async ({ page }) => {
