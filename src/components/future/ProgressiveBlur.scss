@@ -1,0 +1,34 @@
+// ProgressiveBlur — blur that ramps toward one edge. BEM: .q-progressive-blur, __stack, __band;
+// [data-direction], [data-mode="progressive|masked"]. Each band gets --_step (its share of the
+// maximum blur, 0 → 1) and --_mask (its gradient window) from the component.
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-progressive-blur-max: 28px; // unique to this component; the maxBlur prop overrides it
+    --q-progressive-blur-z: var(--q-z-raised);
+  }
+}
+
+@layer q.components {
+  .q-progressive-blur {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .q-progressive-blur__stack {
+    position: absolute;
+    inset: 0;
+    z-index: var(--q-progressive-blur-z);
+    pointer-events: none;
+  }
+
+  .q-progressive-blur__band {
+    --_blur: blur(calc(var(--q-progressive-blur-max) * var(--_step, 1)));
+
+    position: absolute;
+    inset: 0;
+    backdrop-filter: var(--_blur);
+    mask-image: var(--_mask);
+  }
+}
