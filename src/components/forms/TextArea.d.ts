@@ -5,6 +5,8 @@ import * as React from 'react';
  */
 export interface TextAreaProps {
   label?: React.ReactNode;
+  /** Keep label for screen readers only */
+  hideLabel?: boolean;
   required?: boolean;
   helperText?: React.ReactNode;
   error?: React.ReactNode;
@@ -22,6 +24,8 @@ export interface TextAreaProps {
   /** Merged onto the native control (it is passed through with the other input props) */
   className?: string;
   style?: React.CSSProperties;
+  /** Reaches the native <textarea> */
+  ref?: React.Ref<HTMLTextAreaElement>;
   [key: string]: any;
 }
 export declare function TextArea(props: TextAreaProps): JSX.Element;

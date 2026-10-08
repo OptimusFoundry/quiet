@@ -4,7 +4,16 @@ import * as React from 'react';
  * @startingPoint section="Data" subtitle="Sortable, selectable table" viewport="900x420"
  */
 export interface TableProps {
-  columns: Array<{ key: string; header: React.ReactNode; align?: 'left' | 'right' | 'center'; width?: number | string; sortable?: boolean; sortValue?: (row: any) => any; nowrap?: boolean; render?: (row: any, index: number) => React.ReactNode }>;
+  columns: Array<{
+    key: string; header: React.ReactNode; align?: 'left' | 'right' | 'center'; width?: number | string; sortable?: boolean; sortValue?: (row: any) => any; nowrap?: boolean;
+    render?: (row: any, index: number) => React.ReactNode;
+    /** Cell spans this many columns for the row; the columns it covers are not rendered */
+    colSpan?: (row: any, index: number) => number | undefined;
+    /** Footer (totals) cell; a function receives the rows in display order */
+    footer?: React.ReactNode | ((rows: any[]) => React.ReactNode);
+    /** Footer cell spans this many columns */
+    footerColSpan?: number;
+  }>;
   data: any[];
   /** Field name or getter; default 'id' */
   rowKey?: string | ((row: any) => any);
@@ -23,6 +32,12 @@ export interface TableProps {
   manualSort?: boolean;
   /** Enables expandable rows */
   renderExpanded?: (row: any) => React.ReactNode;
+  /** Expanded row keys (controlled) */
+  expanded?: any[];
+  defaultExpanded?: any[];
+  onExpandedChange?: (keys: any[]) => void;
+  /** Full-width footer row, after any columns[].footer row */
+  footer?: React.ReactNode;
   loading?: boolean;
   loadingRows?: number;
   emptyText?: React.ReactNode;

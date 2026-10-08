@@ -17,6 +17,12 @@ export interface SliderProps {
   disabled?: boolean;
   /** Accessible name when there is no visible label */
   'aria-label'?: string;
+  /** Submits the current value (as a string) through a hidden input, so a native <form> and FormData see it */
+  name?: string;
+  /** id of a <form> elsewhere in the document, as on native controls */
+  form?: string;
+  /** Reaches the role="slider" thumb, so it can be focused */
+  ref?: React.Ref<HTMLSpanElement>;
   className?: string;
   style?: React.CSSProperties;
 }

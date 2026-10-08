@@ -6,14 +6,14 @@ import './TextArea.scss';
 const SIZES = ['sm', 'md', 'lg'];
 let ofTaId = 0;
 
-export function TextArea({ label, required, helperText, error, size = 'md', rows = 4, resize = 'vertical', maxLength, disabled, id, className, style, ...rest }) {
+export function TextArea({ label, hideLabel = false, required, helperText, error, size = 'md', rows = 4, resize = 'vertical', maxLength, disabled, id, className, style, ...rest }) {
   const [len, setLen] = React.useState((rest.value ?? rest.defaultValue ?? '').length);
   const [auto] = React.useState(() => 'of-ta-' + (++ofTaId));
   const fid = id || auto;
   const cls = ['q-text-area', 'q-text-area--' + (SIZES.includes(size) ? size : 'md'), disabled && 'q-text-area--disabled'].filter(Boolean).join(' ');
   return (
     <div className={cls} style={style}>
-      {label && <Label htmlFor={fid} required={required} size={size}>{label}</Label>}
+      {label && <Label htmlFor={fid} required={required} size={size} className={hideLabel ? 'q-sr-only' : undefined}>{label}</Label>}
       <textarea id={fid} rows={rows} disabled={disabled} required={required} maxLength={maxLength} aria-invalid={!!error || undefined}
         aria-describedby={[(error || helperText) && fid + '-hint', maxLength && fid + '-count'].filter(Boolean).join(' ') || undefined} {...rest}
         onChange={e => { setLen(e.target.value.length); rest.onChange && rest.onChange(e); }}

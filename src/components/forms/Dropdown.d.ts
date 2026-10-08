@@ -18,6 +18,14 @@ export interface DropdownProps {
   disabled?: boolean;
   helperText?: React.ReactNode;
   error?: React.ReactNode;
+  /** Submits through a hidden input when set, so a native <form> and FormData see it */
+  name?: string;
+  /** Blocks native submission while empty; also sets aria-required */
+  required?: boolean;
+  /** id of a <form> elsewhere in the document, as on native controls */
+  form?: string;
+  /** Reaches the combobox trigger, so it can be focused */
+  ref?: React.Ref<HTMLButtonElement>;
   className?: string;
   style?: React.CSSProperties;
 }

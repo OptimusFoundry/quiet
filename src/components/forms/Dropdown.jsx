@@ -1,16 +1,19 @@
 import React from 'react';
-import { usePresence } from '../../a11y/hooks';
+import { useMergedRef, usePresence } from '../../a11y/hooks';
+import { FormValue } from '../../a11y/form';
 import './Dropdown.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
 const norm = o => typeof o === 'string' ? { value: o, label: o } : o;
 const text = o => typeof o.label === 'string' || typeof o.label === 'number' ? String(o.label) : String(o.value ?? '');
 
-export function Dropdown({ label, options = [], value, defaultValue, onChange, placeholder = 'Select', size = 'md', variant = 'default', fullWidth = false, align = 'start', disabled = false, helperText, error, className, style }) {
+export function Dropdown({ label, options = [], value, defaultValue, onChange, placeholder = 'Select', size = 'md', variant = 'default', fullWidth = false, align = 'start', disabled = false, helperText, error, name, required, form, ref: forwardedRef, className, style }) {
   const [open, setOpen] = React.useState(false);
   const [inner, setInner] = React.useState(defaultValue);
   const [active, setActive] = React.useState(-1);
   const ref = React.useRef(null);
+  const trigger = React.useRef(null);
+  const triggerRef = useMergedRef(trigger, forwardedRef);
   const typed = React.useRef({ s: '', t: 0 });
   const uid = React.useId();
   const listId = uid + 'list', labelId = uid + 'label', hintId = uid + 'hint', optId = i => uid + 'opt' + i;
@@ -63,7 +66,7 @@ export function Dropdown({ label, options = [], value, defaultValue, onChange, p
   return (
     <div ref={ref} className={cls} style={style}>
       {label && <span id={labelId} className="q-dropdown__label">{label}</span>}
-      <button type="button" disabled={disabled} role="combobox" aria-haspopup="listbox" aria-expanded={open} aria-controls={presence.mounted || open ? listId : undefined}
+      <button ref={triggerRef} type="button" disabled={disabled} role="combobox" aria-required={required || undefined} aria-haspopup="listbox" aria-expanded={open} aria-controls={presence.mounted || open ? listId : undefined}
         aria-activedescendant={open && active >= 0 ? optId(active) : undefined} aria-labelledby={label ? labelId : undefined} aria-label={label ? undefined : placeholder}
         aria-describedby={error || helperText ? hintId : undefined} aria-invalid={error ? true : undefined}
         onClick={() => (open ? setOpen(false) : show())} onKeyDown={key} className={'q-dropdown__trigger' + (sel ? '' : ' q-dropdown__trigger--placeholder')}>
@@ -86,6 +89,7 @@ export function Dropdown({ label, options = [], value, defaultValue, onChange, p
             </div>)}
       </div>}
       {(error || helperText) && <span id={hintId} className={'q-dropdown__hint' + (error ? ' q-dropdown__hint--error' : '')}>{error || helperText}</span>}
+      <FormValue name={name} value={cur ?? ''} required={required} disabled={disabled} form={form} focusTarget={() => trigger.current} />
     </div>
   );
 }

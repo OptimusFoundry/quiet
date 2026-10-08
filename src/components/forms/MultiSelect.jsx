@@ -1,5 +1,6 @@
 import React from 'react';
-import { usePresence } from '../../a11y/hooks';
+import { useMergedRef, usePresence } from '../../a11y/hooks';
+import { FormValues } from '../../a11y/form';
 import './MultiSelect.scss';
 
 const SIZES = ['sm', 'md', 'lg'];
@@ -7,7 +8,7 @@ const norm = o => typeof o === 'string' ? { value: o, label: o } : o;
 const text = o => typeof o.label === 'string' || typeof o.label === 'number' ? String(o.label) : String(o.value ?? '');
 const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export function MultiSelect({ label, options = [], value, defaultValue = [], onChange, placeholder = 'Select', size = 'md', variant = 'default', fullWidth = false, maxDisplay = 3, searchable, disabled = false, helperText, error, className, style }) {
+export function MultiSelect({ label, options = [], value, defaultValue = [], onChange, placeholder = 'Select', size = 'md', variant = 'default', fullWidth = false, maxDisplay = 3, searchable, disabled = false, helperText, error, name, required, form, ref: forwardedRef, className, style }) {
   const [open, setOpen] = React.useState(false);
   const [inner, setInner] = React.useState(defaultValue);
   const [q, setQ] = React.useState('');
@@ -16,6 +17,7 @@ export function MultiSelect({ label, options = [], value, defaultValue = [], onC
   const [gone, setGone] = React.useState([]); // removed pills fading out: { o, at }
   const ref = React.useRef(null);
   const combo = React.useRef(null);
+  const comboRef = useMergedRef(combo, forwardedRef);
   const uid = React.useId();
   const listId = uid + 'list', labelId = uid + 'label', hintId = uid + 'hint', sumId = uid + 'sum', optId = i => uid + 'opt' + i;
   const presence = usePresence(open);
@@ -78,7 +80,7 @@ export function MultiSelect({ label, options = [], value, defaultValue = [], onC
       {label && <span id={labelId} className="q-multi-select__label">{label}</span>}
       <div onClick={() => !disabled && (open ? setOpen(false) : show())} className="q-multi-select__field">
         {/* quiet: the focusable combobox is a transparent layer over the field, so the pills' remove buttons are not nested inside it */}
-        <span ref={combo} role="combobox" tabIndex={disabled ? -1 : 0} aria-haspopup="listbox" aria-expanded={open} aria-controls={open || presence.mounted ? listId : undefined}
+        <span ref={comboRef} role="combobox" aria-required={required || undefined} tabIndex={disabled ? -1 : 0} aria-haspopup="listbox" aria-expanded={open} aria-controls={open || presence.mounted ? listId : undefined}
           aria-activedescendant={open && !canSearch && active >= 0 ? optId(active) : undefined} aria-labelledby={label ? labelId : undefined} aria-label={label ? undefined : placeholder}
           aria-describedby={sumId + (error || helperText ? ' ' + hintId : '')} aria-invalid={error ? true : undefined} aria-disabled={disabled || undefined} onKeyDown={key}
           className="q-multi-select__combo" />
@@ -105,6 +107,7 @@ export function MultiSelect({ label, options = [], value, defaultValue = [], onC
         </div>
       </div>}
       {(error || helperText) && <span id={hintId} className={'q-multi-select__hint' + (error ? ' q-multi-select__hint--error' : '')}>{error || helperText}</span>}
+      <FormValues name={name} values={cur} required={required} disabled={disabled} form={form} focusTarget={() => combo.current} />
     </div>
   );
 }

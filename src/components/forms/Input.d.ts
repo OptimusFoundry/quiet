@@ -10,5 +10,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   error?: React.ReactNode;
   /** Render a textarea */
   multiline?: boolean;
+  /** Reaches the native control: the <input>, or the <textarea> when multiline */
+  ref?: React.Ref<HTMLInputElement> | React.Ref<HTMLTextAreaElement>;
 }
 export declare function Input(props: InputProps): JSX.Element;

@@ -20,6 +20,14 @@ export interface MultiSelectProps {
   disabled?: boolean;
   helperText?: React.ReactNode;
   error?: React.ReactNode;
+  /** Submits one hidden input per chosen value (read with FormData.getAll) */
+  name?: string;
+  /** Blocks native submission while empty; also sets aria-required */
+  required?: boolean;
+  /** id of a <form> elsewhere in the document, as on native controls */
+  form?: string;
+  /** Reaches the role="combobox" element, so it can be focused */
+  ref?: React.Ref<HTMLSpanElement>;
   className?: string;
   style?: React.CSSProperties;
 }

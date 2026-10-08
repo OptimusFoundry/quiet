@@ -26,6 +26,8 @@ export interface TextFieldProps {
   className?: string;
   style?: React.CSSProperties;
   inputStyle?: React.CSSProperties;
+  /** Reaches the native <input> */
+  ref?: React.Ref<HTMLInputElement>;
   [key: string]: any;
 }
 export declare function TextField(props: TextFieldProps): JSX.Element;
