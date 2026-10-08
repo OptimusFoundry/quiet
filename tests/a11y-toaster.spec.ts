@@ -18,6 +18,8 @@ test("the region is portalled, themed and a polite live region before any toast"
 	await expect(region(page)).toHaveCount(1);
 	expect(await region(page).evaluate((el) => el.parentElement === document.body)).toBe(true);
 	await expect(region(page)).toHaveAttribute("data-theme", "foundry");
+	// The portal sits outside QuietRoot, so it marks itself quiet-owned to get the scoped base styles.
+	await expect(region(page)).toHaveAttribute("data-quiet", "");
 	await expect(region(page).locator("ol")).toHaveAttribute("aria-live", "polite");
 	await expect(region(page).getByRole("listitem")).toHaveCount(0);
 });
