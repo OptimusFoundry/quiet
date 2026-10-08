@@ -2,7 +2,7 @@
 // (docs/reference/optimus-design), so they can never drift by hand:
 //   src/index.ts                         — one export per component, in ds-loader.js order
 //   src/stories/catalog.generated.jsx    — the App from components/index.html, verbatim
-import { readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const REF = "docs/reference/optimus-design";
 const HEADER =
@@ -10,9 +10,15 @@ const HEADER =
 
 const loader = readFileSync(`${REF}/ds-loader.js`, "utf8");
 const files = JSON.parse(loader.match(/var FILES = (\[[^\]]*\])/)[1]);
+// quiet's own components (not in the reference): src/components/future, from the Claude Design
+// "Future Components" concepts, rebuilt on quiet tokens. Appended after the reference ones.
+const future = readdirSync("src/components/future")
+	.filter((f) => f.endsWith(".jsx"))
+	.map((f) => `future/${f.slice(0, -4)}`)
+	.sort();
 writeFileSync(
 	"src/index.ts",
-	`${HEADER}/// <reference path="./jsx-global.d.ts" />\n${files
+	`${HEADER}/// <reference path="./jsx-global.d.ts" />\n${[...files, ...future]
 		.map((f) => `export * from "./components/${f}";`)
 		.join(
 			"\n",
