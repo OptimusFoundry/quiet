@@ -51,10 +51,11 @@ examples in `docs/reference/optimus-design/components/<group>/<Name>.prompt.md`.
 | a side panel (filters, notifications) | `Drawer` | |
 | anchored content (help, small form) | `Popover` | |
 | a menu of actions | `DropdownMenu` | a Popover with buttons |
+| switch views in place | `Tabs panels={…}`, or `Tabs` + `TabPanel` when the panel sits elsewhere | buttons toggling `display` |
 | a hint on hover/focus | `Tooltip` | `title` attribute |
 | inline message in content | `Alert` | |
 | page-wide message | `Banner` | stacked Alerts |
-| transient feedback | `Toast` | an Alert that disappears |
+| transient feedback | `toast()` into the app's one `Toaster` | an Alert that disappears, a hand-rolled toast stack |
 | progress with a value | `Progress`; on a card's edge → `BorderProgress` | |
 | progress the button itself shows | `HonestButton` | a spinner elsewhere |
 | loading placeholder | `Skeleton` | grey divs |
@@ -75,7 +76,9 @@ rebuild them, wrap them in a different look, or swap in a third-party equivalent
 - `Tabs`, `Accordion`, `Table`, `DataGrid`, `Sidebar`;
 - every chart (no Recharts, Chart.js or d3 components alongside quiet);
 - the chat set (`ChatThread`, `ChatMessage`, `ChatComposer`, …);
-- `Toast` (and the notification centre pattern).
+- `Toaster` / `toast()` (and the notification centre pattern);
+- the mobile nav: `Sidebar mobile="drawer"` + `SidebarTrigger`, not a `Drawer` around a copied nav;
+- links: set `linkComponent` once; don't wrap quiet components in router `<Link>`s.
 
 If a component is missing a feature, add it to quiet (see AGENTS.md and `.claude/skills/`). Don't fork it into the
 product. A component that only one product needs lives in that product's repo, **built on quiet tokens and BEM**.

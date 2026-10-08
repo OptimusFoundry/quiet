@@ -15,8 +15,9 @@ import {
 	SectionHeader,
 	Text,
 	ToolCall,
+	toast,
 } from "../../index";
-import { AppFrame, row, stack, useNarrow, useToast } from "./AppFrame";
+import { AppFrame, row, stack, useNarrow } from "./AppFrame";
 
 // Assistant — a full chat-with-Claude page. The thread and composer take the main column; the side
 // panel holds what the assistant changed (Checkpoints) and the receipt for its last action.
@@ -97,7 +98,6 @@ const uid = () => `t${++seq}`;
 
 function Conversation() {
 	const narrow = useNarrow();
-	const toast = useToast();
 	const [turns, setTurns] = useState<Turn[]>(HISTORY);
 	const [busy, setBusy] = useState(false);
 	const timers = useRef<number[]>([]);
@@ -225,7 +225,6 @@ function Conversation() {
 }
 
 function SidePanel() {
-	const toast = useToast();
 	const [undone, setUndone] = useState<string[]>([]);
 	return (
 		<div style={stack("var(--q-space-section)")}>
@@ -265,7 +264,7 @@ function SidePanel() {
 							undoable: true,
 							undone: undone.includes("draft"),
 						},
-						{ id: "notify", verb: "Told", object: "Leo, the campaign owner", undoable: false },
+						{ id: "notify", verb: "Told", object: "Leo, the campaign owner" },
 					]}
 					onUndo={(line) => setUndone((u) => [...u, String(line.id)])}
 				/>

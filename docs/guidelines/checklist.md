@@ -33,8 +33,10 @@ visual-reviewer agent (`.claude/agents/`) uses this list. Every item should be a
 ## Components
 - [ ] No hand-rolled modal, menu, tooltip, tabs, table, chart, toast or chat UI.
 - [ ] No third-party UI kit or chart library alongside quiet.
-- [ ] Destructive actions follow the reversibility table (Toast + Undo → Dialog → Approval/HoldButton).
-- [ ] Toasts are for the user's own actions and the notification centre for system events.
+- [ ] Destructive actions follow the reversibility table (`toast()` + Undo → Dialog → Approval/HoldButton).
+- [ ] Toasts are for the user's own actions and the notification centre for system events; one `Toaster` per app.
+- [ ] On a phone the nav is `Sidebar mobile="drawer"` opened by `SidebarTrigger`; links route through `linkComponent`.
+- [ ] Status colour comes from `variant`/`status` props or `--q-status-*`, never a raw hue.
 - [ ] Loading, empty, filtered-empty and error states all exist and match `patterns-states--default`.
 
 ## Content

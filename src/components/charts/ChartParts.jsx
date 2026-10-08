@@ -40,10 +40,14 @@ export function ChartTooltip({ x, y, bounds, title, rows }) {
 /** The chart's data as a visually hidden table, for screen readers and copy-out. */
 export function ChartTable({ caption, columns, rows }) {
   return (
-    <table className="q-sr-only">
-      <caption>{caption}</caption>
-      <thead><tr>{columns.map((c, i) => <th key={i} scope="col">{c}</th>)}</tr></thead>
-      <tbody>{rows.map((r, i) => <tr key={i}>{r.map((c, j) => j === 0 ? <th key={j} scope="row">{c}</th> : <td key={j}>{c}</td>)}</tr>)}</tbody>
-    </table>
+    // The wrapper is what hides it: a <table> ignores the 1px box of .q-sr-only and would still
+    // extend the page by its full height.
+    <div className="q-sr-only">
+      <table>
+        <caption>{caption}</caption>
+        <thead><tr>{columns.map((c, i) => <th key={i} scope="col">{c}</th>)}</tr></thead>
+        <tbody>{rows.map((r, i) => <tr key={i}>{r.map((c, j) => j === 0 ? <th key={j} scope="row">{c}</th> : <td key={j}>{c}</td>)}</tr>)}</tbody>
+      </table>
+    </div>
   );
 }

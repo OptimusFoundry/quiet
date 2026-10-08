@@ -76,8 +76,9 @@ function Shell() {
 					<div style={stack("var(--q-space-stack)")}>
 						<SectionHeader size="sm" as="h2" title="On a phone" />
 						<Alert variant="info" title="Under 720px the sidebar leaves the grid.">
-							A Menu button in the top bar opens it in a left drawer, the breadcrumb keeps its last
-							two steps, and Search drops its shortcut hint. Every Col stacks to full width.
+							Sidebar becomes its own drawer (SidebarProvider + SidebarTrigger in the top bar), the
+							breadcrumb keeps only the current page, and Search drops its shortcut hint. Every Col
+							stacks to full width.
 						</Alert>
 						<Text size="sm" color="muted">
 							Two-pane pages (list and detail, chat and its side panel) stack the list above the

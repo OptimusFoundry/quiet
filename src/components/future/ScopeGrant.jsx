@@ -1,4 +1,5 @@
 import React from 'react';
+import { Avatar } from '../core/Avatar';
 import { Button } from '../core/Button';
 import { FilterTabs } from '../data/FilterTabs';
 import { Switch } from '../forms/Switch';
@@ -27,7 +28,7 @@ export function ScopeGrant({ agent, title, caption, scopes = [], value, defaultV
     <section aria-labelledby={uid + 't'} className={['q-scope-grant', className].filter(Boolean).join(' ')} data-granted={granted || undefined} style={style}>
       <header className="q-scope-grant__header">
         <div className="q-scope-grant__who">
-          {agent && <span aria-hidden="true" className="q-scope-grant__agent">{agent}</span>}
+          {agent && <span aria-hidden="true" className="q-scope-grant__agent">{typeof agent === 'string' ? <Avatar name={agent} size="sm" shape="square" /> : agent}</span>}
           <div className="q-scope-grant__heading">
             <h3 id={uid + 't'} className="q-scope-grant__title">{title}</h3>
             {caption && <span className="q-scope-grant__caption">{caption}</span>}

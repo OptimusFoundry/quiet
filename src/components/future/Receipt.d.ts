@@ -10,7 +10,7 @@ export interface ReceiptLine {
   verb?: React.ReactNode;
   /** What it happened to */
   object: React.ReactNode;
-  /** false for effects that can't be taken back on their own */
+  /** Shows an Undo for this line. Off by default: only effects that can really be taken back say so */
   undoable?: boolean;
   /** Controlled: the effect has been undone */
   undone?: boolean;

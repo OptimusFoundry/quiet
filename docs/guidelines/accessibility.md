@@ -29,11 +29,13 @@ plus keyboard and ARIA specs (`tests/`). The app still owns the page.
   (TextField) rather than omitting the label.
 - **Errors:** pass messages through the field's `error` prop so they're tied to the input. After a
   failed submit, move focus to the first invalid field.
-- **Headings:** keep the order h1 → h2 → h3. `SectionHeader` and `PageHero` take `as`, so use it to
-  keep the outline right.
+- **Headings:** keep the order h1 → h2 → h3. `SectionHeader` and `PageHero` take `as`, and
+  `ChatMessage` takes `headingLevel`, so use them to keep the outline right.
+- **Route changes:** with `linkComponent` routing, move focus to the new page's h1 (or `main`) after
+  navigation and update `document.title`. quiet can't do this for you.
 - **Live updates you build yourself:** use one polite live region per surface. Don't announce every token or
   every row.
-- **Time limits:** toasts with actions must stay long enough to reach (errors 6s). Anything that must
+- **Time limits:** toasts with actions must stay long enough to reach; `Toaster` pauses while a toast is hovered or focused, and an error toast should get a longer `duration`. Anything that must
   not be missed goes to the notification centre.
 - **Hit targets:** at least 32px high (`size="sm"`), and never smaller.
 

@@ -19,8 +19,9 @@ import {
 	StatusDot,
 	Table,
 	TextField,
+	toast,
 } from "../../index";
-import { AppFrame, row, stack, useNarrow, useToast } from "./AppFrame";
+import { AppFrame, row, stack, useNarrow } from "./AppFrame";
 
 // Records — the reference kit's list-detail.html: a 360 list pane (search, FilterTabs, selectable
 // List) beside the detail. The detail shows where its numbers come from (LineageChip), how old its
@@ -123,7 +124,6 @@ const signupsFor = (c: (typeof CAMPAIGNS)[number]) =>
 const PAGE = 8;
 
 function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
-	const toast = useToast();
 	const rows = useMemo(() => signupsFor(campaign), [campaign]);
 	const [page, setPage] = useState(1);
 	const [selected, setSelected] = useState<string[]>([]);

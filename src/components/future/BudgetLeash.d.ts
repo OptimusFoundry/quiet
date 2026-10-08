@@ -8,7 +8,10 @@ import * as React from 'react';
 export interface BudgetLeashProps {
   /** The run or agent, e.g. "Meerkat · research run" */
   label: string;
-  /** Mark for the agent (e.g. an Avatar); decorative */
+  /**
+   * Mark for the agent; decorative (the title carries the name). A string renders as a square
+   * Avatar with its initials, e.g. `agent="Meerkat"`; pass a node for anything else.
+   */
   agent?: React.ReactNode;
   spent: number;
   cap: number;

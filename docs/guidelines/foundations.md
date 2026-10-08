@@ -41,25 +41,47 @@ Primary actions are **ink**, not molten.
 `NarratedChart`, molten is series 1, the data the user cares about. Comparison series step through ink then greys
 (`--q-chart-series-1…5`). Labels, values and axes never take a series colour.
 
-### Status without green or red
+### Status: tokens, not hues
 
-The brand defines no green/red. The status language is:
+Status colour comes from the theme through `--q-status-{info,success,warning,error}-{fg,bg,border}`
+(`fg` = glyphs, dots, fills and status text · `bg` = a status surface · `border` = its edge).
+Components read them through their own tier-3 tokens (`--q-alert-<status>-*`, `--q-badge-<status>-*`,
+`--q-toast-*`, `--q-progress-<status>-fill`, Tag `status`, Icon `color`); see
+[DESIGN.md](../../DESIGN.md#product-themes).
+
+In `foundry` and `foundry-dark` the brand has no green or red, so the tokens resolve to ink and
+molten:
 
 | Status | Look | Components |
 |---|---|---|
 | Info | soft hairline + `i` | `Alert variant="info"`, `Banner status="info"` |
-| Success / done | ink + ✓, solid ink dot | `Alert variant="success"`, `Badge variant="success"`, `Toast variant="success"` |
+| Success / done | ink + ✓, solid ink dot | `Alert variant="success"`, `Badge variant="success"`, `toast({ status: "success" })` |
 | Warning | molten hollow dot / molten `!` | `Alert variant="warning"`, `Badge variant="warning"` |
-| Error | molten hairline + molten `!` | `Alert variant="error"`, `Badge variant="error"`, field `error` props |
+| Error | molten hairline + molten `!` | `Alert variant="error"`, `Badge variant="error"`, `toast({ status: "error" })` (announced assertively), field `error` props |
 
-If the `--q-status-*` tokens are present (theme work in progress), style any custom status surface
-with them. Never introduce `#16a34a`-style greens or reds, even "just for this badge".
+| Token set | foundry resolves to |
+|---|---|
+| `--q-status-info-*` | fg `--q-fg-muted`, border `--q-border` |
+| `--q-status-success-*` | fg and border `--q-fg` (ink) |
+| `--q-status-warning-*` | fg `--q-accent`, border `--q-border` |
+| `--q-status-error-*` | fg and border `--q-accent` |
+
+A **product theme may give them real hues** (a green success, a red error) in its own
+`@layer q.themes` block; that is the only place a status hue is ever set. Style any custom status
+surface with `--q-status-*`, use the components' `variant`/`status` props, and never write a raw
+`#16a34a`-style colour in a component or screen, even "just for this badge".
 
 ### Dark mode and product themes
 
 - Themes are `[data-theme]` blocks: `foundry` (default) and `foundry-dark`, plus one per product.
   Set the theme app-wide with `<ThemeProvider>` (it writes `data-theme` on `<html>`), or for a subtree with
   `<QuietRoot theme>`.
+- A product theme lives in the **product's repo**: register it before the first render with
+  `defineThemes({ acme: { label: "Acme", colorScheme: "light" } })`, and style it in `@layer q.themes`
+  (`[data-theme="acme"] { --q-gray-0…900, --q-molten-500, --q-shadow-rgb, --q-status-*, color-scheme }`,
+  repeating quiet's layer order first). An unregistered name falls back to `foundry` and warns once in
+  development. The full contract (must-set and may-set tokens, fonts, density, reduced motion) is
+  [DESIGN.md → Product themes](../../DESIGN.md#product-themes).
 - A product gets its identity from a **theme** (palette, accent, type, shape, density, per-component
   tokens), never from forking components. The rules on this page stay the same in every theme.
 - `QuietRoot accent="…"` swaps the accent for a product. The molten rule still applies to whatever colour

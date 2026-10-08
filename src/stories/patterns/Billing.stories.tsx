@@ -14,8 +14,9 @@ import {
 	SectionHeader,
 	Table,
 	Text,
+	toast,
 } from "../../index";
-import { AppFrame, row, stack, useToast } from "./AppFrame";
+import { AppFrame, row, stack } from "./AppFrame";
 
 // Billing — plan, what agents are spending today, the leash on each agent, and invoices.
 // Money reads in ink; molten appears only where a meter nears its cap.
@@ -23,7 +24,6 @@ import { AppFrame, row, stack, useToast } from "./AppFrame";
 const usd = (v: number) => `$${v.toFixed(2)}`;
 
 function BillingPage() {
-	const toast = useToast();
 	const [cap, setCap] = useState(40);
 	return (
 		<>

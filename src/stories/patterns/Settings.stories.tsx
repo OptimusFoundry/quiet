@@ -5,17 +5,18 @@ import {
 	Button,
 	ButtonGroup,
 	Checkbox,
-	Dropdown,
 	HoldButton,
 	PageHero,
 	ScopeGrant,
 	SectionHeader,
+	Select,
 	Sidebar,
 	Switch,
 	Text,
 	TextField,
+	toast,
 } from "../../index";
-import { AppFrame, row, stack, useNarrow, useToast } from "./AppFrame";
+import { AppFrame, row, stack, useNarrow } from "./AppFrame";
 
 // Settings — the reference kit's settings.html: a 200 sticky section nav + a 640 form column,
 // sections separated by --q-space-section, Switch rows on hairlines, and the danger zone in a
@@ -34,7 +35,6 @@ const section = {
 
 function SettingsPage() {
 	const narrow = useNarrow();
-	const toast = useToast();
 	const [current, setCurrent] = useState("profile");
 	const [deleted, setDeleted] = useState(false);
 	const go = (v: string) => {
@@ -113,14 +113,13 @@ function SettingsPage() {
 							helperText="Campaign reports and invoices go here."
 							required
 						/>
-						<Dropdown
+						<Select
 							size="sm"
-							fullWidth
 							label="Time zone"
 							defaultValue="cet"
 							options={[
-								{ value: "cet", label: "Stockholm · CET", description: "UTC+01:00" },
-								{ value: "est", label: "Ottawa · EST", description: "UTC−05:00" },
+								{ value: "cet", label: "Stockholm · CET (UTC+01:00)" },
+								{ value: "est", label: "Ottawa · EST (UTC−05:00)" },
 								{ value: "utc", label: "UTC" },
 							]}
 						/>
@@ -130,7 +129,7 @@ function SettingsPage() {
 							</Button>
 							<Button
 								size="sm"
-								onClick={() => toast({ variant: "success", title: "Profile saved." })}
+								onClick={() => toast({ status: "success", title: "Profile saved." })}
 							>
 								Save profile
 							</Button>
@@ -249,7 +248,7 @@ function SettingsPage() {
 								onConfirm={() => {
 									setDeleted(true);
 									toast({
-										variant: "error",
+										status: "error",
 										title: "Workspace scheduled for deletion.",
 										description: "Cancel from this page within 7 days.",
 									});

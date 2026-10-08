@@ -15,8 +15,9 @@ import {
 	SectionHeader,
 	Sparkline,
 	StatCard,
+	toast,
 } from "../../index";
-import { AppFrame, stack, useToast } from "./AppFrame";
+import { AppFrame, stack } from "./AppFrame";
 
 // Dashboard — the reference kit's dashboard.html order: PageHero md → Alert → 4 StatCards (span 3)
 // → main column (span 8) + activity (span 4). Molten carries chart data and nothing else.
@@ -41,7 +42,6 @@ const STEPS = [
 ];
 
 function Overview() {
-	const toast = useToast();
 	const [step, setStep] = useState(2);
 	const [status, setStatus] = useState<"running" | "paused" | "stopped" | "done">("running");
 	useEffect(() => {
@@ -67,7 +67,7 @@ function Overview() {
 							size="sm"
 							variant="secondary"
 							onClick={() =>
-								toast({ variant: "success", title: "Invite sent.", meta: "leo@sjocamp.co" })
+								toast({ status: "success", title: "Invite sent.", meta: "leo@sjocamp.co" })
 							}
 						>
 							Invite

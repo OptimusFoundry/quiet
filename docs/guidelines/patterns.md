@@ -13,6 +13,8 @@ something needs attention.
 
 - Do use `StatCard` with `delta`, `trend` and `period` ("vs last 30 days"). The delta carries the
   direction, so there's no need to colour the number.
+- Do put a `Sparkline` (≈160×28) directly **below** its `StatCard` in the same `Col`, stacked at
+  `--q-space-inline`, when the trend matters. StatCard has no chart slot; don't overlay or nest it.
 - Do make the series the user cares about the molten one (series 1), with comparisons such as last
   period in ink.
 - Do limit a dashboard to about four KPIs and two charts above the fold. If more are needed, move them to a
@@ -42,7 +44,8 @@ slices · `DataGrid` for searchable, selectable, paged data, or `Table` for read
 Storybook: `patterns-records--default`.
 
 **Use:** a 360 list pane (`TextField` search with `leftIcon`, `FilterTabs`, `List` with selectable items) and a
-detail pane (`PageHero size="md"`, `Tabs`, `PageTransition` between tabs, `StatCard` span 4,
+detail pane (`PageHero size="md"`, `Tabs` with `panels` (or `TabPanel` when the panel sits away from the
+tabs), `PageTransition` between tabs, `StatCard` span 4,
 `DataGrid`, a form at 640).
 
 - Do keep the selection in the URL so the detail can be deep-linked.
@@ -55,7 +58,8 @@ Storybook: `patterns-settings--default`.
 
 **Use:** a 200 section nav (`Sidebar compact` or a `List` of anchors) and a 640 column ·
 `SectionHeader size="sm"` per section, separated by `--q-space-section` · `TextField`, `TextArea`,
-`Dropdown`, `MultiSelect`, `DatePicker`, `FileUpload`, `Checkbox`, `Radio` · `Switch` rows on
+`Select` (native, `size="sm"`; long or plain lists like time zones), `Dropdown` (options with
+descriptions or icons), `MultiSelect`, `DatePicker`, `FileUpload`, `Checkbox`, `Radio` · `Switch` rows on
 hairlines for preferences · `FormField` to wrap anything custom · a danger zone last.
 
 - Do label every field (`label`), and use `helperText` for format hints and `error` for validation. Validate on
@@ -97,7 +101,7 @@ There are two channels. Never mix them.
 
 | Channel | For | Component | Behaviour |
 |---|---|---|---|
-| Toast | feedback on the user's **own** action ("Saved", "Invite sent") | `Toast` | bottom-right, max 3, auto-dismiss (`duration` 4s; errors 6s), never logged |
+| Toast | feedback on the user's **own** action ("Saved", "Invite sent") | `toast({ title, status, action })` into the shell's one `Toaster` | bottom-right, max 3, auto-dismiss (Toaster `duration`; pass a longer one for errors), never logged |
 | Notification centre | **system** events (build finished, invoice, invite received) | `Drawer size="sm"` + an unread count `Badge` on the top-bar button | persists until read |
 
 - Do give a toast an `action` (e.g. Undo) instead of a confirm dialog when the action is reversible.
@@ -119,7 +123,7 @@ Pick by reversibility:
 
 | Situation | Use |
 |---|---|
-| Reversible (archive, pause, remove from list) | do it immediately, then a `Toast` with an Undo `action`, or `UndoRiver` / `Receipt` for agent work |
+| Reversible (archive, pause, remove from list) | do it immediately, then `toast({ title, action: <Button>Undo</Button> })`, or `UndoRiver` / `Receipt` for agent work |
 | Irreversible, small (delete one draft) | `Button variant="destructive"` → `Dialog size="sm"` stating exactly what is lost |
 | Irreversible, large or many objects (delete workspace, revoke all keys, publish to 4,000 people) | `Approval`: before → after, how far it reaches, undo window, confirmed with `HoldButton` |
 | Single dangerous button in place | `HoldButton` alone |
@@ -159,7 +163,7 @@ Storybook: `patterns-assistant--default`.
 | Cap spend | `BudgetLeash`; report spend with `CostMeter` |
 | Edit suggestions | `DraftDiff` (accept/keep per hunk; Ship stays blocked while any are pending) |
 | History and rollback | `Checkpoints` (agent marks square, human round), `RunScrubber` for a finished run |
-| What was done, undoable | `Receipt`, `UndoRiver` |
+| What was done, undoable | `Receipt` (mark only lines that can really be taken back `undoable: true`; the rest show —), `UndoRiver` |
 | Chat with Claude | `ChatThread` + `ChatMessage` + `ChatComposer`, with `ToolCall`, `CodeBlock`, `Attachment` and `PromptSuggestions` |
 
 - Do wire chat yourself. `ChatComposer` `onSubmit({ text, attachments })` sends to your API, and you
@@ -168,6 +172,8 @@ Storybook: `patterns-assistant--default`.
 - Do render markdown and highlight code before passing them as children. quiet ships no parser or
   highlighter.
 - Do keep the chat column at `--q-w-form` (640). Put run details in a 400 side panel, not inline.
+- Do give the thread a section heading (a visible or `q-sr-only` h2 "Messages") and set
+  `ChatMessage headingLevel` to one below it (default 3), so each turn is a jump target.
 - Do name the agent and the model plainly ("Claude", "Meerkat"). See [content.md](content.md) for
   banned words like "AI-powered".
 - Don't use sparkle icons, gradients or a "magic" colour for AI. AI surfaces look like the rest of the product.

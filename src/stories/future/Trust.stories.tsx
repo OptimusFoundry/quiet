@@ -99,11 +99,11 @@ function ReceiptDemo() {
 			reference="#4f2a"
 			reason="Three campaigns bounced above 5% for two days running."
 			lines={[
-				{ id: "1", verb: "Paused", object: "Spring waitlist" },
-				{ id: "2", verb: "Paused", object: "Founding members" },
-				{ id: "3", verb: "Paused", object: "Beta · EU" },
-				{ id: "4", verb: "Sent", object: "3 owner notices", undoable: false },
-				{ id: "5", verb: "Kept", object: "2,481 signups in place", undoable: false },
+				{ id: "1", verb: "Paused", object: "Spring waitlist", undoable: true },
+				{ id: "2", verb: "Paused", object: "Founding members", undoable: true },
+				{ id: "3", verb: "Paused", object: "Beta · EU", undoable: true },
+				{ id: "4", verb: "Sent", object: "3 owner notices" },
+				{ id: "5", verb: "Kept", object: "2,481 signups in place" },
 			]}
 			footer="Reversible until tomorrow 14:02"
 		/>

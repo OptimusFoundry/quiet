@@ -69,13 +69,15 @@ test.describe("at 390px", () => {
 			expect(overflow).toBeLessThanOrEqual(0);
 		});
 	}
-	test("the sidebar opens from Menu in a drawer", async ({ page }) => {
+	test("the sidebar opens as a drawer from the top bar trigger", async ({ page }) => {
 		await open(page, "dashboard");
-		await page.getByRole("button", { name: "Menu", exact: true }).click();
-		const drawer = page.getByRole("dialog");
+		const trigger = page.getByRole("button", { name: "Open navigation" });
+		await trigger.click();
+		const drawer = page.getByRole("dialog", { name: "Main" });
 		await expect(drawer.getByRole("navigation", { name: "Main" })).toBeVisible();
 		await page.keyboard.press("Escape");
 		await expect(drawer).toBeHidden();
+		await expect(trigger).toBeFocused();
 	});
 });
 

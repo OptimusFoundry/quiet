@@ -20,6 +20,14 @@ Reference screens live in Storybook under **Patterns** (`npm run dev` → :6020)
 `patterns-billing--default`, `patterns-assistant--default`, `patterns-states--default`. Copy their
 structure; change the content.
 
+## Setup in one breath
+
+Install a tagged release from git (`npm install "git+https://github.com/OptimusFoundry/quiet.git#vX.Y.Z"`;
+never a branch), import `@optimusfoundry/quiet/style.css` and, for the foundry fonts, `fonts.css`.
+Wrap the app in `ThemeProvider` (theme on `<html>`, `linkComponent` for your router) and
+`QuietRoot density="app"`, mount one `Toaster`, and register a product theme with `defineThemes` if
+the product has one. Details: the package [README](../../README.md) and the `quiet-app` skill.
+
 ## quiet in ten rules
 
 1. **Density first.** Products render inside `<QuietRoot density="app">` (or `compact` for dense
@@ -29,9 +37,10 @@ structure; change the content.
 3. **Molten is punctuation.** The page-title period, one status dot, a warning mark, the human step.
    It is never a fill, a button or a section. Charts are the one exception: there, molten is the
    primary series.
-4. **No green, no red.** Done/success = ink + ✓. Attention/warning/error = molten (hollow dot,
-   hairline, `!`). Info = soft hairline + i. If `--q-status-*` tokens are present, use them, not
-   ad-hoc colours.
+4. **Status comes from the theme.** Use the components' `variant`/`status` props and the
+   `--q-status-*` tokens, never a raw colour. In foundry there is no green or red: done = ink + ✓,
+   attention/warning/error = molten (hollow dot, hairline, `!`), info = soft hairline + i. A product
+   theme may set real status hues; screens don't change.
 5. **One page title per screen.** `PageHero size="md"` with a molten period. Sections use
    `SectionHeader size="sm"`. Use only the eight type roles: page-title 40, section-title 24, card-title 17,
    metric 40, body-lg 17, body 15, small 13, mono label 11.

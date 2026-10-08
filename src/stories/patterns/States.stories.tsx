@@ -16,8 +16,9 @@ import {
 	StatCard,
 	Table,
 	Text,
+	toast,
 } from "../../index";
-import { AppFrame, row, stack, useToast } from "./AppFrame";
+import { AppFrame, row, stack } from "./AppFrame";
 
 // States — the four states every data surface needs, on one page: loading keeps the layout's
 // shape (Skeleton, Table loading), empty says what will arrive (EmptyState, GhostFuture), error
@@ -149,16 +150,15 @@ function Empty() {
 }
 
 function Failed() {
-	const toast = useToast();
 	const [state, setState] = useState<"error" | "retrying" | "ok">("error");
 	useEffect(() => {
 		if (state !== "retrying") return;
 		const t = setTimeout(() => {
 			setState("ok");
-			toast({ variant: "success", title: "Campaigns loaded." });
+			toast({ status: "success", title: "Campaigns loaded." });
 		}, 1200);
 		return () => clearTimeout(t);
-	}, [state, toast]);
+	}, [state]);
 	return (
 		<section aria-labelledby="error-h" style={stack("var(--q-space-stack)")}>
 			<SectionHeader

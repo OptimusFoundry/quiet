@@ -1,4 +1,5 @@
 import React from 'react';
+import { Avatar } from '../core/Avatar';
 import { Button } from '../core/Button';
 import { FilterTabs } from '../data/FilterTabs';
 import './BudgetLeash.scss';
@@ -21,7 +22,7 @@ export function BudgetLeash({ label, agent, spent = 0, cap, onCapChange, presets
     <section aria-labelledby={uid + 'l'} className={cls} style={{ '--_pct': x + '%', ...style }}>
       <header className="q-budget-leash__header">
         <div className="q-budget-leash__who">
-          {agent && <span aria-hidden="true" className="q-budget-leash__agent">{agent}</span>}
+          {agent && <span aria-hidden="true" className="q-budget-leash__agent">{typeof agent === 'string' ? <Avatar name={agent} size="sm" shape="square" /> : agent}</span>}
           <div className="q-budget-leash__heading">
             <span id={uid + 'l'} className="q-budget-leash__label">{label}</span>
             <span aria-hidden="true" className="q-budget-leash__speed">{speed}{level === 3 && atCap ? ' · ' + atCap : ''}</span>

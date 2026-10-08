@@ -22,11 +22,12 @@ Storybook: `patterns-app-shell--default`.
 | Part | Component | Notes |
 |---|---|---|
 | Root | `QuietRoot density="app"` (or `ThemeProvider` + a `data-density="app"` wrapper) | one density for the shell |
-| Side nav | `Sidebar` with `groups`, `header={<Wordmark size="nav" />}`, account `footer` | 240 wide, `collapsible` to a 64 rail; `breakpoint` auto-collapses. Give `label` if there are two navs. |
-| Top bar | `Breadcrumb` + `Button variant="outline" size="sm"` ×2 + `DropdownMenu` on an `Avatar` | height `--q-h-topbar` (64), soft bottom hairline |
+| Side nav | `SidebarProvider` › `Sidebar mobile="drawer"` with `groups`, `header={<Wordmark size="nav" />}`, account `footer` | 240 wide, `collapsible` to a 64 rail. Below the provider's `breakpoint` it becomes an off-canvas drawer. Give `label` if there are two navs. |
+| Top bar | `SidebarTrigger` (renders only on mobile) + `Breadcrumb` + `Button variant="outline" size="sm"` ×2 + `DropdownMenu` on an `Avatar` | height `--q-h-topbar` (64), soft bottom hairline |
 | Search | `CommandPalette` (⌘K via `hotkey`) | one per app, mounted in the shell |
 | Notifications | `Drawer size="sm"` notification centre | system events persist here; see [patterns.md](patterns.md#notifications-and-toasts) |
-| Toasts | `Toast`, bottom-right, max 3 | feedback on the user's own action only |
+| Toasts | one `<Toaster position="bottom-right" max={3} />` in the shell; raise with `toast()` | feedback on the user's own action only |
+| Links | `linkComponent` on `ThemeProvider` / `QuietRoot` | every quiet `href` goes through your router |
 | Main | `<main>` landmark, scrolls independently | one per page |
 
 Marketing pages use `NavBar` instead of `Sidebar`. Never put both on one screen.
@@ -86,8 +87,11 @@ Reading text never exceeds `--q-w-content`, and forms never exceed `--q-w-form`.
 
 ## Responsive and mobile
 
-- Below the `Sidebar` `breakpoint` it collapses to the 64 rail. On phones, hide it behind a
-  top-bar button that opens the same nav in a `Drawer side="left"`.
+- Wrap the shell in `SidebarProvider breakpoint={720}` and give `Sidebar` `mobile="drawer"`. Below
+  the breakpoint the Sidebar leaves the layout and opens as an off-canvas drawer from the
+  `SidebarTrigger` in the top bar (focus trap, Escape, focus back to the trigger; picking an item
+  closes it). Use `useSidebar().isMobile` to drop the sidebar column from your grid. Never hand-wire a
+  `Drawer` around a second copy of the nav. Outside a provider, `breakpoint` collapses to the 64 rail instead.
 - List-detail becomes two routes on small screens: the list, then the detail with a Breadcrumb back.
   Never squeeze both panes side by side under 720px.
 - Tables: keep `Table`/`DataGrid` scrolling horizontally inside their card (`minWidth`). Don't
