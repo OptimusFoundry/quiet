@@ -1,4 +1,5 @@
 import type { Decorator, Preview } from "@storybook/react-vite";
+import "../src/styles/fonts.css";
 import { QuietRoot } from "../src/QuietRoot";
 import { defaultTheme, type ThemeName, themeNames, themes } from "../src/styles/themes/themes";
 

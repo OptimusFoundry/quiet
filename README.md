@@ -5,17 +5,37 @@ The Optimus Foundry "Soft" design system from Claude Design, as a React package 
 plus a derived dark mode and a swappable accent. See [DESIGN.md](DESIGN.md) and
 [AGENTS.md](AGENTS.md).
 
+## Install
+
+quiet is not on a registry. Install a tagged release from git and pin the tag:
+
+```bash
+npm install "git+https://github.com/OptimusFoundry/quiet.git#v0.2.0"
+```
+
+`dist/` is not committed; npm runs the `prepare` script (`npm run build`) when it installs from git.
+The repo is public, so installs need no credentials, locally or in CI.
+
 ## Use
 
 ```tsx
 import { QuietRoot, Button, Headline } from "@optimusfoundry/quiet";
 import "@optimusfoundry/quiet/style.css";
+import "@optimusfoundry/quiet/fonts.css";
 
-<QuietRoot mode="light" density="app">
+<QuietRoot theme="foundry" density="app">
 	<Headline size="h2" lead="Heavy software," accent="quietly made" />
 	<Button arrow>Start a project</Button>
 </QuietRoot>;
 ```
+
+| Import | What it loads |
+|---|---|
+| `@optimusfoundry/quiet/style.css` | Tokens, themes, base and component styles. No fonts |
+| `@optimusfoundry/quiet/fonts.css` | The brand fonts, Inter Tight and JetBrains Mono, from Google Fonts |
+
+Import `fonts.css` when you use the `foundry` themes. A product whose theme sets other fonts
+(`--q-font-sans`, `--q-font-mono`) skips it and loads its own.
 
 ## Develop
 
@@ -25,5 +45,21 @@ npm run gen        # regenerate src/index.ts + the catalog from docs/reference/o
 npm run lint       # Biome (copied files are excluded)
 npm run typecheck
 npm run build
+npm run check:package  # what a git-tag install ships: exports, layer order, fonts, .d.ts
 npm run test       # pixel parity with the reference master page + dark-mode smoke
 ```
+
+## Release
+
+1. Bump `version` in `package.json` (semver) and run `npm install --package-lock-only` so the
+   lockfile matches.
+2. Add an entry for the version at the top of [CHANGELOG.md](CHANGELOG.md).
+3. Merge to `main`, then tag the merge commit and push the tag:
+
+   ```bash
+   git tag v0.2.0
+   git push origin v0.2.0
+   ```
+
+Consumers move to the new version by changing the `#vX.Y.Z` in their dependency. Nothing is
+published; the tag is the release. Never move a pushed tag; cut a new patch version instead.
