@@ -1,7 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const story = (id: string, mode = "light") => `/iframe.html?id=${id}&viewMode=story&globals=mode:${mode}`;
+const story = (id: string, mode = "light") =>
+	`/iframe.html?id=${id}&viewMode=story&globals=mode:${mode}`;
 
 for (const mode of ["light", "dark"]) {
 	test(`gallery has no axe violations (${mode})`, async ({ page }) => {
