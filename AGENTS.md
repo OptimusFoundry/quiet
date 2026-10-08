@@ -79,6 +79,11 @@ on quiet tokens + BEM with full keyboard/ARIA. Parity and drift don't apply to t
 exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…),
 tests: `tests/future-<set>.spec.ts`. Quiet has no green/red: done is ink, attention is molten.
 
+Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts molten is the primary data
+colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `src/components/chat/`
+(AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
+inside; the product wires it to Claude). Stories: Charts, Chat; tests `charts.spec.ts`, `chat.spec.ts`.
+
 ## quiet's own code
 
 `src/QuietRoot.tsx`, `src/a11y/`, `src/styles/quiet-*.css`, `src/jsx-global.d.ts`, `scripts/`,
