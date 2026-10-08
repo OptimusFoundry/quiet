@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { CSSProperties } from "react";
 import { BarChart } from "../../components/charts/BarChart";
 import { DonutChart } from "../../components/charts/DonutChart";
 import { LineChart } from "../../components/charts/LineChart";
 import { NarratedChart } from "../../components/charts/NarratedChart";
 import { Sparkline } from "../../components/charts/Sparkline";
 import { Concept, FuturePage, Spec } from "./Concept";
+import "./Charts.scss";
 
 // quiet's chart set: hand-rolled SVG, molten carries the data (series 1), ink and greys compare.
 // Narrated chart is Future concept 21, rebuilt on quiet.
@@ -19,35 +19,6 @@ const LAST_MONTH = [
 ];
 const usd = (v: number) => `$${v >= 1000 ? `${(v / 1000).toFixed(1).replace(/\.0$/, "")}k` : v}`;
 
-const kpi: CSSProperties = {
-	display: "grid",
-	gap: 6,
-	minWidth: 200,
-	padding: "16px 20px",
-	border: "1px solid var(--q-border)",
-	borderRadius: "var(--q-radius-md)",
-};
-const kpiLabel: CSSProperties = {
-	fontFamily: "var(--q-font-mono)",
-	fontSize: "var(--q-text-3xs)",
-	letterSpacing: "var(--q-tracking-mono)",
-	textTransform: "uppercase",
-	color: "var(--q-fg-muted)",
-};
-const kpiRow: CSSProperties = {
-	display: "flex",
-	alignItems: "flex-end",
-	justifyContent: "space-between",
-	gap: 16,
-};
-const kpiValue: CSSProperties = {
-	fontSize: "var(--q-text-2xl)",
-	fontWeight: 700,
-	letterSpacing: "var(--q-tracking-tight)",
-	lineHeight: 1,
-	fontVariantNumeric: "tabular-nums",
-};
-
 function Kpi({
 	label,
 	value,
@@ -60,10 +31,10 @@ function Kpi({
 	tone?: "accent" | "ink";
 }) {
 	return (
-		<div style={kpi}>
-			<span style={kpiLabel}>{label}</span>
-			<div style={kpiRow}>
-				<span style={kpiValue}>{value}</span>
+		<div className="q-sb-charts__kpi">
+			<span className="q-sb-charts__kpi-label">{label}</span>
+			<div className="q-sb-charts__kpi-row">
+				<span className="q-sb-charts__kpi-value">{value}</span>
 				<Sparkline data={data} tone={tone} aria-label={`${label}, last 24 days`} />
 			</div>
 		</div>
@@ -94,14 +65,7 @@ function Charts() {
 					<Kpi label="MRR" value="$13.2k" data={[9.1, 9.4, 10.2, 10.8, 11.5, 12.1, 12.6, 13.2]} />
 				</Spec>
 				<Spec label="Inline">
-					<span
-						style={{
-							display: "inline-flex",
-							alignItems: "center",
-							gap: 8,
-							fontSize: "var(--q-text-sm)",
-						}}
-					>
+					<span className="q-sb-charts__inline">
 						Signups this week{" "}
 						<Sparkline
 							data={SIGNUPS.slice(-7)}
@@ -109,7 +73,7 @@ function Charts() {
 							height={16}
 							aria-label="Signups this week"
 						/>
-						<strong style={{ fontWeight: 600 }}>+12%</strong>
+						<strong className="q-sb-charts__strong">+12%</strong>
 					</span>
 				</Spec>
 			</Concept>

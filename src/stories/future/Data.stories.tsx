@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/core/Button";
 import { Table } from "../../components/data/Table";
 import { Switch } from "../../components/forms/Switch";
@@ -8,12 +8,11 @@ import { StreamingTable } from "../../components/future/StreamingTable";
 import { ThresholdHandles } from "../../components/future/ThresholdHandles";
 import { UncertaintyCell } from "../../components/future/UncertaintyCell";
 import { Concept, FuturePage, Spec } from "./Concept";
+import "./Data.scss";
 
 // Future components, data set — from the Claude Design "Future Components IV" concepts
 // (115 Anomaly ribbon, 117 Streaming table, 121 Threshold handles, 123 Uncertainty cells),
 // rebuilt on quiet tokens. Demo data lives here, never in the components.
-const wide: CSSProperties = { display: "grid", gap: 16, width: "100%", maxWidth: 640 };
-
 const FIGURES = [
 	{ id: "waitlist", name: "Spring waitlist", value: 4812 },
 	{ id: "forecast", name: "Forecast · Oct", value: 5400, error: 620 },
@@ -24,7 +23,7 @@ const FIGURES = [
 function UncertaintyDemo() {
 	const [bands, setBands] = useState(true);
 	return (
-		<div style={wide}>
+		<div className="q-sb-data">
 			<Switch label="Show bands" checked={bands} onChange={setBands} />
 			<Table
 				label="Signups, measured and forecast"
@@ -97,8 +96,8 @@ function StreamDemo() {
 		return () => clearInterval(t);
 	});
 	return (
-		<div style={wide}>
-			<div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+		<div className="q-sb-data">
+			<div className="q-sb-data__controls">
 				<Button size="sm" variant="secondary" onClick={arrive}>
 					A signup arrives
 				</Button>
@@ -135,7 +134,7 @@ function DataPage() {
 				idea="A thin ribbon along any series marks where the model found something it didn't expect. You don't scan for the needle; the ribbon hands it to you, and choosing a mark takes you there."
 			>
 				<Spec label="Series" col>
-					<div style={wide}>
+					<div className="q-sb-data">
 						<AnomalyRibbon
 							label="Signup anomalies"
 							data={SIGNUPS}
@@ -164,7 +163,7 @@ function DataPage() {
 				idea="Alert thresholds are lines you drag on the chart itself, and the count of historical firings updates as you move them. You set sensitivity by feel, with the false positives in view."
 			>
 				<Spec label="Band" col>
-					<div style={wide}>
+					<div className="q-sb-data">
 						<ThresholdHandles
 							label="Bounce rate · alert band"
 							data={BOUNCE}
@@ -176,7 +175,7 @@ function DataPage() {
 					</div>
 				</Spec>
 				<Spec label="High only" col>
-					<div style={wide}>
+					<div className="q-sb-data">
 						<ThresholdHandles
 							label="Spend per day"
 							data={BOUNCE.map((v) => Math.round(v * 9))}

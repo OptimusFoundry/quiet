@@ -1,0 +1,67 @@
+// Guidelines/Grid specimens (Grid.stories.tsx).
+
+.q-sb-grid {
+	&__cell {
+		height: var(--q-space-5);
+		display: flex;
+		align-items: center;
+		padding-left: var(--q-space-1);
+		border: var(--q-hairline) solid var(--q-fg);
+		border-radius: var(--q-radius-sm);
+		background: var(--q-bg);
+		box-sizing: border-box;
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	&__cell-label {
+		color: var(--q-fg);
+	}
+
+	// The 12 columns behind a grid, using the same gap so the cells line up with them.
+	&__columns {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: var(--q-space-3);
+	}
+
+	&__column {
+		background: var(--q-bg-subtle);
+		border-radius: var(--q-radius-xs);
+	}
+
+	&__split {
+		display: grid;
+		gap: var(--q-space-1);
+	}
+
+	&__split-stage,
+	&__split-grid {
+		position: relative;
+	}
+
+	// --_w is the frame's nominal width in px.
+	&__frame {
+		display: grid;
+		gap: var(--q-space-1);
+		width: min(var(--_w), 100%);
+	}
+
+	&__splits {
+		display: grid;
+		gap: var(--q-space-3);
+	}
+
+	&__frames {
+		display: grid;
+		gap: var(--q-space-4);
+	}
+
+	&__panes {
+		display: grid;
+		gap: var(--q-space-1);
+		overflow: hidden;
+	}
+}

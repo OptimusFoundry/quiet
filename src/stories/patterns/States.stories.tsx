@@ -18,7 +18,7 @@ import {
 	Text,
 	toast,
 } from "../../index";
-import { AppFrame, row, stack } from "./AppFrame";
+import { AppFrame } from "./AppFrame";
 
 // States — the four states every data surface needs, on one page: loading keeps the layout's
 // shape (Skeleton, Table loading), empty says what will arrive (EmptyState, GhostFuture), error
@@ -44,7 +44,10 @@ function Loading() {
 		return () => clearTimeout(t);
 	}, [loading]);
 	return (
-		<section aria-labelledby="loading-h" style={stack("var(--q-space-stack)")}>
+		<section
+			aria-labelledby="loading-h"
+			className="q-sb-app-frame__stack q-sb-app-frame__stack--stack"
+		>
 			<SectionHeader
 				size="sm"
 				as="h2"
@@ -85,7 +88,10 @@ function Loading() {
 function Empty() {
 	const [rows, setRows] = useState<string[]>([]);
 	return (
-		<section aria-labelledby="empty-h" style={stack("var(--q-space-stack)")}>
+		<section
+			aria-labelledby="empty-h"
+			className="q-sb-app-frame__stack q-sb-app-frame__stack--stack"
+		>
 			<SectionHeader
 				size="sm"
 				as="h2"
@@ -107,7 +113,7 @@ function Empty() {
 					/>
 				</Col>
 				<Col span={6}>
-					<div style={stack("var(--q-space-stack)")}>
+					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 						<GhostFuture
 							caption="Dashed rows are what the first fortnight looked like for 40 similar waitlists. They fold away as real signups arrive."
 							ghosts={[
@@ -128,7 +134,7 @@ function Empty() {
 								/>
 							)}
 						</GhostFuture>
-						<div style={row()}>
+						<div className="q-sb-app-frame__row">
 							<Button
 								size="sm"
 								variant="secondary"
@@ -160,7 +166,10 @@ function Failed() {
 		return () => clearTimeout(t);
 	}, [state]);
 	return (
-		<section aria-labelledby="error-h" style={stack("var(--q-space-stack)")}>
+		<section
+			aria-labelledby="error-h"
+			className="q-sb-app-frame__stack q-sb-app-frame__stack--stack"
+		>
 			<SectionHeader
 				size="sm"
 				as="h2"
@@ -193,7 +202,10 @@ function Failed() {
 
 function Partial() {
 	return (
-		<section aria-labelledby="offline-h" style={stack("var(--q-space-stack)")}>
+		<section
+			aria-labelledby="offline-h"
+			className="q-sb-app-frame__stack q-sb-app-frame__stack--stack"
+		>
 			<SectionHeader
 				size="sm"
 				as="h2"
@@ -205,7 +217,7 @@ function Partial() {
 			</Banner>
 			<Grid columns={12} gap="md">
 				<Col span={6}>
-					<div style={stack("var(--q-space-inline)")}>
+					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--inline">
 						<StatCard label="Verified signups" value="4,812" period="as of 11:40" />
 						<div>
 							<DecayingBadge checkedAt={NOW - 20 * 60_000} now={NOW}>
@@ -215,7 +227,7 @@ function Partial() {
 					</div>
 				</Col>
 				<Col span={6}>
-					<div style={stack("var(--q-space-inline)")}>
+					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--inline">
 						<StatCard label="Bounce rate" value="—" period="not loaded" />
 						<Text size="sm" color="muted">
 							The analytics service didn't answer. Signups above are still current.
@@ -235,7 +247,7 @@ export const Default: StoryObj = {
 			<PageHero
 				size="md"
 				ruled={false}
-				style={{ padding: 0 }}
+				className="q-sb-app-frame__hero"
 				title="States"
 				description="Loading, empty, error, and offline — the same four on every list, card and chart."
 			/>

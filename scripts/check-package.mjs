@@ -35,6 +35,11 @@ for (const family of ["Inter+Tight", "JetBrains+Mono"]) {
 	check(fonts.includes(`family=${family}`), `dist/fonts.css does not load ${family}`);
 }
 
+check(
+	readFileSync("dist/tokens.json", "utf8") ===
+		readFileSync("src/styles/tokens.generated.json", "utf8"),
+	"dist/tokens.json (for quiet/known-tokens) is not the current token list",
+);
 check(shipped.has("dist/components/core/Button.d.ts"), "component declarations are not shipped");
 
 if (failures.length) {

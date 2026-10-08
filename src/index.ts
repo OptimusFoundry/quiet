@@ -110,3 +110,4 @@ export { QuietRoot, type QuietRootProps } from "./QuietRoot";
 export { applyTheme, type BuiltInTheme, defaultTheme, defineThemes, getTheme, resolveTheme, type ThemeDefinition, type ThemeName, themeNames, themes } from "./styles/themes/themes";
 export { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";
 export { type LinkComponent, type LinkComponentProps, useLinkComponent } from "./lib/link";
+export { cssVar, type TokenName } from "./styles/tokens.generated";

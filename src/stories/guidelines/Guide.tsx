@@ -7,22 +7,24 @@ import {
 	useState,
 } from "react";
 import { FilterTabs, Text } from "../../index";
+import { cssVar, type TokenName } from "../../styles/tokens.generated";
+import "./Guide.scss";
 
 // Story-only helpers for the Guidelines specimens (docs/guidelines/*). Measurements are read from
 // the live tokens with getComputedStyle, so they follow density and theme. Molten marks redlines only.
 
 export type Density = "app" | "compact" | "marketing";
 
-const mono: CSSProperties = {
-	fontFamily: "var(--q-font-mono)",
-	fontSize: "var(--q-text-2xs)",
-	letterSpacing: "var(--q-tracking-mono)",
-	textTransform: "uppercase",
-	color: "var(--q-fg-muted)",
-};
+/** Panel and well containers for specimens: add to a `className`. */
+export const panel = "q-sb-guide__panel";
+export const well = "q-sb-guide__well";
 
-export function Mono({ children, style }: { children: ReactNode; style?: CSSProperties }) {
-	return <span style={{ ...mono, ...style }}>{children}</span>;
+export function Mono({ children, className }: { children: ReactNode; className?: string }) {
+	return (
+		<span className={className ? `q-sb-guide__mono ${className}` : "q-sb-guide__mono"}>
+			{children}
+		</span>
+	);
 }
 
 /** Live px size of an element (follows density and theme via ResizeObserver). */
@@ -42,7 +44,7 @@ export function useSize(ref: RefObject<HTMLElement | null>, axis: "width" | "hei
 }
 
 /** A custom property resolved on `ref` (re-read every render, so it follows density changes). */
-export function useVar(ref: RefObject<HTMLElement | null>, name: string) {
+export function useVar(ref: RefObject<HTMLElement | null>, name: TokenName) {
 	const [value, setValue] = useState("");
 	useLayoutEffect(() => {
 		const el = ref.current;
@@ -63,28 +65,14 @@ export function GuidePage({
 	children: ReactNode;
 }) {
 	return (
-		<main
-			aria-label={title}
-			style={{
-				maxWidth: "var(--q-w-max)",
-				margin: "0 auto",
-				padding: "var(--q-space-6) var(--q-space-page-x) var(--q-space-12)",
-				boxSizing: "border-box",
-				background: "var(--q-bg)",
-				color: "var(--q-fg-body)",
-				fontFamily: "var(--q-font-sans)",
-				display: "grid",
-				gap: "var(--q-space-6)",
-				minWidth: 0,
-			}}
-		>
-			<header style={{ display: "grid", gap: "var(--q-space-2)" }}>
+		<main aria-label={title} className="q-sb-guide">
+			<header className="q-sb-guide__header">
 				<Mono>Guidelines · docs/guidelines/{doc}</Mono>
 				<Text as="h1" heading={2}>
 					{title}
-					<span style={{ color: "var(--q-accent)" }}>.</span>
+					<span className="q-sb-guide__accent">.</span>
 				</Text>
-				<Text size="lg" color="muted" style={{ maxWidth: "var(--q-w-form)" }}>
+				<Text size="lg" color="muted" className="q-sb-guide__intro">
 					{intro}
 				</Text>
 			</header>
@@ -106,25 +94,9 @@ export function Part({
 	aside?: ReactNode;
 }) {
 	return (
-		<section
-			style={{
-				display: "grid",
-				gap: "var(--q-space-3)",
-				paddingTop: "var(--q-space-2)",
-				borderTop: "var(--q-hairline) solid var(--q-fg)",
-				minWidth: 0,
-			}}
-		>
-			<div
-				style={{
-					display: "flex",
-					flexWrap: "wrap",
-					justifyContent: "space-between",
-					alignItems: "flex-start",
-					gap: "var(--q-space-2)",
-				}}
-			>
-				<div style={{ display: "grid", gap: "var(--q-space-1)", maxWidth: "var(--q-w-form)" }}>
+		<section className="q-sb-guide__part">
+			<div className="q-sb-guide__part-head">
+				<div className="q-sb-guide__part-title">
 					<Text as="h2" heading={4}>
 						{title}
 					</Text>
@@ -166,25 +138,12 @@ export function DensitySwitch({
 }
 
 /** A vertical redline: renders the gap `token` itself, with molten end ticks and its live px. */
-export function Gap({ token, note }: { token: string; note?: string }) {
+export function Gap({ token, note }: { token: TokenName; note?: string }) {
 	const ref = useRef<HTMLDivElement>(null);
 	const px = useSize(ref, "height");
 	return (
-		<div
-			ref={ref}
-			style={{
-				position: "relative",
-				height: `var(${token})`,
-				borderTop: "var(--q-hairline) dashed var(--q-accent)",
-				borderBottom: "var(--q-hairline) dashed var(--q-accent)",
-				boxSizing: "border-box",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "flex-end",
-				minHeight: "var(--q-space-1)",
-			}}
-		>
-			<Mono style={{ background: "var(--q-bg)", paddingLeft: "var(--q-space-1)", lineHeight: 1 }}>
+		<div ref={ref} className="q-sb-guide__gap" style={{ "--_h": cssVar(token) } as CSSProperties}>
+			<Mono className="q-sb-guide__gap-label">
 				{token} · {px}
 				{note ? ` · ${note}` : ""}
 			</Mono>
@@ -193,24 +152,16 @@ export function Gap({ token, note }: { token: string; note?: string }) {
 }
 
 /** A horizontal redline used beside or inside a box: shows a padding/width token. */
-export function Span({ token, label }: { token: string; label?: string }) {
+export function Span({ token, label }: { token: TokenName; label?: string }) {
 	const ref = useRef<HTMLSpanElement>(null);
 	const px = useSize(ref, "width");
 	return (
-		<span style={{ display: "inline-flex", alignItems: "center", gap: "var(--q-space-1)" }}>
+		<span className="q-sb-guide__span">
 			<span
 				ref={ref}
 				aria-hidden="true"
-				style={{
-					width: `var(${token})`,
-					height: "var(--q-space-1)",
-					borderLeft: "var(--q-hairline) solid var(--q-accent)",
-					borderRight: "var(--q-hairline) solid var(--q-accent)",
-					background:
-						"linear-gradient(var(--q-accent), var(--q-accent)) center / 100% var(--q-hairline) no-repeat",
-					boxSizing: "border-box",
-					flex: "none",
-				}}
+				className="q-sb-guide__span-bar"
+				style={{ "--_w": cssVar(token) } as CSSProperties}
 			/>
 			<Mono>
 				{label ?? token} · {px}
@@ -218,21 +169,3 @@ export function Span({ token, label }: { token: string; label?: string }) {
 		</span>
 	);
 }
-
-export const panel: CSSProperties = {
-	display: "grid",
-	gap: "var(--q-space-stack)",
-	padding: "var(--q-space-card-pad)",
-	border: "var(--q-hairline) solid var(--q-border)",
-	borderRadius: "var(--q-radius-lg)",
-	minWidth: 0,
-};
-
-export const well: CSSProperties = {
-	display: "grid",
-	gap: "var(--q-space-stack)",
-	padding: "var(--q-space-card-pad)",
-	background: "var(--q-bg-subtle)",
-	borderRadius: "var(--q-radius-lg)",
-	minWidth: 0,
-};

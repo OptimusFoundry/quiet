@@ -1,0 +1,53 @@
+// Guidelines/Spacing specimens (Spacing.stories.tsx). Loaded after Guide.scss, so the
+// modifiers here win over the shared panel.
+
+.q-sb-spacing {
+	display: contents;
+
+	&__list {
+		display: grid;
+		gap: var(--q-space-1);
+	}
+
+	&__bar {
+		display: grid;
+		grid-template-columns: minmax(0, 200px) 40px minmax(0, 1fr);
+		align-items: center;
+		gap: var(--q-space-2);
+	}
+
+	&__bar-label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&__bar-value {
+		font-variant-numeric: tabular-nums;
+		text-align: right;
+	}
+
+	// --_w is the token the bar measures.
+	&__bar-fill {
+		width: var(--_w);
+		max-width: 100%;
+		height: var(--q-space-1);
+		background: var(--q-fg);
+		border-radius: var(--q-radius-pill);
+	}
+
+	&__redlines {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+		gap: var(--q-space-4);
+		align-items: start;
+	}
+
+	&__panel {
+		gap: 0;
+	}
+
+	&__actions {
+		display: flex;
+		gap: var(--q-space-inline);
+	}
+}

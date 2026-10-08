@@ -9,6 +9,7 @@ import {
 	SidebarTrigger,
 	useSidebar,
 } from "../components/navigation/Sidebar";
+import "./Sidebar.scss";
 
 const GROUPS = [
 	{
@@ -40,7 +41,7 @@ function AppShell() {
 	const [page, setPage] = useState("Overview");
 	return (
 		<SidebarProvider>
-			<div style={{ display: "flex", minHeight: "100vh" }}>
+			<div className="q-sb-sidebar">
 				<Sidebar
 					collapsible
 					header={<Wordmark size="nav" />}
@@ -49,7 +50,7 @@ function AppShell() {
 					onChange={setPage}
 					groups={GROUPS}
 					footer={
-						<div style={{ display: "flex", gap: 12, alignItems: "center", padding: "0 12px" }}>
+						<div className="q-sb-sidebar__user">
 							<Avatar name="Ada Lovelace" size="sm" />
 							<Text size="sm" color="heading">
 								Ada Lovelace
@@ -57,22 +58,14 @@ function AppShell() {
 						</div>
 					}
 				/>
-				<div style={{ flex: 1, minWidth: 0 }}>
-					<header
-						style={{
-							display: "flex",
-							alignItems: "center",
-							gap: 12,
-							padding: "12px 16px",
-							borderBottom: "1px solid var(--q-border)",
-						}}
-					>
+				<div className="q-sb-sidebar__content">
+					<header className="q-sb-sidebar__header">
 						<SidebarTrigger />
 						<Text size="sm" color="heading">
 							Anvil
 						</Text>
 					</header>
-					<main style={{ padding: 24, display: "grid", gap: 12 }}>
+					<main className="q-sb-sidebar__main">
 						<Text as="h1" size="lg" color="heading">
 							<span data-testid="current-page">{page}</span>
 						</Text>

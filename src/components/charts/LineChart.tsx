@@ -11,6 +11,7 @@ import {
 	useWidth,
 	valueDomain,
 } from "./chart-utils";
+import "./chart.scss";
 import "./LineChart.scss";
 
 /**

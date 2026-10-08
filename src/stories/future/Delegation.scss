@@ -1,0 +1,15 @@
+// Layout for the Future/Delegation story.
+.q-sb-delegation {
+	display: grid;
+	gap: 16px;
+	width: 100%;
+
+	&--tight {
+		gap: 12px;
+	}
+
+	&__actions {
+		display: flex;
+		gap: 8px;
+	}
+}

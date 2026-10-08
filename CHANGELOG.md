@@ -4,7 +4,24 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 ## Unreleased
 
+### Added
+
+- **Token names are checked.** A renamed, removed or misspelled `--q-*` token used to fail
+  silently (an unset style); now it fails a check, in quiet and in apps:
+  - `TokenName` (every token quiet declares) and `cssVar("--q-space-stack")`, exported for TS.
+  - `@optimusfoundry/quiet/stylelint`: the `quiet/known-tokens` rule for an app's CSS/SCSS. It reports
+    any `var(--q-…)` quiet doesn't declare, and any `--q-*` the app invents. The list ships as
+    `@optimusfoundry/quiet/tokens.json`.
+  - quiet's own `npm run lint` runs `scripts/check-tokens.mjs` (every `--q-*` in TS declared, none
+    built from a prefix, every `--_local` read by its stylesheet) and the Stylelint rule on its SCSS.
+- Stories style with BEM stylesheets (`q-sb-*`) instead of inline styles, so the pattern screens
+  read as the CSS a product would write.
+
 ### Changed
+
+- Charts import the shared `chart.scss` directly (ChartParts included) instead of `@use`-ing it
+  from each chart stylesheet; one source copy, ~0.7 kB less CSS.
+- RunScrubber no longer sets an unused `--_n`.
 
 - **Every component is TypeScript.** `src/components/**` is typed `.tsx` (strict,
   `noUncheckedIndexedAccess`); each props interface lives next to its component and the shipped

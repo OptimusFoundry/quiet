@@ -1,0 +1,47 @@
+// Assistant — conversation beside a detail panel, filling the viewport under the top bar.
+
+.q-sb-assistant {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) var(--q-w-detail-panel);
+	height: calc(100vh - var(--q-h-topbar));
+
+	// Under 720px the panel moves into a Drawer.
+	&--narrow {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	&__conversation {
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr);
+		gap: var(--q-space-stack);
+		padding: var(--q-space-stack) var(--q-space-page-x);
+		min-height: 0;
+		min-width: 0;
+	}
+
+	&__header {
+		justify-content: space-between;
+	}
+
+	&__column {
+		width: 100%;
+		max-width: var(--q-w-content);
+		margin: 0 auto;
+		min-height: 0;
+	}
+
+	// Thread scrolls; the composer stays at the bottom.
+	&__chat {
+		display: grid;
+		grid-template-rows: minmax(0, 1fr) auto;
+		gap: var(--q-space-stack);
+		min-height: 0;
+		height: 100%;
+	}
+
+	&__panel {
+		padding: var(--q-space-block) var(--q-space-card-pad);
+		border-left: var(--q-hairline) solid var(--q-border);
+		overflow-y: auto;
+	}
+}

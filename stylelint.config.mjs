@@ -12,8 +12,11 @@ const TOKENISED = [
 
 export default {
 	extends: ["stylelint-config-standard-scss"],
-	plugins: ["stylelint-declaration-strict-value"],
+	// quiet/known-tokens is the rule quiet ships to apps (stylelint/index.mjs); here it checks that every
+	// var(--q-…) in quiet's own SCSS is declared somewhere. Definitions are quiet's to make.
+	plugins: ["stylelint-declaration-strict-value", "./stylelint/index.mjs"],
 	rules: {
+		"quiet/known-tokens": [true, { definitions: false }],
 		"selector-class-pattern": [BEM, { message: (s) => `"${s}" must be BEM: q-block__element--modifier` }],
 		"scale-unlimited/declaration-strict-value": [
 			TOKENISED,
@@ -33,6 +36,12 @@ export default {
 		"comment-empty-line-before": null,
 	},
 	overrides: [
+		{
+			// Story stylesheets (src/stories/**, blocks q-sb-*) lay out demos and guideline specimens;
+			// they may use raw values where no token fits, as the inline styles they replaced did.
+			files: ["src/stories/**"],
+			rules: { "scale-unlimited/declaration-strict-value": null },
+		},
 		{
 			// Token, theme and compat files define values (and the compat file keeps the reference names).
 			files: ["src/styles/tokens/**", "src/styles/themes/**"],

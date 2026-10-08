@@ -1,0 +1,73 @@
+// Settings — a sticky section nav beside one form column; Switch rows on hairlines and the
+// danger zone in an accent hairline box.
+
+.q-sb-settings {
+	display: grid;
+	grid-template-columns: var(--q-w-settings-nav) minmax(0, var(--q-w-form));
+	gap: var(--q-space-block);
+	align-items: start;
+
+	// Under 720px the section nav is dropped and the form takes the width.
+	&--narrow {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	&__nav {
+		position: sticky;
+		top: calc(var(--q-h-topbar) + var(--q-space-stack));
+		border: 0;
+		padding: 0;
+	}
+
+	// Jumping to a section lands it just under the sticky top bar.
+	&__section {
+		scroll-margin-top: calc(var(--q-h-topbar) + var(--q-space-stack));
+	}
+
+	&__names {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--q-space-field);
+	}
+
+	&__names--narrow {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	&__actions {
+		justify-content: flex-end;
+	}
+
+	&__notices {
+		display: flex;
+		flex-direction: column;
+	}
+
+	// The first rule is ink, the rest hairline grey.
+	&__notice {
+		padding: var(--q-space-stack) 0;
+		border-top: var(--q-hairline) solid var(--q-border);
+
+		&:first-child {
+			border-top-color: var(--q-fg);
+		}
+	}
+
+	&__switch {
+		width: 100%;
+	}
+
+	&__danger {
+		padding: var(--q-space-card-pad);
+		border: var(--q-hairline) solid var(--q-accent);
+		border-radius: var(--q-radius-lg);
+	}
+
+	&__danger-text {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-0-5);
+		min-width: 0;
+		flex: 1 1 240px;
+	}
+}

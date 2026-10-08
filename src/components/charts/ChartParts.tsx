@@ -1,5 +1,6 @@
 import type React from "react";
 import { seriesColor, seriesDash } from "./chart-utils";
+import "./chart.scss";
 
 /** One legend entry: a name and the series colour it stands for. */
 export interface ChartLegendItem {

@@ -1,9 +1,17 @@
 import React from "react";
+import { cssVar, type TokenName } from "../../styles/tokens.generated";
 
 // Shared plumbing for quiet's hand-rolled SVG charts: scales, ticks, paths, formatting, width.
 
 /** Series colour i (0-based) as a CSS value; 1 is accent, 2 ink, then greys. Past 5 it repeats. */
-export const seriesColor = (i: number) => `var(--q-chart-series-${(i % 5) + 1})`;
+const SERIES = [
+	"--q-chart-series-1",
+	"--q-chart-series-2",
+	"--q-chart-series-3",
+	"--q-chart-series-4",
+	"--q-chart-series-5",
+] as const satisfies readonly TokenName[];
+export const seriesColor = (i: number) => cssVar(SERIES[i % 5]!);
 /** Secondary encoding for series 3+ so identity never rests on grey lightness alone. */
 export const seriesDash = (i: number) => ["none", "none", "none", "4 3", "1 3"][i % 5]!;
 

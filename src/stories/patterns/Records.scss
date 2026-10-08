@@ -1,0 +1,35 @@
+// Records — list and detail: a list pane on the left, the selected record on the right.
+
+.q-sb-records {
+	display: grid;
+	grid-template-columns: var(--q-w-list-pane) minmax(0, 1fr);
+	min-height: 100%;
+
+	// Under 720px the list stacks above the detail.
+	&--narrow {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	&__list {
+		padding: var(--q-space-card-pad);
+		border-right: var(--q-hairline) solid var(--q-border);
+		border-bottom: 0;
+	}
+
+	&--narrow &__list {
+		border-right: 0;
+		border-bottom: var(--q-hairline) solid var(--q-border);
+	}
+
+	&__detail {
+		padding: var(--q-space-section) var(--q-space-page-x);
+		min-width: 0;
+		max-width: var(--q-w-content);
+		box-sizing: border-box;
+	}
+
+	&__pager {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

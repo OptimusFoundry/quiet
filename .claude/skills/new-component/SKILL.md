@@ -31,6 +31,8 @@ Mistakes that got past review before:
 - **No `ref` prop:** React 19 passes `ref` through.
 - **Status colour:** comes from `--q-status-*`, through the component's own tier-3 tokens. Never use the
   accent or a grey directly for status. Molten is punctuation; only charts use it as the primary series.
+- **Tokens in TS:** spell the real name (`"--q-dur-expand"`), type token parameters `TokenName`, never build a
+  name from a prefix (AGENTS.md, "Token names are checked"). `npm run lint` fails on an unknown one.
 - **Data:** no demo data in the component. Data comes in through props; the story holds it.
 - **Hooks:** use the ones in `src/a11y/hooks.ts`. Don't hand-roll focus traps, outside-click or roving focus.
 - **Motion:** one-shot only. No spring overshoot, nothing moving at rest, and respect reduced motion.

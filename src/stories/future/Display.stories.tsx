@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type CSSProperties, type ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { Button } from "../../components/core/Button";
 import { Card } from "../../components/display/Card";
 import { Slider } from "../../components/forms/Slider";
@@ -7,33 +7,15 @@ import { BorderProgress } from "../../components/future/BorderProgress";
 import { DecayingBadge } from "../../components/future/DecayingBadge";
 import { GhostFuture } from "../../components/future/GhostFuture";
 import { Concept, FuturePage, Spec } from "./Concept";
+import "./Display.scss";
 
 // Future components, display set — from the Claude Design "Future Components II" concepts
 // (43 Decaying badge, 45 Ghost future, 46 Border progress), rebuilt on quiet tokens.
 const HOUR = 3600e3;
 const NOW = Date.UTC(2026, 9, 8, 12);
 
-const row: CSSProperties = {
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "space-between",
-	gap: 16,
-	height: 48,
-	padding: "0 16px",
-	border: "1px solid var(--q-border)",
-	borderRadius: "var(--q-radius-md)",
-	fontSize: "var(--q-text-sm)",
-};
-const mono: CSSProperties = {
-	fontFamily: "var(--q-font-mono)",
-	fontSize: "var(--q-text-2xs)",
-	letterSpacing: "var(--q-tracking-mono)",
-	textTransform: "uppercase",
-	color: "var(--q-fg-muted)",
-};
-
 function Row({ children }: { children: ReactNode }) {
-	return <div style={row}>{children}</div>;
+	return <div className="q-sb-display__row">{children}</div>;
 }
 
 function DecayDemo() {
@@ -42,7 +24,7 @@ function DecayDemo() {
 	const [checked, setChecked] = useState([NOW - 2 * HOUR, NOW - 30 * HOUR, NOW - 64 * HOUR]);
 	const now = NOW + later * HOUR;
 	return (
-		<div style={{ display: "grid", gap: 16, width: "100%", maxWidth: 520 }}>
+		<div className="q-sb-display">
 			<Slider
 				label="Time passes"
 				min={0}
@@ -70,7 +52,7 @@ function DecayDemo() {
 function BorderDemo() {
 	const [p, setP] = useState(40);
 	return (
-		<div style={{ display: "grid", gap: 16, width: "100%", maxWidth: 380 }}>
+		<div className="q-sb-display q-sb-display--narrow">
 			<BorderProgress
 				value={p}
 				label="Rendering 3 clips"
@@ -80,7 +62,7 @@ function BorderDemo() {
 					1080×1920 · about {Math.ceil((100 - p) / 16)} min left
 				</Card>
 			</BorderProgress>
-			<div style={{ display: "flex", gap: 8 }}>
+			<div className="q-sb-display__actions">
 				<Button
 					size="sm"
 					variant="secondary"
@@ -108,10 +90,10 @@ const REAL = ["mira@hey.com", "ada@park.dev", "jon@takeda.jp", "sam@lee.io", "ka
 function GhostDemo() {
 	const [n, setN] = useState(0);
 	return (
-		<div style={{ display: "grid", gap: 16, width: "100%", maxWidth: 520 }}>
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-				<strong style={{ fontWeight: 600 }}>Signups</strong>
-				<span style={mono} aria-live="polite">
+		<div className="q-sb-display">
+			<div className="q-sb-display__head">
+				<strong className="q-sb-display__strong">Signups</strong>
+				<span className="q-sb-display__mono" aria-live="polite">
 					{n} so far
 				</span>
 			</div>
@@ -122,11 +104,11 @@ function GhostDemo() {
 				{REAL.slice(0, n).map((e) => (
 					<Row key={e}>
 						<span>{e}</span>
-						<span style={mono}>just now</span>
+						<span className="q-sb-display__mono">just now</span>
 					</Row>
 				))}
 			</GhostFuture>
-			<div style={{ display: "flex", gap: 8 }}>
+			<div className="q-sb-display__actions">
 				<Button
 					size="sm"
 					variant="secondary"

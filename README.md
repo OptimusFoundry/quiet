@@ -129,6 +129,46 @@ The guidelines explain how to put the components together into product screens t
 
 Reference screens are in Storybook under **Patterns**; measured specimens under **Guidelines**.
 
+### Styling your own pages
+
+Lay pages out with quiet's components (`PageShell`, `PageHero`, `Container`, `Stack`, `Grid`, `Card` …)
+and style anything of your own with quiet's tokens, never raw values. The tokens are CSS custom
+properties defined by `style.css`, so any styling approach works:
+
+```css
+/* CSS, SCSS or a CSS module */
+.billing-summary {
+  display: grid;
+  gap: var(--q-space-stack);
+  padding: var(--q-space-card-pad);
+  border: var(--q-hairline) solid var(--q-border);
+  color: var(--q-fg-body);
+}
+```
+
+```tsx
+// TS, when a value has to be computed: names are typed, so a typo or a renamed token is a type error
+import { cssVar, type TokenName } from "@optimusfoundry/quiet";
+
+const gap: TokenName = dense ? "--q-space-inline" : "--q-space-stack";
+<div style={{ gap: cssVar(gap) }} />;
+```
+
+Check your stylesheets against the tokens your installed quiet declares:
+
+```js
+// stylelint.config.mjs (needs stylelint >= 16)
+export default {
+  plugins: ["@optimusfoundry/quiet/stylelint"],
+  rules: { "quiet/known-tokens": true },
+};
+```
+
+`quiet/known-tokens` reports any `var(--q-…)` quiet doesn't declare (a typo, or a token renamed in a
+newer quiet) and any `--q-*` your app invents: `--q-` is quiet's namespace, so name your own
+`--app-*`. A product theme may still set quiet's tokens (`--q-accent`, the palette, `--q-status-*`).
+After building, `npx quiet-audit` measures the running page for off-token values.
+
 ### Agent skill for product repos
 
 The package ships a Claude Code skill, `quiet-app`, that points agents at these guidelines when they build

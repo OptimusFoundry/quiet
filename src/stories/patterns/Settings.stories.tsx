@@ -16,7 +16,8 @@ import {
 	TextField,
 	toast,
 } from "../../index";
-import { AppFrame, row, stack, useNarrow } from "./AppFrame";
+import { AppFrame, useNarrow } from "./AppFrame";
+import "./Settings.scss";
 
 // Settings — the reference kit's settings.html: a 200 sticky section nav + a 640 form column,
 // sections separated by --q-space-section, Switch rows on hairlines, and the danger zone in a
@@ -28,10 +29,7 @@ const SECTIONS = [
 	{ label: "Meerkat", value: "agent" },
 	{ label: "Danger zone", value: "danger" },
 ];
-const section = {
-	...stack("var(--q-space-field)"),
-	scrollMarginTop: "calc(var(--q-h-topbar) + var(--q-space-stack))",
-};
+const section = "q-sb-app-frame__stack q-sb-app-frame__stack--field q-sb-settings__section";
 
 function SettingsPage() {
 	const narrow = useNarrow();
@@ -46,20 +44,11 @@ function SettingsPage() {
 			<PageHero
 				size="md"
 				ruled={false}
-				style={{ padding: 0 }}
+				className="q-sb-app-frame__hero"
 				title="Settings"
 				description="Your profile, what reaches your inbox, and what Meerkat may do alone. Each section saves on its own."
 			/>
-			<div
-				style={{
-					display: "grid",
-					gridTemplateColumns: narrow
-						? "minmax(0, 1fr)"
-						: "var(--q-w-settings-nav) minmax(0, var(--q-w-form))",
-					gap: "var(--q-space-block)",
-					alignItems: "start",
-				}}
-			>
+			<div className={narrow ? "q-sb-settings q-sb-settings--narrow" : "q-sb-settings"}>
 				{!narrow && (
 					<Sidebar
 						compact
@@ -68,23 +57,18 @@ function SettingsPage() {
 						items={SECTIONS}
 						value={current}
 						onChange={go}
-						style={{
-							position: "sticky",
-							top: "calc(var(--q-h-topbar) + var(--q-space-stack))",
-							border: 0,
-							padding: 0,
-						}}
+						className="q-sb-settings__nav"
 					/>
 				)}
-				<div style={stack("var(--q-space-section)")}>
-					<section id="profile" aria-labelledby="profile-h" style={section}>
+				<div className="q-sb-app-frame__stack q-sb-app-frame__stack--section">
+					<section id="profile" aria-labelledby="profile-h" className={section}>
 						<SectionHeader
 							size="sm"
 							as="h2"
 							title={<span id="profile-h">Profile</span>}
 							description="How you appear to your team and on invoices."
 						/>
-						<div style={row("var(--q-space-stack)")}>
+						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
 							<Avatar name="Ada Park" size="sm" />
 							<ButtonGroup>
 								<Button size="sm" variant="secondary">
@@ -96,11 +80,11 @@ function SettingsPage() {
 							</ButtonGroup>
 						</div>
 						<div
-							style={{
-								display: "grid",
-								gridTemplateColumns: narrow ? "minmax(0, 1fr)" : "repeat(2, minmax(0, 1fr))",
-								gap: "var(--q-space-field)",
-							}}
+							className={
+								narrow
+									? "q-sb-settings__names q-sb-settings__names--narrow"
+									: "q-sb-settings__names"
+							}
 						>
 							<TextField size="sm" label="First name" defaultValue="Ada" />
 							<TextField size="sm" label="Last name" defaultValue="Park" />
@@ -123,7 +107,7 @@ function SettingsPage() {
 								{ value: "utc", label: "UTC" },
 							]}
 						/>
-						<div style={{ ...row("var(--q-space-stack)"), justifyContent: "flex-end" }}>
+						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-settings__actions">
 							<Button size="sm" variant="secondary">
 								Cancel
 							</Button>
@@ -136,35 +120,29 @@ function SettingsPage() {
 						</div>
 					</section>
 
-					<section id="notifications" aria-labelledby="notifications-h" style={section}>
+					<section id="notifications" aria-labelledby="notifications-h" className={section}>
 						<SectionHeader
 							size="sm"
 							as="h2"
 							title={<span id="notifications-h">Notifications</span>}
 							description="Email only. Nothing promotional."
 						/>
-						<div style={{ display: "flex", flexDirection: "column" }}>
+						<div className="q-sb-settings__notices">
 							{(
 								[
 									["Campaign bounces", "When a campaign passes 5% bounces.", true],
 									["Weekly brief", "One email, Mondays at 08:00.", true],
 									["Meerkat's posts", "A copy of everything Meerkat posts for you.", false],
 								] as const
-							).map(([label, description, on], i) => (
-								<div
-									key={label}
-									style={{
-										padding: "var(--q-space-stack) 0",
-										borderTop: `var(--q-hairline) solid ${i ? "var(--q-border)" : "var(--q-fg)"}`,
-									}}
-								>
+							).map(([label, description, on]) => (
+								<div key={label} className="q-sb-settings__notice">
 									<Switch
 										size="sm"
 										label={label}
 										description={description}
 										defaultChecked={on}
 										labelPosition="left"
-										style={{ width: "100%" }}
+										className="q-sb-settings__switch"
 									/>
 								</div>
 							))}
@@ -177,7 +155,7 @@ function SettingsPage() {
 						/>
 					</section>
 
-					<section id="agent" aria-labelledby="agent-h" style={section}>
+					<section id="agent" aria-labelledby="agent-h" className={section}>
 						<SectionHeader
 							size="sm"
 							as="h2"
@@ -221,17 +199,10 @@ function SettingsPage() {
 						/>
 					</section>
 
-					<section id="danger" aria-labelledby="danger-h" style={section}>
+					<section id="danger" aria-labelledby="danger-h" className={section}>
 						<SectionHeader size="sm" as="h2" title={<span id="danger-h">Danger zone</span>} />
-						<div
-							style={{
-								...row("var(--q-space-stack)"),
-								padding: "var(--q-space-card-pad)",
-								border: "var(--q-hairline) solid var(--q-accent)",
-								borderRadius: "var(--q-radius-lg)",
-							}}
-						>
-							<div style={{ ...stack("var(--q-space-0-5)"), flex: "1 1 240px" }}>
+						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-settings__danger">
+							<div className="q-sb-settings__danger-text">
 								<Text color="heading" weight="semibold">
 									Delete workspace
 								</Text>

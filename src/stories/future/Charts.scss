@@ -1,0 +1,45 @@
+// Layout for the Charts story.
+.q-sb-charts {
+	&__kpi {
+		display: grid;
+		gap: 6px;
+		min-width: 200px;
+		padding: 16px 20px;
+		border: 1px solid var(--q-border);
+		border-radius: var(--q-radius-md);
+	}
+
+	&__kpi-label {
+		font-family: var(--q-font-mono);
+		font-size: var(--q-text-3xs);
+		letter-spacing: var(--q-tracking-mono);
+		text-transform: uppercase;
+		color: var(--q-fg-muted);
+	}
+
+	&__kpi-row {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	&__kpi-value {
+		font-size: var(--q-text-2xl);
+		font-weight: 700;
+		letter-spacing: var(--q-tracking-tight);
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
+	}
+
+	&__inline {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		font-size: var(--q-text-sm);
+	}
+
+	&__strong {
+		font-weight: 600;
+	}
+}

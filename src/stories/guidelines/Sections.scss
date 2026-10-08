@@ -1,0 +1,60 @@
+// Guidelines/Sections specimens (Sections.stories.tsx). Loaded after Guide.scss, so the
+// modifiers here win over the shared panel.
+
+.q-sb-sections {
+	display: contents;
+
+	&__container {
+		display: grid;
+		gap: var(--q-space-1);
+		align-content: start;
+		min-width: 0;
+	}
+
+	&__container-body {
+		padding-top: var(--q-space-1);
+	}
+
+	&__containers {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+		gap: var(--q-grid-gutter);
+	}
+
+	&__stack {
+		display: grid;
+		gap: var(--q-space-stack);
+	}
+
+	&__row {
+		padding: var(--q-space-stack) 0;
+		border-top: var(--q-hairline) solid var(--q-border);
+	}
+
+	&__anatomy {
+		max-width: var(--q-w-content);
+		min-width: 0;
+	}
+
+	&__hero {
+		padding: 0;
+	}
+
+	&__lead {
+		min-height: 120px;
+	}
+
+	&__danger {
+		border-color: var(--q-accent);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__levels {
+		display: grid;
+		gap: var(--q-space-block);
+		max-width: var(--q-w-form);
+	}
+}

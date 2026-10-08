@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Button, Table } from "../../index";
+import "./Table.scss";
 
 // Additions on top of the Claude Design catalog (G12): footer / totals row, controlled
 // expansion, per-cell colSpan.
@@ -52,8 +53,8 @@ export const Footer: StoryObj = {
 function ControlledDemo() {
 	const [expanded, setExpanded] = useState<string[]>(["inv-2"]);
 	return (
-		<div id="table-expansion" style={{ display: "grid", gap: 16 }}>
-			<div style={{ display: "flex", gap: 8 }}>
+		<div id="table-expansion" className="q-sb-table">
+			<div className="q-sb-table__actions">
 				<Button
 					size="sm"
 					variant="secondary"

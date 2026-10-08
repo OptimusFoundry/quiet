@@ -9,6 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import type { TokenName } from "../styles/tokens.generated";
 
 const FOCUSABLE =
 	'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"]),[contenteditable="true"]';
@@ -153,7 +154,7 @@ export function usePresence(open: boolean, exitMs = 160) {
 }
 
 /** Reads a motion token for the Web Animations API: durations in ms, easings as strings. */
-export function motionToken(el: Element, name: `--q-${string}`): string | number {
+export function motionToken(el: Element, name: TokenName): string | number {
 	const raw = getComputedStyle(el).getPropertyValue(name).trim();
 	const ms = raw.match(/^([\d.]+)(m?s)$/);
 	if (ms) return Number(ms[1]) * (ms[2] === "s" ? 1000 : 1);

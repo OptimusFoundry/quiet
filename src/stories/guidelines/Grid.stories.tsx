@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import { Col, Grid } from "../../index";
+import type { TokenName } from "../../styles/tokens.generated";
 import { GuidePage, Mono, Part, Span } from "./Guide";
+import "./Grid.scss";
 
 // docs/guidelines/grid.md as specimens: the allowed splits over the 12 columns, the responsive span
 // rules at three container widths, and the fixed panes.
@@ -19,37 +21,12 @@ const SPLITS: Split[] = [
 
 const COLUMN_IDS = ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12"];
 
-const cell: CSSProperties = {
-	height: "var(--q-space-5)",
-	display: "flex",
-	alignItems: "center",
-	paddingLeft: "var(--q-space-1)",
-	border: "var(--q-hairline) solid var(--q-fg)",
-	borderRadius: "var(--q-radius-sm)",
-	background: "var(--q-bg)",
-	boxSizing: "border-box",
-	minWidth: 0,
-	overflow: "hidden",
-};
-
 /** The 12 columns behind a grid, using the same gap so the cells line up with them. */
 function Columns() {
 	return (
-		<div
-			aria-hidden="true"
-			style={{
-				position: "absolute",
-				inset: 0,
-				display: "grid",
-				gridTemplateColumns: "repeat(12, minmax(0, 1fr))",
-				gap: "var(--q-space-3)",
-			}}
-		>
+		<div aria-hidden="true" className="q-sb-grid__columns">
 			{COLUMN_IDS.map((id) => (
-				<span
-					key={id}
-					style={{ background: "var(--q-bg-subtle)", borderRadius: "var(--q-radius-xs)" }}
-				/>
+				<span key={id} className="q-sb-grid__column" />
 			))}
 		</div>
 	);
@@ -57,22 +34,22 @@ function Columns() {
 
 function SplitRow({ s }: { s: Split }) {
 	return (
-		<div style={{ display: "grid", gap: "var(--q-space-1)" }}>
+		<div className="q-sb-grid__split">
 			<Mono>{s.name}</Mono>
-			<div style={{ position: "relative" }}>
+			<div className="q-sb-grid__split-stage">
 				<Columns />
 				<Grid
 					columns={12}
 					gap="md"
 					rowGap="md"
 					breakpoints={[0, 0]}
-					style={{ position: "relative" }}
+					className="q-sb-grid__split-grid"
 				>
 					{s.cols.map((c, i) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: static specimen
 						<Col key={i} span={c.span} start={c.start}>
-							<div style={cell}>
-								<Mono style={{ color: "var(--q-fg)" }}>{c.span}</Mono>
+							<div className="q-sb-grid__cell">
+								<Mono className="q-sb-grid__cell-label">{c.span}</Mono>
 							</div>
 						</Col>
 					))}
@@ -93,15 +70,15 @@ function Frame({ width, cols }: { width: number; cols: Split["cols"] }) {
 		return () => ro.disconnect();
 	}, []);
 	return (
-		<div style={{ display: "grid", gap: "var(--q-space-1)", width: `min(${width}px, 100%)` }}>
+		<div className="q-sb-grid__frame" style={{ "--_w": `${width}px` } as CSSProperties}>
 			<Mono>grid {w}px wide</Mono>
 			<div ref={ref}>
 				<Grid columns={12} gap="md" rowGap="md">
 					{cols.map((c, i) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: static specimen
 						<Col key={i} span={c.span}>
-							<div style={cell}>
-								<Mono style={{ color: "var(--q-fg)" }}>span {c.span}</Mono>
+							<div className="q-sb-grid__cell">
+								<Mono className="q-sb-grid__cell-label">span {c.span}</Mono>
 							</div>
 						</Col>
 					))}
@@ -117,7 +94,7 @@ const PANES = [
 	["--q-w-list-pane", "list pane"],
 	["--q-w-detail-panel", "detail panel"],
 	["--q-w-form", "form / chat / prose"],
-] as const;
+] as const satisfies ReadonlyArray<readonly [TokenName, string]>;
 
 function GridPage() {
 	return (
@@ -130,7 +107,7 @@ function GridPage() {
 				title="Allowed splits"
 				rule="Blocks stacked on one page share column edges. 8 + 4 under 3 × 4 lines up at column 9."
 			>
-				<div style={{ display: "grid", gap: "var(--q-space-3)" }}>
+				<div className="q-sb-grid__splits">
 					{SPLITS.map((s) => (
 						<SplitRow key={s.name} s={s} />
 					))}
@@ -140,7 +117,7 @@ function GridPage() {
 				title="Responsive spans"
 				rule="Grid measures its own width. ≥ 960: span. 720–960: spans under 4 become 6. Under 720: 12. Always pass rowGap."
 			>
-				<div style={{ display: "grid", gap: "var(--q-space-4)" }}>
+				<div className="q-sb-grid__frames">
 					{[1000, 840, 560].map((w) => (
 						<Frame key={w} width={w} cols={SPLITS[4]?.cols ?? []} />
 					))}
@@ -153,7 +130,7 @@ function GridPage() {
 				title="Fixed panes"
 				rule="Never % or invented widths. Under 720 a pane leaves the layout (drawer or its own route)."
 			>
-				<div style={{ display: "grid", gap: "var(--q-space-1)", overflow: "hidden" }}>
+				<div className="q-sb-grid__panes">
 					{PANES.map(([t, l]) => (
 						<Span key={t} token={t} label={`${t} · ${l}`} />
 					))}

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Text } from "../components/core/Text";
 import { TabPanel, Tabs } from "../components/navigation/Tabs";
+import "./TabPanels.scss";
 
 // quiet's own: wired tab panels are not in the Optimus Foundry reference.
 const TABS = [
@@ -13,7 +14,7 @@ const TABS = [
 
 function Panels() {
 	return (
-		<div style={{ padding: 24 }}>
+		<div className="q-sb-tab-panels">
 			<Tabs
 				label="Account settings"
 				tabs={TABS}
@@ -30,7 +31,7 @@ function Panels() {
 function Render() {
 	const [tab, setTab] = useState("Connected");
 	return (
-		<div style={{ padding: 24 }}>
+		<div className="q-sb-tab-panels">
 			<Tabs
 				label="Integrations"
 				variant="enclosed"
@@ -46,7 +47,7 @@ function Render() {
 function Standalone() {
 	const [tab, setTab] = useState("logs");
 	return (
-		<div style={{ padding: 24, display: "grid", gap: 16 }}>
+		<div className="q-sb-tab-panels q-sb-tab-panels--stack">
 			<Tabs
 				label="Delivery"
 				tabs={[

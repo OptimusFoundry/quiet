@@ -13,6 +13,7 @@ hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESI
 | `src/styles/tokens/` | `docs/reference/optimus-design/tokens/` | rebuilt as 3-tier `--q-*` tokens with the same values; the reference names live in `tokens/_reference-compat.scss` |
 | `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest (parity tests) |
 | `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
+| `src/styles/tokens.generated.{ts,json}` | the compiled SCSS | `npm run gen` (`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`) |
 | `src/stories/catalog.generated.tsx` | `components/index.html` App script | `npm run gen` (verbatim, `@ts-nocheck`) |
 
 `docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Everything
@@ -70,6 +71,18 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
   `QuietRoot theme` scopes a subtree, `ThemeProvider` themes the app.
 - **Status colour**: components never hard-code a status grey or the accent; they read
   `--q-status-<status>-{fg,bg,border}` through their own tier-3 tokens (DESIGN.md, "Status colour").
+- **Token names are checked, never guessed.** In TS a token is its real name, spelled whole:
+  `motionToken(el, "--q-dur-expand")`, `cssVar("--q-space-stack")`, `{ "--q-accent": c }`. A
+  parameter that takes a name is `TokenName` (generated from the compiled SCSS), so tsc rejects a
+  typo. `scripts/check-tokens.mjs` (in `npm run lint`) also checks the strings tsc can't type
+  (style objects, prose, comments): every `--q-*` must be declared, and none may be built from a
+  prefix (`--q-space-${n}`) — list the real names instead. It also checks that every `--_local` a
+  component or story sets from TSX is read by a stylesheet that file imports. In SCSS,
+  `quiet/known-tokens` (the Stylelint rule quiet ships to apps) checks every `var(--q-…)`. Run
+  `npm run gen` after adding, renaming or removing a token.
+- **Stories style with classes,** like components: `<File>.scss` next to the story, BEM under
+  `q-sb-*`, plain CSS (tokens, nesting; no SCSS features, no `@layer`). Pattern screens are what
+  products copy, so keep them clean. Inline `style` only for dynamic `--_` values.
 - The reference names (`--ink`, `--paper`, `--molten` …) exist only in
   `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by

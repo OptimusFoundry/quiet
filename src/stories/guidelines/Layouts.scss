@@ -1,0 +1,345 @@
+// Guidelines/Layouts miniatures (Layouts.stories.tsx): the page layouts drawn from the real width
+// tokens at 1/5 scale. Base pieces first, so the per-piece rules below them win.
+
+.q-sb-layouts {
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+		gap: var(--q-space-4) var(--q-space-3);
+	}
+
+	&__figure {
+		margin: 0;
+		display: grid;
+		gap: var(--q-space-1);
+		min-width: 0;
+	}
+
+	&__art {
+		overflow: hidden;
+	}
+
+	&__caption {
+		display: grid;
+		gap: var(--q-space-0-5);
+	}
+
+	// Base pieces.
+	&__box {
+		border: var(--q-hairline) solid var(--q-border-strong);
+		border-radius: var(--q-radius-xs);
+		background: var(--q-bg);
+		min-width: 0;
+		min-height: var(--q-space-1);
+	}
+
+	&__fill {
+		background: var(--q-bg-subtle);
+		border-radius: var(--q-radius-2xs);
+		min-width: 0;
+		min-height: var(--q-space-1);
+	}
+
+	&__title {
+		height: var(--q-space-1);
+		width: 40%;
+		background: var(--q-fg);
+		border-radius: 2px;
+	}
+
+	&__rows {
+		display: grid;
+		gap: var(--q-space-0-5);
+		align-content: start;
+	}
+
+	&__rule {
+		border-top: var(--q-hairline) solid var(--q-border);
+	}
+
+	&__pane {
+		border-left: var(--q-hairline) solid var(--q-border);
+	}
+
+	// App frame at 1/5: sidebar 240 + main (padding 48/32 scaled).
+	&__app {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-sidebar) * 0.2) minmax(0, 1fr);
+		gap: 0;
+		border: var(--q-hairline) solid var(--q-border-strong);
+		border-radius: var(--q-radius-xs);
+		background: var(--q-bg);
+		min-width: 0;
+		min-height: var(--q-space-1);
+		height: 128px;
+		overflow: hidden;
+
+		&--no-rail {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	&__rail {
+		border-radius: 0;
+	}
+
+	&__main {
+		display: grid;
+		gap: 0;
+		align-content: start;
+		grid-template-rows: calc(var(--q-h-topbar) * 0.2) 1fr;
+		min-width: 0;
+	}
+
+	&__topbar {
+		border-bottom: var(--q-hairline) solid var(--q-border);
+	}
+
+	&__body {
+		display: grid;
+		gap: var(--q-space-0-75);
+		align-content: start;
+		padding: calc(var(--q-space-6) * 0.2) calc(var(--q-space-4) * 0.2);
+	}
+
+	// Dashboard.
+	&__kpis {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: var(--q-space-0-5);
+	}
+
+	&__kpi {
+		height: 14px;
+	}
+
+	&__dash-split {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: var(--q-space-0-5);
+	}
+
+	&__chart {
+		height: 34px;
+	}
+
+	// List-detail.
+	&__list-detail {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-list-pane) * 0.2) minmax(0, 1fr);
+		gap: var(--q-space-1);
+		height: 80px;
+	}
+
+	&__list-row {
+		height: 10px;
+	}
+
+	&__detail {
+		height: 50px;
+	}
+
+	// Detail + inspector.
+	&__inspector-split {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) calc(var(--q-w-detail-panel) * 0.2);
+		gap: 0;
+		height: 80px;
+	}
+
+	&__detail-col {
+		padding-right: var(--q-space-1);
+	}
+
+	&__inspector {
+		padding-left: var(--q-space-0-75);
+	}
+
+	&__pane-row {
+		height: 12px;
+	}
+
+	// Full-bleed table.
+	&__toolbar {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: var(--q-space-0-5);
+	}
+
+	&__search {
+		height: 8px;
+		width: 50%;
+	}
+
+	&__filter {
+		height: 8px;
+		width: 24px;
+	}
+
+	&__table {
+		height: 52px;
+	}
+
+	// Form page and wizard.
+	&__form {
+		display: grid;
+		gap: var(--q-space-0-75);
+		align-content: start;
+		width: calc(var(--q-w-form) * 0.2);
+	}
+
+	&__field {
+		height: 9px;
+	}
+
+	&__submit {
+		height: 9px;
+		width: 30px;
+		background: var(--q-fg);
+		justify-self: end;
+	}
+
+	&__steps {
+		display: flex;
+		gap: 4px;
+		align-items: center;
+	}
+
+	&__step {
+		width: 8px;
+		height: 8px;
+		border-radius: 8px;
+		background: var(--q-border);
+
+		&--current {
+			background: var(--q-fg);
+		}
+	}
+
+	&__wizard-actions {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		gap: var(--q-space-0-5);
+	}
+
+	&__wizard-button {
+		height: 9px;
+		width: 24px;
+
+		&--primary {
+			background: var(--q-fg);
+		}
+	}
+
+	// Settings.
+	&__settings-split {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-settings-nav) * 0.2) calc(var(--q-w-form) * 0.2);
+		gap: var(--q-space-1);
+		height: 80px;
+	}
+
+	&__nav-item {
+		height: 7px;
+	}
+
+	&__groups {
+		gap: var(--q-space-1);
+	}
+
+	&__group-title {
+		width: 30%;
+		height: 5px;
+	}
+
+	&__setting {
+		height: 8px;
+	}
+
+	&__danger {
+		height: 10px;
+		border-color: var(--q-accent);
+	}
+
+	// Chat.
+	&__chat-split {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-form) * 0.2) calc(var(--q-w-detail-panel) * 0.2);
+		gap: var(--q-space-1);
+		height: 80px;
+	}
+
+	&__chat {
+		gap: var(--q-space-0-75);
+		grid-template-rows: 1fr auto;
+	}
+
+	&__bubble {
+		height: 9px;
+		width: 50%;
+		justify-self: end;
+	}
+
+	&__reply {
+		height: 16px;
+		background: transparent;
+		border-left: 2px solid var(--q-border);
+	}
+
+	&__composer {
+		height: 14px;
+		border-radius: 6px;
+	}
+
+	&__chat-pane {
+		padding-left: 4px;
+	}
+
+	// App shell.
+	&__shell-main {
+		height: 70px;
+	}
+
+	// Marketing.
+	&__site {
+		display: grid;
+		gap: var(--q-space-1);
+		align-content: start;
+		border: var(--q-hairline) solid var(--q-border-strong);
+		border-radius: var(--q-radius-xs);
+		background: var(--q-bg);
+		min-width: 0;
+		min-height: var(--q-space-1);
+		height: 128px;
+		padding: 8px;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+
+	&__site-nav {
+		border-bottom: var(--q-hairline) solid var(--q-border);
+		height: 10px;
+	}
+
+	&__site-hero {
+		height: 18px;
+		width: 60%;
+	}
+
+	&__site-section {
+		border-top: var(--q-hairline) solid var(--q-fg);
+		display: grid;
+		grid-template-columns: 5fr 1fr 6fr;
+		gap: var(--q-space-0-5);
+		padding-top: 6px;
+	}
+
+	&__site-heading {
+		width: 70%;
+		height: 8px;
+	}
+
+	&__site-art {
+		height: 24px;
+	}
+}

@@ -51,6 +51,8 @@ Decide on paper before writing JSX.
 
 - Hand-roll what quiet has, or add another UI kit or chart library.
 - Raw colours, px or durations. Status colour only from `--q-status-*` and component props.
+- Guessed or invented `--q-*` names. Look them up in `dist/tokens.json`; `TokenName` + `cssVar()` in TS;
+  the `quiet/known-tokens` Stylelint rule (README). Your own custom properties are `--app-*`.
 - Molten as a fill, button or background (charts: series 1).
 - Banned words (`content.md`), exclamation marks or emoji.
 

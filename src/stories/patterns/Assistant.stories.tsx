@@ -17,7 +17,8 @@ import {
 	ToolCall,
 	toast,
 } from "../../index";
-import { AppFrame, row, stack, useNarrow } from "./AppFrame";
+import { AppFrame, useNarrow } from "./AppFrame";
+import "./Assistant.scss";
 
 // Assistant — a full chat-with-Claude page. The thread and composer take the main column; the side
 // panel holds what the assistant changed (Checkpoints) and the receipt for its last action.
@@ -148,15 +149,7 @@ function Conversation() {
 	};
 	const last = turns[turns.length - 1]?.id;
 	return (
-		<div
-			style={{
-				display: "grid",
-				gridTemplateRows: "minmax(0, 1fr) auto",
-				gap: "var(--q-space-stack)",
-				minHeight: 0,
-				height: "100%",
-			}}
-		>
+		<div className="q-sb-assistant__chat">
 			{/* ChatMessage names are h3s; give the thread an h2 so the outline holds. */}
 			<h2 className="q-sr-only">Messages</h2>
 			<ChatThread
@@ -227,8 +220,8 @@ function Conversation() {
 function SidePanel() {
 	const [undone, setUndone] = useState<string[]>([]);
 	return (
-		<div style={stack("var(--q-space-section)")}>
-			<div style={stack("var(--q-space-stack)")}>
+		<div className="q-sb-app-frame__stack q-sb-app-frame__stack--section">
+			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 				<SectionHeader
 					size="sm"
 					as="h2"
@@ -242,7 +235,7 @@ function SidePanel() {
 					onRestore={(c) => toast({ title: "Restored.", meta: c.label })}
 				/>
 			</div>
-			<div style={stack("var(--q-space-stack)")}>
+			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 				<SectionHeader size="sm" as="h2" title="Last action" />
 				<Receipt
 					actor="Meerkat"
@@ -277,25 +270,12 @@ function AssistantPage() {
 	const narrow = useNarrow();
 	const [panel, setPanel] = useState(false);
 	return (
-		<div
-			style={{
-				display: "grid",
-				gridTemplateColumns: narrow ? "minmax(0, 1fr)" : "minmax(0, 1fr) var(--q-w-detail-panel)",
-				height: "calc(100vh - var(--q-h-topbar))",
-			}}
-		>
+		<div className={narrow ? "q-sb-assistant q-sb-assistant--narrow" : "q-sb-assistant"}>
 			<section
 				aria-label="Conversation: Bouncing campaigns"
-				style={{
-					display: "grid",
-					gridTemplateRows: "auto minmax(0, 1fr)",
-					gap: "var(--q-space-stack)",
-					padding: "var(--q-space-stack) var(--q-space-page-x)",
-					minHeight: 0,
-					minWidth: 0,
-				}}
+				className="q-sb-assistant__conversation"
 			>
-				<div style={{ ...row("var(--q-space-stack)"), justifyContent: "space-between" }}>
+				<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-assistant__header">
 					<Text as="h1" heading={4}>
 						Bouncing campaigns
 					</Text>
@@ -310,9 +290,7 @@ function AssistantPage() {
 						</Button>
 					)}
 				</div>
-				<div
-					style={{ width: "100%", maxWidth: "var(--q-w-content)", margin: "0 auto", minHeight: 0 }}
-				>
+				<div className="q-sb-assistant__column">
 					<Conversation />
 				</div>
 			</section>
@@ -321,14 +299,7 @@ function AssistantPage() {
 					<SidePanel />
 				</Drawer>
 			) : (
-				<aside
-					aria-label="Changes and receipts"
-					style={{
-						padding: "var(--q-space-block) var(--q-space-card-pad)",
-						borderLeft: "var(--q-hairline) solid var(--q-border)",
-						overflowY: "auto",
-					}}
-				>
+				<aside aria-label="Changes and receipts" className="q-sb-assistant__panel">
 					<SidePanel />
 				</aside>
 			)}

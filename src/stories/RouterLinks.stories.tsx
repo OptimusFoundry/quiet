@@ -12,6 +12,7 @@ import {
 	Sidebar,
 	StatCard,
 } from "../index";
+import "./RouterLinks.scss";
 
 // Every href-capable component under one <QuietRoot linkComponent>. The stand-in router link
 // navigates with pushState, the way TanStack Router's <Link> does, so a test can tell a routed
@@ -32,7 +33,7 @@ const RouterLink: LinkComponent = ({ href, onClick, ...props }) => (
 
 function RouterLinks() {
 	return (
-		<QuietRoot linkComponent={RouterLink} density="app" style={{ padding: 32 }}>
+		<QuietRoot linkComponent={RouterLink} density="app" className="q-sb-router-links">
 			<NavBar links={[{ label: "Pricing", href: "/pricing" }]} ctaHref="/contact" />
 			<Breadcrumb items={[{ label: "Home", href: "/home" }, { label: "Settings" }]} />
 			<Sidebar items={[{ label: "Projects", href: "/projects" }]} />

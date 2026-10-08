@@ -2,6 +2,7 @@ import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
 import { ChartLegend, ChartTable, ChartTooltip } from "./ChartParts";
 import { formatNumber, linear, seriesColor, useWidth, valueDomain } from "./chart-utils";
+import "./chart.scss";
 import "./BarChart.scss";
 
 /**
