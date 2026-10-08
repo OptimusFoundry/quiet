@@ -131,11 +131,7 @@ export function RunScrubber({
 					className="q-run-scrubber__thumb"
 				/>
 			</div>
-			<ol
-				aria-hidden="true"
-				className="q-run-scrubber__steps"
-				style={{ "--_n": n } as React.CSSProperties}
-			>
+			<ol aria-hidden="true" className="q-run-scrubber__steps">
 				{steps.map((s, i) => (
 					<li
 						key={i}

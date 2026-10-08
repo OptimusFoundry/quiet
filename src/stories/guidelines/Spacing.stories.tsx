@@ -1,27 +1,29 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useRef, useState } from "react";
+import { type CSSProperties, useRef, useState } from "react";
 import { Button, SectionHeader, StatCard, Text, TextField } from "../../index";
+import { cssVar, type TokenName } from "../../styles/tokens.generated";
 import { type Density, DensitySwitch, Gap, GuidePage, Mono, Part, panel, useVar } from "./Guide";
+import "./Spacing.scss";
 
 // docs/guidelines/spacing.md as measured specimens: the scale, the job tokens per density, and
 // redlines between real components.
 
 const SCALE = [
-	"0-5",
-	"1",
-	"1-5",
-	"2",
-	"2-5",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"10",
-	"12",
-	"16",
-] as const;
+	"--q-space-0-5",
+	"--q-space-1",
+	"--q-space-1-5",
+	"--q-space-2",
+	"--q-space-2-5",
+	"--q-space-3",
+	"--q-space-4",
+	"--q-space-5",
+	"--q-space-6",
+	"--q-space-7",
+	"--q-space-8",
+	"--q-space-10",
+	"--q-space-12",
+	"--q-space-16",
+] as const satisfies readonly TokenName[];
 const JOBS = [
 	["--q-space-inline", "icon ↔ label, button ↔ button"],
 	["--q-space-stack", "lines inside a panel"],
@@ -32,38 +34,22 @@ const JOBS = [
 	["--q-space-section", "page top/bottom, settings sections"],
 	["--q-space-page-x", "page sides"],
 	["--q-grid-gutter", "grid column gap"],
-] as const;
+] as const satisfies ReadonlyArray<readonly [TokenName, string]>;
 
-function Bar({ token, label }: { token: string; label: string }) {
+function Bar({ token, label }: { token: TokenName; label: string }) {
 	const ref = useRef<HTMLSpanElement>(null);
 	const px = Number.parseFloat(useVar(ref, token)) || 0;
 	return (
-		<div
-			style={{
-				display: "grid",
-				gridTemplateColumns: "minmax(0, 200px) 40px minmax(0, 1fr)",
-				alignItems: "center",
-				gap: "var(--q-space-2)",
-			}}
-		>
-			<Mono style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{label}</Mono>
-			<Text
-				size="sm"
-				color="heading"
-				style={{ fontVariantNumeric: "tabular-nums", textAlign: "right" }}
-			>
+		<div className="q-sb-spacing__bar">
+			<Mono className="q-sb-spacing__bar-label">{label}</Mono>
+			<Text size="sm" color="heading" className="q-sb-spacing__bar-value">
 				{px}
 			</Text>
 			<span
 				ref={ref}
 				aria-hidden="true"
-				style={{
-					width: `var(${token})`,
-					maxWidth: "100%",
-					height: "var(--q-space-1)",
-					background: "var(--q-fg)",
-					borderRadius: "var(--q-radius-pill)",
-				}}
+				className="q-sb-spacing__bar-fill"
+				style={{ "--_w": cssVar(token) } as CSSProperties}
 			/>
 		</div>
 	);
@@ -81,20 +67,20 @@ function SpacingPage() {
 				title="The scale"
 				rule="--q-space-*. Steps under 8 and 20 are for inside components only, never between blocks."
 			>
-				<div style={{ display: "grid", gap: "var(--q-space-1)" }}>
-					{SCALE.map((s) => (
-						<Bar key={s} token={`--q-space-${s}`} label={`--q-space-${s}`} />
+				<div className="q-sb-spacing__list">
+					{SCALE.map((t) => (
+						<Bar key={t} token={t} label={t} />
 					))}
 				</div>
 			</Part>
 
-			<div data-density={density} style={{ display: "contents" }}>
+			<div data-density={density} className="q-sb-spacing">
 				<Part
 					title="Job tokens"
 					rule="Pick by what the gap separates. App is the product default."
 					aside={<DensitySwitch value={density} onChange={setDensity} />}
 				>
-					<div style={{ display: "grid", gap: "var(--q-space-1)" }}>
+					<div className="q-sb-spacing__list">
 						{JOBS.map(([t, job]) => (
 							<Bar key={t} token={t} label={`${t.replace("--q-", "")} · ${job}`} />
 						))}
@@ -105,14 +91,7 @@ function SpacingPage() {
 					title="Redlines between real components"
 					rule="Inside a component, its own spacing. Between components, the parent's gap, never a margin."
 				>
-					<div
-						style={{
-							display: "grid",
-							gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
-							gap: "var(--q-space-4)",
-							alignItems: "start",
-						}}
-					>
+					<div className="q-sb-spacing__redlines">
 						<div>
 							<Mono>Section</Mono>
 							<SectionHeader size="sm" as="h3" title="Signups" description="Last 30 days." />
@@ -121,7 +100,7 @@ function SpacingPage() {
 						</div>
 						<div>
 							<Mono>Panel</Mono>
-							<div style={{ ...panel, gap: 0 }}>
+							<div className={`${panel} q-sb-spacing__panel`}>
 								<Gap token="--q-space-card-pad" note="pad" />
 								<Text as="h3" size="lg" weight="semibold" color="heading">
 									Usage this month
@@ -138,7 +117,7 @@ function SpacingPage() {
 							<Gap token="--q-space-field" />
 							<TextField size="sm" label="Billing email" defaultValue="ops@sjocamp.co" />
 							<Gap token="--q-space-block" note="fields ↔ actions" />
-							<div style={{ display: "flex", gap: "var(--q-space-inline)" }}>
+							<div className="q-sb-spacing__actions">
 								<Button size="sm" variant="secondary">
 									Cancel
 								</Button>

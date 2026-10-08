@@ -17,7 +17,7 @@ import {
 	StatCard,
 	toast,
 } from "../../index";
-import { AppFrame, stack } from "./AppFrame";
+import { AppFrame } from "./AppFrame";
 
 // Dashboard — the reference kit's dashboard.html order: PageHero md → Alert → 4 StatCards (span 3)
 // → main column (span 8) + activity (span 4). Molten carries chart data and nothing else.
@@ -54,7 +54,7 @@ function Overview() {
 			<PageHero
 				size="md"
 				ruled={false}
-				style={{ padding: 0 }}
+				className="q-sb-app-frame__hero"
 				title="Good morning,"
 				accent="Ada"
 				description="Signups doubled after the Product Hunt post. One campaign is bouncing, and Meerkat has a fix waiting for you."
@@ -119,7 +119,7 @@ function Overview() {
 					},
 				].map((s) => (
 					<Col key={s.label} span={3}>
-						<div style={stack("var(--q-space-inline)")}>
+						<div className="q-sb-app-frame__stack q-sb-app-frame__stack--inline">
 							<StatCard
 								label={s.label}
 								value={s.value}
@@ -141,7 +141,7 @@ function Overview() {
 			</Grid>
 			<Grid columns={12} gap="md">
 				<Col span={8}>
-					<div style={stack()}>
+					<div className="q-sb-app-frame__stack">
 						<SectionHeader
 							size="sm"
 							as="h2"
@@ -173,7 +173,7 @@ function Overview() {
 					</div>
 				</Col>
 				<Col span={4}>
-					<div style={stack()}>
+					<div className="q-sb-app-frame__stack">
 						<SectionHeader size="sm" as="h2" title="Meerkat" accent="is working" />
 						<AgentRun
 							title="Pausing bouncing campaigns"

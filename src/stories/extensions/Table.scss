@@ -1,0 +1,10 @@
+// Layout for the Extensions/Table stories.
+.q-sb-table {
+	display: grid;
+	gap: 16px;
+
+	&__actions {
+		display: flex;
+		gap: 8px;
+	}
+}

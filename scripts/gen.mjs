@@ -1,8 +1,10 @@
 // Generates the parts of quiet that are derived mechanically from the Optimus Foundry mirror
 // (docs/reference/optimus-design), so they can never drift by hand:
 //   src/index.ts                         — one export per component, in ds-loader.js order
+//   src/styles/tokens.generated.ts      — the TokenName type (scripts/gen-tokens.mjs)
 //   src/stories/catalog.generated.tsx    — the App from components/index.html, verbatim (untyped)
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { genTokens } from "./gen-tokens.mjs";
 
 const REF = "docs/reference/optimus-design";
 const HEADER =
@@ -27,7 +29,7 @@ writeFileSync(
 		.map((f) => `export * from "./components/${f}";`)
 		.join(
 			"\n",
-		)}\nexport { QuietRoot, type QuietRootProps } from "./QuietRoot";\nexport { applyTheme, type BuiltInTheme, defaultTheme, defineThemes, getTheme, resolveTheme, type ThemeDefinition, type ThemeName, themeNames, themes } from "./styles/themes/themes";\nexport { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";\nexport { type LinkComponent, type LinkComponentProps, useLinkComponent } from "./lib/link";\n`,
+		)}\nexport { QuietRoot, type QuietRootProps } from "./QuietRoot";\nexport { applyTheme, type BuiltInTheme, defaultTheme, defineThemes, getTheme, resolveTheme, type ThemeDefinition, type ThemeName, themeNames, themes } from "./styles/themes/themes";\nexport { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";\nexport { type LinkComponent, type LinkComponentProps, useLinkComponent } from "./lib/link";\nexport { cssVar, type TokenName } from "./styles/tokens.generated";\n`,
 );
 
 const html = readFileSync(`${REF}/components/index.html`, "utf8");
@@ -41,4 +43,7 @@ writeFileSync(
 	"src/stories/catalog.generated.tsx",
 	`${HEADER}// @ts-nocheck\nimport React from "react";\nimport * as DS from "../index";\n\n${script.replace(boot, "")}\nexport default App;\n`,
 );
-console.log(`index.ts: ${files.length} components; catalog: ${script.split("\n").length} lines`);
+const tokenCount = genTokens();
+console.log(
+	`index.ts: ${files.length} components; catalog: ${script.split("\n").length} lines; ${tokenCount} tokens`,
+);

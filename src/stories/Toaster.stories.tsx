@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Button } from "../components/core/Button";
 import { Toaster, type ToasterProps, toast } from "../components/feedback/Toaster";
+import "./Toaster.scss";
 
 // quiet's own: Toaster is not in the Optimus Foundry reference, so it has its own story
 // rather than a section in the generated catalog.
@@ -9,7 +10,7 @@ function Demo(props: ToasterProps & { second?: boolean }) {
 	const { second, ...toaster } = props;
 	const [last, setLast] = useState<string>();
 	return (
-		<div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: 24 }}>
+		<div className="q-sb-toaster">
 			<Button
 				onClick={() =>
 					setLast(toast({ title: "Draft saved", description: "Your changes are stored." }))

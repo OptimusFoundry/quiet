@@ -1,0 +1,42 @@
+// Layout for the Chat story.
+.q-sb-chat {
+	&__mono {
+		font-family: var(--q-font-mono);
+		font-size: var(--q-text-2xs);
+		letter-spacing: var(--q-tracking-mono);
+		text-transform: uppercase;
+		color: var(--q-fg-muted);
+	}
+
+	&__demo {
+		display: grid;
+		grid-template-rows: minmax(0, 1fr) auto;
+		gap: 16px;
+		height: var(--_height);
+		padding: 16px;
+		border: 1px solid var(--q-border);
+		border-radius: var(--q-radius-xl);
+		background: var(--q-bg);
+	}
+
+	&__empty {
+		display: grid;
+		gap: 20px;
+		width: 100%;
+		justify-items: center;
+		text-align: center;
+	}
+
+	&__empty-title {
+		font-size: var(--q-text-2xl);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+	}
+
+	&__gallery {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		align-items: flex-start;
+	}
+}

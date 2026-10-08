@@ -14,14 +14,12 @@ import {
 	TextArea,
 	TextField,
 } from "../../index";
+import "./Forms.scss";
 
 // Additions on top of the Claude Design catalog: native form participation and refs (G10),
 // Select field chrome and TextArea hideLabel (G11).
 const meta: Meta = { title: "Extensions/Forms", parameters: { layout: "padded" } };
 export default meta;
-
-const page = { display: "grid", gap: 32, maxWidth: 560, padding: 32 } as const;
-const row = { display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" } as const;
 
 const entries = (form: HTMLFormElement) =>
 	[...new FormData(form).entries()].map(([k, v]) => [k, String(v)] as const);
@@ -33,7 +31,7 @@ function NativeFormDemo() {
 		setSent(entries(e.currentTarget));
 	};
 	return (
-		<form id="native-form" aria-label="Project brief" onSubmit={submit} style={page}>
+		<form id="native-form" aria-label="Project brief" onSubmit={submit} className="q-sb-forms">
 			<Checkbox name="terms" value="accepted" label="Accept the terms" required />
 			<Checkbox name="news" label="Send the journal" defaultChecked />
 			<Switch name="digest" label="Weekly digest" defaultChecked />
@@ -57,7 +55,7 @@ function NativeFormDemo() {
 			/>
 			<DatePicker name="start" label="Start" defaultValue={new Date(2026, 9, 12)} />
 			<Switch name="locked" label="Locked (disabled, not submitted)" defaultChecked disabled />
-			<div style={row}>
+			<div className="q-sb-forms__row">
 				<Button type="submit">Submit</Button>
 			</div>
 			<output aria-label="Submitted data">
@@ -84,7 +82,7 @@ function RefsDemo() {
 		datePicker: useRef<HTMLButtonElement>(null),
 	};
 	return (
-		<div id="refs" style={page}>
+		<div id="refs" className="q-sb-forms">
 			<TextField ref={refs.textField} label="Name" />
 			<TextArea ref={refs.textArea} label="Brief" rows={2} />
 			<Select ref={refs.select} label="Region" options={["EU", "US"]} />
@@ -96,7 +94,7 @@ function RefsDemo() {
 			<Dropdown ref={refs.dropdown} label="Practice" options={["Apps", "Backends"]} />
 			<MultiSelect ref={refs.multiSelect} label="Stack" options={["Go", "React"]} />
 			<DatePicker ref={refs.datePicker} label="Start" />
-			<div style={row}>
+			<div className="q-sb-forms__row">
 				{Object.entries(refs).map(([name, r]) => (
 					<Button key={name} size="sm" variant="secondary" onClick={() => r.current?.focus()}>
 						{`Focus ${name}`}
@@ -117,7 +115,7 @@ const REGIONS = [
 
 export const SelectChrome: StoryObj = {
 	render: () => (
-		<div id="select-chrome" style={page}>
+		<div id="select-chrome" className="q-sb-forms">
 			<Select label="Region" placeholder="Choose a region" options={REGIONS} />
 			<Select
 				label="Region with help"
@@ -132,7 +130,7 @@ export const SelectChrome: StoryObj = {
 				options={REGIONS}
 			/>
 			<Select label="Region flagged" error options={REGIONS} />
-			<div style={row}>
+			<div className="q-sb-forms__row">
 				<Select label="Small" size="sm" options={REGIONS} />
 				<Select label="Medium" size="md" options={REGIONS} />
 				<Select label="Large" size="lg" options={REGIONS} />

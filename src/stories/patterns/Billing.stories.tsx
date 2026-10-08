@@ -16,7 +16,8 @@ import {
 	Text,
 	toast,
 } from "../../index";
-import { AppFrame, row, stack } from "./AppFrame";
+import { AppFrame } from "./AppFrame";
+import "./Billing.scss";
 
 // Billing — plan, what agents are spending today, the leash on each agent, and invoices.
 // Money reads in ink; molten appears only where a meter nears its cap.
@@ -30,7 +31,7 @@ function BillingPage() {
 			<PageHero
 				size="md"
 				ruled={false}
-				style={{ padding: 0 }}
+				className="q-sb-app-frame__hero"
 				title="Billing"
 				description="Pro plan, $49 a month, renews November 1. Agent usage is billed on top, capped per agent."
 				actions={
@@ -41,7 +42,7 @@ function BillingPage() {
 			/>
 			<Grid columns={12} gap="md">
 				<Col span={5}>
-					<div style={stack()}>
+					<div className="q-sb-app-frame__stack">
 						<SectionHeader size="sm" as="h2" title="Plan" />
 						<Card
 							eyebrow="Current plan"
@@ -49,7 +50,7 @@ function BillingPage() {
 							accent="$49 / month"
 							meta="Renews Nov 1 · billed to ada@sjocamp.co"
 							footer={
-								<div style={row("var(--q-space-stack)")}>
+								<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
 									<Button size="sm" variant="secondary">
 										Switch to yearly
 									</Button>
@@ -59,18 +60,11 @@ function BillingPage() {
 						>
 							Unlimited campaigns, 10 seats, Meerkat with a $40 daily cap. Four of ten seats used.
 						</Card>
-						<div
-							style={{
-								...row("var(--q-space-stack)"),
-								padding: "var(--q-space-card-pad)",
-								border: "var(--q-hairline) solid var(--q-border)",
-								borderRadius: "var(--q-radius-lg)",
-							}}
-						>
+						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-billing__card">
 							<Badge size="sm" variant="outline">
 								VISA
 							</Badge>
-							<div style={{ ...stack("0"), flex: 1 }}>
+							<div className="q-sb-billing__card-text">
 								<Text color="heading">Ending 4242</Text>
 								<Text size="sm" color="muted">
 									Expires 11 / 27
@@ -83,7 +77,7 @@ function BillingPage() {
 					</div>
 				</Col>
 				<Col span={7}>
-					<div style={stack()}>
+					<div className="q-sb-app-frame__stack">
 						<SectionHeader
 							size="sm"
 							as="h2"
@@ -118,7 +112,7 @@ function BillingPage() {
 					</div>
 				</Col>
 			</Grid>
-			<div style={stack("var(--q-space-stack)")}>
+			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 				<SectionHeader
 					size="sm"
 					as="h2"

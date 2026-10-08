@@ -8,6 +8,7 @@ import { RunScrubber } from "../../components/future/RunScrubber";
 import { ScopeGrant } from "../../components/future/ScopeGrant";
 import { UndoRiver } from "../../components/future/UndoRiver";
 import { Concept, FuturePage, Spec } from "./Concept";
+import "./Delegation.scss";
 
 // Future components I, II + IV: handing work to agents — say it, scope it, leash it, replay it,
 // and take it back.
@@ -122,7 +123,7 @@ function LeashDemo() {
 		return () => clearInterval(t);
 	}, [running, cap]);
 	return (
-		<div style={{ display: "grid", gap: 16, width: "100%" }}>
+		<div className="q-sb-delegation">
 			<BudgetLeash
 				label="Meerkat · research run"
 				agent={agent}
@@ -133,7 +134,7 @@ function LeashDemo() {
 				slack={10}
 				atCap="asks before spending more"
 			/>
-			<div style={{ display: "flex", gap: 8 }}>
+			<div className="q-sb-delegation__actions">
 				<Button size="sm" variant="secondary" onClick={() => setRunning((r) => !r)}>
 					{running ? "Pause spending" : "Let it spend"}
 				</Button>
@@ -200,13 +201,13 @@ const RIVER = [
 function RiverDemo() {
 	const [items, setItems] = useState(RIVER);
 	return (
-		<div style={{ display: "grid", gap: 12, width: "100%" }}>
+		<div className="q-sb-delegation q-sb-delegation--tight">
 			<UndoRiver
 				items={items}
 				now={NOW}
 				onUndo={(it) => setItems((xs) => xs.filter((x) => x.id !== it.id))}
 			/>
-			<div style={{ display: "flex", gap: 8 }}>
+			<div className="q-sb-delegation__actions">
 				<Button
 					size="sm"
 					variant="secondary"

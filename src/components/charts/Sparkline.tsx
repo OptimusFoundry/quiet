@@ -1,5 +1,6 @@
 import type React from "react";
 import { areaPath, formatNumber, linear, linePath } from "./chart-utils";
+import "./chart.scss";
 import "./Sparkline.scss";
 
 /**

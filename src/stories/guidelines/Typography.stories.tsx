@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { Eyebrow, PageHero, SectionHeader, StatCard, Text } from "../../index";
+import { cssVar, type TokenName } from "../../styles/tokens.generated";
 import { GuidePage, Mono, Part } from "./Guide";
+import "./Typography.scss";
 
 // docs/guidelines/typography.md as measured specimens: each app role rendered by the component
 // that owns it, with its computed size / line height / weight read from the rendered text.
@@ -13,7 +15,15 @@ const ROLES: Role[] = [
 		role: "page-title",
 		how: 'PageHero size="md" · h1 (h3 here)',
 		target: ".q-page-hero__title",
-		node: <PageHero size="md" as="h3" ruled={false} title="Campaigns" style={{ padding: 0 }} />,
+		node: (
+			<PageHero
+				size="md"
+				as="h3"
+				ruled={false}
+				title="Campaigns"
+				className="q-sb-typography__hero"
+			/>
+		),
 	},
 	{
 		role: "section-title",
@@ -86,17 +96,8 @@ function RoleRow({ r }: { r: Role }) {
 		setM(`${Math.round(Number.parseFloat(cs.fontSize))} / ${lh} · ${cs.fontWeight}`);
 	}, [r.target]);
 	return (
-		<div
-			style={{
-				display: "grid",
-				gridTemplateColumns: "repeat(auto-fit, minmax(min(240px, 100%), 1fr))",
-				gap: "var(--q-space-3)",
-				alignItems: "center",
-				padding: "var(--q-space-2) 0",
-				borderTop: "var(--q-hairline) solid var(--q-border)",
-			}}
-		>
-			<div style={{ display: "grid", gap: "var(--q-space-0-5)" }}>
+		<div className="q-sb-typography__row">
+			<div className="q-sb-typography__meta">
 				<Text size="sm" color="heading" weight="semibold">
 					{r.role}
 				</Text>
@@ -105,14 +106,21 @@ function RoleRow({ r }: { r: Role }) {
 					<code>{r.how}</code>
 				</Text>
 			</div>
-			<div ref={box} style={{ minWidth: 0, gridColumn: "span 2" }}>
+			<div ref={box} className="q-sb-typography__specimen">
 				{r.node}
 			</div>
 		</div>
 	);
 }
 
-const SCALE = ["2xs", "sm", "md", "lg", "2xl", "4xl"] as const;
+const SCALE = [
+	"--q-text-2xs",
+	"--q-text-sm",
+	"--q-text-md",
+	"--q-text-lg",
+	"--q-text-2xl",
+	"--q-text-4xl",
+] as const satisfies readonly TokenName[];
 
 function TypographyPage() {
 	return (
@@ -135,20 +143,16 @@ function TypographyPage() {
 				title="The six app sizes"
 				rule="11 · 13 · 15 · 17 · 24 · 40. 12 is in-component chrome; 19, 30, 52, 68 and display are marketing."
 			>
-				<div
-					style={{
-						display: "flex",
-						flexWrap: "wrap",
-						alignItems: "baseline",
-						gap: "var(--q-space-4)",
-					}}
-				>
-					{SCALE.map((s) => (
-						<div key={s} style={{ display: "grid", gap: "var(--q-space-0-5)" }}>
-							<span style={{ fontSize: `var(--q-text-${s})`, lineHeight: 1, color: "var(--q-fg)" }}>
+				<div className="q-sb-typography__sizes">
+					{SCALE.map((t) => (
+						<div key={t} className="q-sb-typography__size">
+							<span
+								className="q-sb-typography__sample"
+								style={{ "--_size": cssVar(t) } as CSSProperties}
+							>
 								Ag
 							</span>
-							<Mono>--q-text-{s}</Mono>
+							<Mono>{t}</Mono>
 						</div>
 					))}
 				</div>
@@ -157,10 +161,7 @@ function TypographyPage() {
 				title="Hierarchy on one screen"
 				rule="One 40, then 24 per section, 17 per panel. Never two equal headings stacked."
 			>
-				<div
-					data-density="app"
-					style={{ display: "grid", gap: "var(--q-space-block)", maxWidth: "var(--q-w-form)" }}
-				>
+				<div data-density="app" className="q-sb-typography__hierarchy">
 					<PageHero
 						size="md"
 						as="h3"
@@ -168,11 +169,11 @@ function TypographyPage() {
 						title="Billing"
 						description="Plan, usage and invoices."
 						ruled={false}
-						style={{ padding: 0 }}
+						className="q-sb-typography__hero"
 					/>
-					<div style={{ display: "grid", gap: "var(--q-space-block)" }}>
+					<div className="q-sb-typography__section">
 						<SectionHeader size="sm" as="h4" title="Usage" />
-						<div style={{ display: "grid", gap: "var(--q-space-stack)" }}>
+						<div className="q-sb-typography__stack">
 							<Text as="h5" size="lg" weight="semibold" color="heading">
 								Meerkat
 							</Text>

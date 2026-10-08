@@ -1,0 +1,114 @@
+// Layout for the Future stories (FuturePage, Concept, Spec in Concept.tsx).
+.q-sb-concept {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: var(--q-space-8) var(--q-space-page-x) var(--q-space-16);
+	background: var(--q-bg);
+	color: var(--q-fg);
+	font-family: var(--q-font-sans);
+
+	&__mono {
+		font-family: var(--q-font-mono);
+		font-size: var(--q-text-3xs);
+		letter-spacing: var(--q-tracking-mono);
+		text-transform: uppercase;
+		color: var(--q-fg-muted);
+	}
+
+	&__mono--strong {
+		color: var(--q-fg);
+	}
+
+	&__title {
+		margin: 12px 0 16px;
+		font-size: var(--q-text-5xl);
+		font-weight: 700;
+		letter-spacing: var(--q-tracking-display);
+		line-height: 1;
+	}
+
+	&__dot {
+		color: var(--q-accent);
+	}
+
+	&__intro {
+		max-width: 560px;
+		margin: 0 0 48px;
+		color: var(--q-fg-body);
+		line-height: 1.55;
+	}
+
+	&__section {
+		padding: 64px 0;
+		border-top: 1px solid var(--q-fg);
+	}
+
+	&__head {
+		display: flex;
+		gap: 16px;
+		align-items: baseline;
+		margin-bottom: 16px;
+	}
+
+	&__name {
+		margin: 0;
+		font-weight: 700;
+		font-size: var(--q-text-4xl);
+		letter-spacing: var(--q-tracking-h2);
+		line-height: 1;
+	}
+
+	&__meta {
+		display: flex;
+		gap: 32px;
+		flex-wrap: wrap;
+		margin-bottom: 24px;
+	}
+
+	&__from {
+		margin-top: 4px;
+	}
+
+	&__idea {
+		flex: 1 1 360px;
+		margin: 0;
+		color: var(--q-fg-body);
+		line-height: 1.55;
+	}
+
+	&__spec {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--q-space-3);
+		padding: var(--q-space-3) 0;
+		border-top: var(--q-hairline) solid var(--q-border);
+		align-items: center;
+	}
+
+	&__spec-label {
+		flex: 0 0 160px;
+		padding-top: 0;
+	}
+
+	&__spec-body {
+		flex: 1 1 320px;
+		display: flex;
+		flex-flow: row wrap;
+		gap: var(--q-space-2);
+		align-items: center;
+		min-width: 0;
+	}
+
+	&__spec--col {
+		align-items: start;
+	}
+
+	&__spec--col &__spec-label {
+		padding-top: var(--q-space-0-5);
+	}
+
+	&__spec--col &__spec-body {
+		flex-flow: column nowrap;
+		align-items: stretch;
+	}
+}

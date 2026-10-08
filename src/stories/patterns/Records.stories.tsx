@@ -21,7 +21,8 @@ import {
 	TextField,
 	toast,
 } from "../../index";
-import { AppFrame, row, stack, useNarrow } from "./AppFrame";
+import { AppFrame, useNarrow } from "./AppFrame";
+import "./Records.scss";
 
 // Records — the reference kit's list-detail.html: a 360 list pane (search, FilterTabs, selectable
 // List) beside the detail. The detail shows where its numbers come from (LineageChip), how old its
@@ -134,11 +135,11 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 	const shown = live.slice((page - 1) * PAGE, page * PAGE);
 	const picked = live.filter((r) => selected.includes(r.id));
 	return (
-		<div style={stack()}>
+		<div className="q-sb-app-frame__stack">
 			<PageHero
 				size="md"
 				ruled={false}
-				style={{ padding: 0 }}
+				className="q-sb-app-frame__hero"
 				eyebrow={campaign.kind}
 				title={campaign.name}
 				actions={
@@ -175,7 +176,7 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 					</>
 				}
 			/>
-			<div style={row("var(--q-space-stack)")}>
+			<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
 				<DecayingBadge
 					checkedAt={campaign.checked}
 					now={NOW}
@@ -278,7 +279,7 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 						data={shown}
 					/>
 					{pages > 1 && (
-						<div style={{ display: "flex", justifyContent: "flex-end" }}>
+						<div className="q-sb-records__pager">
 							<Pagination
 								size="sm"
 								page={page}
@@ -337,21 +338,10 @@ function Records() {
 	const campaign = (CAMPAIGNS.find((c) => c.id === selected) ??
 		CAMPAIGNS[0]) as (typeof CAMPAIGNS)[number];
 	return (
-		<div
-			style={{
-				display: "grid",
-				gridTemplateColumns: narrow ? "minmax(0, 1fr)" : "var(--q-w-list-pane) minmax(0, 1fr)",
-				minHeight: "100%",
-			}}
-		>
+		<div className={narrow ? "q-sb-records q-sb-records--narrow" : "q-sb-records"}>
 			<section
 				aria-label="Campaigns"
-				style={{
-					...stack("var(--q-space-stack)"),
-					padding: "var(--q-space-card-pad)",
-					borderRight: narrow ? 0 : "var(--q-hairline) solid var(--q-border)",
-					borderBottom: narrow ? "var(--q-hairline) solid var(--q-border)" : 0,
-				}}
+				className="q-sb-app-frame__stack q-sb-app-frame__stack--stack q-sb-records__list"
 			>
 				<TextField
 					label="Search campaigns"
@@ -402,15 +392,7 @@ function Records() {
 					/>
 				)}
 			</section>
-			<section
-				aria-label={`${campaign.name} detail`}
-				style={{
-					padding: "var(--q-space-section) var(--q-space-page-x)",
-					minWidth: 0,
-					maxWidth: "var(--q-w-content)",
-					boxSizing: "border-box",
-				}}
-			>
+			<section aria-label={`${campaign.name} detail`} className="q-sb-records__detail">
 				<Detail key={campaign.id} campaign={campaign} />
 			</section>
 		</div>

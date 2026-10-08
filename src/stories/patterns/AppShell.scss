@@ -1,0 +1,9 @@
+// App shell — the public-site preview sits in a hairline box at marketing density.
+
+.q-sb-app-shell {
+	&__public {
+		border: var(--q-hairline) solid var(--q-border);
+		border-radius: var(--q-radius-lg);
+		overflow: hidden;
+	}
+}

@@ -8,17 +8,10 @@ import { CodeBlock } from "../../components/chat/CodeBlock";
 import { PromptSuggestions } from "../../components/chat/PromptSuggestions";
 import { ToolCall } from "../../components/chat/ToolCall";
 import { Concept, FuturePage, Spec } from "./Concept";
+import "./Chat.scss";
 
 // Chat — quiet's AI chat set: thread, messages, rich composer, attachments, tool calls, code.
 // UI only. The demo fakes Claude's streamed reply with a timer; a product wires onSubmit to the API.
-
-const mono: CSSProperties = {
-	fontFamily: "var(--q-font-mono)",
-	fontSize: "var(--q-text-2xs)",
-	letterSpacing: "var(--q-tracking-mono)",
-	textTransform: "uppercase",
-	color: "var(--q-fg-muted)",
-};
 
 // A small placeholder image, so image attachments have something to show without network.
 const IMAGE = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -190,34 +183,11 @@ function ChatDemo({
 	};
 
 	return (
-		<div
-			style={{
-				display: "grid",
-				gridTemplateRows: "minmax(0, 1fr) auto",
-				gap: 16,
-				height,
-				padding: 16,
-				border: "1px solid var(--q-border)",
-				borderRadius: "var(--q-radius-xl)",
-				background: "var(--q-bg)",
-			}}
-		>
+		<div className="q-sb-chat__demo" style={{ "--_height": `${height}px` } as CSSProperties}>
 			<ChatThread
 				empty={
-					<div
-						style={{
-							display: "grid",
-							gap: 20,
-							width: "100%",
-							justifyItems: "center",
-							textAlign: "center",
-						}}
-					>
-						<div
-							style={{ fontSize: "var(--q-text-2xl)", fontWeight: 600, letterSpacing: "-0.02em" }}
-						>
-							What are we working on?
-						</div>
+					<div className="q-sb-chat__empty">
+						<div className="q-sb-chat__empty-title">What are we working on?</div>
 						<PromptSuggestions
 							layout="grid"
 							suggestions={STARTERS}
@@ -257,7 +227,7 @@ function ChatDemo({
 							)}
 							{t.text && <Words text={t.text} />}
 							{t.code && <CodeBlock language="sql" code={CODE} />}
-							{t.stopped && <p style={mono}>Stopped</p>}
+							{t.stopped && <p className="q-sb-chat__mono">Stopped</p>}
 						</ChatMessage>
 					),
 				)}
@@ -272,7 +242,7 @@ function ChatDemo({
 				}}
 				accept="image/*,.pdf,.csv,.txt,.md,.docx,.xlsx,.json"
 				maxSize={20 * 1024 * 1024}
-				toolbar={<span style={mono}>Claude Opus 5.5</span>}
+				toolbar={<span className="q-sb-chat__mono">Claude Opus 5.5</span>}
 				hint="⏎ send · ⇧⏎ line"
 			/>
 		</div>
@@ -311,11 +281,7 @@ function UploadingComposer() {
 }
 
 function Gallery({ children }: { children: ReactNode }) {
-	return (
-		<div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "flex-start" }}>
-			{children}
-		</div>
-	);
+	return <div className="q-sb-chat__gallery">{children}</div>;
 }
 
 function Page() {
@@ -334,7 +300,7 @@ function Page() {
 			>
 				<Spec label="Working demo" col>
 					<ChatDemo />
-					<span style={mono}>
+					<span className="q-sb-chat__mono">
 						Send a message (attach a file if you like) — the reply is faked with a timer
 					</span>
 				</Spec>
@@ -404,7 +370,7 @@ function Page() {
 						accept="image/*,.pdf,.csv,.txt,.md"
 						maxFiles={4}
 						maxSize={5 * 1024 * 1024}
-						toolbar={<span style={mono}>Claude Opus 5.5</span>}
+						toolbar={<span className="q-sb-chat__mono">Claude Opus 5.5</span>}
 						hint="4 files · 5 MB each"
 					/>
 				</Spec>
@@ -561,7 +527,7 @@ function Page() {
 						]}
 						onSelect={setPicked}
 					/>
-					<span style={mono} aria-live="polite">
+					<span className="q-sb-chat__mono" aria-live="polite">
 						{picked ? `Picked: ${picked}` : "Pick one"}
 					</span>
 				</Spec>

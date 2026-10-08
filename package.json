@@ -19,10 +19,13 @@
 			"import": "./dist/index.js"
 		},
 		"./style.css": "./dist/quiet.css",
-		"./fonts.css": "./dist/fonts.css"
+		"./fonts.css": "./dist/fonts.css",
+		"./stylelint": "./stylelint/index.mjs",
+		"./tokens.json": "./dist/tokens.json"
 	},
 	"files": [
 		"dist",
+		"stylelint",
 		"DESIGN.md",
 		"docs/guidelines",
 		"skills",
@@ -38,13 +41,14 @@
 		"prepare": "npm run build",
 		"check:package": "node scripts/check-package.mjs",
 		"build-storybook": "storybook build",
-		"lint": "biome check . && stylelint \"src/**/*.scss\"",
+		"lint": "biome check . && stylelint \"src/**/*.scss\" && node scripts/check-tokens.mjs",
 		"typecheck": "tsc --noEmit",
 		"test": "playwright test"
 	},
 	"peerDependencies": {
 		"react": "^19.2.0",
-		"react-dom": "^19.2.0"
+		"react-dom": "^19.2.0",
+		"stylelint": ">=16"
 	},
 	"dependencies": {
 		"motion": "^12.38.0"
@@ -68,5 +72,10 @@
 		"stylelint-declaration-strict-value": "^1.12.1",
 		"typescript": "^7.0.2",
 		"vite": "^8.3.4"
+	},
+	"peerDependenciesMeta": {
+		"stylelint": {
+			"optional": true
+		}
 	}
 }

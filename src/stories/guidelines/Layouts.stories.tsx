@@ -1,68 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Text } from "../../index";
 import { GuidePage, Mono, Part } from "./Guide";
+import "./Layouts.scss";
 
 // docs/guidelines/layouts.md as miniatures: the ten page layouts drawn from the real width tokens at
 // 1/5 scale, each with when to choose it and what collapses under 720.
-
-const k = 0.2; // scale
-const w = (token: string) => `calc(var(${token}) * ${k})`;
-
-const box = (extra?: CSSProperties): CSSProperties => ({
-	border: "var(--q-hairline) solid var(--q-border-strong)",
-	borderRadius: "var(--q-radius-xs)",
-	background: "var(--q-bg)",
-	minWidth: 0,
-	minHeight: "var(--q-space-1)",
-	...extra,
-});
-const fill = (extra?: CSSProperties): CSSProperties => ({
-	background: "var(--q-bg-subtle)",
-	borderRadius: "var(--q-radius-2xs)",
-	minWidth: 0,
-	minHeight: "var(--q-space-1)",
-	...extra,
-});
-const title: CSSProperties = {
-	height: "var(--q-space-1)",
-	width: "40%",
-	background: "var(--q-fg)",
-	borderRadius: 2,
-};
-const cols = (t: string, gap = "var(--q-space-0-5)"): CSSProperties => ({
-	display: "grid",
-	gridTemplateColumns: t,
-	gap,
-});
-const rows = (gap = "var(--q-space-0-5)"): CSSProperties => ({
-	display: "grid",
-	gap,
-	alignContent: "start",
-});
 
 /** App frame at 1/5: sidebar 240 + main (padding 48/32 scaled). */
 function App({ children, rail }: { children: ReactNode; rail?: boolean }) {
 	return (
 		<div
-			style={{
-				...cols(rail === false ? "minmax(0,1fr)" : `${w("--q-w-sidebar")} minmax(0,1fr)`, "0"),
-				...box(),
-				height: 128,
-				overflow: "hidden",
-			}}
+			className={
+				rail === false ? "q-sb-layouts__app q-sb-layouts__app--no-rail" : "q-sb-layouts__app"
+			}
 		>
-			{rail !== false && <div style={fill({ borderRadius: 0 })} />}
-			<div style={{ ...rows("0"), gridTemplateRows: `${w("--q-h-topbar")} 1fr`, minWidth: 0 }}>
-				<div style={{ borderBottom: "var(--q-hairline) solid var(--q-border)" }} />
-				<div
-					style={{
-						...rows("var(--q-space-0-75)"),
-						padding: `${w("--q-space-6")} ${w("--q-space-4")}`,
-					}}
-				>
-					{children}
-				</div>
+			{rail !== false && <div className="q-sb-layouts__fill q-sb-layouts__rail" />}
+			<div className="q-sb-layouts__main">
+				<div className="q-sb-layouts__topbar" />
+				<div className="q-sb-layouts__body">{children}</div>
 			</div>
 		</div>
 	);
@@ -78,15 +34,15 @@ const LAYOUTS: L[] = [
 		collapse: "2 × 2 at 720–960 · stacks under 720",
 		art: (
 			<App>
-				<div style={title} />
-				<div style={cols("repeat(4, minmax(0,1fr))")}>
+				<div className="q-sb-layouts__title" />
+				<div className="q-sb-layouts__kpis">
 					{[0, 1, 2, 3].map((i) => (
-						<div key={i} style={box({ height: 14 })} />
+						<div key={i} className="q-sb-layouts__box q-sb-layouts__kpi" />
 					))}
 				</div>
-				<div style={cols("2fr 1fr")}>
-					<div style={box({ height: 34 })} />
-					<div style={box({ height: 34 })} />
+				<div className="q-sb-layouts__dash-split">
+					<div className="q-sb-layouts__box q-sb-layouts__chart" />
+					<div className="q-sb-layouts__box q-sb-layouts__chart" />
 				</div>
 			</App>
 		),
@@ -98,20 +54,15 @@ const LAYOUTS: L[] = [
 		collapse: "two routes under 720",
 		art: (
 			<App>
-				<div
-					style={{
-						...cols(`${w("--q-w-list-pane")} minmax(0,1fr)`, "var(--q-space-1)"),
-						height: 80,
-					}}
-				>
-					<div style={rows()}>
+				<div className="q-sb-layouts__list-detail">
+					<div className="q-sb-layouts__rows">
 						{[0, 1, 2, 3, 4].map((i) => (
-							<div key={i} style={fill({ height: 10 })} />
+							<div key={i} className="q-sb-layouts__fill q-sb-layouts__list-row" />
 						))}
 					</div>
-					<div style={rows()}>
-						<div style={title} />
-						<div style={box({ height: 50 })} />
+					<div className="q-sb-layouts__rows">
+						<div className="q-sb-layouts__title" />
+						<div className="q-sb-layouts__box q-sb-layouts__detail" />
 					</div>
 				</div>
 			</App>
@@ -124,20 +75,14 @@ const LAYOUTS: L[] = [
 		collapse: "panel → Drawer under 720",
 		art: (
 			<App>
-				<div style={{ ...cols(`minmax(0,1fr) ${w("--q-w-detail-panel")}`, "0"), height: 80 }}>
-					<div style={{ ...rows(), paddingRight: "var(--q-space-1)" }}>
-						<div style={title} />
-						<div style={box({ height: 50 })} />
+				<div className="q-sb-layouts__inspector-split">
+					<div className="q-sb-layouts__rows q-sb-layouts__detail-col">
+						<div className="q-sb-layouts__title" />
+						<div className="q-sb-layouts__box q-sb-layouts__detail" />
 					</div>
-					<div
-						style={{
-							...rows(),
-							borderLeft: "var(--q-hairline) solid var(--q-border)",
-							paddingLeft: "var(--q-space-0-75)",
-						}}
-					>
+					<div className="q-sb-layouts__rows q-sb-layouts__pane q-sb-layouts__inspector">
 						{[0, 1, 2].map((i) => (
-							<div key={i} style={fill({ height: 12 })} />
+							<div key={i} className="q-sb-layouts__fill q-sb-layouts__pane-row" />
 						))}
 					</div>
 				</div>
@@ -151,12 +96,12 @@ const LAYOUTS: L[] = [
 		collapse: "table scrolls inside itself",
 		art: (
 			<App>
-				<div style={title} />
-				<div style={cols("1fr auto")}>
-					<div style={fill({ height: 8, width: "50%" })} />
-					<div style={fill({ height: 8, width: 24 })} />
+				<div className="q-sb-layouts__title" />
+				<div className="q-sb-layouts__toolbar">
+					<div className="q-sb-layouts__fill q-sb-layouts__search" />
+					<div className="q-sb-layouts__fill q-sb-layouts__filter" />
 				</div>
-				<div style={box({ height: 52 })} />
+				<div className="q-sb-layouts__box q-sb-layouts__table" />
 			</App>
 		),
 	},
@@ -167,17 +112,12 @@ const LAYOUTS: L[] = [
 		collapse: "column goes full width",
 		art: (
 			<App>
-				<div style={title} />
-				<div style={{ ...rows("var(--q-space-0-75)"), width: w("--q-w-form") }}>
+				<div className="q-sb-layouts__title" />
+				<div className="q-sb-layouts__form">
 					{[0, 1, 2].map((i) => (
-						<div key={i} style={box({ height: 9 })} />
+						<div key={i} className="q-sb-layouts__box q-sb-layouts__field" />
 					))}
-					<div
-						style={{
-							...fill({ height: 9, width: 30, background: "var(--q-fg)" }),
-							justifySelf: "end",
-						}}
-					/>
+					<div className="q-sb-layouts__fill q-sb-layouts__submit" />
 				</div>
 			</App>
 		),
@@ -189,27 +129,28 @@ const LAYOUTS: L[] = [
 		collapse: "vertical StepIndicator, full width",
 		art: (
 			<App>
-				<div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+				<div className="q-sb-layouts__steps">
 					{[0, 1, 2].map((i) => (
 						<span
 							key={i}
-							style={{
-								width: 8,
-								height: 8,
-								borderRadius: 8,
-								background: i ? "var(--q-border)" : "var(--q-fg)",
-							}}
+							className={
+								i ? "q-sb-layouts__step" : "q-sb-layouts__step q-sb-layouts__step--current"
+							}
 						/>
 					))}
 				</div>
-				<div style={{ ...rows("var(--q-space-0-75)"), width: w("--q-w-form") }}>
+				<div className="q-sb-layouts__form">
 					{[0, 1].map((i) => (
-						<div key={i} style={box({ height: 9 })} />
+						<div key={i} className="q-sb-layouts__box q-sb-layouts__field" />
 					))}
-					<div style={cols("auto 1fr auto")}>
-						<div style={fill({ height: 9, width: 24 })} />
+					<div className="q-sb-layouts__wizard-actions">
+						<div className="q-sb-layouts__fill q-sb-layouts__wizard-button" />
 						<span />
-						<div style={fill({ height: 9, width: 24, background: "var(--q-fg)" })} />
+						<div
+							className={
+								"q-sb-layouts__fill q-sb-layouts__wizard-button q-sb-layouts__wizard-button--primary"
+							}
+						/>
 					</div>
 				</div>
 			</App>
@@ -222,26 +163,21 @@ const LAYOUTS: L[] = [
 		collapse: "nav → Select above the form",
 		art: (
 			<App>
-				<div
-					style={{
-						...cols(`${w("--q-w-settings-nav")} ${w("--q-w-form")}`, "var(--q-space-1)"),
-						height: 80,
-					}}
-				>
-					<div style={rows()}>
+				<div className="q-sb-layouts__settings-split">
+					<div className="q-sb-layouts__rows">
 						{[0, 1, 2, 3].map((i) => (
-							<div key={i} style={fill({ height: 7 })} />
+							<div key={i} className="q-sb-layouts__fill q-sb-layouts__nav-item" />
 						))}
 					</div>
-					<div style={rows("var(--q-space-1)")}>
+					<div className="q-sb-layouts__rows q-sb-layouts__groups">
 						{[0, 1].map((i) => (
-							<div key={i} style={rows()}>
-								<div style={{ ...title, width: "30%", height: 5 }} />
-								<div style={{ borderTop: "var(--q-hairline) solid var(--q-border)", height: 8 }} />
-								<div style={{ borderTop: "var(--q-hairline) solid var(--q-border)", height: 8 }} />
+							<div key={i} className="q-sb-layouts__rows">
+								<div className="q-sb-layouts__title q-sb-layouts__group-title" />
+								<div className="q-sb-layouts__rule q-sb-layouts__setting" />
+								<div className="q-sb-layouts__rule q-sb-layouts__setting" />
 							</div>
 						))}
-						<div style={box({ height: 10, borderColor: "var(--q-accent)" })} />
+						<div className="q-sb-layouts__box q-sb-layouts__danger" />
 					</div>
 				</div>
 			</App>
@@ -254,34 +190,17 @@ const LAYOUTS: L[] = [
 		collapse: "full width · panel → drawer",
 		art: (
 			<App>
-				<div
-					style={{
-						...cols(`${w("--q-w-form")} ${w("--q-w-detail-panel")}`, "var(--q-space-1)"),
-						height: 80,
-					}}
-				>
-					<div style={{ ...rows("var(--q-space-0-75)"), gridTemplateRows: "1fr auto" }}>
-						<div style={rows()}>
-							<div style={{ ...fill({ height: 9, width: "50%" }), justifySelf: "end" }} />
-							<div
-								style={fill({
-									height: 16,
-									background: "transparent",
-									borderLeft: "2px solid var(--q-border)",
-								})}
-							/>
+				<div className="q-sb-layouts__chat-split">
+					<div className="q-sb-layouts__rows q-sb-layouts__chat">
+						<div className="q-sb-layouts__rows">
+							<div className="q-sb-layouts__fill q-sb-layouts__bubble" />
+							<div className="q-sb-layouts__fill q-sb-layouts__reply" />
 						</div>
-						<div style={box({ height: 14, borderRadius: 6 })} />
+						<div className="q-sb-layouts__box q-sb-layouts__composer" />
 					</div>
-					<div
-						style={{
-							...rows(),
-							borderLeft: "var(--q-hairline) solid var(--q-border)",
-							paddingLeft: 4,
-						}}
-					>
+					<div className="q-sb-layouts__rows q-sb-layouts__pane q-sb-layouts__chat-pane">
 						{[0, 1].map((i) => (
-							<div key={i} style={fill({ height: 12 })} />
+							<div key={i} className="q-sb-layouts__fill q-sb-layouts__pane-row" />
 						))}
 					</div>
 				</div>
@@ -295,7 +214,7 @@ const LAYOUTS: L[] = [
 		collapse: "sidebar → drawer · page-x 16",
 		art: (
 			<App>
-				<div style={fill({ height: 70 })} />
+				<div className="q-sb-layouts__fill q-sb-layouts__shell-main" />
 			</App>
 		),
 	},
@@ -305,28 +224,13 @@ const LAYOUTS: L[] = [
 		dims: "NavBar · density marketing · sections 128 · gutter 32",
 		collapse: "columns stack",
 		art: (
-			<div
-				style={{
-					...rows("var(--q-space-1)"),
-					...box(),
-					height: 128,
-					padding: 8,
-					boxSizing: "border-box",
-					overflow: "hidden",
-				}}
-			>
-				<div style={{ borderBottom: "var(--q-hairline) solid var(--q-border)", height: 10 }} />
-				<div style={{ ...title, height: 18, width: "60%" }} />
-				<div
-					style={{
-						borderTop: "var(--q-hairline) solid var(--q-fg)",
-						...cols("5fr 1fr 6fr"),
-						paddingTop: 6,
-					}}
-				>
-					<div style={{ ...title, width: "70%", height: 8 }} />
+			<div className="q-sb-layouts__site">
+				<div className="q-sb-layouts__site-nav" />
+				<div className="q-sb-layouts__title q-sb-layouts__site-hero" />
+				<div className="q-sb-layouts__site-section">
+					<div className="q-sb-layouts__title q-sb-layouts__site-heading" />
 					<span />
-					<div style={fill({ height: 24 })} />
+					<div className="q-sb-layouts__fill q-sb-layouts__site-art" />
 				</div>
 			</div>
 		),
@@ -344,22 +248,13 @@ function LayoutsPage() {
 				title="The ten"
 				rule="Each: when to choose it, its dimensions, what collapses under 720."
 			>
-				<div
-					style={{
-						display: "grid",
-						gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))",
-						gap: "var(--q-space-4) var(--q-space-3)",
-					}}
-				>
+				<div className="q-sb-layouts__list">
 					{LAYOUTS.map((l) => (
-						<figure
-							key={l.name}
-							style={{ margin: 0, display: "grid", gap: "var(--q-space-1)", minWidth: 0 }}
-						>
-							<div aria-hidden="true" style={{ overflow: "hidden" }}>
+						<figure key={l.name} className="q-sb-layouts__figure">
+							<div aria-hidden="true" className="q-sb-layouts__art">
 								{l.art}
 							</div>
-							<figcaption style={{ display: "grid", gap: "var(--q-space-0-5)" }}>
+							<figcaption className="q-sb-layouts__caption">
 								<Text as="h3" size="md" weight="semibold" color="heading">
 									{l.name}
 								</Text>

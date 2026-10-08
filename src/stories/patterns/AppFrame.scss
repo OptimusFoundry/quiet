@@ -1,0 +1,112 @@
+// The signed-in app frame: 240 sidebar + 64 top bar + main, plus the layout helpers every
+// Patterns page uses inside it (stack, row, page hero). Plain CSS on --q-* tokens.
+
+// Shared by every page that imports this file, so the selectors are wrapped in :where() (no
+// specificity): a page's own class always overrides them, whatever order the stylesheets load in.
+:where(.q-sb-app-frame) {
+	display: grid;
+	grid-template-columns: var(--q-w-sidebar) minmax(0, 1fr);
+	min-height: 100vh;
+	background: var(--q-bg);
+	color: var(--q-fg-body);
+	font-family: var(--q-font-body);
+}
+
+// Under 720px the Sidebar is a drawer and leaves the grid.
+:where(.q-sb-app-frame--narrow) {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+:where(.q-sb-app-frame__sidebar) {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+
+:where(.q-sb-app-frame__body) {
+	display: grid;
+	grid-template-rows: var(--q-h-topbar) minmax(0, 1fr);
+	min-width: 0;
+}
+
+:where(.q-sb-app-frame__topbar) {
+	display: flex;
+	align-items: center;
+	gap: var(--q-space-stack);
+	flex-wrap: nowrap;
+	min-width: 0;
+	position: sticky;
+	top: 0;
+	z-index: var(--q-z-sticky);
+	padding: 0 var(--q-space-page-x);
+	border-bottom: var(--q-hairline) solid var(--q-border);
+	background: var(--q-bg);
+}
+
+:where(.q-sb-app-frame__crumbs) {
+	flex: 1;
+	min-width: 0;
+}
+
+:where(.q-sb-app-frame__person) {
+	display: flex;
+	flex-direction: column;
+}
+
+:where(.q-sb-app-frame__main) {
+	min-width: 0;
+}
+
+// Pages that don't lay out their own panes: one centred column of blocks.
+:where(.q-sb-app-frame__main--padded) {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-block);
+	width: 100%;
+	max-width: var(--q-w-max);
+	margin: 0 auto;
+	padding: var(--q-space-section) var(--q-space-page-x);
+	box-sizing: border-box;
+}
+
+// The page title sits flush in the main column; the column's padding is the margin.
+:where(.q-sb-app-frame__hero) {
+	padding: 0;
+}
+
+// Vertical stack. Default gap separates blocks; modifiers name the job of the gap.
+:where(.q-sb-app-frame__stack) {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-block);
+	min-width: 0;
+}
+
+:where(.q-sb-app-frame__stack--section) {
+	gap: var(--q-space-section);
+}
+
+:where(.q-sb-app-frame__stack--stack) {
+	gap: var(--q-space-stack);
+}
+
+:where(.q-sb-app-frame__stack--field) {
+	gap: var(--q-space-field);
+}
+
+:where(.q-sb-app-frame__stack--inline) {
+	gap: var(--q-space-inline);
+}
+
+// Horizontal row that wraps. Default gap is inline; --stack spaces whole controls.
+:where(.q-sb-app-frame__row) {
+	display: flex;
+	align-items: center;
+	gap: var(--q-space-inline);
+	flex-wrap: wrap;
+	min-width: 0;
+}
+
+:where(.q-sb-app-frame__row--stack) {
+	gap: var(--q-space-stack);
+}

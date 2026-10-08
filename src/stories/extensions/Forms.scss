@@ -1,0 +1,14 @@
+// Layout for the Extensions/Forms stories.
+.q-sb-forms {
+	display: grid;
+	gap: 32px;
+	max-width: 560px;
+	padding: 32px;
+
+	&__row {
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+}

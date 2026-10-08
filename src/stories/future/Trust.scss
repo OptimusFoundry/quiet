@@ -1,0 +1,51 @@
+// Layout for the Future/Trust story.
+.q-sb-trust {
+	&__mono {
+		font-family: var(--q-font-mono);
+		font-size: var(--q-text-2xs);
+		letter-spacing: var(--q-tracking-mono);
+		text-transform: uppercase;
+		color: var(--q-fg-muted);
+	}
+
+	&__history {
+		width: 100%;
+		max-width: 640px;
+	}
+
+	&__doubt {
+		display: grid;
+		gap: 16px;
+		max-width: 600px;
+	}
+
+	&__claim {
+		margin: 0;
+		font-size: var(--q-text-lg);
+		line-height: var(--q-leading-body);
+	}
+
+	&__foot {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__figure {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	&__big {
+		font-size: var(--q-text-3xl);
+		font-weight: 600;
+		letter-spacing: var(--q-tracking-h3);
+		font-variant-numeric: tabular-nums;
+	}
+
+	&__num {
+		font-variant-numeric: tabular-nums;
+	}
+}

@@ -1,22 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type CSSProperties, useState } from "react";
+import { useState } from "react";
 import { Button } from "../../components/core/Button";
 import { type Checkpoint, Checkpoints } from "../../components/future/Checkpoints";
 import { DoubtMarker } from "../../components/future/DoubtMarker";
 import { LineageChip } from "../../components/future/LineageChip";
 import { Receipt } from "../../components/future/Receipt";
 import { Concept, FuturePage, Spec } from "./Concept";
+import "./Trust.scss";
 
 // Future components, trust set — from the Claude Design "Future Components" concepts
 // (04 Checkpoints, 66 Doubt marker, 67 Receipt, 122 Lineage chip), rebuilt on quiet tokens.
-const mono: CSSProperties = {
-	fontFamily: "var(--q-font-mono)",
-	fontSize: "var(--q-text-2xs)",
-	letterSpacing: "var(--q-tracking-mono)",
-	textTransform: "uppercase",
-	color: "var(--q-fg-muted)",
-};
-
 const HISTORY: Checkpoint[] = [
 	{ id: "a", time: "09:12", who: "You", label: "Created Spring waitlist", changes: 0 },
 	{ id: "b", time: "10:40", who: "Meerkat", agent: true, label: "Rewrote welcome email" },
@@ -29,7 +22,7 @@ function CheckpointsDemo() {
 	const [points, setPoints] = useState(HISTORY);
 	const [sel, setSel] = useState(HISTORY.length - 1);
 	return (
-		<div style={{ width: "100%", maxWidth: 640 }}>
+		<div className="q-sb-trust__history">
 			<Checkpoints
 				label="Spring waitlist history"
 				checkpoints={points}
@@ -58,8 +51,8 @@ function DoubtDemo() {
 		setTimeout(() => setSt((s) => ({ ...s, [i]: outcome })), 1200);
 	};
 	return (
-		<div style={{ display: "grid", gap: 16, maxWidth: 600 }}>
-			<p style={{ margin: 0, fontSize: "var(--q-text-lg)", lineHeight: "var(--q-leading-body)" }}>
+		<div className="q-sb-trust__doubt">
+			<p className="q-sb-trust__claim">
 				Signups rose 12% this month.{" "}
 				<DoubtMarker
 					status={st[1] ?? "doubt"}
@@ -79,8 +72,8 @@ function DoubtDemo() {
 					Verification held at 91%.
 				</DoubtMarker>
 			</p>
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-				<span style={mono}>Press a claim you doubt</span>
+			<div className="q-sb-trust__foot">
+				<span className="q-sb-trust__mono">Press a claim you doubt</span>
 				{Object.keys(st).length > 0 && (
 					<Button size="sm" variant="ghost" onClick={() => setSt({})}>
 						Reset
@@ -120,13 +113,6 @@ const MRR_FRESH = [
 const MRR_STALE = MRR_FRESH.map((s) =>
 	s.label === "stripe.subs" ? { ...s, stale: true, detail: "40 min late" } : s,
 );
-
-const big: CSSProperties = {
-	fontSize: "var(--q-text-3xl)",
-	fontWeight: 600,
-	letterSpacing: "var(--q-tracking-h3)",
-	fontVariantNumeric: "tabular-nums",
-};
 
 function TrustPage() {
 	return (
@@ -193,19 +179,19 @@ function TrustPage() {
 				idea="Every headline number wears a chip that says whether its upstream is fresh. Press it and the lineage unfolds: tables, joins, and which one is late. Trust the number or know exactly why not."
 			>
 				<Spec label="Fresh" col>
-					<div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-						<span style={big}>$13,204</span>
+					<div className="q-sb-trust__figure">
+						<span className="q-sb-trust__big">$13,204</span>
 						<LineageChip label="MRR" steps={MRR_FRESH} freshness="4 min" />
 					</div>
 				</Spec>
 				<Spec label="One source late" col>
-					<div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-						<span style={big}>$13,204</span>
+					<div className="q-sb-trust__figure">
+						<span className="q-sb-trust__big">$13,204</span>
 						<LineageChip label="MRR" steps={MRR_STALE} defaultOpen />
 					</div>
 				</Spec>
 				<Spec label="Small">
-					<span style={{ fontVariantNumeric: "tabular-nums" }}>4,812 signups</span>
+					<span className="q-sb-trust__num">4,812 signups</span>
 					<LineageChip size="sm" label="signups" steps={MRR_FRESH.slice(2, 4)} freshness="1 min" />
 				</Spec>
 			</Concept>

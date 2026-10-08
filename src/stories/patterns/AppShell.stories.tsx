@@ -13,7 +13,8 @@ import {
 	SectionHeader,
 	Text,
 } from "../../index";
-import { AppFrame, stack } from "./AppFrame";
+import { AppFrame } from "./AppFrame";
+import "./AppShell.scss";
 
 // App shell — the frame every signed-in screen sits in, and the public-page frame beside it.
 // Signed in: Sidebar (240) + top bar (64: breadcrumb, ⌘K search, account) + main at density "app".
@@ -55,7 +56,7 @@ function Shell() {
 			<PageHero
 				size="md"
 				ruled={false}
-				style={{ padding: 0 }}
+				className="q-sb-app-frame__hero"
 				title="Your"
 				accent="workspace"
 				description="Every signed-in screen uses this frame. Pages only fill the main column; they never bring their own header or navigation."
@@ -67,13 +68,13 @@ function Shell() {
 			/>
 			<Grid columns={12} gap="md">
 				<Col span={7}>
-					<div style={stack("var(--q-space-stack)")}>
+					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 						<SectionHeader size="sm" as="h2" title="Anatomy" />
 						<List size="sm" items={REGIONS} />
 					</div>
 				</Col>
 				<Col span={5}>
-					<div style={stack("var(--q-space-stack)")}>
+					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 						<SectionHeader size="sm" as="h2" title="On a phone" />
 						<Alert variant="info" title="Under 720px the sidebar leaves the grid.">
 							Sidebar becomes its own drawer (SidebarProvider + SidebarTrigger in the top bar), the
@@ -87,21 +88,14 @@ function Shell() {
 					</div>
 				</Col>
 			</Grid>
-			<div style={stack("var(--q-space-stack)")}>
+			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
 				<SectionHeader
 					size="sm"
 					as="h2"
 					title="Public pages"
 					description="Status, changelog, docs and sign-in use the site frame: NavBar on top, PageShell for columns, marketing density."
 				/>
-				<div
-					data-density="marketing"
-					style={{
-						border: "var(--q-hairline) solid var(--q-border)",
-						borderRadius: "var(--q-radius-lg)",
-						overflow: "hidden",
-					}}
-				>
+				<div data-density="marketing" className="q-sb-app-shell__public">
 					<NavBar
 						label="Public site"
 						homeLabel="Sjocamp home"

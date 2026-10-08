@@ -1,0 +1,113 @@
+// Story-only helpers for the Guidelines specimens (Guide.tsx).
+
+// Shared by every page that imports this file, so the selectors are wrapped in :where() (no
+// specificity): a page's own class always overrides them, whatever order the stylesheets load in.
+:where(.q-sb-guide) {
+	max-width: var(--q-w-max);
+	margin: 0 auto;
+	padding: var(--q-space-6) var(--q-space-page-x) var(--q-space-12);
+	box-sizing: border-box;
+	background: var(--q-bg);
+	color: var(--q-fg-body);
+	font-family: var(--q-font-sans);
+	display: grid;
+	gap: var(--q-space-6);
+	min-width: 0;
+}
+
+:where(.q-sb-guide__header) {
+	display: grid;
+	gap: var(--q-space-2);
+}
+
+:where(.q-sb-guide__accent) {
+	color: var(--q-accent);
+}
+
+:where(.q-sb-guide__intro) {
+	max-width: var(--q-w-form);
+}
+
+:where(.q-sb-guide__mono) {
+	font-family: var(--q-font-mono);
+	font-size: var(--q-text-2xs);
+	letter-spacing: var(--q-tracking-mono);
+	text-transform: uppercase;
+	color: var(--q-fg-muted);
+}
+
+:where(.q-sb-guide__part) {
+	display: grid;
+	gap: var(--q-space-3);
+	padding-top: var(--q-space-2);
+	border-top: var(--q-hairline) solid var(--q-fg);
+	min-width: 0;
+}
+
+:where(.q-sb-guide__part-head) {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: var(--q-space-2);
+}
+
+:where(.q-sb-guide__part-title) {
+	display: grid;
+	gap: var(--q-space-1);
+	max-width: var(--q-w-form);
+}
+
+// A vertical redline: --_h is the gap token it renders.
+:where(.q-sb-guide__gap) {
+	position: relative;
+	height: var(--_h);
+	border-top: var(--q-hairline) dashed var(--q-accent);
+	border-bottom: var(--q-hairline) dashed var(--q-accent);
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	min-height: var(--q-space-1);
+}
+
+:where(.q-sb-guide__gap-label) {
+	background: var(--q-bg);
+	padding-left: var(--q-space-1);
+	line-height: 1;
+}
+
+:where(.q-sb-guide__span) {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--q-space-1);
+}
+
+// A horizontal redline: --_w is the width token it renders.
+:where(.q-sb-guide__span-bar) {
+	width: var(--_w);
+	height: var(--q-space-1);
+	border-left: var(--q-hairline) solid var(--q-accent);
+	border-right: var(--q-hairline) solid var(--q-accent);
+	background: linear-gradient(var(--q-accent), var(--q-accent)) center / 100% var(--q-hairline) no-repeat;
+	box-sizing: border-box;
+	flex: none;
+}
+
+:where(.q-sb-guide__panel) {
+	display: grid;
+	gap: var(--q-space-stack);
+	padding: var(--q-space-card-pad);
+	border: var(--q-hairline) solid var(--q-border);
+	border-radius: var(--q-radius-lg);
+	min-width: 0;
+}
+
+:where(.q-sb-guide__well) {
+	display: grid;
+	gap: var(--q-space-stack);
+	padding: var(--q-space-card-pad);
+	background: var(--q-bg-subtle);
+	border-radius: var(--q-radius-lg);
+	min-width: 0;
+}

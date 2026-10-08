@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import {
 	Avatar,
 	Breadcrumb,
@@ -13,12 +13,14 @@ import {
 	useSidebar,
 	Wordmark,
 } from "../../index";
+import "./AppFrame.scss";
 
 // The signed-in app frame every Patterns screen sits in — the reference app kit's AppShell
 // (ui_kits/app/AppShell.jsx) rebuilt on quiet: 240 sidebar + 64 top bar + main, density "app".
 // Below 720px the Sidebar becomes its own off-canvas drawer, opened by the SidebarTrigger in the
 // top bar (SidebarProvider shares the state). Toasts go through one Toaster and toast().
-// Story-only glue: inline styles are layout only, on --q-* tokens.
+// Layout lives in AppFrame.scss, on --q-* tokens. Pages use its helper classes:
+// q-sb-app-frame__stack (--section, --stack, --field, --inline), __row (--stack) and __hero.
 
 export const NAV = [
 	{
@@ -92,20 +94,6 @@ export function useNarrow(max = 719) {
 	return narrow;
 }
 
-export const stack = (gap = "var(--q-space-block)"): CSSProperties => ({
-	display: "flex",
-	flexDirection: "column",
-	gap,
-	minWidth: 0,
-});
-export const row = (gap = "var(--q-space-inline)"): CSSProperties => ({
-	display: "flex",
-	alignItems: "center",
-	gap,
-	flexWrap: "wrap",
-	minWidth: 0,
-});
-
 type FrameProps = {
 	active: string;
 	crumbs: { label: ReactNode; href?: string }[];
@@ -126,9 +114,9 @@ function Frame({ active, crumbs, children, padded = true }: FrameProps) {
 	const { isMobile: narrow } = useSidebar();
 	const [palette, setPalette] = useState(false);
 	const account = (
-		<div style={row("var(--q-space-inline)")}>
+		<div className="q-sb-app-frame__row">
 			<Avatar name="Ada Park" size="sm" />
-			<div style={{ display: "flex", flexDirection: "column" }}>
+			<div className="q-sb-app-frame__person">
 				<Text size="sm" color="heading" weight="medium">
 					Ada Park
 				</Text>
@@ -141,14 +129,7 @@ function Frame({ active, crumbs, children, padded = true }: FrameProps) {
 	return (
 		<div
 			data-density="app"
-			style={{
-				display: "grid",
-				gridTemplateColumns: narrow ? "minmax(0, 1fr)" : "var(--q-w-sidebar) minmax(0, 1fr)",
-				minHeight: "100vh",
-				background: "var(--q-bg)",
-				color: "var(--q-fg-body)",
-				fontFamily: "var(--q-font-body)",
-			}}
+			className={narrow ? "q-sb-app-frame q-sb-app-frame--narrow" : "q-sb-app-frame"}
 		>
 			<Sidebar
 				label="Main"
@@ -157,29 +138,15 @@ function Frame({ active, crumbs, children, padded = true }: FrameProps) {
 				header={<Wordmark size="nav" />}
 				groups={NAV}
 				footer={account}
-				style={narrow ? undefined : { position: "sticky", top: 0, height: "100vh" }}
+				className={narrow ? undefined : "q-sb-app-frame__sidebar"}
 			/>
-			<div
-				style={{
-					display: "grid",
-					gridTemplateRows: "var(--q-h-topbar) minmax(0, 1fr)",
-					minWidth: 0,
-				}}
-			>
-				<header
-					style={{
-						...row("var(--q-space-stack)"),
-						flexWrap: "nowrap",
-						position: "sticky",
-						top: 0,
-						zIndex: "var(--q-z-sticky)" as unknown as number,
-						padding: "0 var(--q-space-page-x)",
-						borderBottom: "var(--q-hairline) solid var(--q-border)",
-						background: "var(--q-bg)",
-					}}
-				>
+			<div className="q-sb-app-frame__body">
+				<header className="q-sb-app-frame__topbar">
 					<SidebarTrigger />
-					<Breadcrumb items={narrow ? crumbs.slice(-1) : crumbs} style={{ flex: 1, minWidth: 0 }} />
+					<Breadcrumb
+						items={narrow ? crumbs.slice(-1) : crumbs}
+						className="q-sb-app-frame__crumbs"
+					/>
 					<Button
 						size="sm"
 						variant="outline"
@@ -219,17 +186,8 @@ function Frame({ active, crumbs, children, padded = true }: FrameProps) {
 				<main
 					id="app-main"
 					aria-label="Content"
-					style={
-						padded
-							? {
-									...stack(),
-									width: "100%",
-									maxWidth: "var(--q-w-max)",
-									margin: "0 auto",
-									padding: "var(--q-space-section) var(--q-space-page-x)",
-									boxSizing: "border-box",
-								}
-							: { minWidth: 0 }
+					className={
+						padded ? "q-sb-app-frame__main q-sb-app-frame__main--padded" : "q-sb-app-frame__main"
 					}
 				>
 					{children}

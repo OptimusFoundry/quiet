@@ -1,0 +1,9 @@
+// Layout for the TabPanels stories.
+.q-sb-tab-panels {
+	padding: 24px;
+
+	&--stack {
+		display: grid;
+		gap: 16px;
+	}
+}
