@@ -84,6 +84,10 @@ colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `
 (AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
 inside; the product wires it to Claude). Stories: Charts, Chat; tests `charts.spec.ts`, `chat.spec.ts`.
 
+Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
+`scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
+section, since the catalog is generated from the reference and must stay pixel-identical to it.
+
 ## quiet's own code
 
 `src/QuietRoot.tsx`, `src/a11y/`, `src/styles/quiet-*.css`, `src/jsx-global.d.ts`, `scripts/`,

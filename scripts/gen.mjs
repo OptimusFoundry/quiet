@@ -13,12 +13,14 @@ const files = JSON.parse(loader.match(/var FILES = (\[[^\]]*\])/)[1]);
 // quiet's own components (not in the reference), appended after the reference ones:
 // src/components/future — the Claude Design "Future Components" concepts, rebuilt on quiet tokens;
 // src/components/charts — quiet's chart set; src/components/chat — AI chat (thread, messages, composer).
-const own = ["future", "charts", "chat"].flatMap((group) =>
-	readdirSync(`src/components/${group}`)
-		.filter((f) => f.endsWith(".jsx"))
-		.map((f) => `${group}/${f.slice(0, -4)}`)
-		.sort(),
-);
+const own = ["future", "charts", "chat"]
+	.flatMap((group) =>
+		readdirSync(`src/components/${group}`)
+			.filter((f) => f.endsWith(".jsx"))
+			.map((f) => `${group}/${f.slice(0, -4)}`)
+			.sort(),
+	)
+	.concat(["feedback/Toaster"]);
 writeFileSync(
 	"src/index.ts",
 	`${HEADER}/// <reference path="./jsx-global.d.ts" />\n${[...files, ...own]

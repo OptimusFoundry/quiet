@@ -106,6 +106,7 @@ export * from "./components/chat/ChatThread";
 export * from "./components/chat/CodeBlock";
 export * from "./components/chat/PromptSuggestions";
 export * from "./components/chat/ToolCall";
+export * from "./components/feedback/Toaster";
 export { QuietRoot, type QuietRootProps } from "./QuietRoot";
 export { applyTheme, defaultTheme, type ThemeName, themeNames, themes } from "./styles/themes/themes";
 export { ThemeProvider, useTheme } from "./styles/themes/ThemeProvider";

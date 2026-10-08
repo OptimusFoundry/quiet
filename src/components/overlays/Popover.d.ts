@@ -15,6 +15,12 @@ export interface PopoverProps {
   width?: number;
   /** Focus first focusable element on open */
   trapFocus?: boolean;
+  /** Close on a pointer down outside the trigger and panel (default true) */
+  closeOnClickOutside?: boolean;
+  /** Close on Escape and return focus to the trigger (default true) */
+  closeOnEscape?: boolean;
+  /** Show a × button in the panel's corner (default false) */
+  showClose?: boolean;
   className?: string;
   style?: React.CSSProperties;
 }
