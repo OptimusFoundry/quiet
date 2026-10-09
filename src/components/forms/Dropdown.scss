@@ -10,9 +10,9 @@
     --q-dropdown-gap: var(--q-space-1);
     --q-dropdown-min-width: 220px;
     --q-dropdown-disabled-opacity: 0.4;
-    --q-dropdown-label-font-family: var(--q-font-mono);
-    --q-dropdown-label-font-size: var(--q-text-2xs);
-    --q-dropdown-label-tracking: var(--q-tracking-mono);
+    --q-dropdown-label-font-family: var(--q-font-label);
+    --q-dropdown-label-font-size: var(--q-text-label);
+    --q-dropdown-label-tracking: var(--q-tracking-label);
     --q-dropdown-label-fg: var(--q-fg-muted);
     --q-dropdown-sm-height: var(--q-field-sm);
     --q-dropdown-sm-px: var(--q-space-1-5);
@@ -100,8 +100,9 @@
   .q-dropdown__label {
     font-family: var(--q-dropdown-label-font-family);
     font-size: var(--q-dropdown-label-font-size);
+    font-weight: var(--q-weight-label);
     letter-spacing: var(--q-dropdown-label-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
     color: var(--q-dropdown-label-fg);
   }
 
