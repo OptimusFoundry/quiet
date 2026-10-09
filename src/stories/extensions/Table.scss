@@ -3,6 +3,12 @@
 	display: grid;
 	gap: 16px;
 
+	// A grid item's min-width is its content's, so without a 0 floor a wide table widens the
+	// column instead of scrolling inside .q-table.
+	&--fit {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
 	&__actions {
 		display: flex;
 		gap: 8px;

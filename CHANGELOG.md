@@ -2,6 +2,35 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.4.2
+
+### Fixed
+
+- **Table / DataGrid / StreamingTable:** a sr-only header no longer escapes the horizontal scroll
+  container. A column whose header is a visually hidden label (`<span className="q-sr-only">`,
+  e.g. an "Actions" column) is `position: absolute`. `.q-table` scrolls with `overflow-x: auto`
+  but is `position: static`, so it isn't that label's containing block. The label sat at its
+  column's x outside the scroll box and widened the page: at a 390px viewport the whole page
+  scrolled sideways by 650–900px. A `.q-sr-only` inside `.q-table` is now pinned to the inline
+  start (`inset-inline-start: 0`), so it can't land past the viewport. `.q-table` stays static:
+  making it `position: relative` changes how the table is rasterized and breaks pixel parity
+  with the reference. Apps can drop the `position: relative` className workaround if their
+  hidden labels use `.q-sr-only`.
+- **Focus trap (Sidebar drawer, Drawer, Dialog):** focus now returns to the trigger after a
+  fast first click on the scrim. Under load, that click could land after the modal was committed
+  but before its effects ran, so the trap saved `<body>` as the element to restore.
+  `useFocusTrap` and `useModalBackground` (and Dialog's copy) now run as layout effects, so the
+  trap and `inert` are in place before the browser can paint or dispatch input.
+- **`quiet sync`** edits only the `hooks` in an app's `.claude/settings.json` and leaves the rest
+  byte-for-byte. It used to re-serialize the whole file, reflowing unrelated lines on every
+  sync. If the spliced result doesn't parse back to the intended settings, sync leaves the
+  file alone and says to add the hooks by hand.
+
+### Changed
+
+- Biome no longer scans Claude Code isolation worktrees (`.claude/worktrees/`) inside the repo.
+  Their nested `biome.json` failed the whole lint.
+
 ## 0.4.1
 
 ### Fixed
