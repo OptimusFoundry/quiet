@@ -14,8 +14,10 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   unchanged. App density retunes them: PageHero md title 19/600 with no period, SectionHeader sm
   and Card titles 15/600, StatCard values 24/600, and labels (Label, field labels, table heads,
   tabs, breadcrumbs, sidebar groups, Eyebrow, Card/Stat/StatCard/List/EmptyState/Dialog/Drawer
-  labels) in 12/500 sans sentence case instead of 11 mono caps. Tag, StatusDot and `Text mono`
-  stay mono. `Text heading` sizes through the same roles when no `size` is passed.
+  labels) in 12/500 sans sentence case instead of 11 mono caps; form hints (`--q-font-hint`,
+  `--q-text-hint`, `--q-tracking-hint`, `--q-hint-leading`) in 12 sans instead of 11 mono. Tag, StatusDot and `Text mono`
+  stay mono. `Text heading` sizes through the same roles when no `size` is passed. Pattern stories
+  now set density on the themed root (`parameters.density`), as an app does.
 
 ## 0.4.3
 

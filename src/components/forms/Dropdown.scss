@@ -56,9 +56,9 @@
     --q-dropdown-option-description-font-size: var(--q-text-sm);
     --q-dropdown-option-description-fg: var(--q-fg-muted);
     --q-dropdown-check-width: var(--q-space-1-5);
-    --q-dropdown-hint-font-family: var(--q-font-mono);
-    --q-dropdown-hint-font-size: var(--q-text-2xs);
-    --q-dropdown-hint-tracking: var(--q-tracking-wide);
+    --q-dropdown-hint-font-family: var(--q-font-hint);
+    --q-dropdown-hint-font-size: var(--q-text-hint);
+    --q-dropdown-hint-tracking: var(--q-tracking-hint);
     --q-dropdown-hint-fg: var(--q-fg-muted);
     --q-dropdown-hint-error-fg: var(--q-accent);
   }

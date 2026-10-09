@@ -235,7 +235,10 @@ function SettingsPage() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/Settings", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/Settings",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (

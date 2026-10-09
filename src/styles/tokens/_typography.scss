@@ -42,7 +42,7 @@
 }
 
 // Type roles. The defaults are the reference's editorial scale; data-density="app" and "compact"
-// retune them for product screens: smaller headings, no molten period, sans sentence-case labels.
+// retune them for product screens: smaller headings, no molten period, sans sentence-case labels and hints.
 :root,
 [data-density="marketing"] {
   --q-text-heading-1: var(--q-text-5xl);
@@ -62,6 +62,11 @@
   --q-weight-label: var(--q-weight-regular);
   --q-tracking-label: var(--q-tracking-mono);
   --q-case-label: uppercase;
+
+  --q-font-hint: var(--q-font-mono);
+  --q-text-hint: var(--q-text-2xs);
+  --q-tracking-hint: var(--q-tracking-wide);
+  --q-hint-leading: 1.5; // the reference's hint line; not a --q-leading-* step
 }
 
 [data-density="app"],
@@ -83,4 +88,9 @@
   --q-weight-label: var(--q-weight-medium);
   --q-tracking-label: var(--q-tracking-none);
   --q-case-label: none;
+
+  --q-font-hint: var(--q-font-sans);
+  --q-text-hint: var(--q-text-xs);
+  --q-tracking-hint: var(--q-tracking-none);
+  --q-hint-leading: var(--q-leading-body);
 }
