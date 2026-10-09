@@ -4,9 +4,11 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const pkg = JSON.parse(readFileSync("package.json", "utf8"));
-const [packed] = JSON.parse(
-	execFileSync("npm", ["pack", "--dry-run", "--json", "--ignore-scripts"], { encoding: "utf8" }),
-);
+// CI's npm still runs `prepare` here and its gen log lands on stdout ahead of the JSON.
+const packOut = execFileSync("npm", ["pack", "--dry-run", "--json", "--ignore-scripts"], {
+	encoding: "utf8",
+});
+const [packed] = JSON.parse(packOut.slice(packOut.search(/^\[/m)));
 const shipped = new Set(packed.files.map((f) => f.path));
 const failures = [];
 const check = (ok, message) => {
