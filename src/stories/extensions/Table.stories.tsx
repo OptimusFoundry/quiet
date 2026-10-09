@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Button, Table } from "../../index";
+import { Button, DataGrid, Table, type TableProps } from "../../index";
 import "./Table.scss";
 
 // Additions on top of the Claude Design catalog (G12): footer / totals row, controlled
-// expansion, per-cell colSpan.
+// expansion, per-cell colSpan; a wide table with a visually hidden header on a phone.
 const meta: Meta = { title: "Extensions/Table", parameters: { layout: "padded" } };
 export default meta;
 
@@ -92,6 +92,71 @@ export const UncontrolledExpansion: StoryObj = {
 				defaultExpanded={["inv-1"]}
 				renderExpanded={(r: Invoice) => `Invoice ${r.id} for ${r.client}.`}
 			/>
+		</div>
+	),
+};
+
+type APIKey = {
+	id: string;
+	name: string;
+	prefix: string;
+	scope: string;
+	created: string;
+	lastUsed: string;
+	requests: number;
+};
+
+const KEYS: APIKey[] = [
+	{
+		id: "k1",
+		name: "Production",
+		prefix: "qk_live_7Hd2",
+		scope: "read, write",
+		created: "12 Mar 2026",
+		lastUsed: "2 minutes ago",
+		requests: 184_220,
+	},
+	{
+		id: "k2",
+		name: "Staging",
+		prefix: "qk_test_Lp91",
+		scope: "read",
+		created: "3 Jun 2026",
+		lastUsed: "yesterday",
+		requests: 9_310,
+	},
+];
+
+// The actions column has no visible header, only a .q-sr-only name, like most row-action columns.
+const keyColumns: TableProps<APIKey>["columns"] = [
+	{ key: "name", header: "Name", nowrap: true },
+	{ key: "prefix", header: "Prefix", nowrap: true },
+	{ key: "scope", header: "Scope", nowrap: true },
+	{ key: "created", header: "Created", nowrap: true },
+	{ key: "lastUsed", header: "Last used", nowrap: true },
+	{
+		key: "requests",
+		header: "Requests",
+		align: "right",
+		render: (r) => r.requests.toLocaleString("en"),
+	},
+	{
+		key: "actions",
+		header: <span className="q-sr-only">Actions</span>,
+		align: "right",
+		render: (r) => (
+			<Button size="sm" variant="secondary" aria-label={`Revoke ${r.name}`}>
+				Revoke
+			</Button>
+		),
+	},
+];
+
+export const SrOnlyHeader: StoryObj = {
+	render: () => (
+		<div id="table-sr-only-header" className="q-sb-table q-sb-table--fit">
+			<Table label="API keys" columns={keyColumns} data={KEYS} minWidth={900} />
+			<DataGrid title="API keys" columns={keyColumns} data={KEYS} minWidth={900} />
 		</div>
 	),
 };
