@@ -11,6 +11,22 @@ async function load(page: Page) {
 const focusedInside = (page: Page, selector: string) =>
 	page.evaluate((s) => !!document.querySelector(s)?.contains(document.activeElement), selector);
 
+// A click on the scrim that lands right after the modal is committed, before any later task runs:
+// what happens on a loaded machine, where the first click can beat React's passive effects. The
+// blur stands in for the scrim mousedown's default action (focus moves to <body>).
+const clickScrimOnCommit = (page: Page, scrim: string) =>
+	page.evaluate((sel) => {
+		new MutationObserver((records, obs) => {
+			const el = records
+				.flatMap((r) => [...r.addedNodes])
+				.find((n): n is HTMLElement => n instanceof HTMLElement && n.matches(sel));
+			if (!el) return;
+			obs.disconnect();
+			(document.activeElement as HTMLElement | null)?.blur();
+			el.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+		}).observe(document.body, { subtree: true, childList: true });
+	}, scrim);
+
 test.beforeEach(async ({ page }) => load(page));
 
 test("Dialog traps focus, closes on Escape and returns focus", async ({ page }) => {
@@ -48,6 +64,19 @@ test("Drawer is a labelled modal; Escape and scrim click close it", async ({ pag
 	await page.mouse.click(40, 450);
 	await expect(drawer).toHaveCount(0);
 });
+
+for (const [name, section, opener, scrim] of [
+	["Dialog", "#dialog", /Open dialog/, ".q-dialog"],
+	["Drawer", "#drawer", "Open filters", ".q-drawer"],
+] as const)
+	test(`${name}: a scrim click right after it opens still returns focus`, async ({ page }) => {
+		const open = page.locator(section).getByRole("button", { name: opener });
+		await clickScrimOnCommit(page, scrim);
+		await open.click();
+		await expect(page.getByRole("dialog")).toHaveCount(0);
+		await expect(open).toBeFocused();
+		await expect(page.locator("main")).toHaveJSProperty("inert", false);
+	});
 
 test("Popover trigger exposes state; Escape closes and returns focus", async ({ page }) => {
 	const section = page.locator("#popover");
