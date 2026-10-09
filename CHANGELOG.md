@@ -2,6 +2,26 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.6.0
+
+### Changed
+
+- **quiet's Claude assets ship as a plugin.** `claude/` is now a Claude Code plugin (skill
+  `quiet:quiet-app`, agent `quiet:quiet-screen-reviewer`, the `quiet-guard` hooks in
+  `hooks/hooks.json`). `quiet sync` places it at `.claude/skills/quiet/` in the project root, where
+  Claude Code loads it as a skills-directory plugin, instead of copying files into `.claude/skills/`
+  and `.claude/agents/qa/` and editing `settings.json`. It no longer goes into `vendor/quiet` either.
+  An app's agents still preload `skills: [quiet-app]`. The guard finds the vendored copy by its
+  `quiet.manifest.json`, and also blocks edits to the plugin. Upgrading: sync removes the old
+  skill and agent; remove the `quiet-guard` entries from `.claude/settings.json` (sync warns, `quiet
+  check` fails until you do).
+- `quiet check` hashes dotfiles too (the plugin's `.claude-plugin/plugin.json`).
+
+### Fixed
+
+- The `quiet-app` skill points at `src/components/…` for props in a vendored copy, which has no `dist/`.
+- The Stylelint custom-property message printed the name with four dashes (`----name`).
+
 ## 0.5.0
 
 ### Added

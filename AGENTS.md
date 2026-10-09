@@ -124,8 +124,8 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - `port-future-concept`: judge fit and read a Claude Design concept through Chrome.
   - `sync-from-claude-design`: update the reference copy, hash-verified, with parity.
   - `review-component`: the pre-PR checklist.
-  - App-facing (shipped to apps by `quiet sync`, see "Vendoring"): `claude/skills/quiet-app`,
-    `claude/agents/qa/quiet-screen-reviewer.md`, `claude/hooks/quiet-guard.mjs`.
+  - App-facing (the `quiet` plugin in `claude/`, placed by `quiet sync`, see "Vendoring"):
+    `skills/quiet-app`, `agents/quiet-screen-reviewer.md`, `hooks/` (`quiet-guard.mjs`).
 - **Agents** (`.claude/agents/`):
   - `component-builder`: builds one component, write-scoped to its files.
   - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
@@ -153,13 +153,14 @@ must build in an app's bundler, not only in this repo's:
   builds a minified, split app and checks the computed colours.
 - **The copy list** is `COPY` in `scripts/quiet.mjs`. Add a path there when apps need it.
 - **`npx quiet check`** in the app fails on local edits. A bug an app hits is fixed here, then re-synced.
-- **App-facing Claude assets live in `claude/`**, not `.claude/` (which is for developing quiet).
-  `claude/skills/*` and `claude/agents/*` are placed in the app's `.claude/`, and
-  `claude/hooks/quiet-guard.mjs` is registered in its settings. They must work in any app: no quiet
-  Storybook, quiet tests or quiet paths. Name new ones `quiet-*`, put agents in a department folder
-  (`agents/qa/` for reviewers, as in saas-template), and give them `model`, `color` and
-  `skills: [quiet-app]` frontmatter. Ship what an app lacks (measuring rendered screens), not
-  duplicates of what an app's harness already has (its own a11y or code reviewers).
+- **App-facing Claude assets are a plugin in `claude/`**, not `.claude/` (which is for developing
+  quiet). `quiet sync` copies it to the app's `.claude/skills/quiet/`, where Claude Code loads it as a
+  skills-directory plugin, namespaced `quiet:` (no settings.json edits; hooks in `hooks/hooks.json`).
+  It must work in any app: no quiet Storybook, quiet tests or quiet paths. Name new parts `quiet-*`;
+  agents sit flat in `agents/` (Claude Code doesn't load a plugin's agent sub-folders) with `model`,
+  `color` and `skills: [quiet-app]` frontmatter. Validate with `claude plugin validate claude`.
+  Ship what an app lacks (measuring rendered screens), not duplicates of what an app's harness
+  already has (its own a11y or code reviewers).
 
 ## Working alongside other agents
 

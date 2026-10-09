@@ -23,8 +23,8 @@ node ../quiet/scripts/quiet.mjs sync          # copies quiet into vendor/quiet (
 git add vendor/quiet && git commit -m "chore: quiet 0.4.0"
 ```
 
-`sync` copies `src/` (without stories), the Stylelint config, `quiet-audit`, the guidelines and the
-agent skill. It writes `vendor/quiet/package.json`, whose exports point at that source, and
+`sync` copies `src/` (without stories), the Stylelint config, `quiet-audit` and the guidelines, and
+places the Claude Code plugin. It writes `vendor/quiet/package.json`, whose exports point at that source, and
 `quiet.manifest.json` with a hash per file. Setup on the first sync (it prints this too):
 
 | | |
@@ -174,28 +174,32 @@ After building, `npx quiet-audit` measures the running page for off-token values
 
 ### Claude Code in product repos
 
-quiet's app-facing Claude assets live in [`claude/`](claude/). `quiet sync` puts them where Claude Code
-reads them, and overwrites them on every sync like the rest of the copy:
+quiet's app-facing Claude assets are a Claude Code plugin, [`claude/`](claude/). `quiet sync` places it
+at `.claude/skills/quiet/` in the project root, where Claude Code loads it as a skills-directory
+plugin: nothing goes in `settings.json`, and it loads in place, so a pulled sync takes effect at the
+next session. It loads once the workspace is trusted, in sessions started at the project root.
 
-| From | To | What it does |
+| Part | Name in Claude Code | What it does |
 |---|---|---|
-| `claude/skills/quiet-app` | `.claude/skills/quiet-app` | how to set up, lay out and check a screen on quiet |
-| `claude/agents/qa/quiet-screen-reviewer.md` | `.claude/agents/qa/` | measures a running screen with `quiet-audit`, screenshots both themes, judges it against the checklist |
-| `claude/hooks/quiet-guard.mjs` | registered in `.claude/settings.json` | **blocks** any edit inside `vendor/quiet`, and lints each changed app stylesheet with quiet's rules |
+| `skills/quiet-app` | `quiet:quiet-app` | how to set up, lay out and check a screen on quiet |
+| `agents/quiet-screen-reviewer.md` | `quiet:quiet-screen-reviewer` | measures a running screen with `quiet-audit`, screenshots both themes, judges it against the checklist |
+| `hooks/` (`quiet-guard.mjs`) | | **blocks** any edit inside the vendored copy or the plugin, and lints each changed app stylesheet with the app's Stylelint |
 
-In a monorepo (the app in `webapp/`, `.claude/` at the repo root), they go to the project root: the
-nearest folder from the app up to the git root that has a `.claude/`, or `--claude-root <dir>`.
-Agents keep their department folder (`qa/`); Claude Code finds agents recursively by `name`. For
-accessibility, the app's own a11y agents and rules cover what the app owns; point them at
-`docs/guidelines/accessibility.md` ("What the app must do"). If the project routes skills by path
-(`.claude/rules/*.md`), add `quiet-app` there for UI work; sync doesn't edit rules or routing.
+An app's own agents preload the skill as `skills: [quiet-app]`; the bare name resolves to the
+plugin's skill. In a monorepo (the app in `webapp/`, `.claude/` at the repo root) the plugin goes to
+the project root: the nearest folder from the app up to the git root that has a `.claude/`, or
+`--claude-root <dir>`. For accessibility, the app's own a11y agents and rules cover what the app
+owns; point them at `docs/guidelines/accessibility.md` ("What the app must do"). If the project
+routes skills by path (`.claude/rules/*.md`), add `quiet-app` there for UI work; sync doesn't edit
+rules or routing.
 
-Sync only adds or replaces quiet's own entries. The app's other skills, agents, hooks and settings are
-left alone, and a file quiet stops shipping is removed on the next sync. `quiet check` also fails if a
-placed file was edited or the hook was unregistered.
+Sync replaces `.claude/skills/quiet/` and nothing else in `.claude/`, apart from removing what an
+older sync placed (`.claude/skills/quiet-app`, `.claude/agents/qa/quiet-screen-reviewer.md`). Syncs
+before the plugin registered `quiet-guard` in `settings.json`; sync warns and `quiet check` fails
+until those entries are removed. `quiet check` also fails if a plugin file was edited.
 
-Installed as a package instead? Copy `node_modules/@optimusfoundry/quiet/claude/skills/quiet-app`
-into `.claude/skills/` yourself.
+Installed as a package instead? Copy `node_modules/@optimusfoundry/quiet/claude` to
+`.claude/skills/quiet` yourself.
 
 ## Develop
 
