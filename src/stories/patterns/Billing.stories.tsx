@@ -171,7 +171,10 @@ function BillingPage() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/Billing", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/Billing",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (

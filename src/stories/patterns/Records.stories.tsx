@@ -399,7 +399,10 @@ function Records() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/Records", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/Records",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (

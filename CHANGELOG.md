@@ -2,6 +2,23 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.5.0
+
+### Added
+
+- **Product type scale under `density="app"` and `"compact"`.** Headings, metrics, labels and the
+  molten period now read tier-2 role tokens (`--q-text-heading-1…4`, `--q-text-metric`,
+  `--q-text-intro`, `--q-weight-heading`, `--q-font-label`, `--q-text-label`, `--q-weight-label`,
+  `--q-tracking-label`, `--q-case-label`, `--q-period-display`, `--q-space-hero-top/bottom`). Their
+  defaults are the reference's values, so the marketing density and the parity catalog are
+  unchanged. App density retunes them: PageHero md title 19/600 with no period, SectionHeader sm
+  and Card titles 15/600, StatCard values 24/600, and labels (Label, field labels, table heads,
+  tabs, breadcrumbs, sidebar groups, Eyebrow, Card/Stat/StatCard/List/EmptyState/Dialog/Drawer
+  labels) in 12/500 sans sentence case instead of 11 mono caps; form hints (`--q-font-hint`,
+  `--q-text-hint`, `--q-tracking-hint`, `--q-hint-leading`) in 12 sans instead of 11 mono. Tag, StatusDot and `Text mono`
+  stay mono. `Text heading` sizes through the same roles when no `size` is passed. Pattern stories
+  now set density on the themed root (`parameters.density`), as an app does.
+
 ## 0.4.3
 
 ### Fixed

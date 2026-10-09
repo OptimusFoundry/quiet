@@ -232,7 +232,10 @@ function Overview() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/Dashboard", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/Dashboard",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (

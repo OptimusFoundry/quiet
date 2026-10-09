@@ -143,7 +143,10 @@ function Shell() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/App shell", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/App shell",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (

@@ -16,7 +16,7 @@ import {
 import "./AppFrame.scss";
 
 // The signed-in app frame every Patterns screen sits in — the reference app kit's AppShell
-// (ui_kits/app/AppShell.jsx) rebuilt on quiet: 240 sidebar + 64 top bar + main, density "app".
+// (ui_kits/app/AppShell.jsx) rebuilt on quiet: 240 sidebar + 64 top bar + main; stories set density "app".
 // Below 720px the Sidebar becomes its own off-canvas drawer, opened by the SidebarTrigger in the
 // top bar (SidebarProvider shares the state). Toasts go through one Toaster and toast().
 // Layout lives in AppFrame.scss, on --q-* tokens. Pages use its helper classes:
@@ -127,10 +127,7 @@ function Frame({ active, crumbs, children, padded = true }: FrameProps) {
 		</div>
 	);
 	return (
-		<div
-			data-density="app"
-			className={narrow ? "q-sb-app-frame q-sb-app-frame--narrow" : "q-sb-app-frame"}
-		>
+		<div className={narrow ? "q-sb-app-frame q-sb-app-frame--narrow" : "q-sb-app-frame"}>
 			<Sidebar
 				label="Main"
 				mobile="drawer"

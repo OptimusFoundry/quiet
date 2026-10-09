@@ -239,7 +239,10 @@ function Partial() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/States", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/States",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (

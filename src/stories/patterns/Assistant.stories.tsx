@@ -307,7 +307,10 @@ function AssistantPage() {
 	);
 }
 
-const meta: Meta = { title: "Patterns/Assistant", parameters: { layout: "fullscreen" } };
+const meta: Meta = {
+	title: "Patterns/Assistant",
+	parameters: { layout: "fullscreen", density: "app" },
+};
 export default meta;
 export const Default: StoryObj = {
 	render: () => (
