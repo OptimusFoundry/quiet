@@ -81,32 +81,11 @@ const RouterLink: LinkComponent = ({ href, ...p }) => <Link to={href} {...p} />;
 
 `useLinkComponent()` returns the configured link (or `"a"`) for your own href-rendering components.
 
-## Coexisting with another design system
+## Where quiet's styles apply
 
-`quiet.css` can load on a page that also runs another design system (for example Proto, which
-owns `<html data-theme>` and ships unlayered CSS). quiet styles only what it owns:
+quiet's element defaults apply only inside `[data-quiet]`: body type, `a` colour, `::selection`, the themed background, the keyboard focus ring, and the reference-compat names (`--space-*`, `--radius-*`, …). `ThemeProvider` / `applyTheme` set `data-quiet` on `<html>`, and `QuietRoot` sets it on its wrapper. Use one of them; a page with neither gets no base styles.
 
-- **Ownership is `[data-quiet]`.** `QuietRoot` renders `data-quiet` on its wrapper (alongside the
-  `quiet` class); `ThemeProvider` / `applyTheme` set it on `<html>`. quiet's element defaults
-  (body type, `a` colour, `::selection`, the themed-subtree background, the keyboard focus ring)
-  and the reference-compat names (`--space-*`, `--radius-*`, `--ease-*`, `--paper` …) apply only
-  inside `[data-quiet]`. Elements outside it, and another system's `[data-theme]`, are untouched.
-  quiet's own `--q-*` tokens are still declared at `:root`; they are namespaced, so they can't
-  collide.
-- **One owner of `<html data-theme>`.** While another system themes `<html>`, don't mount quiet's
-  `ThemeProvider`: render each quiet surface in a `QuietRoot`, which sets `data-theme` on its own
-  wrapper. Mount `ThemeProvider` only once quiet owns the whole document.
-- **Cascade layers.** quiet's rules live in `q.tokens, q.themes, q.base, q.components,
-  q.utilities`. Unlayered CSS beats every layer, so put the other system's global CSS (reset,
-  tokens) in a layer declared before quiet's, and declare the order before either stylesheet:
-
-```scss
-@layer proto, q.tokens, q.themes, q.base, q.components, q.utilities;
-@layer proto { /* the other system's reset, tokens and themes */ }
-@import "@optimusfoundry/quiet/style.css";
-```
-
-`tests/coexistence.spec.ts` checks this against the built `dist/quiet.css`.
+quiet's own `--q-*` tokens are declared at `:root`. Its rules live in the cascade layers `q.tokens, q.themes, q.base, q.components, q.utilities`, so any unlayered CSS in your app overrides them. `tests/coexistence.spec.ts` checks that nothing outside `[data-quiet]` changes.
 
 ## Your product's theme
 

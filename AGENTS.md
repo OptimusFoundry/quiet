@@ -86,8 +86,9 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 - The reference names (`--ink`, `--paper`, `--molten` …) exist only in
   `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by
-  `applyTheme`): element selectors, `::selection`, the reference-compat names. quiet must load next
-  to another design system without restyling it (`tests/coexistence.spec.ts`; README).
+  `applyTheme`): element selectors, `::selection`, the reference-compat names. Nothing outside a
+  quiet root changes when quiet.css loads (`tests/coexistence.spec.ts`; README "Where quiet's
+  styles apply").
 - Links: a component that renders `<a>` from `href` picks its element with `useLinkElement` from
   `src/lib/link.tsx`, so `QuietRoot linkComponent` routes it.
 - Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
