@@ -2,6 +2,39 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.4.3
+
+### Fixed
+
+- **Cascade-layer order in code-split production builds.** Apps compile quiet's source, so each
+  component's `.tsx` imports its own `.scss`. A code-split `vite build` puts the components that
+  routes share into their own CSS chunks (`Button-*.css`, `Stack-*.css` …) and links them before
+  the entry CSS. Those chunks named `q.tokens` and then `q.components` first. Layers rank by
+  first appearance, so the order became `q.tokens, q.components, q.themes, q.base, q.utilities`,
+  and base and theme rules beat component rules. A primary link Button, for one, took the base
+  `a` colour (`--q-fg`) and rendered its text in the background colour. Dev mode never showed
+  it. Every component stylesheet now opens with the full order statement from a new
+  `src/styles/_layers.scss` (`@use "../../styles/layers";`), and so does `index.scss`, so the order
+  holds whichever quiet stylesheet loads first. A repeated statement never reorders, and
+  lightningcss keeps its order when it minifies. Apps can drop the inline
+  `<style>@layer q.tokens, q.themes, q.base, q.components, q.utilities;</style>` workaround from
+  `index.html`.
+
+### Added
+
+- `scripts/check-layers.mjs` (in `npm run lint`) compiles `index.scss` and every component
+  stylesheet and fails if one doesn't open with the order statement. `npm run new` scaffolds
+  the `@use`.
+- `tests/layer-order-build.spec.ts` builds a minified, code-split fixture app with Vite. It checks
+  that every CSS chunk names the layers in order, and that a primary link Button inside
+  `[data-quiet]` keeps `--q-button-primary-fg` as its text colour.
+
+### Changed
+
+- The README no longer documents running quiet next to another design system. Its `@import`
+  recipe was wrong: Sass hoists `@import` above the `@layer` statement. A short note on where
+  quiet's styles apply (`[data-quiet]`, the cascade layers) replaces the section.
+
 ## 0.4.2
 
 ### Fixed

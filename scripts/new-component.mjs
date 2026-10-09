@@ -83,6 +83,8 @@ export function ${name}({
 
 const scss = `// ${name} — TODO: one line.
 // BEM: .${block}, __label; --{sm|md|lg}.
+@use "../../styles/layers";
+
 @layer q.tokens {
   :root,
   [data-theme] {

@@ -1,6 +1,6 @@
 {
 	"name": "@optimusfoundry/quiet",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"description": "A design system built from 1,384 saved UI references. Quiet, precise, neutral.",
 	"type": "module",
 	"license": "UNLICENSED",
@@ -44,7 +44,7 @@
 		"prepare": "npm run build",
 		"check:package": "node scripts/check-package.mjs",
 		"build-storybook": "storybook build",
-		"lint": "biome check . && stylelint \"src/**/*.scss\" && node scripts/check-tokens.mjs",
+		"lint": "biome check . && stylelint \"src/**/*.scss\" && node scripts/check-tokens.mjs && node scripts/check-layers.mjs",
 		"typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.app-compat.json",
 		"test": "playwright test"
 	},

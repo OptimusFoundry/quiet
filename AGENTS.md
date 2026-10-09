@@ -145,6 +145,12 @@ must build in an app's bundler, not only in this repo's:
   (`tsconfig.app-compat.json`). Type timers as `ReturnType<typeof setTimeout>`, never `number`.
 - **Styles first:** `src/index.ts` imports `./styles/index.scss` before any component, so the
   `@layer` order holds after a minifier drops the order statement. `check:package` asserts the order.
+- **Every stylesheet names the layer order first.** A code-split app build links component CSS
+  chunks ahead of the entry CSS, so any quiet stylesheet can be the first to load. Each component
+  `.scss` starts with `@use "../../styles/layers";` (`_layers.scss` holds the order statement;
+  `npm run new` adds it). `scripts/check-layers.mjs` (in `npm run lint`) compiles each one and fails
+  if it doesn't name all five layers in order before anything else. `tests/layer-order-build.spec.ts`
+  builds a minified, split app and checks the computed colours.
 - **The copy list** is `COPY` in `scripts/quiet.mjs`. Add a path there when apps need it.
 - **`npx quiet check`** in the app fails on local edits. A bug an app hits is fixed here, then re-synced.
 - **App-facing Claude assets live in `claude/`**, not `.claude/` (which is for developing quiet).
