@@ -2,6 +2,32 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.7.0
+
+### Added
+
+- **A modern reset** (`src/styles/base/_reset.scss`, in `q.base`, scoped to `[data-quiet]`, all
+  `:where()`). It replaces the reset every app copied into its own `index.css`:
+  - no default margins;
+  - unstyled lists;
+  - block, fluid media (`img`, `picture`, `video`, `canvas`, `svg`);
+  - `overflow-wrap: break-word`, `text-wrap: balance` on headings and `pretty` on text;
+  - `border-collapse` on tables, a bare `dialog`, and pointer cursors on buttons, `summary`,
+    `label[for]` and `select`;
+  - `scroll-margin` on `:target`;
+  - on an `<html data-quiet>` document: `text-size-adjust: none`, `interpolate-size: allow-keywords`
+    (motion allowed only) and a full-height body.
+
+  `border-box` sizing and font/colour inheritance on form controls reach only the app's own classed
+  elements. quiet's components (any `q-*` class) keep the reference's content-box and control type,
+  so the catalog stays pixel-identical. The apps' old global `border-box` had been shrinking quiet
+  components: icons in Alert, Banner, StatCard, EmptyState and FileUpload by 2px, Skeleton by 46px,
+  Accordion content by 36px, the DataGrid search by 26px, plus Table cells and FormHint glyphs.
+- **`quiet sync --ref <tag|branch|commit>`** (default `HEAD`). sync reads quiet as committed at that
+  ref with `git archive`, never the working tree, so uncommitted edits in a quiet checkout can't
+  reach an app. The manifest records `ref` and the exact `commit` (`dirty` is gone). sync warns
+  when the commit isn't on `origin/main`, and refuses refs from before the 0.6.0 plugin layout.
+
 ## 0.6.0
 
 ### Changed

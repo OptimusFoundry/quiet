@@ -19,11 +19,14 @@ copy is read-only. A fix goes into this repo, and every app picks it up on its n
 
 ```bash
 # in the app, with this repo checked out next to it
-node ../quiet/scripts/quiet.mjs sync          # copies quiet into vendor/quiet (replaces it)
-git add vendor/quiet && git commit -m "chore: quiet 0.4.0"
+git -C ../quiet fetch --tags
+node ../quiet/scripts/quiet.mjs sync --ref v0.7.0   # copies quiet at that tag into vendor/quiet (replaces it)
+git add vendor/quiet && git commit -m "chore: quiet 0.7.0"
 ```
 
-`sync` copies `src/` (without stories), the Stylelint config, `quiet-audit` and the guidelines, and
+`sync` reads quiet as committed at `--ref` (a tag, branch or commit; default `HEAD`), never the
+working tree, so uncommitted edits in your quiet checkout can't reach an app; it warns when the
+commit isn't on `origin/main`. It copies `src/` (without stories), the Stylelint config, `quiet-audit` and the guidelines, and
 places the Claude Code plugin. It writes `vendor/quiet/package.json`, whose exports point at that source, and
 `quiet.manifest.json` with a hash per file. Setup on the first sync (it prints this too):
 
@@ -83,7 +86,9 @@ const RouterLink: LinkComponent = ({ href, ...p }) => <Link to={href} {...p} />;
 
 ## Where quiet's styles apply
 
-quiet's element defaults apply only inside `[data-quiet]`: body type, `a` colour, `::selection`, the themed background, the keyboard focus ring, and the reference-compat names (`--space-*`, `--radius-*`, …). `ThemeProvider` / `applyTheme` set `data-quiet` on `<html>`, and `QuietRoot` sets it on its wrapper. Use one of them; a page with neither gets no base styles.
+quiet's element defaults apply only inside `[data-quiet]`: a modern reset (`src/styles/base/_reset.scss`:
+no default margins, unstyled lists, block media, balanced headings, border-box for the app's own
+classed elements while quiet's components keep the reference's box), body type, `a` colour, `::selection`, the themed background, the keyboard focus ring, and the reference-compat names (`--space-*`, `--radius-*`, …). `ThemeProvider` / `applyTheme` set `data-quiet` on `<html>`, and `QuietRoot` sets it on its wrapper. Use one of them; a page with neither gets no base styles.
 
 quiet's own `--q-*` tokens are declared at `:root`. Its rules live in the cascade layers `q.tokens, q.themes, q.base, q.components, q.utilities`, so any unlayered CSS in your app overrides them. `tests/coexistence.spec.ts` checks that nothing outside `[data-quiet]` changes.
 
@@ -226,9 +231,9 @@ npm run test       # pixel and hover parity with the reference, axe in both them
    git push origin v0.4.0
    ```
 
-Apps move to a version by syncing from that tag: `git -C ../quiet checkout v0.4.0`, then
-`node ../quiet/scripts/quiet.mjs sync` in the app. The manifest records the version and commit, and
-sync warns if quiet had uncommitted changes. (Apps that install the package instead change the
+Apps move to a version by syncing from that tag: `node ../quiet/scripts/quiet.mjs sync --ref v0.4.0`
+in the app (no checkout needed; `git -C ../quiet fetch --tags` first). The manifest records the
+version, the ref and the exact commit. (Apps that install the package instead change the
 `#vX.Y.Z` in their dependency.) Nothing is published; the tag is the release. Never move a pushed
 tag; cut a new patch version instead.
 
