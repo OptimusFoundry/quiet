@@ -137,7 +137,8 @@ section, since the catalog is generated from the reference and must stay pixel-i
 
 ## Vendoring (how apps use quiet)
 
-Apps don't install quiet. `node ../quiet/scripts/quiet.mjs sync` copies it into the app's
+Apps don't install quiet. `node ../quiet/scripts/quiet.mjs sync --ref vX.Y.Z` copies it (as committed at
+that ref, never the working tree) into the app's
 `vendor/quiet` (see README, "Install"), and the app compiles the source. So everything under `src/`
 must build in an app's bundler, not only in this repo's:
 - **No global ambient types.** Dev checks use `isDev()` from `src/lib/env.ts`.
