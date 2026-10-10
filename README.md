@@ -90,6 +90,12 @@ quiet's element defaults apply only inside `[data-quiet]`: a modern reset (`src/
 no default margins, unstyled lists, block media, balanced headings, border-box for the app's own
 classed elements while quiet's components keep the reference's box), body type, `a` colour, `::selection`, the themed background, the keyboard focus ring, and the reference-compat names (`--space-*`, `--radius-*`, …). `ThemeProvider` / `applyTheme` set `data-quiet` on `<html>`, and `QuietRoot` sets it on its wrapper. Use one of them; a page with neither gets no base styles.
 
+Box sizing: your own classed elements are `border-box`, while quiet's components keep the
+reference's `content-box`, even when you pass them a `className`. So a class that sizes a quiet
+component (`width`, `height`, `max-width`, `100%` …) and gives it padding or a border, or sits on one
+that has them (Card, Input, Alert …), sets `box-sizing: border-box` too. Otherwise the padding adds to
+the size: `height: 100%` on a Card overflows its column by the Card's padding.
+
 quiet's own `--q-*` tokens are declared at `:root`. Its rules live in the cascade layers `q.tokens, q.themes, q.base, q.components, q.utilities`, so any unlayered CSS in your app overrides them. `tests/coexistence.spec.ts` checks that nothing outside `[data-quiet]` changes.
 
 ## Your product's theme

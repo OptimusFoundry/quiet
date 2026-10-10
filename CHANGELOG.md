@@ -2,6 +2,15 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.7.1
+
+### Docs
+
+- The `quiet-app` skill and the README say how box sizing works on quiet: an app's own classed
+  elements are `border-box`, quiet's components keep `content-box` even with an app `className`, so
+  an app class that sizes a quiet component and gives it padding or a border (or sits on a padded
+  one, like Card) sets `box-sizing: border-box` itself.
+
 ## 0.7.0
 
 ### Added
