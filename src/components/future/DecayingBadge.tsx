@@ -1,7 +1,10 @@
 import React from "react";
+import { nodeText } from "../../lib/text";
 import "./DecayingBadge.scss";
 
-export interface DecayingBadgeProps {
+export interface DecayingBadgeProps extends React.HTMLAttributes<HTMLElement> {
+	/** The root: a <button> with `onRecheck`, else a <span>. */
+	ref?: React.Ref<HTMLElement>;
 	/** What was true when someone looked */
 	children?: React.ReactNode;
 	/** When the fact was last confirmed; missing means never */
@@ -60,6 +63,9 @@ export function DecayingBadge({
 	size = "md",
 	className,
 	style,
+	ref,
+	onClick,
+	...rest
 }: DecayingBadgeProps) {
 	const [clock, setClock] = React.useState(() => Date.now());
 	React.useEffect(() => {
@@ -73,8 +79,9 @@ export function DecayingBadge({
 	const stale = decay >= 1;
 	const a = age(elapsed);
 	const known = !Number.isNaN(at);
+	const text = nodeText(children);
 	const name =
-		(stale ? `${staleLabel}, ${children} expired` : children) +
+		(stale ? `${staleLabel}, ${text} expired` : text) +
 		(known ? `, checked ${a.long}` : ", never checked");
 	const cls = [
 		"q-decaying-badge",
@@ -98,6 +105,7 @@ export function DecayingBadge({
 		</>
 	);
 	const props = {
+		...rest,
 		className: cls,
 		"data-stale": stale || undefined,
 		"data-checking": checking || undefined,
@@ -107,7 +115,11 @@ export function DecayingBadge({
 		<button
 			type="button"
 			{...props}
-			onClick={onRecheck}
+			ref={ref as React.Ref<HTMLButtonElement>}
+			onClick={(e) => {
+				onRecheck(e);
+				onClick?.(e);
+			}}
 			disabled={checking}
 			aria-busy={checking || undefined}
 			aria-label={`${name}. Re-check`}
@@ -116,7 +128,7 @@ export function DecayingBadge({
 			{inner}
 		</button>
 	) : (
-		<span {...props}>
+		<span {...props} ref={ref} onClick={onClick}>
 			{inner}
 			<span className="q-sr-only">{name}</span>
 		</span>

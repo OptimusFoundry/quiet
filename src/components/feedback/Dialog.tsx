@@ -1,9 +1,11 @@
 import React from "react";
-import { useEscape, useFocusTrap, usePresence } from "../../a11y/hooks";
+import { useEscape, useFocusTrap, useMergedRef, usePresence } from "../../a11y/hooks";
 import "./Dialog.scss";
 import { CloseButton, isStatus, StatusIcon } from "./parts";
 
-export interface DialogProps {
+export interface DialogProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+	/** The dialog panel (role="dialog"), not the scrim; rest props land there too. */
+	ref?: React.Ref<HTMLDivElement>;
 	open: boolean;
 	onClose?: () => void;
 	eyebrow?: React.ReactNode;
@@ -64,11 +66,16 @@ export function Dialog({
 	width,
 	dismissible = true,
 	showClose = true,
+	className,
+	style,
+	ref,
+	...rest
 }: DialogProps) {
 	const { mounted, state } = usePresence(open, 160);
 	const live = open && mounted;
 	const scrim = React.useRef<HTMLDivElement>(null);
 	const box = React.useRef<HTMLDivElement>(null);
+	const panelRef = useMergedRef(box, ref);
 	const id = React.useId();
 	useModalBackground(scrim, live);
 	useFocusTrap(box, live);
@@ -78,7 +85,10 @@ export function Dialog({
 		"q-dialog__panel",
 		"q-anim-scale",
 		`q-dialog__panel--${SIZES.includes(size as string) ? size : "md"}`,
-	].join(" ");
+		className,
+	]
+		.filter(Boolean)
+		.join(" ");
 	return (
 		<div
 			ref={scrim}
@@ -87,21 +97,26 @@ export function Dialog({
 			onClick={dismissible ? onClose : undefined}
 		>
 			<div
-				ref={box}
+				{...rest}
+				ref={panelRef}
 				role="dialog"
 				aria-modal="true"
-				aria-labelledby={title ? `${id}-t` : undefined}
-				aria-describedby={typeof children === "string" ? `${id}-d` : undefined}
+				aria-labelledby={title ? `${id}-t` : rest["aria-labelledby"]}
+				aria-describedby={typeof children === "string" ? `${id}-d` : rest["aria-describedby"]}
 				tabIndex={-1}
 				className={cls}
 				data-state={state}
-				onClick={(e) => e.stopPropagation()}
+				onClick={(e) => {
+					e.stopPropagation();
+					rest.onClick?.(e);
+				}}
 				style={
 					width
 						? ({
+								...style,
 								"--_max-width": typeof width === "number" ? `${width}px` : width,
 							} as React.CSSProperties)
-						: undefined
+						: style
 				}
 			>
 				<div className="q-dialog__header">

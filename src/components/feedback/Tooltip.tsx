@@ -2,7 +2,10 @@ import React from "react";
 import { useEscape } from "../../a11y/hooks";
 import "./Tooltip.scss";
 
-export interface TooltipProps {
+export interface TooltipProps
+	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "content" | "children"> {
+	/** The wrapper <span> around the trigger and bubble; the trigger itself is `children`. */
+	ref?: React.Ref<HTMLSpanElement>;
 	content: React.ReactNode;
 	children: React.ReactNode;
 	placement?: "top" | "bottom" | "left" | "right";
@@ -16,7 +19,15 @@ const INTERACTIVE: string[] = ["a", "button", "input", "select", "textarea"];
  * Ink tooltip in sans sentence case, soft corners (--q-radius-sm). Four placements, optional delay.
  * @startingPoint section="Feedback" subtitle="Ink tooltips, 4 placements" viewport="600x200"
  */
-export function Tooltip({ content, children, placement = "top", delay = 0 }: TooltipProps) {
+export function Tooltip({
+	content,
+	children,
+	placement = "top",
+	delay = 0,
+	className,
+	ref,
+	...rest
+}: TooltipProps) {
 	const [open, setOpen] = React.useState(false);
 	const t = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 	const id = React.useId();
@@ -47,13 +58,27 @@ export function Tooltip({ content, children, placement = "top", delay = 0 }: Too
 		: children;
 	return (
 		<span
-			onMouseEnter={show}
-			onMouseLeave={leave}
-			onFocus={show}
-			onBlur={hide}
-			aria-describedby={el ? undefined : id}
-			tabIndex={el ? undefined : 0}
-			className="q-tooltip"
+			{...rest}
+			ref={ref}
+			onMouseEnter={(e) => {
+				show();
+				rest.onMouseEnter?.(e);
+			}}
+			onMouseLeave={(e) => {
+				leave();
+				rest.onMouseLeave?.(e);
+			}}
+			onFocus={(e) => {
+				show();
+				rest.onFocus?.(e);
+			}}
+			onBlur={(e) => {
+				hide();
+				rest.onBlur?.(e);
+			}}
+			aria-describedby={el ? rest["aria-describedby"] : id}
+			tabIndex={el ? rest.tabIndex : 0}
+			className={["q-tooltip", className].filter(Boolean).join(" ")}
 		>
 			{trigger}
 			<span

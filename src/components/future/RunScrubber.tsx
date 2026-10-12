@@ -7,7 +7,8 @@ export interface RunScrubberStep {
 	/** The state or reasoning at this step */
 	detail?: React.ReactNode;
 }
-export interface RunScrubberProps {
+export interface RunScrubberProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "children"> {
 	steps: RunScrubberStep[];
 	/** Zero-based step index */
 	value?: number;
@@ -23,6 +24,8 @@ export interface RunScrubberProps {
 	actions?:
 		| React.ReactNode
 		| ((index: number, step: RunScrubberStep | undefined) => React.ReactNode);
+	/** The root <div> (the track, the panel and the actions). */
+	ref?: React.Ref<HTMLDivElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -43,8 +46,10 @@ export function RunScrubber({
 	agent,
 	caption,
 	actions,
+	ref,
 	className,
 	style,
+	...rest
 }: RunScrubberProps) {
 	const n = steps.length;
 	const [inner, setInner] = React.useState(defaultValue);
@@ -95,6 +100,8 @@ export function RunScrubber({
 	const text = step ? `Step ${cur + 1} of ${n}: ${step.label}` : "";
 	return (
 		<div
+			{...rest}
+			ref={ref}
 			className={["q-run-scrubber", className].filter(Boolean).join(" ")}
 			style={{ "--_pct": `${pct}%`, ...style } as React.CSSProperties}
 		>

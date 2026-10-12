@@ -7,7 +7,8 @@ export interface ThresholdValue {
 	/** Upper line; omit for a low-only alert */
 	high?: number;
 }
-export interface ThresholdHandlesProps {
+export interface ThresholdHandlesProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "color"> {
 	/** The history the thresholds are tested against, oldest first */
 	data: number[];
 	value?: ThresholdValue;
@@ -23,6 +24,8 @@ export interface ThresholdHandlesProps {
 	summary?: (fires: number, total: number) => React.ReactNode;
 	lowLabel?: string;
 	highLabel?: string;
+	/** The root role="group" <div> (each line is its own slider, so attributes land on the group). */
+	ref?: React.Ref<HTMLDivElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -51,8 +54,10 @@ export function ThresholdHandles({
 	summary,
 	lowLabel = "Low threshold",
 	highLabel = "High threshold",
+	ref,
 	className,
 	style,
+	...rest
 }: ThresholdHandlesProps) {
 	const top = max ?? Math.ceil(Math.max(min + 1, ...data) * 1.2);
 	const [inner, setInner] = React.useState<ThresholdValue>(defaultValue ?? {});
@@ -116,7 +121,14 @@ export function ThresholdHandles({
 	].filter(([, v]) => v != null) as [Which, number, string][];
 	const cls = ["q-threshold-handles", className].filter(Boolean).join(" ");
 	return (
-		<div role="group" aria-labelledby={label ? `${uid}l` : undefined} className={cls} style={style}>
+		<div
+			aria-labelledby={label ? `${uid}l` : undefined}
+			{...rest}
+			ref={ref}
+			role="group"
+			className={cls}
+			style={style}
+		>
 			<div className="q-threshold-handles__header">
 				{label && (
 					<span id={`${uid}l`} className="q-threshold-handles__label">

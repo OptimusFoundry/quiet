@@ -9,7 +9,11 @@ export interface ProbabilityLevel {
 	/** The policy said back in words, e.g. "Posts alone unless the draft mentions pricing." */
 	description?: React.ReactNode;
 }
-export interface ProbabilityToggleProps {
+export interface ProbabilityToggleProps
+	extends Omit<
+		React.HTMLAttributes<HTMLSpanElement>,
+		"onChange" | "defaultValue" | "color" | "role"
+	> {
 	label?: React.ReactNode;
 	/** Ordered by `upTo`; the last one should reach 100 */
 	levels?: ProbabilityLevel[];
@@ -22,6 +26,8 @@ export interface ProbabilityToggleProps {
 	disabled?: boolean;
 	/** Accessible name when there is no visible label */
 	"aria-label"?: string;
+	/** Reaches the role="slider" thumb, so it can be focused; other HTML attributes (id, aria-*, data-*, onBlur…) land there too. `className`/`style` stay on the root. */
+	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -49,8 +55,12 @@ export function ProbabilityToggle({
 	step = 5,
 	disabled = false,
 	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	ref,
+	onKeyDown,
 	className,
 	style,
+	...rest
 }: ProbabilityToggleProps) {
 	const [inner, setInner] = React.useState(defaultValue);
 	const [glide, setGlide] = React.useState(false);
@@ -123,6 +133,8 @@ export function ProbabilityToggle({
 					/>
 				))}
 				<span
+					{...rest}
+					ref={ref}
 					role="slider"
 					tabIndex={disabled ? -1 : 0}
 					aria-valuemin={0}
@@ -130,10 +142,13 @@ export function ProbabilityToggle({
 					aria-valuenow={cur}
 					aria-valuetext={`${level.label}, ${cur}%`}
 					aria-disabled={disabled || undefined}
-					aria-labelledby={label ? `${uid}l` : undefined}
+					aria-labelledby={label ? `${uid}l` : ariaLabelledby}
 					aria-label={label ? undefined : ariaLabel}
 					aria-describedby={level.description ? `${uid}d` : undefined}
-					onKeyDown={key}
+					onKeyDown={(e) => {
+						key(e);
+						onKeyDown?.(e);
+					}}
 					className="q-probability-toggle__thumb"
 				/>
 			</div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { nodeText } from "../../lib/text";
 import { ChartLegend, ChartTable, ChartTooltip } from "./ChartParts";
 import {
 	areaPath,
@@ -82,7 +83,7 @@ export function LineChart({
 	const [ref, width] = useWidth();
 	const [active, setActive] = React.useState<number | null>(null);
 	const n = Math.max(labels.length, ...series.map((s) => s.data.length), 0);
-	const name = ariaLabel ?? title ?? "Line chart";
+	const name = ariaLabel ?? (nodeText(title) || "Line chart");
 	const { ticks, domain } = valueDomain(
 		series.flatMap((s) => s.data).concat(reference ? [reference.value] : []),
 		{ zero: zero ?? area, count: yTicks },
@@ -142,7 +143,7 @@ export function LineChart({
 				className="q-chart__plot"
 				tabIndex={n ? 0 : -1}
 				role="slider"
-				aria-label={name as string}
+				aria-label={name}
 				aria-valuemin={0}
 				aria-valuemax={Math.max(0, n - 1)}
 				aria-valuenow={focusIndex}

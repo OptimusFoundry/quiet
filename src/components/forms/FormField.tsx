@@ -34,12 +34,16 @@ type FieldControlProps = {
 	"aria-invalid"?: boolean;
 	"aria-describedby"?: string;
 	"aria-required"?: boolean;
+	required?: boolean;
 };
+
+// Native elements that take `required` (and so block a native form's submit).
+const REQUIRABLE = new Set(["input", "select", "textarea"]);
 
 let ofFieldId = 0;
 
 /**
- * Label + any control + hint/error. Wires native controls and fieldControl components (TextField, TextArea, Select and the ARIA widgets) automatically (id, aria-invalid, aria-describedby, aria-required, and aria-labelledby for widgets).
+ * Label + any control + hint/error. Wires native controls and fieldControl components (TextField, TextArea, Select and the ARIA widgets) automatically (id, aria-invalid, aria-describedby, aria-required and native `required`, and aria-labelledby for widgets).
  * @startingPoint section="Forms" subtitle="Label · control · hint" viewport="600x240"
  */
 export function FormField({
@@ -78,6 +82,12 @@ export function FormField({
 				"aria-invalid": !!error || undefined,
 				"aria-describedby": described,
 				"aria-required": required || undefined,
+				// Native `required` too, so a native form won't submit it empty; the control's own wins.
+				...(required &&
+					(kind !== "element" ||
+						REQUIRABLE.has((children as React.ReactElement).type as string)) && {
+						required: (children as React.ReactElement<FieldControlProps>).props.required ?? true,
+					}),
 				// A widget that isn't a native labelable element is named through aria-labelledby.
 				...(kind === true &&
 					label && {

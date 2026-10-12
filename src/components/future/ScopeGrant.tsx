@@ -1,4 +1,5 @@
 import React from "react";
+import { nodeText } from "../../lib/text";
 import { Avatar } from "../core/Avatar";
 import { Button } from "../core/Button";
 import { Switch } from "../forms/Switch";
@@ -24,7 +25,11 @@ export interface ScopeGrantDuration {
 	/** Footer phrase, e.g. "expires at midnight" */
 	expires?: string;
 }
-export interface ScopeGrantProps {
+export interface ScopeGrantProps
+	extends Omit<
+		React.HTMLAttributes<HTMLElement>,
+		"title" | "onChange" | "defaultValue" | "onDurationChange" | "children"
+	> {
 	/**
 	 * Mark for the agent; decorative (the title carries the name). A string renders as a square
 	 * Avatar with its initials, e.g. `agent="Meerkat"`; pass a node for anything else.
@@ -49,11 +54,13 @@ export interface ScopeGrantProps {
 	granted?: boolean;
 	grantLabel?: string;
 	revokeLabel?: string;
+	/** The root <section>. */
+	ref?: React.Ref<HTMLElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-const first = (s: string) => s.split(" ")[0]!.toLowerCase();
+const first = (label: React.ReactNode) => nodeText(label).trim().split(/\s+/)[0]!.toLowerCase();
 
 /**
  * Narrow, time-boxed permission for an agent, in plain words: a switch per scope, one duration,
@@ -79,8 +86,10 @@ export function ScopeGrant({
 	granted = false,
 	grantLabel = "Grant",
 	revokeLabel = "Revoke all",
+	ref,
 	className,
 	style,
+	...rest
 }: ScopeGrantProps) {
 	const [innerSet, setInnerSet] = React.useState<string[]>(
 		() => defaultValue ?? scopes.filter((s) => s.defaultGranted).map((s) => s.id),
@@ -102,12 +111,14 @@ export function ScopeGrant({
 	};
 	const d = durations.find((x) => x.value === dur);
 	const cant = scopes.filter((s) => !on.includes(s.id));
-	const cantText = cant.length
-		? cant.map((s) => s.short ?? first(s.label as string)).join(", ")
-		: "nothing";
+	const cantText = cant.map((s) => s.short ?? first(s.label)).join(", ");
+	// Everything granted: say so, rather than "can't nothing".
+	const reach = cant.length ? `can't ${cantText}` : null;
 	return (
 		<section
 			aria-labelledby={`${uid}t`}
+			{...rest}
+			ref={ref}
 			className={["q-scope-grant", className].filter(Boolean).join(" ")}
 			data-granted={granted || undefined}
 			style={style}
@@ -157,7 +168,13 @@ export function ScopeGrant({
 			</ul>
 			<footer className="q-scope-grant__footer">
 				<p className="q-scope-grant__summary">
-					Can {on.length} · <span className="q-scope-grant__cant">can't {cantText}</span>
+					{reach ? (
+						<>
+							Can {on.length} · <span className="q-scope-grant__cant">{reach}</span>
+						</>
+					) : (
+						`Can all ${on.length}`
+					)}
 					{d?.expires ? ` · ${d.expires}` : ""}
 				</p>
 				<div className="q-scope-grant__actions">
@@ -179,10 +196,7 @@ export function ScopeGrant({
 			</footer>
 			<p role="status" className="q-sr-only">
 				{granted
-					? "Granted: can " +
-						on.length +
-						", can't " +
-						cantText +
+					? `Granted: ${reach ? `can ${on.length}, ${reach}` : `can all ${on.length}`}` +
 						(d?.expires ? `, ${d.expires}` : "")
 					: ""}
 			</p>

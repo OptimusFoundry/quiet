@@ -14,7 +14,8 @@ export interface IntentChip {
 	/** Alternatives; with two or more the chip opens a menu to switch */
 	options?: string[];
 }
-export interface IntentBarProps {
+export interface IntentBarProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "onSubmit"> {
 	value?: string;
 	defaultValue?: string;
 	onChange?: (text: string) => void;
@@ -36,6 +37,8 @@ export interface IntentBarProps {
 	label?: string;
 	submitLabel?: string;
 	resubmitLabel?: string;
+	/** The root <div>. */
+	ref?: React.Ref<HTMLDivElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -62,8 +65,10 @@ export function IntentBar({
 	label = "What do you want done?",
 	submitLabel = "Read",
 	resubmitLabel = "Re-read",
+	ref,
 	className,
 	style,
+	...rest
 }: IntentBarProps) {
 	const [inner, setInner] = React.useState(defaultValue);
 	const text = value ?? inner;
@@ -85,6 +90,8 @@ export function IntentBar({
 				: "";
 	return (
 		<div
+			{...rest}
+			ref={ref}
 			className={["q-intent-bar", className].filter(Boolean).join(" ")}
 			data-status={status}
 			style={style}

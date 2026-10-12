@@ -12,7 +12,9 @@ export interface AgentRunStep {
 	/** Elapsed time, shown once the step is done, e.g. "1.1s" */
 	duration?: React.ReactNode;
 }
-export interface AgentRunProps {
+export interface AgentRunProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
+	/** The root <section>. */
+	ref?: React.Ref<HTMLElement>;
 	title: React.ReactNode;
 	/** Mono line under the title, e.g. "Meerkat · started 4s ago" */
 	meta?: React.ReactNode;
@@ -75,6 +77,8 @@ export function AgentRun({
 	actions,
 	className,
 	style,
+	ref,
+	...rest
 }: AgentRunProps) {
 	const uid = React.useId();
 	const count = steps.length;
@@ -91,6 +95,8 @@ export function AgentRun({
 					: "";
 	return (
 		<section
+			{...rest}
+			ref={ref}
 			aria-labelledby={`${uid}t`}
 			aria-busy={(status === "running" && !atHuman) || undefined}
 			className={["q-agent-run", `q-agent-run--${status}`, className].filter(Boolean).join(" ")}

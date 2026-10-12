@@ -6,7 +6,7 @@ export interface GhostFutureRow {
 	/** When it usually happens, e.g. "day 3" */
 	hint?: React.ReactNode;
 }
-export interface GhostFutureProps {
+export interface GhostFutureProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
 	/** The likely first rows, in order */
 	ghosts?: GhostFutureRow[];
 	/** The real rows so far; each one replaces the first remaining ghost */
@@ -17,6 +17,8 @@ export interface GhostFutureProps {
 	caption?: React.ReactNode;
 	/** Custom ghost content (the dashed row frame stays) */
 	renderGhost?: (ghost: GhostFutureRow, index: number) => React.ReactNode;
+	/** The root <div>. */
+	ref?: React.Ref<HTMLDivElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -34,13 +36,20 @@ export function GhostFuture({
 	count,
 	caption,
 	renderGhost,
+	ref,
 	className,
 	style,
+	...rest
 }: GhostFutureProps) {
 	const real = count ?? React.Children.toArray(children).length;
 	const left = Math.max(0, ghosts.length - real);
 	return (
-		<div className={["q-ghost-future", className].filter(Boolean).join(" ")} style={style}>
+		<div
+			{...rest}
+			ref={ref}
+			className={["q-ghost-future", className].filter(Boolean).join(" ")}
+			style={style}
+		>
 			{real > 0 && <div className="q-ghost-future__rows">{children}</div>}
 			{ghosts.length > 0 && (
 				<div aria-hidden="true" className="q-ghost-future__ghosts">
