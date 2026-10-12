@@ -30,6 +30,7 @@
     --q-app-shell-aside-title-font-size: var(--q-text-sm);
     --q-app-shell-aside-title-weight: var(--q-weight-semibold);
     --q-app-shell-aside-close-size: var(--q-control-sm);
+    --q-app-shell-aside-close-font-size: var(--q-text-sm); // not the UA default; its icon is px-sized
     --q-app-shell-aside-close-fg: var(--q-fg-muted);
     --q-app-shell-aside-close-radius: var(--q-radius-sm);
 
@@ -237,6 +238,7 @@
     border-radius: var(--q-app-shell-aside-close-radius);
     background: transparent;
     color: var(--q-app-shell-aside-close-fg);
+    font-size: var(--q-app-shell-aside-close-font-size);
     cursor: pointer;
     transition: background var(--q-dur-hover) var(--q-ease-soft);
 
