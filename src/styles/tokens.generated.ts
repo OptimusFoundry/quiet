@@ -288,6 +288,7 @@ export type TokenName =
 	| "--q-bar-chart-value-fg"
 	| "--q-bar-chart-value-font-size"
 	| "--q-bg"
+	| "--q-bg-canvas"
 	| "--q-bg-hover"
 	| "--q-bg-inverse"
 	| "--q-bg-inverse-hover"

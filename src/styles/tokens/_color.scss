@@ -10,6 +10,10 @@
   // lighter ground of its own (themes/_foundry.scss); a fallback to a 25 step here would inherit
   // foundry's from :root into every other theme.
   --q-bg-subtle: color-mix(in srgb, var(--q-accent) 0.5%, var(--q-gray-50));
+  // The app's canvas: behind the Sidebar and around the inset panel (AppShell), and behind pages
+  // built on the same frame (a sign-in). A breath darker than --q-bg; a dark theme sets it darker
+  // still, so the panel reads as the lifted one.
+  --q-bg-canvas: color-mix(in srgb, rgb(var(--q-shadow-rgb)) 5%, var(--q-bg));
   // Washes of the ink, so they read on white, on --q-bg-subtle and in a dark theme alike.
   --q-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent); // hover and pressed on any ground
   --q-bg-subtle-hover: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle)); // a warm ground, hovered

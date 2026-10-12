@@ -33,7 +33,7 @@
 	gap: var(--q-space-1);
 	padding: var(--q-space-2);
 	border-radius: var(--q-radius-md);
-	background: color-mix(in srgb, rgb(var(--q-shadow-rgb)) 5%, var(--q-bg));
+	background: var(--q-bg-canvas);
 }
 
 .q-sb-notices__rail {

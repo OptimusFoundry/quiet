@@ -13,7 +13,7 @@ production. If you're writing a raw colour, size or duration, there is a token f
 
 | Job | Token | foundry | Use |
 |---|---|---|---|
-| Canvas | `--q-app-shell-canvas` (AppShell's) | a breath darker than white | behind the Sidebar and around the panel; AppShell sets it |
+| Canvas | `--q-bg-canvas` | a breath darker than white (darker than the panel in dark themes) | behind the Sidebar and around the panel (AppShell reads it), and behind a sign-in page on the same frame |
 | Ground | `--q-bg` | white | the panel, fields, tables, overlays |
 | Warm ground | `--q-bg-subtle` | #fcfcfc warmed 0.5% toward the accent | `Panel` surfaces, wells, user chat bubbles, ghost hovers |
 | Inverse | `--q-bg-inverse` | soft ink | tooltips |
