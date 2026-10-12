@@ -1,4 +1,4 @@
-// FormHint — mono helper / error / success line. BEM: .q-form-hint, __glyph; --{variant}.
+// FormHint — helper / error / success line in the hint role. BEM: .q-form-hint, __glyph (an icon); --{variant}.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -10,10 +10,9 @@
     --q-form-hint-leading: var(--q-hint-leading);
     --q-form-hint-tracking: var(--q-tracking-hint);
     --q-form-hint-fg: var(--q-fg-muted);
-    --q-form-hint-error-fg: var(--q-accent);
-    --q-form-hint-success-fg: var(--q-fg);
-    --q-form-hint-glyph-size: 14px; // optical circle around the 9px glyph
-    --q-form-hint-glyph-font-size: 9px;
+    --q-form-hint-error-fg: var(--q-status-error-fg);
+    --q-form-hint-success-fg: var(--q-status-success-fg);
+    --q-form-hint-glyph-size: var(--q-icon-sm);
     --q-form-hint-glyph-nudge: var(--q-space-0-25);
   }
 }
@@ -21,7 +20,7 @@
 @layer q.components {
   .q-form-hint {
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     gap: var(--q-form-hint-gap);
     font-family: var(--q-form-hint-font-family);
     font-size: var(--q-form-hint-font-size);
@@ -38,16 +37,16 @@
     }
   }
 
+  .q-form-hint__glyph .q-icon {
+    font-size: inherit;
+  }
+
   .q-form-hint__glyph {
     display: inline-grid;
     flex: none;
     place-items: center;
-    width: var(--q-form-hint-glyph-size);
-    height: var(--q-form-hint-glyph-size);
-    border: var(--q-hairline) solid currentcolor;
-    border-radius: var(--q-radius-pill);
-    font-size: var(--q-form-hint-glyph-font-size);
-    line-height: 1;
+    font-size: var(--q-form-hint-glyph-size);
+    line-height: var(--q-leading-none);
     transform: translateY(var(--q-form-hint-glyph-nudge));
   }
 }

@@ -2,7 +2,7 @@ import type React from "react";
 import "./Label.scss";
 
 /**
- * Mono caps field label with required mark, sub text, badge and trailing action.
+ * Sentence-case field label (the label role) with required mark, sub text, badge and trailing action.
  * @startingPoint section="Forms" subtitle="Field labels" viewport="600x200"
  */
 export interface LabelProps {
@@ -10,7 +10,7 @@ export interface LabelProps {
 	htmlFor?: string;
 	/** On the <label> text, so a non-native control can point aria-labelledby at it */
 	id?: string;
-	/** Molten asterisk */
+	/** Accent asterisk */
 	required?: boolean;
 	subText?: React.ReactNode;
 	badge?: React.ReactNode;

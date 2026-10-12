@@ -11,37 +11,36 @@
     --q-select-label-tracking: var(--q-tracking-label);
     --q-select-label-fg: var(--q-fg-muted);
     --q-select-font-family: var(--q-font-sans);
-    --q-select-sm-py: var(--q-space-1);
+    --q-select-sm-height: var(--q-field-sm);
     --q-select-sm-pl: var(--q-space-1-5);
     --q-select-sm-pr: var(--q-space-4);
     --q-select-sm-font-size: var(--q-text-md);
-    --q-select-md-py: var(--q-space-1-5);
+    --q-select-md-height: var(--q-field-md);
     --q-select-md-pl: var(--q-space-2);
     --q-select-md-pr: var(--q-space-5);
-    --q-select-md-font-size: var(--q-text-lg);
-    --q-select-lg-py: var(--q-space-1-75);
+    --q-select-md-font-size: var(--q-text-md);
+    --q-select-lg-height: var(--q-field-lg);
     --q-select-lg-pl: var(--q-space-2-5);
     --q-select-lg-pr: var(--q-space-6);
-    --q-select-lg-font-size: var(--q-text-xl);
+    --q-select-lg-font-size: var(--q-text-lg);
     --q-select-fg: var(--q-fg);
     --q-select-bg: var(--q-bg);
-    --q-select-radius: var(--q-radius-md);
+    --q-select-radius: var(--q-radius-pill);
     --q-select-border: var(--q-border);
     --q-select-border-focus: var(--q-accent);
-    --q-select-border-invalid: var(--q-accent);
+    --q-select-border-invalid: var(--q-status-error-fg);
     --q-select-fg-placeholder: var(--q-fg-subtle);
     --q-select-ring-focus: var(--q-ring-soft);
     --q-select-chevron-inset: var(--q-space-2);
     --q-select-chevron-fg: var(--q-fg-muted);
-    --q-select-chevron-size: 7px; // the drawn chevron
-    --q-select-chevron-stroke: 1.5px;
+    --q-select-chevron-size: var(--q-icon-md);
   }
 
 }
 
 @layer q.components {
   .q-select {
-    --_py: var(--q-select-md-py);
+    --_height: var(--q-select-md-height);
     --_pl: var(--q-select-md-pl);
     --_pr: var(--q-select-md-pr);
     --_font-size: var(--q-select-md-font-size);
@@ -51,14 +50,14 @@
     gap: var(--q-select-gap);
 
     &--sm {
-      --_py: var(--q-select-sm-py);
+      --_height: var(--q-select-sm-height);
       --_pl: var(--q-select-sm-pl);
       --_pr: var(--q-select-sm-pr);
       --_font-size: var(--q-select-sm-font-size);
     }
 
     &--lg {
-      --_py: var(--q-select-lg-py);
+      --_height: var(--q-select-lg-height);
       --_pl: var(--q-select-lg-pl);
       --_pr: var(--q-select-lg-pr);
       --_font-size: var(--q-select-lg-font-size);
@@ -80,8 +79,10 @@
   }
 
   .q-select__input {
+    box-sizing: border-box;
     width: 100%;
-    padding: var(--_py) var(--_pr) var(--_py) var(--_pl);
+    height: var(--_height);
+    padding: 0 var(--_pr) 0 var(--_pl);
     border: var(--q-hairline) solid var(--q-select-border);
     border-radius: var(--q-select-radius);
     outline: none;
@@ -108,27 +109,14 @@
     }
   }
 
-  .q-select__chevron {
+  .q-select .q-select__chevron {
     position: absolute;
     top: 50%;
     right: var(--q-select-chevron-inset);
     color: var(--q-select-chevron-fg);
+    font-size: var(--q-select-chevron-size);
     transform: translateY(-50%);
     pointer-events: none;
-  }
-
-  .q-select__chevron {
-    font-size: 0;
-
-    &::before {
-      content: "";
-      display: block;
-      width: var(--q-select-chevron-size);
-      height: var(--q-select-chevron-size);
-      border-right: var(--q-select-chevron-stroke) solid currentcolor;
-      border-bottom: var(--q-select-chevron-stroke) solid currentcolor;
-      transform: translateY(-25%) rotate(45deg);
-    }
   }
 
 }

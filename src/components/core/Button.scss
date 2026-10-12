@@ -1,4 +1,4 @@
-// Button — pill action. BEM: .q-button, __icon, __arrow; --{variant}, --{size}, --full, --icon-only.
+// Button — dense pill action. BEM: .q-button, __arrow (an Icon); --{variant}, --{size}, --full, --icon-only.
 // Tier-3 tokens (override hooks) first, then the block.
 @use "../../styles/layers";
 
@@ -11,6 +11,7 @@
     --q-button-tracking: var(--q-tracking-tight);
     --q-button-disabled-opacity: 0.4;
     --q-button-arrow-nudge: var(--q-space-0-5);
+    --q-button-icon-size: 1.1em; // the arrow icon, against the label
 
     --q-button-sm-height: var(--q-control-sm);
     --q-button-sm-px: var(--q-space-2);
@@ -34,8 +35,8 @@
     --q-button-outline-border-hover: var(--q-border-emphasis);
     --q-button-outline-bg-hover: var(--q-bg-subtle);
     --q-button-ghost-fg: var(--q-fg);
-    --q-button-ghost-fg-hover: var(--q-accent-fg);
-    --q-button-ghost-icon-bg-hover: var(--q-bg-subtle);
+    // A soft grey wash, visible on white and on the warm ground alike.
+    --q-button-ghost-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
     --q-button-destructive-fg: var(--q-fg);
     --q-button-destructive-border: var(--q-border-strong);
     --q-button-destructive-hover: var(--q-accent-fg);
@@ -126,7 +127,6 @@
     }
 
     &--ghost {
-      padding: 0;
       color: var(--q-button-ghost-fg);
     }
 
@@ -150,11 +150,7 @@
       }
 
       &.q-button--ghost {
-        color: var(--q-button-ghost-fg-hover);
-      }
-
-      &.q-button--ghost.q-button--icon-only {
-        background: var(--q-button-ghost-icon-bg-hover);
+        background: var(--q-button-ghost-bg-hover);
       }
 
       &.q-button--destructive {
@@ -168,8 +164,8 @@
     }
   }
 
-  .q-button__arrow {
-    display: inline-block;
+  .q-button .q-button__arrow {
+    font-size: var(--q-button-icon-size);
     transition: transform var(--q-dur-hover) var(--q-ease-soft);
   }
 }

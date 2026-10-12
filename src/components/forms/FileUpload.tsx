@@ -1,6 +1,7 @@
 import React from "react";
 import { FormValue } from "../../a11y/form";
 import { useMergedRef } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./FileUpload.scss";
 
 /** One row of the file list. The app may own these (controlled `files`) and update `progress`/`error` over time. */
@@ -118,11 +119,7 @@ function FileRow({
 						{f.error || (busy ? `Uploading ${Math.round(pct)}%` : "Ready")}
 					</span>
 				</span>
-				{!busy && !f.error && (
-					<span aria-hidden="true" className="q-file-upload__done">
-						{"\u2713"}
-					</span>
-				)}
+				{!busy && !f.error && <Icon name="check" className="q-file-upload__done" />}
 				<button
 					type="button"
 					aria-label={`Remove ${f.name}`}
@@ -130,7 +127,7 @@ function FileRow({
 					onClick={onRemove}
 					className="q-file-upload__remove"
 				>
-					{"\u00d7"}
+					<Icon name="close" />
 				</button>
 			</div>
 			{busy && (
@@ -361,7 +358,7 @@ export function FileUpload({
 						}}
 						className="q-file-upload__button"
 					>
-						<span aria-hidden="true">{"↑"}</span>
+						<Icon name="upload" className="q-file-upload__button-icon" />
 						{buttonLabel}
 					</button>
 					{hintText && (
@@ -417,7 +414,7 @@ export function FileUpload({
 				>
 					{hidden}
 					<span aria-hidden="true" className="q-file-upload__zone-icon">
-						{"↑"}
+						<Icon name="upload" />
 					</span>
 					<span className="q-file-upload__zone-text">
 						{drag ? (

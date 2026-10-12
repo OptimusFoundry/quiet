@@ -1,15 +1,16 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import { FormHint } from "./FormHint";
 import "./Select.scss";
 
-/** Native select styled with soft --radius-md corners with a ↓ glyph. */
+/** Native select in a pill field, with a chevron icon. */
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
 	label?: React.ReactNode;
 	options?: Array<string | { value: string; label: string; disabled?: boolean }>;
 	/** Disabled first option with value ""; selected until the user picks */
 	placeholder?: string;
 	helperText?: React.ReactNode;
-	/** true = molten edge; a node = edge + message (replaces helperText) */
+	/** true = error edge; a node = edge + message (replaces helperText) */
 	error?: boolean | React.ReactNode;
 	size?: "sm" | "md" | "lg";
 	/** Reaches the native <select> */
@@ -81,9 +82,7 @@ export function Select({
 						),
 					)}
 				</select>
-				<span aria-hidden="true" className="q-select__chevron">
-					{"↓"}
-				</span>
+				<Icon name="chevron-down" className="q-select__chevron" />
 			</span>
 			<FormHint id={`${uid}h`} variant={error ? "error" : "default"}>
 				{message}

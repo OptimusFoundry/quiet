@@ -10,24 +10,24 @@
     --q-text-area-sm-font-size: var(--q-text-md);
     --q-text-area-sm-py: var(--q-space-1);
     --q-text-area-sm-px: var(--q-space-1-5);
-    --q-text-area-md-font-size: var(--q-text-lg);
+    --q-text-area-md-font-size: var(--q-text-md);
     --q-text-area-md-py: var(--q-space-1-5);
     --q-text-area-md-px: var(--q-space-2);
-    --q-text-area-lg-font-size: var(--q-text-xl);
+    --q-text-area-lg-font-size: var(--q-text-lg);
     --q-text-area-lg-py: var(--q-space-2);
     --q-text-area-lg-px: var(--q-space-2-5);
     --q-text-area-font-family: var(--q-font-sans);
     --q-text-area-leading: var(--q-leading-body);
     --q-text-area-fg: var(--q-fg);
     --q-text-area-bg: var(--q-bg);
-    --q-text-area-radius: var(--q-radius-md);
+    --q-text-area-radius: var(--q-radius-md); // multi-line: a rounded rect, not a pill
     --q-text-area-border: var(--q-border);
-    --q-text-area-border-focus: var(--q-fg);
-    --q-text-area-border-invalid: var(--q-accent);
+    --q-text-area-border-focus: var(--q-accent);
+    --q-text-area-border-invalid: var(--q-status-error-fg);
     --q-text-area-ring-focus: var(--q-ring-soft);
     --q-text-area-footer-gap: var(--q-space-2);
-    --q-text-area-count-font-family: var(--q-font-mono);
-    --q-text-area-count-font-size: var(--q-text-2xs);
+    --q-text-area-count-font-family: var(--q-font-hint);
+    --q-text-area-count-font-size: var(--q-text-hint);
     --q-text-area-count-fg: var(--q-fg-muted);
   }
 }
@@ -99,6 +99,7 @@
     margin-left: auto;
     font-family: var(--q-text-area-count-font-family);
     font-size: var(--q-text-area-count-font-size);
+    font-variant-numeric: tabular-nums;
     color: var(--q-text-area-count-fg);
   }
 }

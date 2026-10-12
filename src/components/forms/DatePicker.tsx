@@ -1,6 +1,7 @@
 import React from "react";
 import { FormValue } from "../../a11y/form";
 import { useFocusTrap, useMergedRef, usePresence } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./DatePicker.scss";
 
 /**
@@ -305,9 +306,7 @@ export function DatePicker({
 				<span id={valueId} className="q-date-picker__value">
 					{cur ? format(cur) : placeholder}
 				</span>
-				<span aria-hidden="true" className="q-date-picker__day-badge">
-					{cur ? String(cur.getDate()).padStart(2, "0") : "--"}
-				</span>
+				<Icon name="calendar" className="q-date-picker__icon" />
 			</button>
 			{(open || presence.mounted) && (
 				<div
@@ -327,13 +326,13 @@ export function DatePicker({
 				>
 					<div className="q-date-picker__head">
 						<NavBtn label="Previous month" onClick={() => page(-1)}>
-							{"\u2190"}
+							<Icon name="chevron-left" />
 						</NavBtn>
 						<span id={headId} aria-live="polite" className="q-date-picker__month">
 							{MONTHS[m]} <span className="q-date-picker__year">{y}</span>
 						</span>
 						<NavBtn label="Next month" onClick={() => page(1)}>
-							{"\u2192"}
+							<Icon name="chevron-right" />
 						</NavBtn>
 					</div>
 					{/* quiet: rows use display: contents so the grid semantics add no boxes to the 7-column layout */}

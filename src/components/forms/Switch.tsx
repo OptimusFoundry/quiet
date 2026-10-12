@@ -4,7 +4,7 @@ import { useMergedRef } from "../../a11y/hooks";
 import "./Switch.scss";
 
 /**
- * Pill switch for immediate settings. Ink when on.
+ * Pill switch for immediate settings. Accent-filled when on.
  * @startingPoint section="Forms" subtitle="Pill toggles" viewport="600x200"
  */
 export interface SwitchProps

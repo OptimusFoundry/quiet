@@ -19,29 +19,30 @@
     --q-dropdown-sm-font-size: var(--q-text-md);
     --q-dropdown-md-height: var(--q-field-md);
     --q-dropdown-md-px: var(--q-space-2);
-    --q-dropdown-md-font-size: var(--q-text-lg);
+    --q-dropdown-md-font-size: var(--q-text-md);
     --q-dropdown-lg-height: var(--q-field-lg);
     --q-dropdown-lg-px: var(--q-space-2-5);
-    --q-dropdown-lg-font-size: var(--q-text-xl);
+    --q-dropdown-lg-font-size: var(--q-text-lg);
     --q-dropdown-trigger-gap: var(--q-space-1-5);
     --q-dropdown-trigger-font-family: var(--q-font-sans);
     --q-dropdown-trigger-fg: var(--q-fg);
     --q-dropdown-trigger-fg-placeholder: var(--q-fg-subtle);
     --q-dropdown-trigger-bg: var(--q-bg);
-    --q-dropdown-trigger-radius: var(--q-radius-md);
+    --q-dropdown-trigger-radius: var(--q-radius-pill);
     --q-dropdown-trigger-border: var(--q-border);
-    --q-dropdown-trigger-border-open: var(--q-fg);
-    --q-dropdown-trigger-border-invalid: var(--q-accent);
+    --q-dropdown-trigger-border-open: var(--q-accent);
+    --q-dropdown-trigger-border-invalid: var(--q-status-error-fg);
     --q-dropdown-trigger-ring-open: var(--q-ring-soft);
     --q-dropdown-filled-bg: var(--q-bg-subtle);
     --q-dropdown-icon-fg: var(--q-fg-muted);
+    --q-dropdown-chevron-size: var(--q-icon-md);
     --q-dropdown-list-offset: var(--q-space-0-5);
     --q-dropdown-list-max-height: 300px;
     --q-dropdown-list-pad: var(--q-space-0-75);
     --q-dropdown-list-bg: var(--q-bg);
-    --q-dropdown-list-border: var(--q-border);
+    --q-dropdown-list-divider: var(--q-border);
     --q-dropdown-list-radius: var(--q-radius-lg);
-    --q-dropdown-list-shadow: var(--q-shadow-2);
+    --q-dropdown-list-shadow: var(--q-shadow-float);
     --q-dropdown-list-z: var(--q-z-dropdown);
     --q-dropdown-divider-gap: var(--q-space-0-5);
     --q-dropdown-option-gap: var(--q-space-1-5);
@@ -55,12 +56,13 @@
     --q-dropdown-option-text-gap: var(--q-space-0-25);
     --q-dropdown-option-description-font-size: var(--q-text-sm);
     --q-dropdown-option-description-fg: var(--q-fg-muted);
-    --q-dropdown-check-width: var(--q-space-1-5);
+    --q-dropdown-check-width: var(--q-icon-md);
+    --q-dropdown-check-fg: var(--q-accent-fg);
     --q-dropdown-hint-font-family: var(--q-font-hint);
     --q-dropdown-hint-font-size: var(--q-text-hint);
     --q-dropdown-hint-tracking: var(--q-tracking-hint);
     --q-dropdown-hint-fg: var(--q-fg-muted);
-    --q-dropdown-hint-error-fg: var(--q-accent);
+    --q-dropdown-hint-error-fg: var(--q-status-error-fg);
   }
 }
 
@@ -123,7 +125,9 @@
     color: var(--q-dropdown-trigger-fg);
     text-align: left;
     cursor: pointer;
-    transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+    transition:
+      border-color var(--q-dur-hover) var(--q-ease-soft),
+      box-shadow var(--q-dur-hover) var(--q-ease-soft);
 
     &--placeholder {
       color: var(--q-dropdown-trigger-fg-placeholder);
@@ -164,6 +168,10 @@
     white-space: nowrap;
   }
 
+  .q-dropdown .q-dropdown__chevron.q-icon {
+    font-size: var(--q-dropdown-chevron-size);
+  }
+
   .q-dropdown__chevron {
     color: var(--q-dropdown-icon-fg);
     transition: transform var(--q-dur-hover) var(--q-ease-soft);
@@ -184,7 +192,6 @@
     margin-top: var(--q-dropdown-list-offset);
     padding: var(--q-dropdown-list-pad);
     overflow-y: auto;
-    border: var(--q-hairline) solid var(--q-dropdown-list-border);
     border-radius: var(--q-dropdown-list-radius);
     background: var(--q-dropdown-list-bg);
     box-shadow: var(--q-dropdown-list-shadow);
@@ -201,7 +208,7 @@
 
   .q-dropdown__divider {
     margin: var(--q-dropdown-divider-gap) 0;
-    border-top: var(--q-hairline) solid var(--q-dropdown-list-border);
+    border-top: var(--q-hairline) solid var(--q-dropdown-list-divider);
   }
 
   .q-dropdown__option {
@@ -244,8 +251,17 @@
   }
 
   .q-dropdown__check {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
     width: var(--q-dropdown-check-width);
-    color: var(--q-dropdown-option-fg);
+    height: 1lh;
+    color: var(--q-dropdown-check-fg);
+    font-size: var(--q-dropdown-check-width);
+  }
+
+  .q-dropdown__check .q-icon {
+    font-size: inherit;
   }
 
   .q-dropdown__hint {

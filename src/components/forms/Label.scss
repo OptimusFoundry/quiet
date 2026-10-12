@@ -1,4 +1,4 @@
-// Label — mono caps field label. BEM: .q-label, __row, __text, __required, __sub; --{size}.
+// Label — sentence-case field label (the label role). BEM: .q-label, __row, __text, __required, __sub; --{size}.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -13,7 +13,7 @@
     --q-label-sm-font-size: var(--q-text-3xs);
     --q-label-md-font-size: var(--q-text-label);
     --q-label-lg-font-size: var(--q-text-sm);
-    --q-label-required-fg: var(--q-accent);
+    --q-label-required-fg: var(--q-accent-fg);
     --q-label-required-gap: var(--q-space-0-25);
     --q-label-sub-font-size: var(--q-text-sm);
     --q-label-sub-leading: var(--q-leading-compact);

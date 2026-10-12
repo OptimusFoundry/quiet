@@ -4,7 +4,7 @@ import { useMergedRef } from "../../a11y/hooks";
 import "./Slider.scss";
 
 /**
- * Hairline range slider with ink thumb. Pointer + keyboard.
+ * Hairline range slider with an accent fill and thumb. Pointer + keyboard.
  * @startingPoint section="Forms" subtitle="Range slider" viewport="600x160"
  */
 export interface SliderProps

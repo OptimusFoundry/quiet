@@ -1,11 +1,13 @@
 import React from "react";
 import { isDev } from "../../lib/env";
 import { useLinkElement } from "../../lib/link";
+import { Icon } from "./Icon";
 import { Spinner } from "./Spinner";
 import "./Button.scss";
 
 /**
- * Pill button. Ink primary, hairline secondary/outline, text ghost, ink→molten destructive. Never molten-filled.
+ * Dense pill button. Accent-filled primary (one per view), hairline secondary/outline, padded ghost
+ * with a soft grey hover, ink→accent destructive.
  * @startingPoint section="Actions" subtitle="Pill buttons — variants, sizes, states" viewport="700x200"
  */
 type ButtonHost = HTMLButtonElement | HTMLAnchorElement;
@@ -24,7 +26,7 @@ export interface ButtonProps extends ButtonHostAttributes {
 	ref?: React.Ref<ButtonHost>;
 	variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
 	size?: "sm" | "md" | "lg";
-	/** Trailing → that nudges 4px on hover */
+	/** Trailing arrow icon that nudges 4px on hover */
 	arrow?: boolean;
 	/** Shows a spinner and blocks clicks */
 	loading?: boolean;
@@ -99,11 +101,7 @@ export function Button({
 			{iconOnly && !loading ? icon : null}
 			{children}
 			{rightIcon}
-			{arrow && (
-				<span aria-hidden="true" className="q-button__arrow">
-					{"→"}
-				</span>
-			)}
+			{arrow && <Icon name="arrow-right" className="q-button__arrow" />}
 		</>
 	);
 	const common = {

@@ -1,10 +1,11 @@
 import React from "react";
 import { FormValue } from "../../a11y/form";
 import { useMergedRef } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./Checkbox.scss";
 
 /**
- * Soft-cornered checkbox (--radius-xs), ink fill with ✓. Indeterminate, description, error, sizes.
+ * Soft-cornered checkbox (--radius-xs), accent fill with a check icon. Indeterminate, description, error, sizes.
  * @startingPoint section="Forms" subtitle="Soft checks" viewport="600x220"
  */
 export interface CheckboxProps
@@ -20,7 +21,7 @@ export interface CheckboxProps
 	indeterminate?: boolean;
 	onChange?: (checked: boolean) => void;
 	disabled?: boolean;
-	/** true = molten edge; string = edge + message */
+	/** true = error edge; string = edge + message */
 	error?: boolean | string;
 	size?: "sm" | "md" | "lg";
 	/** Accessible name when there is no visible label */
@@ -117,9 +118,7 @@ export function Checkbox({
 				}}
 				className="q-checkbox__box"
 			>
-				<span aria-hidden="true" className="q-checkbox__mark">
-					{indeterminate ? "\u2212" : "\u2713"}
-				</span>
+				<Icon name={indeterminate ? "minus" : "check"} className="q-checkbox__mark" />
 			</span>
 			{(label || description || error) && (
 				<span onClick={toggle} className="q-checkbox__text">

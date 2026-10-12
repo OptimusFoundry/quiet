@@ -1,5 +1,5 @@
 // DatePicker — field trigger with a month-grid dialog. BEM: .q-date-picker, __label, __trigger
-// (--placeholder, --invalid), __value, __day-badge, __dialog, __head, __nav, __month, __year,
+// (--placeholder, --invalid), __value, __icon, __dialog, __head, __nav, __month, __year,
 // __grid, __row, __weekday, __cell, __day, __today, __footer, __action(--muted), __hint(--error);
 // --{size}, --disabled. Open reads aria-expanded; the selected day reads its cell's aria-selected.
 @use "../../styles/layers";
@@ -10,9 +10,6 @@
     --q-date-picker-gap: var(--q-space-1);
     --q-date-picker-min-width: 240px;
     --q-date-picker-disabled-opacity: 0.4;
-    --q-date-picker-mono-font-family: var(--q-font-mono);
-    --q-date-picker-mono-font-size: var(--q-text-2xs);
-    --q-date-picker-mono-tracking: var(--q-tracking-mono);
     --q-date-picker-muted-fg: var(--q-fg-muted);
     --q-date-picker-subtle-fg: var(--q-fg-subtle);
     --q-date-picker-fg: var(--q-fg);
@@ -23,44 +20,54 @@
     --q-date-picker-sm-font-size: var(--q-text-md);
     --q-date-picker-md-height: var(--q-field-md);
     --q-date-picker-md-px: var(--q-space-2);
-    --q-date-picker-md-font-size: var(--q-text-lg);
+    --q-date-picker-md-font-size: var(--q-text-md);
     --q-date-picker-lg-height: var(--q-field-lg);
     --q-date-picker-lg-px: var(--q-space-2-5);
-    --q-date-picker-lg-font-size: var(--q-text-xl);
+    --q-date-picker-lg-font-size: var(--q-text-lg);
     --q-date-picker-trigger-gap: var(--q-space-1-5);
     --q-date-picker-trigger-font-family: var(--q-font-sans);
-    --q-date-picker-trigger-radius: var(--q-radius-md);
-    --q-date-picker-trigger-border-open: var(--q-fg);
-    --q-date-picker-trigger-border-invalid: var(--q-accent);
+    --q-date-picker-trigger-radius: var(--q-radius-pill);
+    --q-date-picker-icon-size: var(--q-icon-md);
+    --q-date-picker-icon-fg: var(--q-fg-muted);
+    --q-date-picker-trigger-border-open: var(--q-accent);
+    --q-date-picker-trigger-border-invalid: var(--q-status-error-fg);
     --q-date-picker-trigger-ring-open: var(--q-ring-soft);
     --q-date-picker-dialog-offset: var(--q-space-0-5);
     --q-date-picker-dialog-width: 296px; // seven 36px days plus gutters
     --q-date-picker-dialog-pad: var(--q-space-2);
     --q-date-picker-dialog-gap: var(--q-space-1-5);
     --q-date-picker-dialog-radius: var(--q-radius-lg);
-    --q-date-picker-dialog-shadow: var(--q-shadow-2);
+    --q-date-picker-dialog-shadow: var(--q-shadow-float);
     --q-date-picker-dialog-z: var(--q-z-dropdown);
     --q-date-picker-nav-size: var(--q-control-sm);
-    --q-date-picker-nav-font-size: var(--q-text-md);
-    --q-date-picker-nav-border-hover: var(--q-fg);
+    --q-date-picker-nav-icon-size: var(--q-icon-md);
+    // Hovers are a soft grey wash, visible on the white dialog.
+    --q-date-picker-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
     --q-date-picker-month-font-size: var(--q-text-md);
     --q-date-picker-month-weight: var(--q-weight-semibold);
     --q-date-picker-month-tracking: var(--q-tracking-tight);
     --q-date-picker-grid-row-gap: var(--q-space-0-25);
-    --q-date-picker-weekday-font-size: var(--q-text-3xs);
+    --q-date-picker-weekday-font-family: var(--q-font-label);
+    --q-date-picker-weekday-font-size: var(--q-text-label);
+    --q-date-picker-weekday-weight: var(--q-weight-label);
+    --q-date-picker-weekday-fg: var(--q-fg-muted);
+    --q-date-picker-year-weight: var(--q-weight-regular);
     --q-date-picker-weekday-pb: var(--q-space-0-75);
     --q-date-picker-day-size: var(--q-field-sm);
     --q-date-picker-day-font-family: var(--q-font-sans);
-    --q-date-picker-day-font-size: 14px; // the grid's own size, between sm and md
-    --q-date-picker-day-border-hover: var(--q-fg);
-    --q-date-picker-day-bg-selected: var(--q-fg);
-    --q-date-picker-day-fg-selected: var(--q-bg);
+    --q-date-picker-day-font-size: var(--q-text-md);
+    --q-date-picker-day-bg-selected: var(--q-accent-bg);
+    --q-date-picker-day-fg-selected: var(--q-fg-on-accent);
     --q-date-picker-today-size: var(--q-space-0-5);
     --q-date-picker-today-inset: var(--q-space-0-5);
     --q-date-picker-today-bg: var(--q-accent);
-    --q-date-picker-footer-pt: var(--q-space-1-5);
-    --q-date-picker-hint-tracking: var(--q-tracking-wide);
-    --q-date-picker-hint-error-fg: var(--q-accent);
+    --q-date-picker-footer-font-size: var(--q-text-sm);
+    --q-date-picker-footer-weight: var(--q-weight-medium);
+    --q-date-picker-action-fg: var(--q-accent-fg);
+    --q-date-picker-hint-font-family: var(--q-font-hint);
+    --q-date-picker-hint-font-size: var(--q-text-hint);
+    --q-date-picker-hint-tracking: var(--q-tracking-hint);
+    --q-date-picker-hint-error-fg: var(--q-status-error-fg);
   }
 }
 
@@ -94,20 +101,17 @@
   }
 
   .q-date-picker__label,
-  .q-date-picker__day-badge,
-  .q-date-picker__year,
-  .q-date-picker__weekday,
-  .q-date-picker__footer {
-    font-family: var(--q-date-picker-mono-font-family);
-    font-size: var(--q-date-picker-mono-font-size);
-    letter-spacing: var(--q-date-picker-mono-tracking);
-    text-transform: uppercase;
-  }
-
-  .q-date-picker__label,
-  .q-date-picker__day-badge,
   .q-date-picker__year {
     color: var(--q-date-picker-muted-fg);
+  }
+
+  .q-date-picker__year {
+    font-weight: var(--q-date-picker-year-weight);
+  }
+
+  .q-date-picker .q-date-picker__icon {
+    color: var(--q-date-picker-icon-fg);
+    font-size: var(--q-date-picker-icon-size);
   }
 
   .q-date-picker__trigger {
@@ -127,7 +131,9 @@
     color: var(--q-date-picker-fg);
     text-align: left;
     cursor: pointer;
-    transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+    transition:
+      border-color var(--q-dur-hover) var(--q-ease-soft),
+      box-shadow var(--q-dur-hover) var(--q-ease-soft);
 
     &--placeholder {
       color: var(--q-date-picker-subtle-fg);
@@ -164,7 +170,6 @@
     width: var(--q-date-picker-dialog-width);
     margin-top: var(--q-date-picker-dialog-offset);
     padding: var(--q-date-picker-dialog-pad);
-    border: var(--q-hairline) solid var(--q-date-picker-border);
     border-radius: var(--q-date-picker-dialog-radius);
     background: var(--q-date-picker-bg);
     box-shadow: var(--q-date-picker-dialog-shadow);
@@ -181,19 +186,26 @@
   }
 
   .q-date-picker__nav {
+    display: inline-grid;
+    place-items: center;
     width: var(--q-date-picker-nav-size);
     height: var(--q-date-picker-nav-size);
-    border: var(--q-hairline) solid var(--q-date-picker-border);
+    padding: 0;
+    border: 0;
     border-radius: var(--q-radius-pill);
-    background: var(--q-date-picker-bg);
-    font-size: var(--q-date-picker-nav-font-size);
-    line-height: 1;
+    background: transparent;
+    font-size: var(--q-date-picker-nav-icon-size);
+    line-height: var(--q-leading-none);
     color: var(--q-date-picker-fg);
     cursor: pointer;
-    transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+    transition: background var(--q-dur-hover) var(--q-ease-soft);
 
-    &:is(:hover, :focus) {
-      border-color: var(--q-date-picker-nav-border-hover);
+    &:is(:hover, :focus-visible) {
+      background: var(--q-date-picker-bg-hover);
+    }
+
+    .q-icon {
+      font-size: inherit;
     }
   }
 
@@ -217,8 +229,10 @@
 
   .q-date-picker__weekday {
     padding-bottom: var(--q-date-picker-weekday-pb);
+    font-family: var(--q-date-picker-weekday-font-family);
     font-size: var(--q-date-picker-weekday-font-size);
-    color: var(--q-date-picker-subtle-fg);
+    font-weight: var(--q-date-picker-weekday-weight);
+    color: var(--q-date-picker-weekday-fg);
     text-align: center;
   }
 
@@ -227,7 +241,8 @@
     justify-self: center;
     width: var(--q-date-picker-day-size);
     height: var(--q-date-picker-day-size);
-    border: var(--q-hairline) solid transparent;
+    padding: 0;
+    border: 0;
     border-radius: var(--q-radius-pill);
     background: transparent;
     font-family: var(--q-date-picker-day-font-family);
@@ -236,10 +251,12 @@
     color: var(--q-date-picker-fg);
     text-decoration: none;
     cursor: pointer;
-    transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      color var(--q-dur-hover) var(--q-ease-soft);
 
-    &:is(:hover, :focus):not([aria-disabled="true"]) {
-      border-color: var(--q-date-picker-day-border-hover);
+    &:is(:hover, :focus-visible):not([aria-disabled="true"]) {
+      background: var(--q-date-picker-bg-hover);
     }
 
     &[aria-disabled="true"] {
@@ -249,8 +266,7 @@
     }
 
     .q-date-picker__cell[aria-selected="true"] > &,
-    .q-date-picker__cell[aria-selected="true"] > &:is(:hover, :focus) {
-      border-color: transparent;
+    .q-date-picker__cell[aria-selected="true"] > &:is(:hover, :focus-visible) {
       background: var(--q-date-picker-day-bg-selected);
       color: var(--q-date-picker-day-fg-selected);
     }
@@ -265,13 +281,17 @@
     margin-left: calc(var(--q-date-picker-today-size) / -2);
     border-radius: var(--q-radius-pill);
     background: var(--q-date-picker-today-bg);
+
+    .q-date-picker__cell[aria-selected="true"] & {
+      background: var(--q-date-picker-day-fg-selected);
+    }
   }
 
   .q-date-picker__footer {
     display: flex;
     justify-content: space-between;
-    padding-top: var(--q-date-picker-footer-pt);
-    border-top: var(--q-hairline) solid var(--q-date-picker-border);
+    font-size: var(--q-date-picker-footer-font-size);
+    font-weight: var(--q-date-picker-footer-weight);
   }
 
   .q-date-picker__action {
@@ -279,9 +299,7 @@
     border: 0;
     background: none;
     font: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    color: var(--q-date-picker-fg);
+    color: var(--q-date-picker-action-fg);
     cursor: pointer;
 
     &:disabled {
@@ -294,8 +312,8 @@
   }
 
   .q-date-picker__hint {
-    font-family: var(--q-date-picker-mono-font-family);
-    font-size: var(--q-date-picker-mono-font-size);
+    font-family: var(--q-date-picker-hint-font-family);
+    font-size: var(--q-date-picker-hint-font-size);
     letter-spacing: var(--q-date-picker-hint-tracking);
     color: var(--q-date-picker-muted-fg);
 

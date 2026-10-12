@@ -1,12 +1,11 @@
-// Headline — display/h2/h3/h4 with an italic accent and the molten period.
-// BEM: .q-headline, __accent(--molten), __period; --display, --h2, --h3, --h4.
+// Headline — display/h2/h3/h4 with an optional accent period.
+// BEM: .q-headline, __period; --display, --h2, --h3, --h4.
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
     --q-headline-fg: var(--q-fg);
-    --q-headline-accent-molten-fg: var(--q-accent);
     --q-headline-period-fg: var(--q-accent);
 
     --q-headline-display-font-size: var(--q-text-4xl);
@@ -43,15 +42,6 @@
         letter-spacing: var(--q-headline-#{$size}-tracking);
         line-height: var(--q-headline-#{$size}-leading);
       }
-    }
-  }
-
-  .q-headline__accent {
-    color: inherit;
-    font-style: italic;
-
-    &--molten {
-      color: var(--q-headline-accent-molten-fg);
     }
   }
 

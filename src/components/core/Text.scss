@@ -1,5 +1,5 @@
 // Text — typography primitive. BEM: .q-text; --size-{xs…5xl|heading-1…4|mono|custom} (--_size), --weight-*,
-// --color-{name|custom} (--_color), --h1…--h4, --large (24px+), --mono, --italic, --underline, --strike,
+// --color-{name|custom} (--_color), --h1…--h4, --large (24px+), --mono, --underline, --strike,
 // --uppercase/--lowercase/--capitalize, --align-*, --truncate, --clamp (--_lines).
 @use "../../styles/layers";
 
@@ -9,17 +9,16 @@
     --q-text-leading: var(--q-leading-body);
     --q-text-large-leading: var(--q-leading-snug);
     --q-text-large-tracking: var(--q-tracking-h4);
-    --q-text-mono-font-size: var(--q-text-2xs);
-    --q-text-mono-tracking: var(--q-tracking-mono);
+    --q-text-mono-font-size: var(--q-text-sm);
 
     --q-text-default-fg: var(--q-fg-body);
     --q-text-heading-fg: var(--q-fg);
     --q-text-muted-fg: var(--q-fg-muted);
     --q-text-quiet-fg: var(--q-fg-subtle);
-    --q-text-primary-fg: var(--q-accent);
-    --q-text-success-fg: var(--q-fg);
-    --q-text-warning-fg: var(--q-accent);
-    --q-text-error-fg: var(--q-accent);
+    --q-text-primary-fg: var(--q-accent-fg);
+    --q-text-success-fg: var(--q-status-success-fg);
+    --q-text-warning-fg: var(--q-status-warning-fg);
+    --q-text-error-fg: var(--q-status-error-fg);
 
     --q-text-h1-leading: var(--q-leading-none);
     --q-text-h1-tracking: var(--q-tracking-h2);
@@ -101,20 +100,15 @@ $colors: default, heading, muted, quiet, primary, success, warning, error;
       }
     }
 
+    // Mono is for code and IDs: Geist Mono as written, never caps.
     &--mono {
       font-family: var(--q-font-mono);
-      letter-spacing: var(--q-text-mono-tracking);
-      text-transform: uppercase;
     }
 
     @each $transform in uppercase, lowercase, capitalize {
       &--#{$transform} {
         text-transform: $transform;
       }
-    }
-
-    &--italic {
-      font-style: italic;
     }
 
     &--underline {

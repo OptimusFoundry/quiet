@@ -1,12 +1,14 @@
-// StatusDot — mono caps status with a leading dot. BEM: .q-status-dot, __dot; --live, --prototype.
+// StatusDot — sentence-case status with a leading dot. BEM: .q-status-dot, __dot; --live, --prototype.
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
     --q-status-dot-gap: var(--q-space-1);
-    --q-status-dot-font-size: var(--q-text-2xs);
-    --q-status-dot-tracking: var(--q-tracking-mono);
+    --q-status-dot-font-family: var(--q-font-label);
+    --q-status-dot-font-size: var(--q-text-label);
+    --q-status-dot-weight: var(--q-weight-label);
+    --q-status-dot-tracking: var(--q-tracking-label);
     --q-status-dot-fg: var(--q-fg);
     --q-status-dot-size: var(--q-space-1);
     --q-status-dot-color: var(--q-fg);
@@ -22,10 +24,11 @@
     align-items: center;
     gap: var(--q-status-dot-gap);
     color: var(--q-status-dot-fg);
-    font-family: var(--q-font-mono);
+    font-family: var(--q-status-dot-font-family);
     font-size: var(--q-status-dot-font-size);
+    font-weight: var(--q-status-dot-weight);
     letter-spacing: var(--q-status-dot-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
   }
 
   .q-status-dot__dot {
