@@ -8,7 +8,7 @@ import { defaultTheme, getTheme, type ThemeName } from "./styles/themes/themes";
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 	/** Any registered theme (built-in, or added with defineThemes). Unregistered names fall back to defaultTheme. Scopes to this subtree. Omitted: the enclosing ThemeProvider's theme, else defaultTheme. */
 	theme?: ThemeName;
-	/** Spacing density. `comfortable` (default) for most screens, `compact` for dense tools.
+	/** Spacing density. `comfortable` (the default when no ancestor sets one) for most screens, `compact` for dense tools.
 	 *  @deprecated `"app"` and `"marketing"`: quiet has one look; both mean `"comfortable"`. */
 	density?: "comfortable" | "compact" | "app" | "marketing";
 	/** Overrides the theme's accent (any CSS colour); the fill and text steps derive from it. */
@@ -19,10 +19,12 @@ export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 	ref?: Ref<HTMLDivElement>;
 }
 
+const warned = new Set<string>();
+
 /** Scopes a theme, density and accent to its subtree. For app-wide theming use <ThemeProvider>. */
 export function QuietRoot({
 	theme,
-	density = "comfortable",
+	density,
 	accent,
 	linkComponent,
 	className,
@@ -33,11 +35,14 @@ export function QuietRoot({
 }: QuietRootProps) {
 	const inherited = useProviderTheme();
 	const resolved = getTheme(theme ?? inherited ?? defaultTheme);
-	const dense = density === "compact" ? "compact" : "comfortable";
-	if (isDev() && (density === "app" || density === "marketing"))
+	// Only an explicit density is written, so a nested root inherits its parent's.
+	const dense = density && (density === "compact" ? "compact" : "comfortable");
+	if (isDev() && (density === "app" || density === "marketing") && !warned.has(density)) {
+		warned.add(density);
 		console.warn(
 			`quiet: density="${density}" is deprecated (one look); use "comfortable" or "compact".`,
 		);
+	}
 	return (
 		<LinkProvider value={linkComponent}>
 			<div

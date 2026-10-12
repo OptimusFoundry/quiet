@@ -42,7 +42,11 @@
 }
 
 // Type roles: one scale for product screens (Geist, sentence-case sans labels and hints).
-:root {
+// Declared on every [data-theme] too, so a scoped product theme that sets --q-font-sans or the
+// --q-text-* scale gets its own labels, hints, headings and body font.
+:root,
+[data-theme] {
+  --q-font-body: var(--q-weight-regular) var(--q-text-md) / 22px var(--q-font-sans);
   // Product screens are text-heavy: the whole body range steps down a notch (body 15 → 14,
   // small 13 → 12, labels 11 → 10.5), so every component that sizes from the scale follows.
   --q-text-2xs: 10.5px;

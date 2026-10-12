@@ -24,8 +24,10 @@
   --q-space-20: 160px;
 }
 
-// Spacing by job. data-density="compact" tightens it for dense tools.
-:root {
+// Spacing by job. data-density="compact" tightens it for dense tools; "comfortable" restores it
+// inside a compact subtree. (Not on [data-theme]: a themed root inside a compact one stays compact.)
+:root,
+[data-density="comfortable"] {
   --q-space-inline: var(--q-space-1);
   --q-space-stack: var(--q-space-2);
   --q-space-field: var(--q-space-3);
@@ -37,7 +39,6 @@
   --q-space-hero-bottom: var(--q-space-2);
   --q-space-page-x: var(--q-space-4);
   --q-grid-gutter: var(--q-space-3);
-  --q-font-body: var(--q-weight-regular) var(--q-text-md) / 22px var(--q-font-sans);
 }
 
 [data-density="compact"] {

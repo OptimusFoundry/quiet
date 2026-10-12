@@ -52,7 +52,7 @@ import { QuietRoot, Button, PageHero } from "@optimusfoundry/quiet";
 import "@optimusfoundry/quiet/style.css";
 import "@optimusfoundry/quiet/fonts.css";
 
-<QuietRoot theme="foundry" density="app">
+<QuietRoot theme="foundry">
 	<PageHero size="md" eyebrow="Workspace" title="Builds" actions={<Button size="sm">New build</Button>} />
 </QuietRoot>;
 ```
