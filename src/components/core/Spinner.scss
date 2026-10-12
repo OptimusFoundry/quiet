@@ -14,11 +14,11 @@
     --q-spinner-ring-width: var(--q-hairline);
     --q-spinner-ring-width-thick: calc(var(--q-hairline) * 2);
     --q-spinner-track: var(--q-border);
-    --q-spinner-paper-track: var(--q-track-on-inverse);
+    --q-spinner-on-accent-track: var(--q-track-on-inverse);
     --q-spinner-default-fg: var(--q-fg);
     --q-spinner-muted-fg: var(--q-fg-muted);
-    --q-spinner-paper-fg: var(--q-bg);
-    --q-spinner-molten-fg: var(--q-accent);
+    --q-spinner-on-accent-fg: var(--q-bg);
+    --q-spinner-accent-fg: var(--q-accent);
     --q-spinner-label-font-family: var(--q-font-label);
     --q-spinner-label-font-size: var(--q-text-label);
     --q-spinner-label-weight: var(--q-weight-label);
@@ -54,14 +54,14 @@
       --_ring-width: var(--q-spinner-ring-width-thick);
     }
 
-    @each $tone in default, muted, paper, molten {
+    @each $tone in default, muted, on-accent, accent {
       &--#{$tone} {
         --_tone: var(--q-spinner-#{$tone}-fg);
       }
     }
 
-    &--paper {
-      --_track: var(--q-spinner-paper-track);
+    &--on-accent {
+      --_track: var(--q-spinner-on-accent-track);
     }
   }
 

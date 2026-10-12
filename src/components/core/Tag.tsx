@@ -13,7 +13,8 @@ export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, "child
 	 */
 	ref?: React.Ref<HTMLElement>;
 	children?: React.ReactNode;
-	tone?: "default" | "ink";
+	/** default · strong (a deeper ground, for emphasis). `ink` is a deprecated alias of strong */
+	tone?: "default" | "strong" | "ink";
 	/** quiet addition: semantic status colour, from the theme's --q-status-* tokens */
 	status?: "info" | "success" | "warning" | "error";
 	size?: "sm" | "md";
@@ -82,7 +83,7 @@ export function Tag({
 	const cls = [
 		"q-tag",
 		size === "sm" && "q-tag--sm",
-		tone === "ink" && "q-tag--ink",
+		(tone === "strong" || tone === "ink") && "q-tag--strong",
 		STATUSES.includes(status) && `q-tag--${status}`,
 		selectable && "q-tag--selectable",
 		avatar && "q-tag--with-avatar",

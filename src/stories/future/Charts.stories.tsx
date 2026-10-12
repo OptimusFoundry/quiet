@@ -28,7 +28,7 @@ function Kpi({
 	label: string;
 	value: string;
 	data: number[];
-	tone?: "accent" | "ink";
+	tone?: "accent" | "neutral";
 }) {
 	return (
 		<div className="q-sb-charts__kpi">
@@ -52,7 +52,7 @@ function Charts() {
 				index={1}
 				name="Sparkline"
 				from="KPI deltas, tiny static charts"
-				idea="A trend the size of a word. Molten by default with the latest point dotted; a quieter ink tone for secondary figures. Screen readers hear one sentence: from, to, low, high."
+				idea="A trend the size of a word. The accent by default with the latest point dotted; a quieter neutral tone for secondary figures. Screen readers hear one sentence: from, to, low, high."
 			>
 				<Spec label="KPI row">
 					<Kpi label="Verified signups" value="4,812" data={SIGNUPS} />
@@ -60,7 +60,7 @@ function Charts() {
 						label="Bounce rate"
 						value="3.1%"
 						data={[5.2, 4.8, 4.9, 4.1, 3.8, 3.6, 3.3, 3.1]}
-						tone="ink"
+						tone="neutral"
 					/>
 					<Kpi label="MRR" value="$13.2k" data={[9.1, 9.4, 10.2, 10.8, 11.5, 12.1, 12.6, 13.2]} />
 				</Spec>

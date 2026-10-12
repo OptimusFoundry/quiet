@@ -51,7 +51,7 @@ const fmtTime = (t: Date | string | number | undefined) => {
 	};
 };
 
-// The Claude mark: a molten asterisk on a quiet tile — the one bit of heat in a reply.
+// The Claude mark: an accent asterisk on a quiet tile — the one bit of heat in a reply.
 export function ClaudeMark({ size = "md", className }: { size?: "sm" | "md"; className?: string }) {
 	return (
 		<span

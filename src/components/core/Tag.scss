@@ -1,5 +1,5 @@
 // Tag — small sans pill on a soft ground; removable and selectable (selected = accent tint).
-// BEM: .q-tag, __select, __icon, __remove (a close Icon); --sm, --ink, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
+// BEM: .q-tag, __select, __icon, __remove (a close Icon); --sm, --strong, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
 // selected = [aria-pressed="true"]. A selectable tag with a remove button is a <span> holding two sibling
 // buttons (__select, __remove), so its states read through :has(> .q-tag__select …).
 @use "../../styles/layers";
@@ -26,10 +26,10 @@
     // A soft grey ground, no edge: visible on white and on the warm ground alike.
     --q-tag-fg: var(--q-fg-body);
     --q-tag-bg: var(--q-bg-well);
-    --q-tag-ink-fg: var(--q-fg);
-    --q-tag-ink-bg: color-mix(in srgb, var(--q-fg) 9%, transparent);
-    --q-tag-bg-hover: var(--q-tag-ink-bg);
-    --q-tag-fg-hover: var(--q-tag-ink-fg);
+    --q-tag-strong-fg: var(--q-fg);
+    --q-tag-strong-bg: color-mix(in srgb, var(--q-fg) 9%, transparent);
+    --q-tag-bg-hover: var(--q-tag-strong-bg);
+    --q-tag-fg-hover: var(--q-tag-strong-fg);
     --q-tag-selected-bg: var(--q-accent-subtle);
     --q-tag-selected-bg-hover: var(--q-accent-subtle-hover);
     --q-tag-selected-fg: var(--q-accent-fg);
@@ -90,12 +90,12 @@
       padding-left: var(--q-tag-avatar-pl);
     }
 
-    &--ink {
-      background: var(--q-tag-ink-bg);
-      color: var(--q-tag-ink-fg);
+    &--strong {
+      background: var(--q-tag-strong-bg);
+      color: var(--q-tag-strong-fg);
     }
 
-    // After --ink so status wins over tone; hover and selected still win on specificity.
+    // After --strong so status wins over tone; hover and selected still win on specificity.
     @each $status in info, success, warning, error {
       &--#{$status} {
         border-color: var(--q-tag-#{$status}-border);
@@ -187,7 +187,7 @@
 
     &:is(:hover, :focus-visible):not(:disabled) {
       background: var(--q-tag-bg);
-      color: var(--q-tag-ink-fg);
+      color: var(--q-tag-strong-fg);
     }
 
     &:disabled {

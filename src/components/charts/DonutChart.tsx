@@ -6,7 +6,7 @@ import "./chart.scss";
 import "./DonutChart.scss";
 
 /**
- * Share of a total. Largest segment molten, the rest ink then greys, with a centre total that
+ * Share of a total. Largest segment in the accent, the rest ink then greys, with a centre total that
  * turns into the active segment's share on hover or focus. Segments are focusable marks.
  * @startingPoint section="Charts" subtitle="Share of a total" viewport="600x260"
  */
@@ -22,7 +22,7 @@ export interface DonutChartProps {
 	size?: number;
 	/** Ring thickness in px (default 22) */
 	thickness?: number;
-	/** Order largest first so the largest gets molten (default true) */
+	/** Order largest first so the largest gets the accent (default true) */
 	sort?: boolean;
 	formatValue?: (value: number) => string;
 	/** Mono caption in the centre (default "Total") */
@@ -37,7 +37,7 @@ export interface DonutChartProps {
 	style?: React.CSSProperties;
 }
 
-// Share of a total. Segments are ordered largest first, so the largest carries molten and the
+// Share of a total. Segments are ordered largest first, so the largest carries the accent and the
 // rest step through ink and greys; a 2px surface gap separates them. Each segment is a focusable
 // mark (one tab stop, arrows move); the centre shows the total, or the active segment's share.
 export function DonutChart({

@@ -8,7 +8,7 @@
   [data-theme] {
     --q-border-progress-radius: var(--q-radius-lg); // Card's radius
     --q-border-progress-stroke: var(--q-fg);
-    --q-border-progress-stroke-done: var(--q-fg); // ink, like Progress success; molten stays punctuation
+    --q-border-progress-stroke-done: var(--q-fg); // ink, like Progress success; accent stays punctuation
     --q-border-progress-stroke-width: 1.5px;
     --q-border-progress-dur: 0.4s; // same glide as Progress
     --q-border-progress-done-dur: var(--q-dur-expand);

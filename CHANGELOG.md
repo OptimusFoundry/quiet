@@ -2,6 +2,18 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Changed
+
+- Prop values named after the old reference's palette get plain names; the old values still work as
+  deprecated aliases: `Spinner tone` `"on-accent"` and `"accent"` (were `"paper"`, `"molten"`), `Tag tone`
+  `"strong"` (was `"ink"`), `Sparkline tone` `"neutral"` (was `"ink"`). `Banner variant` is deprecated
+  as a whole (one look); `"paper"` is accepted silently.
+- Private tier-3 tokens renamed to match: `--q-spinner-on-accent-*`, `--q-spinner-accent-fg`,
+  `--q-badge-dot-on-accent`, `--q-badge-dot-accent`, `--q-tag-strong-*`, `--q-sparkline-neutral`.
+- Comments call the accent "the accent", not "molten" (the palette token `--q-molten-500` keeps its name).
+
 ## 1.1.0
 
 ### Added

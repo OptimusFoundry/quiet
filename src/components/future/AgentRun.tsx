@@ -6,7 +6,7 @@ import "./AgentRun.scss";
 /**
  * An agent's run as named, timed, interruptible steps — replaces spinners and progress toasts for
  * work that touches real data. The last step is always a person; when the run reaches it, its
- * marker turns molten and `actions` appear. Controlled: the caller advances `current`.
+ * marker takes the accent and `actions` appear. Controlled: the caller advances `current`.
  * @startingPoint section="Future" subtitle="Interruptible agent steps" viewport="760x360"
  */
 export interface AgentRunStep {
@@ -61,7 +61,7 @@ function stepState(
 }
 
 // Work that takes seconds and touches real data, shown as named, timed, interruptible steps.
-// The last step is always a person: when the run reaches it, its marker turns molten.
+// The last step is always a person: when the run reaches it, its marker takes the accent.
 export function AgentRun({
 	title,
 	meta,

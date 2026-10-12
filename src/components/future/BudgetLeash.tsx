@@ -6,7 +6,7 @@ import "./BudgetLeash.scss";
 
 /**
  * A spend limit on an agent drawn as a leash: the slack line from the agent to its cap sags while
- * there is room and pulls taut (and molten) as it spends. The agent slows before it stops. Read as
+ * there is room and pulls taut (taking the accent) as it spends. The agent slows before it stops. Read as
  * a meter; lengthen it with presets or "Give slack".
  * @startingPoint section="Future" subtitle="A spend cap that goes taut" viewport="640x200"
  */

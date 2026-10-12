@@ -109,7 +109,7 @@ export const Overview: StoryObj = {
 			</div>
 			<div className="q-sb-core__row">
 				<Tag>Design</Tag>
-				<Tag tone="ink">Ink</Tag>
+				<Tag tone="strong">Strong</Tag>
 				<Tag selectable defaultSelected>
 					Selected
 				</Tag>

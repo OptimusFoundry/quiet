@@ -5,7 +5,7 @@ import { Icon } from "../core/Icon";
 import "./DatePicker.scss";
 
 /**
- * Date field with a rounded month calendar. Today = molten dot, selected = ink circle.
+ * Date field with a rounded month calendar. Today = an accent dot, selected = an accent fill.
  * @startingPoint section="Forms" subtitle="Calendar date picker" viewport="600x500"
  */
 export interface DatePickerProps
