@@ -1,0 +1,22 @@
+/* Layout for the DropdownMenu stories: room below the trigger for the open menu. */
+.q-sb-dropdown-menu {
+	min-height: 320px;
+
+	&__log {
+		white-space: pre-line;
+		font-family: var(--q-font-mono);
+		font-size: var(--q-text-sm);
+		color: var(--q-fg-muted);
+	}
+
+	&__area {
+		display: grid;
+		place-items: center;
+		width: 320px;
+		height: 160px;
+		border-radius: var(--q-radius-lg);
+		background: var(--q-bg-subtle);
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+	}
+}

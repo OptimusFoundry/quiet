@@ -2,11 +2,6 @@ import React from "react";
 import { Icon } from "../core/Icon";
 import "./FormHint.scss";
 
-/**
- * Helper / error / success line under a field: the hint role (sans 11, sentence case), with a
- * status icon for errors and successes.
- * @startingPoint section="Forms" subtitle="Helper, error, success" viewport="600x160"
- */
 export interface FormHintProps {
 	variant?: "default" | "error" | "success";
 	/** true = the variant's icon (info, warning, check); node = custom; false = none */
@@ -20,6 +15,11 @@ export interface FormHintProps {
 
 const ICONS: Record<string, string> = { error: "warning", success: "check", default: "info" };
 
+/**
+ * Helper / error / success line under a field: the hint role (sans 11, sentence case), with a
+ * status icon for errors and successes.
+ * @startingPoint section="Forms" subtitle="Helper, error, success" viewport="600x160"
+ */
 export function FormHint({
 	variant = "default",
 	icon,

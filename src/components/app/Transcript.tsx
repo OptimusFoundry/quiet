@@ -51,12 +51,6 @@ export interface TranscriptSession {
 	items: TranscriptItem[];
 }
 
-/**
- * The read-back of an agent run: sessions as collapsible groups, each a thread of messages
- * (ChatMessage), tool calls (ToolCall) and run events. Consecutive messages from one author share a
- * header; a folded session shows a one-line summary ("12 messages · 3 tool calls").
- * @startingPoint section="App" subtitle="Agent run transcript" viewport="800x640"
- */
 export interface TranscriptProps {
 	sessions: TranscriptSession[];
 	/** Which sessions start open (uncontrolled): the latest only (default) or all */
@@ -419,6 +413,12 @@ function Session({
 	);
 }
 
+/**
+ * The read-back of an agent run: sessions as collapsible groups, each a thread of messages
+ * (ChatMessage), tool calls (ToolCall) and run events. Consecutive messages from one author share a
+ * header; a folded session shows a one-line summary ("12 messages · 3 tool calls").
+ * @startingPoint section="App" subtitle="Agent run transcript" viewport="800x640"
+ */
 export function Transcript({
 	sessions,
 	defaultOpen = "latest",

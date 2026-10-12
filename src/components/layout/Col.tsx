@@ -2,10 +2,6 @@ import React from "react";
 import { Grid } from "./Grid";
 import "./Col.scss";
 
-/**
- * One cell of the 12-column grid. Use inside <Grid columns={12}>.
- * @startingPoint section="Layout" subtitle="12-column spans" viewport="900x200"
- */
 export interface ColProps {
 	/** 1–12 */
 	span?: number;
@@ -22,6 +18,10 @@ export interface ColProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * One cell of the 12-column grid. Use inside `<Grid columns={12}>`.
+ * @startingPoint section="Layout" subtitle="12-column spans" viewport="900x200"
+ */
 export function Col({
 	span = 12,
 	spanMd,

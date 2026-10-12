@@ -149,6 +149,8 @@ console.log(`Created ${files.join(", ")}
 Next:
   1. Build it out: tokens at the top of the scss, BEM .${block}__el--mod, a11y hooks from src/a11y/hooks.ts.
   2. npm run gen                       # exports it from src/index.ts
-  3. Story: ${group === "future" ? `src/stories/future/<Set>.stories.tsx (FuturePage / Concept / Spec), section id="${kebab}"` : group === "app" ? `src/stories/app/${name}.stories.tsx` : `src/stories/extensions/${name}.stories.tsx`}
+  3. Story: src/stories/components/${group}/${name}.stories.tsx, title "Components/<Label>/${name}"
+     (copy src/stories/components/core/Button.stories.tsx), and a tile in src/stories/overview/tiles/${group}.tsx.
+     npm run lint (check-stories) fails until both exist.
   4. npm run lint && npm run typecheck && npm run build
 See .claude/skills/new-component/SKILL.md.`);

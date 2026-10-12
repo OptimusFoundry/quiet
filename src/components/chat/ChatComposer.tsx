@@ -18,12 +18,6 @@ export interface ChatAttachment {
 	status?: "done" | "uploading" | "error";
 	error?: React.ReactNode;
 }
-/**
- * The message box. Text grows with what you type up to `maxRows`. Enter sends, Shift+Enter adds a new
- * line, and nothing sends mid-IME-composition. Files arrive by the attach button, drag-and-drop, or
- * pasting an image, and sit above the text as removable chips. While `busy`, Send becomes Stop.
- * Sending is the product's job: `onSubmit({ text, attachments })`.
- */
 export interface ChatComposerProps {
 	value?: string;
 	defaultValue?: string;
@@ -41,7 +35,7 @@ export interface ChatComposerProps {
 	placeholder?: string;
 	/** Accessible name for the form and textarea (default "Message") */
 	label?: string;
-	/** File types, as for <input accept>: "image/*,.pdf,.csv" */
+	/** File types, as for `<input accept>`: `"image/*,.pdf,.csv"` */
 	accept?: string;
 	/** Default 10 */
 	maxFiles?: number;
@@ -60,10 +54,12 @@ export interface ChatComposerProps {
 	style?: React.CSSProperties;
 }
 
-// The message box. Text grows with what you type (up to `maxRows`); Enter sends, Shift+Enter is a
-// new line, and nothing sends mid-IME-composition. Files arrive by the attach button, drag-and-drop
-// onto the box, or pasting an image; they sit above the text as removable chips. While `busy` the
-// send key becomes Stop. Sending is yours to wire: `onSubmit({ text, attachments })`.
+/**
+ * The message box. Text grows with what you type up to `maxRows`. Enter sends, Shift+Enter adds a new
+ * line, and nothing sends mid-IME-composition. Files arrive by the attach button, drag-and-drop, or
+ * pasting an image, and sit above the text as removable chips. While `busy`, Send becomes Stop.
+ * Sending is the product's job: `onSubmit({ text, attachments })`.
+ */
 export function ChatComposer({
 	value,
 	defaultValue = "",

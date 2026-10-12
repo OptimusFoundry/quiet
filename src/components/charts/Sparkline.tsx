@@ -3,11 +3,6 @@ import { areaPath, formatNumber, linear, linePath } from "./chart-utils";
 import "./chart.scss";
 import "./Sparkline.scss";
 
-/**
- * A word-sized trend for KPIs and table cells. Molten by default with the last point dotted;
- * read out as one sentence (from, to, low, high).
- * @startingPoint section="Charts" subtitle="Inline trend" viewport="400x120"
- */
 export interface SparklineProps {
 	/** Values in order; null leaves a gap */
 	data: (number | null)[];
@@ -26,8 +21,11 @@ export interface SparklineProps {
 	style?: React.CSSProperties;
 }
 
-// A word-sized trend for KPIs and table cells. Molten by default, last point dotted; read out as
-// one sentence (first, low, high, last) since there is nothing to explore at this size.
+/**
+ * A word-sized trend for KPIs and table cells. Molten by default with the last point dotted; read
+ * out as one sentence (from, to, low, high), since there is nothing to explore at this size.
+ * @startingPoint section="Charts" subtitle="Inline trend" viewport="400x120"
+ */
 export function Sparkline({
 	data = [],
 	width = 96,

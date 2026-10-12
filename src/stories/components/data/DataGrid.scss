@@ -1,0 +1,7 @@
+/* Layout for the DataGrid stories. A 0 floor on the column, so a wide table scrolls inside the
+   grid instead of widening the page. */
+.q-sb-data-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	max-width: var(--q-w-content);
+}

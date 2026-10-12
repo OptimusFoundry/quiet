@@ -1,0 +1,34 @@
+/* Layout for the EntityLink stories. */
+.q-sb-entity-link__prose {
+	max-width: 46ch;
+	margin: 0;
+	color: var(--q-fg-body);
+	font-size: var(--q-text-md);
+	line-height: var(--q-leading-body);
+}
+
+.q-sb-entity-link__meta {
+	margin: 0;
+	color: var(--q-fg-muted);
+	font-size: var(--q-text-sm);
+}
+
+.q-sb-entity-link__refs {
+	display: grid;
+	gap: var(--q-space-inline);
+	margin: 0;
+	padding: 0;
+	color: var(--q-fg-body);
+	list-style: none;
+}
+
+.q-sb-entity-link__ref {
+	display: flex;
+	align-items: baseline;
+	gap: var(--q-space-inline);
+}
+
+.q-sb-entity-link__table {
+	width: 100%;
+	max-width: 760px;
+}

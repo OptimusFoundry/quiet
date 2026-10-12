@@ -3,10 +3,6 @@ import { FormValue } from "../../a11y/form";
 import { useMergedRef } from "../../a11y/hooks";
 import "./Switch.scss";
 
-/**
- * Pill switch for immediate settings. Accent-filled when on.
- * @startingPoint section="Forms" subtitle="Pill toggles" viewport="600x200"
- */
 export interface SwitchProps
 	extends Omit<
 		React.HTMLAttributes<HTMLSpanElement>,
@@ -39,6 +35,10 @@ export interface SwitchProps
 
 const SIZES = ["sm", "md", "lg"];
 
+/**
+ * Pill switch for immediate settings. Accent-filled when on.
+ * @startingPoint section="Forms" subtitle="Pill toggles" viewport="600x200"
+ */
 export function Switch({
 	label,
 	description,

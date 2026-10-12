@@ -1,0 +1,36 @@
+/* Shared layout for the component stories (Story.tsx). Wrapped in :where() so a story's own
+   stylesheet always wins, whatever order they load in. */
+:where(.q-sb-story__row-wrap) {
+	display: grid;
+	gap: var(--q-space-1);
+}
+
+:where(.q-sb-story__row) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--q-space-1-5);
+}
+
+:where(.q-sb-story__column) {
+	display: grid;
+	gap: var(--q-space-stack);
+	width: 100%;
+	max-width: 420px;
+}
+
+:where(.q-sb-story__column--wide) {
+	max-width: 760px;
+}
+
+:where(.q-sb-story__label) {
+	margin: 0;
+	font-size: var(--q-text-xs);
+	color: var(--q-fg-muted);
+}
+
+:where(.q-sb-story__note) {
+	margin: 0;
+	font-size: var(--q-text-sm);
+	color: var(--q-fg-muted);
+}

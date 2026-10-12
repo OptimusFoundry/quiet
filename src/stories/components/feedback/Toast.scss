@@ -1,0 +1,4 @@
+/* A Toast in a narrow box (the overview tile): let it shrink below its 280px floor. */
+.q-sb-toast--fit {
+	--q-toast-min-width: 0;
+}

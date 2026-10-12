@@ -3,10 +3,6 @@ import { Icon } from "../core/Icon";
 import { Spinner } from "../core/Spinner";
 import "./ToolCall.scss";
 
-/**
- * A step Claude took inside a reply (a tool call or a thinking pass), folded to one line showing what
- * it was, its state and how long it took. Open it to see the input and output in mono.
- */
 export interface ToolCallProps {
 	/** Tool name, e.g. "web_search" */
 	name?: string;
@@ -37,8 +33,11 @@ const fmtDuration = (d: number | string | undefined) => {
 
 const STATUS_TEXT: Record<string, string> = { running: "running", done: "done", error: "failed" };
 
-// A step Claude took inside a reply — a tool call or a thinking pass — folded to one line:
-// what, its state and how long. Open it to see the input and output in mono.
+/**
+ * A step Claude took inside a reply (a tool call or a thinking pass), folded to one line showing what
+ * it was, its state and how long it took. Open it to see the exact input and output in mono; nothing
+ * hides behind a spinner.
+ */
 export function ToolCall({
 	name,
 	kind = "tool",

@@ -5,11 +5,6 @@ import { EmptyState } from "./EmptyState";
 import { Table, type TableProps } from "./Table";
 import "./DataGrid.scss";
 
-/**
- * Table + title bar, filter box, pagination, selection count, loading and empty states.
- * Any other Table prop (striped, bordered, defaultSort, renderExpanded…) passes through to the Table.
- * @startingPoint section="Data" subtitle="Table with toolbar & pages" viewport="900x520"
- */
 export interface DataGridProps<Row = Record<string, unknown>, Key extends React.Key = React.Key>
 	extends Omit<
 		TableProps<Row, Key>,
@@ -46,6 +41,11 @@ export interface DataGridProps<Row = Record<string, unknown>, Key extends React.
 	style?: React.CSSProperties;
 }
 
+/**
+ * Table + title bar, filter box, pagination, selection count, loading and empty states.
+ * Any other Table prop (striped, bordered, defaultSort, renderExpanded…) passes through to the Table.
+ * @startingPoint section="Data" subtitle="Table with toolbar & pages" viewport="900x520"
+ */
 export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = React.Key>({
 	columns = [],
 	data = [],

@@ -3,10 +3,6 @@ import { FormHint } from "./FormHint";
 import { Label } from "./Label";
 import "./TextArea.scss";
 
-/**
- * Labelled multi-line input with resize control and optional counter.
- * @startingPoint section="Forms" subtitle="Multi-line input" viewport="600x280"
- */
 export interface TextAreaProps
 	extends Omit<
 		React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -39,6 +35,10 @@ export interface TextAreaProps
 const SIZES = ["sm", "md", "lg"];
 let ofTaId = 0;
 
+/**
+ * Labelled multi-line input with resize control and optional counter.
+ * @startingPoint section="Forms" subtitle="Multi-line input" viewport="600x280"
+ */
 export function TextArea({
 	label,
 	hideLabel = false,

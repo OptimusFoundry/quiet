@@ -2,10 +2,6 @@ import React from "react";
 import { Icon } from "./Icon";
 import "./Avatar.scss";
 
-/**
- * Person or org avatar — image, initials, or fallback. Circle or soft rounded square.
- * @startingPoint section="Primitives" subtitle="Image, initials, fallback" viewport="600x160"
- */
 export interface AvatarProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	ref?: React.Ref<HTMLSpanElement>;
 	src?: string;
@@ -22,6 +18,10 @@ export interface AvatarProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,
 
 const SIZES: unknown[] = ["xs", "sm", "md", "lg", "xl", "2xl"];
 
+/**
+ * Person or org avatar — image, initials, or fallback. Circle or soft rounded square.
+ * @startingPoint section="Primitives" subtitle="Image, initials, fallback" viewport="600x160"
+ */
 export function Avatar({
 	src,
 	name,

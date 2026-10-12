@@ -1,0 +1,15 @@
+/* Real rows for the GhostFuture stories: a run and when it happened, on the warm ground. */
+.q-sb-ghost-future__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--q-space-2);
+	padding: var(--q-space-1-5) var(--q-space-2);
+	background: var(--q-bg-subtle);
+	border-radius: var(--q-radius-md);
+	font-size: var(--q-text-sm);
+}
+
+.q-sb-ghost-future__when {
+	color: var(--q-fg-muted);
+}

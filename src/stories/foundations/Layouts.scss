@@ -1,0 +1,373 @@
+/* Foundations/Layouts miniatures (Layouts.stories.tsx): the app shell and the page layouts drawn
+   from the real width tokens at 1/5 scale. Base pieces first, so the per-piece rules below win. */
+
+.q-sb-layouts {
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+		gap: var(--q-space-block) var(--q-grid-gutter);
+	}
+
+	&__figure {
+		margin: 0;
+		display: grid;
+		gap: var(--q-space-stack);
+		align-content: start;
+		min-width: 0;
+	}
+
+	&__art {
+		overflow: hidden;
+		border-radius: var(--q-radius-md);
+	}
+
+	&__caption {
+		display: grid;
+		gap: var(--q-space-0-5);
+	}
+
+	/* Base pieces. A fill is the warm ground (a surface panel, a control); a box is white with an edge. */
+	&__box {
+		border: var(--q-hairline) solid var(--q-border-strong);
+		border-radius: var(--q-radius-2xs);
+		background: var(--q-bg);
+		min-width: 0;
+		min-height: var(--q-space-1);
+	}
+
+	&__fill {
+		background: var(--q-bg-subtle);
+		border-radius: var(--q-radius-2xs);
+		min-width: 0;
+		min-height: var(--q-space-0-5);
+	}
+
+	&__title {
+		height: var(--q-space-0-75);
+		width: 40%;
+		background: var(--q-fg);
+		border-radius: var(--q-radius-pill);
+	}
+
+	&__rows {
+		display: grid;
+		gap: var(--q-space-0-5);
+		align-content: start;
+		min-width: 0;
+	}
+
+	/* The frame at 1/5: canvas, sidebar 240 on it, inset white panel, optional third pane 360
+	   (the list-pane token is the same 360). */
+	&__app {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-sidebar) * 0.2) minmax(0, 1fr);
+		gap: var(--q-space-0-25);
+		padding: var(--q-space-0-25);
+		background: var(--q-bg-canvas);
+		height: 128px;
+		box-sizing: border-box;
+		overflow: hidden;
+
+		&--aside {
+			grid-template-columns:
+				calc(var(--q-w-sidebar) * 0.2) minmax(0, 1fr)
+				calc(var(--q-w-list-pane) * 0.2);
+		}
+	}
+
+	&__sidebar {
+		padding: var(--q-space-0-5) var(--q-space-0-25);
+	}
+
+	&__switcher {
+		height: var(--q-space-1);
+		margin-bottom: var(--q-space-0-5);
+		background: var(--q-border);
+	}
+
+	&__nav-item {
+		height: var(--q-space-0-75);
+		border-radius: var(--q-radius-pill);
+		background: var(--q-border);
+		width: 70%;
+
+		&--current {
+			background: var(--q-bg);
+			width: 100%;
+		}
+	}
+
+	&__panel {
+		display: grid;
+		grid-template-rows: calc(var(--q-h-topbar) * 0.2) minmax(0, 1fr);
+		background: var(--q-bg);
+		border-radius: var(--q-radius-xs);
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	&__topbar {
+		min-height: 0;
+	}
+
+	/* The padded column at 1/5: block 32 above, page-x 32 at the sides. */
+	&__body {
+		display: grid;
+		gap: var(--q-space-0-75);
+		align-content: start;
+		padding: 0 calc(var(--q-space-4) * 0.2);
+		min-width: 0;
+	}
+
+	&__aside {
+		grid-template-rows: none;
+		align-content: start;
+		gap: var(--q-space-0-5);
+		padding: var(--q-space-0-75);
+	}
+
+	&__pane-row {
+		height: 10px;
+	}
+
+	/* App shell. */
+	&__shell-main {
+		height: 70px;
+	}
+
+	/* Dashboard and detail page. */
+	&__kpis {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: var(--q-space-0-5);
+	}
+
+	&__kpi {
+		height: 14px;
+	}
+
+	&__dash-split {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: var(--q-space-0-5);
+	}
+
+	&__chart {
+		height: 40px;
+	}
+
+	&__lead {
+		height: 42px;
+	}
+
+	&__rail-panel {
+		height: 28px;
+	}
+
+	/* List page and full-bleed table: the table lies on the panel's white. */
+	&__toolbar {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: var(--q-space-0-5);
+	}
+
+	&__search {
+		height: 8px;
+		width: 50%;
+	}
+
+	&__filter {
+		height: 8px;
+		width: 24px;
+	}
+
+	&__table {
+		display: grid;
+		gap: 0;
+		width: 80%;
+
+		&--full {
+			width: auto;
+		}
+	}
+
+	&__table-row {
+		height: 9px;
+		background: none;
+		border-radius: 0;
+		border-top: var(--q-hairline) solid var(--q-border);
+	}
+
+	/* List-detail: the panes edge to edge, a hairline between. */
+	&__list-detail {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-list-pane) * 0.2) minmax(0, 1fr);
+		gap: var(--q-space-1);
+		height: 80px;
+	}
+
+	&__list-pane {
+		padding-right: var(--q-space-0-75);
+		border-right: var(--q-hairline) solid var(--q-border);
+	}
+
+	&__list-row {
+		height: 10px;
+	}
+
+	&__detail {
+		height: 56px;
+	}
+
+	/* Form page, wizard and sign-in. */
+	&__form {
+		display: grid;
+		gap: var(--q-space-0-75);
+		align-content: start;
+		width: calc(var(--q-w-form) * 0.2);
+		max-width: 100%;
+	}
+
+	&__field {
+		height: 9px;
+		border: var(--q-hairline) solid var(--q-border-strong);
+		background: var(--q-bg);
+	}
+
+	&__submit {
+		height: 9px;
+		width: 30px;
+		background: var(--q-fg);
+		border-radius: var(--q-radius-pill);
+		justify-self: end;
+
+		&--wide {
+			width: auto;
+			justify-self: stretch;
+			background: var(--q-accent-bg);
+		}
+	}
+
+	&__steps {
+		display: flex;
+		gap: var(--q-space-0-5);
+		align-items: center;
+	}
+
+	&__step {
+		width: var(--q-space-1);
+		height: var(--q-space-1);
+		border-radius: var(--q-radius-pill);
+		background: var(--q-border);
+
+		&--current {
+			background: var(--q-fg);
+		}
+	}
+
+	&__wizard-actions {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		gap: var(--q-space-0-5);
+	}
+
+	&__wizard-button {
+		height: 9px;
+		width: 24px;
+		border-radius: var(--q-radius-pill);
+
+		&--primary {
+			background: var(--q-fg);
+		}
+	}
+
+	/* Settings: each group a surface panel, sections 48 apart, the danger zone last. */
+	&__settings-split {
+		display: grid;
+		grid-template-columns: calc(var(--q-w-settings-nav) * 0.2) calc(var(--q-w-form) * 0.2);
+		gap: var(--q-space-1);
+		height: 80px;
+	}
+
+	&__settings-nav {
+		height: 7px;
+		background: var(--q-border);
+		border-radius: var(--q-radius-pill);
+	}
+
+	&__groups {
+		gap: calc(var(--q-space-section) * 0.2);
+	}
+
+	&__group {
+		height: 22px;
+	}
+
+	&__danger {
+		height: 12px;
+		border-color: var(--q-status-error-border);
+	}
+
+	/* Chat. */
+	&__chat {
+		gap: var(--q-space-0-75);
+		grid-template-rows: 1fr auto;
+		width: calc(var(--q-w-form) * 0.2);
+		max-width: 100%;
+		height: 90px;
+		justify-self: center;
+	}
+
+	&__bubble {
+		height: 9px;
+		width: 50%;
+		justify-self: end;
+	}
+
+	&__reply {
+		height: 16px;
+		border-left: var(--q-hairline) solid var(--q-border-strong);
+	}
+
+	&__composer {
+		height: 14px;
+		border-radius: var(--q-radius-xs);
+	}
+
+	/* Sign-in: two halves, the canvas carrying the product, the form in an inset panel. */
+	&__signin {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--q-space-0-25);
+		padding: var(--q-space-0-25);
+		background: var(--q-bg-canvas);
+		height: 128px;
+		box-sizing: border-box;
+	}
+
+	&__pitch {
+		grid-template-rows: auto 1fr auto;
+		padding: var(--q-space-1);
+		gap: var(--q-space-1);
+	}
+
+	&__lockup {
+		width: 30%;
+		height: var(--q-space-1);
+		background: var(--q-fg);
+		border-radius: var(--q-radius-2xs);
+	}
+
+	&__glimpse {
+		width: 80%;
+	}
+
+	&__signin-panel {
+		grid-template-rows: none;
+		place-items: center;
+	}
+
+	&__signin-form {
+		width: calc(var(--q-w-detail-panel) * 0.2);
+	}
+}

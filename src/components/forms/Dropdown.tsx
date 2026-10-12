@@ -4,10 +4,6 @@ import { useMergedRef, usePresence } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./Dropdown.scss";
 
-/**
- * Custom select with a rounded, softly shadowed listbox. Icons, descriptions, dividers, disabled items, keyboard.
- * @startingPoint section="Forms" subtitle="Custom select menu" viewport="600x420"
- */
 export interface DropdownProps
 	extends Omit<
 		React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -80,6 +76,10 @@ const text = (o: DropdownItem) =>
 		? String(o.label)
 		: String(o.value ?? "");
 
+/**
+ * Custom select with a rounded, softly shadowed listbox. Icons, descriptions, dividers, disabled items, keyboard.
+ * @startingPoint section="Forms" subtitle="Custom select menu" viewport="600x420"
+ */
 export function Dropdown({
 	label,
 	options = [],

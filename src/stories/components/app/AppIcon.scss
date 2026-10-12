@@ -1,0 +1,27 @@
+/* The icon set gallery (AppIcon.stories.tsx). */
+.q-sb-app-icon__set {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+	gap: var(--q-space-1);
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.q-sb-app-icon__cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--q-space-1);
+	padding: var(--q-space-1-5) var(--q-space-1);
+	border-radius: var(--q-radius-sm);
+	background: var(--q-bg-subtle);
+	color: var(--q-fg);
+	font-size: var(--q-text-xs);
+}
+
+.q-sb-app-icon__name {
+	color: var(--q-fg-muted);
+	font-family: var(--q-font-mono);
+}

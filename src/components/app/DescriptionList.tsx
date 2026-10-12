@@ -18,11 +18,6 @@ export interface DescriptionListItem {
 	copy?: string;
 }
 
-/**
- * An entity's properties as label/value pairs, each value right next to its label. Semantic
- * `<dl>`; values can be links, mono IDs and copyable. Inline (label column + value) or stacked.
- * @startingPoint section="App" subtitle="Label/value pairs for detail pages" viewport="700x260"
- */
 export interface DescriptionListProps
 	extends Omit<React.HTMLAttributes<HTMLDListElement>, "children" | "className" | "style"> {
 	/** The pairs, in order */
@@ -64,6 +59,11 @@ function CopyButton({ text, labelId }: { text: string; labelId: string }) {
 	);
 }
 
+/**
+ * An entity's properties as label/value pairs, each value right next to its label. Semantic
+ * `<dl>`; values can be links, mono IDs and copyable. Inline (label column + value) or stacked.
+ * @startingPoint section="App" subtitle="Label/value pairs for detail pages" viewport="700x260"
+ */
 export function DescriptionList({
 	items,
 	layout = "inline",

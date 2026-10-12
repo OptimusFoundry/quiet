@@ -1,11 +1,6 @@
 import React from "react";
 import "./Receipt.scss";
 
-/**
- * A receipt instead of a toast: who acted and why, one line per effect, and an undo on every
- * line that can be undone on its own.
- * @startingPoint section="Future" subtitle="What an agent did, line by line" viewport="700x320"
- */
 export interface ReceiptLine {
 	id?: string;
 	/** "Paused", "Sent", "Kept" */
@@ -37,8 +32,11 @@ export interface ReceiptProps {
 	style?: React.CSSProperties;
 }
 
-// After an agent acts you get a receipt, not a toast: who did it and why, one line per effect,
-// and an undo on every line that can be undone. The receipt is the undo UI.
+/**
+ * A receipt instead of a toast: who acted and why, one line per effect, and an undo on every line
+ * that can be undone on its own. The receipt is the undo UI. Evolved from the success toast.
+ * @startingPoint section="Future" subtitle="What an agent did, line by line" viewport="700x320"
+ */
 export function Receipt({
 	actor,
 	time,

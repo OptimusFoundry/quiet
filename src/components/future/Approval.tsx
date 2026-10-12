@@ -4,11 +4,6 @@ import { Icon, type IconName } from "../core/Icon";
 import { HoldButton } from "./HoldButton";
 import "./Approval.scss";
 
-/**
- * Replaces the confirm dialog. Shows exactly what changes (before → after), how far it reaches,
- * and how long it stays undoable; the commit is a hold-to-confirm key.
- * @startingPoint section="Future" subtitle="Approve an agent's plan" viewport="760x320"
- */
 export interface ApprovalChange {
 	id?: string | number;
 	/** What changes, e.g. a campaign name */
@@ -55,8 +50,12 @@ const chip = (v: React.ReactNode, variant: "secondary" | "outline") =>
 		v
 	);
 
-// Replaces "Are you sure?" with what will actually happen: each change as before → after, its
-// reach, and how long it stays undoable. The commit is a HoldButton.
+/**
+ * Replaces the confirm dialog. "Are you sure?" asks a question nobody can answer; this shows the
+ * exact before → after of each change, how far it reaches and how long it stays undoable. The
+ * commit is a HoldButton, the one control that asks for effort. Evolved from confirm dialogs.
+ * @startingPoint section="Future" subtitle="Approve an agent's plan" viewport="760x320"
+ */
 export function Approval({
 	title,
 	description,

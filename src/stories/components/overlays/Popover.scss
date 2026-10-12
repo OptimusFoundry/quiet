@@ -1,0 +1,9 @@
+/* Layout for the Popover stories: room around the trigger for the open panel. */
+.q-sb-popover {
+	min-height: 300px;
+
+	&--centred {
+		display: grid;
+		place-items: center;
+	}
+}

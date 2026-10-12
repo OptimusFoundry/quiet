@@ -5,13 +5,6 @@ import type { TableProps } from "../data/Table";
 import { Table } from "../data/Table";
 import "./StreamingTable.scss";
 
-/**
- * A live Table (newest rows first) that never moves under your hand. While it's paused, scrolled
- * down or has focus inside, new rows wait behind a "Show N new" bar and come in all at once;
- * otherwise they arrive at the top and glow once. Arrivals are announced politely, batched.
- * Evolved from auto-refresh.
- * @startingPoint section="Future" subtitle="Streaming table" viewport="800x360"
- */
 export interface StreamingTableProps<
 	Row = Record<string, unknown>,
 	Key extends React.Key = React.Key,
@@ -44,9 +37,13 @@ export interface StreamingTableProps<
 	style?: React.CSSProperties;
 }
 
-// A live table that never moves under your hand. New rows (newest first) arrive at the top, unless
-// you've paused, scrolled down or put focus inside the table — then they wait behind a
-// "N new" bar and come in all at once when you ask. Arrivals are announced politely, in batches.
+/**
+ * A live Table (newest rows first) that never moves under your hand. While it's paused, scrolled
+ * down or has focus inside, new rows wait behind a "Show N new" bar and come in all at once;
+ * otherwise they arrive at the top and glow once. Arrivals are announced politely, batched.
+ * Reading and watching stop fighting. Evolved from auto-refresh.
+ * @startingPoint section="Future" subtitle="Streaming table" viewport="800x360"
+ */
 export function StreamingTable<Row = Record<string, unknown>, Key extends React.Key = React.Key>({
 	rows = [],
 	columns = [],

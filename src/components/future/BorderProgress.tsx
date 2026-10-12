@@ -1,11 +1,6 @@
 import React from "react";
 import "./BorderProgress.scss";
 
-/**
- * A container whose own edge is the progress bar: the border draws clockwise as the work
- * completes. Wraps a Card (or anything with the same radius) — no bar inside the content.
- * @startingPoint section="Future" subtitle="The edge is the progress" viewport="600x260"
- */
 export interface BorderProgressProps {
 	value?: number;
 	max?: number;
@@ -23,8 +18,13 @@ export interface BorderProgressProps {
 	style?: React.CSSProperties;
 }
 
-// A container whose own edge is the progress: an ink stroke draws clockwise from the top-left
-// corner as the work completes; a full ink edge means done.
+/**
+ * A container whose own edge is the progress bar. No bar inside the content: an ink stroke draws
+ * clockwise from the top-left corner as the work completes, so any card tells you at a glance
+ * whether it has finished becoming itself; a full ink edge means done. Wraps a Card (or anything
+ * with the same radius). Evolved from the progress bar.
+ * @startingPoint section="Future" subtitle="The edge is the progress" viewport="600x260"
+ */
 export function BorderProgress({
 	value = 0,
 	max = 100,

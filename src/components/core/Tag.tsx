@@ -2,10 +2,6 @@ import React from "react";
 import { Icon } from "./Icon";
 import "./Tag.scss";
 
-/**
- * Small sans pill for stacks, categories and filters. Removable and selectable (selected = accent tint).
- * @startingPoint section="Primitives" subtitle="Pills — removable, selectable" viewport="700x180"
- */
 export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, "children" | "onSelect"> {
 	/**
 	 * The root: a <span>, or the toggle <button> when `selectable`. A selectable tag that is also
@@ -35,6 +31,10 @@ export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, "child
 
 const STATUSES: unknown[] = ["info", "success", "warning", "error"];
 
+/**
+ * Small sans pill for stacks, categories and filters. Removable and selectable (selected = accent tint).
+ * @startingPoint section="Primitives" subtitle="Pills — removable, selectable" viewport="700x180"
+ */
 export function Tag({
 	children,
 	tone = "default",

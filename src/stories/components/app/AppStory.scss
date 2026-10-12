@@ -1,0 +1,85 @@
+/* Grounds for the Components/App stories and tiles (AppStory.tsx). */
+.q-sb-app-story__canvas {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-1);
+	box-sizing: border-box;
+	width: var(--q-w-sidebar);
+	max-width: 100%;
+	padding: var(--q-space-1-5) var(--q-space-1);
+	border-radius: var(--q-radius-md);
+	background: var(--q-bg-canvas);
+}
+
+.q-sb-app-story__canvas--tall {
+	min-height: 20rem;
+}
+
+.q-sb-app-story__canvas--row {
+	flex-flow: row wrap;
+	align-items: flex-end;
+	gap: var(--q-space-3);
+	width: auto;
+}
+
+.q-sb-app-story__spacer {
+	flex: 1;
+}
+
+.q-sb-app-story__foot {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-1);
+	width: 100%;
+	min-width: 0;
+}
+
+.q-sb-app-story__frame {
+	width: 100%;
+	overflow: hidden;
+	border-radius: var(--q-radius-md);
+	background: var(--q-bg);
+	box-shadow: 0 0 0 var(--q-hairline) var(--q-border);
+}
+
+.q-sb-app-story__frame--narrow {
+	max-width: 390px;
+}
+
+.q-sb-app-story__page {
+	display: grid;
+	gap: var(--q-space-stack);
+	padding: var(--q-space-section) var(--q-space-page-x);
+}
+
+.q-sb-app-story__block {
+	height: 8rem;
+	border-radius: var(--q-radius-lg);
+	background: var(--q-bg-subtle);
+}
+
+.q-sb-app-story__block--short {
+	height: 4rem;
+}
+
+/* AppShell at half size, for its tile: the frame is laid out twice as large, then scaled down. */
+.q-sb-app-story__mini {
+	position: relative;
+	width: 100%;
+	height: 160px;
+	overflow: hidden;
+	border-radius: var(--q-radius-sm);
+}
+
+.q-sb-app-story__mini-inner {
+	position: absolute;
+	inset: 0 auto auto 0;
+	width: 200%;
+	height: 200%;
+	transform: scale(0.5);
+	transform-origin: top left;
+
+	& .q-app-shell {
+		height: 100%;
+	}
+}

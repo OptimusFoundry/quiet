@@ -5,12 +5,6 @@ import { Skeleton } from "../core/Skeleton";
 import { DropdownMenu } from "../overlays/DropdownMenu";
 import "./IntentBar.scss";
 
-/**
- * Free text in; how the system read it comes back as editable chips before anything runs — the
- * chips are the form, filled in for you. Reading the text is the caller's job: set `status` to
- * "reading" while you work it out, then pass the interpretation as `chips` with `status="read"`.
- * @startingPoint section="Future" subtitle="Say it, then check how it was read" viewport="760x220"
- */
 export interface IntentChip {
 	key?: string;
 	/** Mono key, e.g. "Action" */
@@ -46,9 +40,13 @@ export interface IntentBarProps {
 	style?: React.CSSProperties;
 }
 
-// Say what you want; the system shows how it understood it as editable chips before anything
-// runs. The chips are the form, written for you. Reading the text is the caller's job: pass the
-// interpretation back as `chips`, and set `status` while you work it out.
+/**
+ * Free text in; how the system read it comes back as editable chips before anything runs. The
+ * chips are the form, filled in for you. Reading the text is the caller's job: set `status` to
+ * "reading" while you work it out, then pass the interpretation as `chips` with `status="read"`.
+ * Evolved from search, ⌘K and most forms.
+ * @startingPoint section="Future" subtitle="Say it, then check how it was read" viewport="760x220"
+ */
 export function IntentBar({
 	value,
 	defaultValue = "",

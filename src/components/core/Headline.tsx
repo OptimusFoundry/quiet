@@ -1,11 +1,6 @@
 import type React from "react";
 import "./Headline.scss";
 
-/**
- * Headline in Geist at the display and heading steps, with an optional accent full stop (off in
- * the default themes, `--q-period-display`).
- * @startingPoint section="Typography" subtitle="Display and heading steps" viewport="700x320"
- */
 export interface HeadlineProps extends Omit<React.HTMLAttributes<HTMLHeadingElement>, "children"> {
 	/** The rendered heading (or the `as` element). */
 	ref?: React.Ref<HTMLElement>;
@@ -29,6 +24,11 @@ const TAGS: Record<string, "h1" | "h2" | "h3" | "h4"> = {
 	h4: "h4",
 };
 
+/**
+ * Headline in Geist at the display and heading steps, with an optional accent full stop (off in
+ * the default themes, `--q-period-display`).
+ * @startingPoint section="Typography" subtitle="Display and heading steps" viewport="700x320"
+ */
 export function Headline({
 	size = "h2",
 	as,

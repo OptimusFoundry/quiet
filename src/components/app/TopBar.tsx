@@ -4,13 +4,6 @@ import { SidebarTrigger } from "../navigation/Sidebar";
 import { AppIcon } from "./AppIcon";
 import "./TopBar.scss";
 
-/**
- * The slim bar at the top of an app screen: where you are (a breadcrumb, or a title) on the left,
- * the screen's global actions on the right. Inside an `AppShell` it pins to the panel's top and its
- * rule shows only once the content scrolls under it. It leads with the Sidebar's toggle: on desktop it
- * collapses the Sidebar to its icon rail, on a phone it opens the drawer.
- * @startingPoint section="App" subtitle="Breadcrumb and actions above a screen" viewport="900x120"
- */
 export interface TopBarProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "className" | "style"> {
 	/** Where you are; the last crumb is the current page */
@@ -25,6 +18,13 @@ export interface TopBarProps
 	style?: React.CSSProperties;
 }
 
+/**
+ * The slim bar at the top of an app screen: where you are (a breadcrumb, or a title) on the left,
+ * the screen's global actions on the right. Inside an `AppShell` it pins to the panel's top and its
+ * rule shows only once the content scrolls under it. It leads with the Sidebar's toggle: on desktop it
+ * collapses the Sidebar to its icon rail, on a phone it opens the drawer.
+ * @startingPoint section="App" subtitle="Breadcrumb and actions above a screen" viewport="900x120"
+ */
 export function TopBar({
 	crumbs,
 	title,

@@ -4,11 +4,6 @@ import "./AppIcon.scss";
 
 export { APP_ICONS, type AppIconName } from "../core/icons";
 
-/**
- * A stroke icon from quiet's set (`core/icons.ts`) as a bare `<svg>`, sized in px for nav, buttons
- * and menus. `Icon` draws the same set sized in em. Decorative unless `label` is given.
- * @startingPoint section="App" subtitle="Stroke icons for product screens" viewport="700x200"
- */
 export interface AppIconProps
 	extends Omit<React.SVGAttributes<SVGSVGElement>, "className" | "style" | "children"> {
 	/** Icon name from the set, e.g. "home", "search", "chevron-down" */
@@ -23,6 +18,11 @@ export interface AppIconProps
 
 const SIZES: string[] = ["sm", "md", "lg"];
 
+/**
+ * A stroke icon from quiet's set (`core/icons.ts`) as a bare `<svg>`, sized in px for nav, buttons
+ * and menus. `Icon` draws the same set sized in em. Decorative unless `label` is given.
+ * @startingPoint section="App" subtitle="Stroke icons for product screens" viewport="700x200"
+ */
 export function AppIcon({ name, size = "md", label, className, style, ...rest }: AppIconProps) {
 	const named = typeof size === "string" && SIZES.includes(size);
 	const cls = ["q-app-icon", named && `q-app-icon--${size}`, className].filter(Boolean).join(" ");

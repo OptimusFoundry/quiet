@@ -9,10 +9,6 @@ export interface PromptSuggestion {
 	/** A second line, shown in the grid layout */
 	description?: string;
 }
-/**
- * Starters for an empty thread. One tab stop: arrows, Home and End move between them; Enter or Space
- * picks one.
- */
 export interface PromptSuggestionsProps {
 	suggestions?: (string | PromptSuggestion)[];
 	onSelect?: (prompt: string, suggestion: PromptSuggestion) => void;
@@ -24,8 +20,11 @@ export interface PromptSuggestionsProps {
 	style?: React.CSSProperties;
 }
 
-// Starters for an empty thread. One tab stop; arrows (and Home/End) move between them, Enter or
-// Space picks one. Each can carry a longer `prompt` than its label.
+/**
+ * Starters for an empty thread: a few concrete starts instead of a blank box. One tab stop: arrows,
+ * Home and End move between them; Enter or Space picks one. Each can carry a longer `prompt` than
+ * its label.
+ */
 export function PromptSuggestions({
 	suggestions = [],
 	onSelect,

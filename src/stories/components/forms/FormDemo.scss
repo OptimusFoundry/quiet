@@ -1,0 +1,20 @@
+/* The native-form demo shared by the Forms stories (FormDemo.tsx). */
+.q-sb-form-demo {
+	display: grid;
+	gap: var(--q-space-stack);
+	width: 100%;
+	max-width: 420px;
+}
+
+.q-sb-form-demo__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--q-space-1-5);
+}
+
+.q-sb-form-demo__output {
+	font-family: var(--q-font-mono);
+	font-size: var(--q-text-hint);
+	color: var(--q-fg-muted);
+	white-space: pre-wrap;
+}

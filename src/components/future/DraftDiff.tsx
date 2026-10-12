@@ -3,12 +3,6 @@ import { Button } from "../core/Button";
 import { Icon } from "../core/Icon";
 import "./DraftDiff.scss";
 
-/**
- * Inline, word-level suggestions instead of "regenerate". Each hunk shows the struck original and
- * the proposed words with accept (check) and keep (close) keys; a resolved hunk can be reopened. The ship
- * button stays disabled while any hunk is pending.
- * @startingPoint section="Future" subtitle="Accept suggestions hunk by hunk" viewport="760x300"
- */
 export interface DraftDiffHunk {
 	id?: string | number;
 	/** Unchanged text before the hunk */
@@ -40,8 +34,13 @@ export interface DraftDiffProps {
 
 const quote = (v: React.ReactNode) => (typeof v === "string" ? `“${v}”` : "suggestion");
 
-// Suggestions land inline as word-level hunks you accept or keep one at a time, instead of a
-// regenerate that throws away what was right. Nothing ships while a hunk is still open.
+/**
+ * Inline, word-level suggestions instead of "regenerate", which throws away what was right. Each
+ * hunk shows the struck original and the proposed words with accept (check) and keep (close) keys;
+ * a resolved hunk can be reopened. The ship button stays disabled while any hunk is pending.
+ * Evolved from a textarea + regenerate.
+ * @startingPoint section="Future" subtitle="Accept suggestions hunk by hunk" viewport="760x300"
+ */
 export function DraftDiff({
 	hunks = [],
 	value,

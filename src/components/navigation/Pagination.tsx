@@ -2,10 +2,6 @@ import React from "react";
 import { Icon } from "../core/Icon";
 import "./Pagination.scss";
 
-/**
- * Page navigation: round page pills with tabular numbers; the current page takes the accent tint.
- * @startingPoint section="Navigation" subtitle="Page controls" viewport="700x180"
- */
 export interface PaginationProps {
 	page?: number;
 	defaultPage?: number;
@@ -17,7 +13,7 @@ export interface PaginationProps {
 	variant?: "default" | "outline" | "ghost";
 	size?: "sm" | "md" | "lg";
 	disabled?: boolean;
-	/** Accessible name for the nav landmark. Defaults to "Pagination, page <n> of <total>" */
+	/** Accessible name for the nav landmark. Defaults to `"Pagination, page <n> of <total>"` */
 	label?: string;
 	"aria-label"?: string;
 	className?: string;
@@ -64,6 +60,10 @@ function PageBtn({
 	);
 }
 
+/**
+ * Page navigation: round page pills with tabular numbers; the current page takes the accent tint.
+ * @startingPoint section="Navigation" subtitle="Page controls" viewport="700x180"
+ */
 export function Pagination({
 	page,
 	defaultPage = 1,

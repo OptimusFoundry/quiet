@@ -1,0 +1,25 @@
+/* The icon gallery (Icon.stories.tsx): every name in the set, with its name under it. */
+.q-sb-icon {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+	gap: var(--q-space-1);
+	width: 100%;
+
+	&__cell {
+		display: grid;
+		justify-items: center;
+		gap: var(--q-space-1);
+		padding: var(--q-space-2) var(--q-space-1);
+		border-radius: var(--q-radius-md);
+		background: var(--q-bg-subtle);
+		color: var(--q-fg);
+	}
+
+	&__name {
+		font-family: var(--q-font-mono);
+		font-size: var(--q-text-xs);
+		color: var(--q-fg-muted);
+		text-align: center;
+		overflow-wrap: anywhere;
+	}
+}

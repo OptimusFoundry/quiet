@@ -3,13 +3,6 @@ import { Button, type ButtonProps } from "../core/Button";
 import { Icon } from "../core/Icon";
 import "./HoldButton.scss";
 
-/**
- * Hold-to-confirm button for irreversible or wide-reaching actions. Pointer, Space or Enter must be
- * held for `duration`; an accent hairline fills along the bottom edge as you hold. Releasing early
- * springs back. Progress is exposed as a progressbar beside the button.
- * Other Button props pass through, except the ones the hold itself drives.
- * @startingPoint section="Future" subtitle="Hold to confirm" viewport="600x140"
- */
 export interface HoldButtonProps
 	extends Omit<
 		ButtonProps,
@@ -49,9 +42,14 @@ export interface HoldButtonProps
 	style?: React.CSSProperties;
 }
 
-// Hold-to-confirm: the only control that asks for effort. Pointer, Space or Enter must be held for
-// `duration` ms; letting go early springs back. An accent hairline along the bottom edge fills as
-// you hold — the heat, never a fill of the button itself.
+/**
+ * Hold-to-confirm button for irreversible or wide-reaching actions: the only control that asks for
+ * effort. Pointer, Space or Enter must be held for `duration`; an accent hairline fills along the
+ * bottom edge as you hold (never a fill of the button itself), and releasing early springs back.
+ * Progress is exposed as a progressbar beside the button. Other Button props pass through, except
+ * the ones the hold itself drives. Evolved from confirm dialogs (it commits an Approval).
+ * @startingPoint section="Future" subtitle="Hold to confirm" viewport="600x140"
+ */
 export function HoldButton({
 	children,
 	onConfirm,

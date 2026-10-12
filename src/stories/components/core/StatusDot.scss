@@ -1,0 +1,7 @@
+/* Workspace rows with their status (StatusDot.stories.tsx). */
+.q-sb-status-dot__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--q-space-2);
+}

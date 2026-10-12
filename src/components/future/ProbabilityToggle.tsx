@@ -9,11 +9,6 @@ export interface ProbabilityLevel {
 	/** The policy said back in words, e.g. "Posts alone unless the draft mentions pricing." */
 	description?: React.ReactNode;
 }
-/**
- * A switch that rests anywhere between off and always. The position (0–100) maps to a policy
- * level, read back as a label and a sentence. Evolved from Switch.
- * @startingPoint section="Future" subtitle="Probability toggle" viewport="700x180"
- */
 export interface ProbabilityToggleProps {
 	label?: React.ReactNode;
 	/** Ordered by `upTo`; the last one should reach 100 */
@@ -40,6 +35,11 @@ export const PROBABILITY_LEVELS: ProbabilityLevel[] = [
 ];
 const TICKS = [25, 50, 75];
 
+/**
+ * A switch that rests anywhere between off and always, because delegation isn't binary. The
+ * position (0–100) maps to a policy level, read back as a label and a sentence. Evolved from Switch.
+ * @startingPoint section="Future" subtitle="Probability toggle" viewport="700x180"
+ */
 export function ProbabilityToggle({
 	label,
 	levels = PROBABILITY_LEVELS,

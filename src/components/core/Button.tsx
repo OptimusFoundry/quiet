@@ -5,11 +5,6 @@ import { Icon } from "./Icon";
 import { Spinner } from "./Spinner";
 import "./Button.scss";
 
-/**
- * Dense pill button. Accent-filled primary (one per view), hairline secondary/outline, padded ghost
- * with a soft grey hover, ink→accent destructive.
- * @startingPoint section="Actions" subtitle="Pill buttons — variants, sizes, states" viewport="700x200"
- */
 type ButtonHost = HTMLButtonElement | HTMLAnchorElement;
 /** Native attributes: the button's, plus the anchor's for when `href` renders a link. */
 type ButtonHostAttributes = Omit<
@@ -45,6 +40,11 @@ export interface ButtonProps extends ButtonHostAttributes {
 
 const SPIN = { sm: 12, md: 14, lg: 16 };
 
+/**
+ * Dense pill button. Accent-filled primary (one per view), hairline secondary/outline, padded ghost
+ * with a soft grey hover, ink→accent destructive.
+ * @startingPoint section="Actions" subtitle="Pill buttons — variants, sizes, states" viewport="700x200"
+ */
 export function Button({
 	variant = "primary",
 	size = "md",

@@ -3,11 +3,6 @@ import { Icon } from "../core/Icon";
 import { fileKind, formatBytes, isImage } from "./chat-utils";
 import "./Attachment.scss";
 
-/**
- * A file in a conversation. `chip` sits in the composer and can be removed; `card` sits in a message
- * and can be opened. Images show a thumbnail (from `src`, or an object URL made from `file`).
- * Documents show their type ("PDF", "CSV") in a tile, with name and size.
- */
 export interface AttachmentProps {
 	/** The File itself; name, size, type and the image thumbnail are read from it */
 	file?: File;
@@ -36,9 +31,11 @@ export interface AttachmentProps {
 	style?: React.CSSProperties;
 }
 
-// A file in a conversation. `chip` sits in the composer (removable); `card` sits in a message
-// (openable). Images show a thumbnail — from `src`, or an object URL made from `file` and revoked
-// on unmount; documents show their type ("PDF", "CSV") in a tile, with name and size.
+/**
+ * A file in a conversation. `chip` sits in the composer and can be removed; `card` sits in a message
+ * and can be opened. Images show a thumbnail (from `src`, or an object URL made from `file`, revoked
+ * on unmount). Documents show their type ("PDF", "CSV") in a tile, with name and size.
+ */
 export function Attachment({
 	file,
 	name,

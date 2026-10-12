@@ -5,12 +5,6 @@ import { formatNumber, linear, seriesColor, useWidth, valueDomain } from "./char
 import "./chart.scss";
 import "./BarChart.scss";
 
-/**
- * Bars by category, grouped or stacked, vertical or horizontal. Series 1 is the accent, then ink and
- * greys; 2px surface gaps between fills; rounded data ends. Each bar is a focusable mark (one tab
- * stop, arrows move) with a tooltip.
- * @startingPoint section="Charts" subtitle="Compare categories" viewport="800x320"
- */
 export interface BarChartSeries {
 	id?: string | number;
 	name: string;
@@ -72,8 +66,12 @@ function barPath(
 	return `M${x + w} ${y}H${x + r}Q${x} ${y} ${x} ${y + r}V${y + h - r}Q${x} ${y + h} ${x + r} ${y + h}H${x + w}Z`;
 }
 
-// Bars by category, grouped or stacked, vertical or horizontal. Series 1 is the accent, then ink and
-// greys. Every bar is a focusable mark (one tab stop, arrows move between bars) with a tooltip.
+/**
+ * Bars by category, grouped or stacked, vertical or horizontal. Series 1 is the accent, then ink and
+ * greys; 2px surface gaps between fills; rounded data ends, square to the baseline. Every bar is a
+ * focusable mark (one tab stop, arrows move between bars) with a tooltip.
+ * @startingPoint section="Charts" subtitle="Compare categories" viewport="800x320"
+ */
 export function BarChart({
 	categories = [],
 	series = [],

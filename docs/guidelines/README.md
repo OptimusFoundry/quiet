@@ -25,12 +25,13 @@ frame: `patterns-app-shell--default`, `patterns-dashboard--default`, `patterns-r
 `patterns-billing--default`, `patterns-assistant--default` (chat with its pane open) and
 `patterns-states--default`. Copy their structure; change the content. Their frame is
 `src/stories/patterns/AppFrame.tsx`, the one place that wires `AppShell`, `Sidebar`, `TopBar`,
-`WorkspaceSwitcher`, `AccountMenu`, the third pane, `CommandPalette` and `Toaster` together. The app
-components have their own stories under **App**.
+`WorkspaceSwitcher`, `AccountMenu`, the third pane, `CommandPalette` and `Toaster` together. Every
+component has a Docs page (props, states, usage) under **Components/<Group>/<Name>**, and the whole
+kit is on one page at `overview--ui-kit`.
 
-Measured specimens live under **Guidelines**: `guidelines-spacing--default`,
-`guidelines-typography--default`, `guidelines-grid--default`, `guidelines-layouts--default` and
-`guidelines-sections--default`. They render the real tokens, so they also show density and theme changes.
+Measured specimens live under **Foundations**: `foundations-spacing--default`,
+`foundations-typography--default`, `foundations-grid--default`, `foundations-layouts--default` and
+`foundations-sections--default`. They render the real tokens, so they also show density and theme changes.
 
 ## Setup in one breath
 

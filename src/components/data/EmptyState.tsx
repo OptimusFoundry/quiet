@@ -2,10 +2,6 @@ import type React from "react";
 import { Icon, type IconName } from "../core/Icon";
 import "./EmptyState.scss";
 
-/**
- * Nothing-here state: an icon on a round ground, a title, one honest sentence, actions.
- * @startingPoint section="Data" subtitle="Empty and no-result states" viewport="700x360"
- */
 export interface EmptyStateProps {
 	/** An icon name from the set (`Icon` `name`, e.g. "search", "file") or your own node, set on a round ground. Omit for none */
 	icon?: IconName | React.ReactNode;
@@ -25,6 +21,10 @@ export interface EmptyStateProps {
 
 const SIZES: string[] = ["sm", "md", "lg"];
 
+/**
+ * Nothing-here state: an icon on a round ground, a title, one honest sentence, actions.
+ * @startingPoint section="Data" subtitle="Empty and no-result states" viewport="700x360"
+ */
 export function EmptyState({
 	icon,
 	eyebrow,

@@ -3,11 +3,6 @@ import { DropdownMenu, type DropdownMenuProps } from "../overlays/DropdownMenu";
 import { AppIcon } from "./AppIcon";
 import "./WorkspaceSwitcher.scss";
 
-/**
- * The top of the app sidebar: the workspace's mark and name, opening a menu to switch workspace
- * or manage it. A menu button (Enter, Space or ↓ opens; Escape closes and returns focus).
- * @startingPoint section="App" subtitle="Workspace mark, name and switch menu" viewport="600x320"
- */
 export interface WorkspaceSwitcherProps {
 	/** The current workspace's name */
 	name: string;
@@ -27,6 +22,11 @@ export interface WorkspaceSwitcherProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * The top of the app sidebar: the workspace's mark and name, opening a menu to switch workspace
+ * or manage it. A menu button (Enter, Space or ↓ opens; Escape closes and returns focus).
+ * @startingPoint section="App" subtitle="Workspace mark, name and switch menu" viewport="600x320"
+ */
 export function WorkspaceSwitcher({
 	name,
 	mark,

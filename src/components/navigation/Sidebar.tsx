@@ -4,10 +4,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon } from "../core/Icon";
 import "./Sidebar.scss";
 
-/**
- * App side navigation. Groups with sentence-case labels; the current item is a raised white pill with an accent icon. Collapsible to a 64px rail, auto-collapse below a breakpoint (or, in a SidebarProvider, an off-canvas drawer).
- * @startingPoint section="Navigation" subtitle="App side navigation" viewport="900x560"
- */
 export interface SidebarProps {
 	items?: Array<{
 		label: React.ReactNode;
@@ -51,14 +47,13 @@ export interface SidebarProps {
 	breakpoint?: number;
 	/** Below the breakpoint: collapse to the rail, or become an off-canvas drawer opened by a SidebarTrigger. Defaults to `drawer` inside a SidebarProvider, `rail` outside one */
 	mobile?: "rail" | "drawer";
-	/** Accessible name for the nav landmark. Defaults to "Sidebar: <group labels>" or "Sidebar" */
+	/** Accessible name for the nav landmark. Defaults to `"Sidebar: <group labels>"` or `"Sidebar"` */
 	label?: string;
 	"aria-label"?: string;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-/** Shares the mobile drawer's state between a Sidebar and a SidebarTrigger placed anywhere (e.g. a top bar). */
 export interface SidebarProviderProps {
 	/** Below this viewport width (px) the Sidebar becomes a drawer. Default 768 */
 	breakpoint?: number;
@@ -69,7 +64,6 @@ export interface SidebarProviderProps {
 	children?: React.ReactNode;
 }
 
-/** Opens the mobile drawer. Renders only while the Sidebar is in drawer mode (below the breakpoint), unless `rail` also shows it on desktop. */
 export interface SidebarTriggerProps {
 	/** Accessible name of the drawer opener. Default "Open navigation" */
 	"aria-label"?: string;
@@ -93,7 +87,6 @@ export interface SidebarState {
 	/** Desktop rail is collapsed */
 	collapsed: boolean;
 }
-/** Sidebar state, inside a SidebarProvider or a Sidebar's own header/footer. Throws elsewhere. */
 
 type SidebarItem = NonNullable<SidebarProps["items"]>[number];
 type SidebarGroup = {
@@ -132,6 +125,7 @@ const UNREGISTERED: SidebarRail = {
 // quiet: shared state between a Sidebar and a SidebarTrigger that lives elsewhere (a top bar).
 const SidebarContext = React.createContext<SidebarContextValue | null>(null);
 
+/** Shares the mobile drawer's state between a Sidebar and a SidebarTrigger placed anywhere (e.g. a top bar). */
 export function SidebarProvider({
 	breakpoint = 768,
 	open,
@@ -184,6 +178,7 @@ export function SidebarProvider({
 	return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 }
 
+/** Sidebar state, inside a SidebarProvider or a Sidebar's own header/footer. Throws elsewhere. */
 export function useSidebar(): SidebarState {
 	const ctx = React.useContext(SidebarContext);
 	if (!ctx) throw new Error("useSidebar() must be used inside <SidebarProvider> or a <Sidebar>");
@@ -191,6 +186,7 @@ export function useSidebar(): SidebarState {
 	return { isMobile, open, setOpen, close, toggle, collapsed };
 }
 
+/** Opens the mobile drawer. Renders only while the Sidebar is in drawer mode (below the breakpoint), unless `rail` also shows it on desktop. */
 export function SidebarTrigger({
 	"aria-label": ariaLabel = "Open navigation",
 	rail = false,
@@ -285,6 +281,10 @@ function SideItem({
 }
 
 // quiet: without a SidebarProvider the Sidebar scopes its own, so useSidebar() works in its slots.
+/**
+ * App side navigation. Groups with sentence-case labels; the current item is a raised white pill with an accent icon. Collapsible to a 64px rail, auto-collapse below a breakpoint (or, in a SidebarProvider, an off-canvas drawer).
+ * @startingPoint section="Navigation" subtitle="App side navigation" viewport="900x560"
+ */
 export function Sidebar(props: SidebarProps) {
 	const ctx = React.useContext(SidebarContext);
 	if (ctx) return <SidebarView {...props} />;

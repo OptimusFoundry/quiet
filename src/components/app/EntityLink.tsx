@@ -3,13 +3,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon } from "../core/Icon";
 import "./EntityLink.scss";
 
-/**
- * A reference to another record (a run, project, artifact, ticket) that unmistakably navigates:
- * accent text on a soft accent underline, an optional leading icon and muted kind ("Run"), and a
- * mono variant for short IDs. Inline, so it wraps in prose and table cells. Renders through the
- * configured router link (`QuietRoot linkComponent`) for in-app paths.
- * @startingPoint section="App" subtitle="Links to runs, projects, tickets" viewport="700x200"
- */
 export interface EntityLinkProps
 	extends Omit<
 		React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -41,6 +34,13 @@ export interface EntityLinkProps
 
 const STATE_TEXT = { done: "done", blocked: "blocked" } as const;
 
+/**
+ * A reference to another record (a run, project, artifact, ticket) that unmistakably navigates:
+ * accent text on a soft accent underline, an optional leading icon and muted kind ("Run"), and a
+ * mono variant for short IDs. Inline, so it wraps in prose and table cells. Renders through the
+ * configured router link (`QuietRoot linkComponent`) for in-app paths.
+ * @startingPoint section="App" subtitle="Links to runs, projects, tickets" viewport="700x200"
+ */
 export function EntityLink({
 	href,
 	children,

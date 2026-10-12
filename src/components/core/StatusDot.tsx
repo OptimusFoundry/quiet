@@ -1,7 +1,6 @@
 import type React from "react";
 import "./StatusDot.scss";
 
-/** Status indicator: a dot and a sentence-case label. Live takes the accent dot (a mark). */
 export interface StatusDotProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	ref?: React.Ref<HTMLSpanElement>;
 	status?: "live" | "prototype" | "archived";
@@ -17,6 +16,7 @@ const LABELS: Record<string, string> = {
 	archived: "Archived",
 };
 
+/** Status indicator: a dot and a sentence-case label. Live takes the accent dot (a mark). */
 export function StatusDot({ label, status = "live", className, style, ...rest }: StatusDotProps) {
 	const mod = status === "live" || status === "prototype" ? `q-status-dot--${status}` : null;
 	return (

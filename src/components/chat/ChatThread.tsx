@@ -4,11 +4,6 @@ import { Button } from "../core/Button";
 import { Icon } from "../core/Icon";
 import "./ChatThread.scss";
 
-/**
- * The scrolling conversation. It stays pinned to the newest message while you're at the bottom. If you
- * scroll up to read, it leaves you there and offers "Jump to latest" when something new arrives.
- * role="log" announces new turns politely. Give it a height, or let a flex/grid parent size it.
- */
 export interface ChatThreadProps {
 	/** ChatMessage and ChatDivider elements */
 	children?: React.ReactNode;
@@ -23,9 +18,12 @@ export interface ChatThreadProps {
 
 const NEAR = 48; // px from the bottom that still counts as "at the bottom"
 
-// The scrolling conversation. It stays pinned to the newest message while you're at the bottom;
-// scroll up to read and it leaves you there, offering "Jump to latest" when something new arrives.
-// role="log" announces new turns politely; streaming text inside a turn is not re-announced.
+/**
+ * The scrolling conversation. It stays pinned to the newest message while you're at the bottom. If you
+ * scroll up to read, it leaves you there and offers "Jump to latest" when something new arrives.
+ * role="log" announces new turns politely; streaming text inside a turn is not re-announced. Give it
+ * a height, or let a flex/grid parent size it.
+ */
 export function ChatThread({
 	children,
 	empty,
@@ -109,7 +107,9 @@ export function ChatThread({
 	);
 }
 
-// A quiet day/date rule between turns: "Today", "Yesterday", "8 October".
+/**
+ * A quiet day/date rule between turns: "Today", "Yesterday", "8 October".
+ */
 export function ChatDivider({
 	children,
 	className,

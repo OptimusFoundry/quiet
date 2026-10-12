@@ -3,11 +3,6 @@ import { useEscape } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./LineageChip.scss";
 
-/**
- * A freshness chip on a number. It says whether everything upstream is fresh; pressing it
- * unfolds the lineage — sources, joins, the value — and marks the step that is late.
- * @startingPoint section="Future" subtitle="Where a number came from" viewport="700x200"
- */
 export interface LineageStep {
 	id?: string;
 	/** Table, job or metric name */
@@ -36,8 +31,12 @@ export interface LineageChipProps {
 
 const SIZES: string[] = ["sm", "md"];
 
-// A chip that sits on a number and says whether everything upstream of it is fresh. Pressing it
-// unfolds the lineage — source tables, joins, the value itself — and marks which step is late.
+/**
+ * A freshness chip on a headline number. It says whether everything upstream is fresh; pressing it
+ * unfolds the lineage (source tables, joins, the value itself) and marks the step that is late, so
+ * you trust the number or know exactly why not. Evolved from the data catalog.
+ * @startingPoint section="Future" subtitle="Where a number came from" viewport="700x200"
+ */
 export function LineageChip({
 	label,
 	steps = [],

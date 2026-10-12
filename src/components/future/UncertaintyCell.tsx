@@ -1,13 +1,6 @@
 import type React from "react";
 import "./UncertaintyCell.scss";
 
-/**
- * A table number that carries its doubt. Forecasts get a small track beside the number with their
- * range shaded on the column's shared `domain`; measured values (no range) are set heavier.
- * Screen readers hear the range ("5,400, likely between 4,780 and 6,020"). Use it in a Table
- * column's `render`. Evolved from plain numeric cells.
- * @startingPoint section="Future" subtitle="Uncertainty cell" viewport="700x240"
- */
 export interface UncertaintyCellProps {
 	value: number;
 	/** Symmetric error: shown as ±error, range value−error … value+error */
@@ -20,7 +13,7 @@ export interface UncertaintyCellProps {
 	format?: (value: number) => string;
 	/** Hide the band but keep the ± text and the heavier/lighter weights */
 	showBand?: boolean;
-	/** Spoken text for an uncertain value; default "<value>, likely between <low> and <high>" */
+	/** Spoken text for an uncertain value; default `"<value>, likely between <low> and <high>"` */
 	describe?: (value: number, low: number, high: number) => string;
 	className?: string;
 	style?: React.CSSProperties;
@@ -28,8 +21,14 @@ export interface UncertaintyCellProps {
 
 const plain = (v: number) => (typeof v === "number" ? v.toLocaleString("en-US") : String(v));
 
-// A number that carries its doubt: a small track beside it, with the likely range shaded on a shared scale.
-// Measured values (no range) are set heavier, so a forecast never looks like a count.
+/**
+ * A table number that carries its doubt, because a forecast and a count shouldn't look the same.
+ * Forecasts get a small track beside the number with their range shaded on the column's shared
+ * `domain`; measured values (no range) are set heavier. Screen readers hear the range ("5,400,
+ * likely between 4,780 and 6,020"). Use it in a Table column's `render`. Evolved from plain
+ * numeric cells.
+ * @startingPoint section="Future" subtitle="Uncertainty cell" viewport="700x240"
+ */
 export function UncertaintyCell({
 	value,
 	error,

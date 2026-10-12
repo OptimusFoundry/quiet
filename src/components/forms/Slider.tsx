@@ -3,10 +3,6 @@ import { FormValue } from "../../a11y/form";
 import { useMergedRef } from "../../a11y/hooks";
 import "./Slider.scss";
 
-/**
- * Hairline range slider with an accent fill and thumb. Pointer + keyboard.
- * @startingPoint section="Forms" subtitle="Range slider" viewport="600x160"
- */
 export interface SliderProps
 	extends Omit<
 		React.HTMLAttributes<HTMLSpanElement>,
@@ -37,6 +33,10 @@ export interface SliderProps
 
 const SIZES = ["sm", "md", "lg"];
 
+/**
+ * Hairline range slider with an accent fill and thumb. Pointer + keyboard.
+ * @startingPoint section="Forms" subtitle="Range slider" viewport="600x160"
+ */
 export function Slider({
 	label,
 	value,

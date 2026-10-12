@@ -1,0 +1,10 @@
+/* Room around the trigger so the bubble has space to show in every placement. */
+.q-sb-tooltip {
+	padding: var(--q-space-6) var(--q-space-12);
+}
+
+.q-sb-tooltip__term {
+	color: var(--q-fg);
+	text-decoration: underline dotted;
+	text-underline-offset: 3px;
+}

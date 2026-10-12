@@ -3,10 +3,6 @@ import { FormHint } from "./FormHint";
 import { Label } from "./Label";
 import "./TextField.scss";
 
-/**
- * Labelled text input — icons, filled variant, sizes, hint and error. The full-featured Input.
- * @startingPoint section="Forms" subtitle="Labelled input with icons" viewport="600x260"
- */
 export interface TextFieldProps
 	extends Omit<
 		React.InputHTMLAttributes<HTMLInputElement>,
@@ -41,6 +37,10 @@ export interface TextFieldProps
 const SIZES = ["sm", "md", "lg"];
 let ofTfId = 0;
 
+/**
+ * Labelled text input — icons, filled variant, sizes, hint and error. The full-featured Input.
+ * @startingPoint section="Forms" subtitle="Labelled input with icons" viewport="600x260"
+ */
 export function TextField({
 	label,
 	hideLabel = false,

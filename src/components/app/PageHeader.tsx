@@ -3,12 +3,6 @@ import { Icon } from "../core/Icon";
 import { Link } from "../core/Link";
 import "./PageHeader.scss";
 
-/**
- * The top of an app screen (list, detail, settings): an optional back link and eyebrow, the page
- * title with inline status, a description, key facts, actions on the right and a tabs slot below.
- * No rule underneath; the space below it groups the page.
- * @startingPoint section="App" subtitle="Title, status, meta and actions for a screen" viewport="900x220"
- */
 export interface PageHeaderProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "className" | "style"> {
 	/** The page title. Rendered as the screen's heading. */
@@ -33,6 +27,12 @@ export interface PageHeaderProps
 	style?: React.CSSProperties;
 }
 
+/**
+ * The top of an app screen (list, detail, settings): an optional back link and eyebrow, the page
+ * title with inline status, a description, key facts, actions on the right and a tabs slot below.
+ * No rule underneath; the space below it groups the page.
+ * @startingPoint section="App" subtitle="Title, status, meta and actions for a screen" viewport="900x220"
+ */
 export function PageHeader({
 	title,
 	as: Heading = "h1",

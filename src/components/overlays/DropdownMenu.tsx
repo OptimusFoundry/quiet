@@ -20,11 +20,6 @@ type DropdownMenuAction<Item> = {
 };
 interface DropdownMenuItem extends DropdownMenuAction<DropdownMenuItem> {}
 
-/**
- * Action menu: icons, shortcuts, checkbox items, single-choice (radio) groups, group labels, header,
- * caption, context-menu mode. Floats on --q-shadow-float.
- * @startingPoint section="Overlays" subtitle="Action & context menus" viewport="600x440"
- */
 export interface DropdownMenuProps<Item extends DropdownMenuAction<Item> = DropdownMenuItem> {
 	/** Clickable element that opens the menu */
 	trigger?: React.ReactNode;
@@ -137,6 +132,11 @@ function MenuItem<Item extends DropdownMenuAction<Item>>({
 	);
 }
 
+/**
+ * Action menu: icons, shortcuts, checkbox items, single-choice (radio) groups, group labels, header,
+ * caption, context-menu mode. Floats on --q-shadow-float.
+ * @startingPoint section="Overlays" subtitle="Action & context menus" viewport="600x440"
+ */
 export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMenuItem>({
 	trigger,
 	items = [],

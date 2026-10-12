@@ -2,10 +2,6 @@ import React from "react";
 import "./Toast.scss";
 import { CloseButton, StatusIcon } from "./parts";
 
-/**
- * Rounded notification floating on --q-shadow-float. Variants mark status with a dot or a status icon.
- * @startingPoint section="Feedback" subtitle="Transient notifications" viewport="600x360"
- */
 export interface ToastProps {
 	title?: React.ReactNode;
 	/** Body sentence */
@@ -32,6 +28,10 @@ const MARK: Record<string, React.ReactNode> = {
 	error: <StatusIcon status="error" />,
 };
 
+/**
+ * Rounded notification floating on --q-shadow-float. Variants mark status with a dot or a status icon.
+ * @startingPoint section="Feedback" subtitle="Transient notifications" viewport="600x360"
+ */
 export function Toast({
 	title,
 	meta,

@@ -3,10 +3,6 @@ import { FormHint } from "./FormHint";
 import { Label } from "./Label";
 import "./FormField.scss";
 
-/**
- * Label + any control + hint/error. Wires native controls and fieldControl components (TextField, TextArea, Select and the ARIA widgets) automatically (id, aria-invalid, aria-describedby, aria-required, and aria-labelledby for widgets).
- * @startingPoint section="Forms" subtitle="Label · control · hint" viewport="600x240"
- */
 export interface FormFieldProps {
 	label?: React.ReactNode;
 	id?: string;
@@ -41,6 +37,11 @@ type FieldControlProps = {
 };
 
 let ofFieldId = 0;
+
+/**
+ * Label + any control + hint/error. Wires native controls and fieldControl components (TextField, TextArea, Select and the ARIA widgets) automatically (id, aria-invalid, aria-describedby, aria-required, and aria-labelledby for widgets).
+ * @startingPoint section="Forms" subtitle="Label · control · hint" viewport="600x240"
+ */
 export function FormField({
 	label,
 	id,

@@ -3,10 +3,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon } from "../core/Icon";
 import "./Breadcrumb.scss";
 
-/**
- * Sentence-case trail separated by /. Collapses the middle into a "more" button.
- * @startingPoint section="Navigation" subtitle="Mono path trail" viewport="700x160"
- */
 export interface BreadcrumbProps {
 	items: Array<{
 		label: React.ReactNode;
@@ -18,7 +14,7 @@ export interface BreadcrumbProps {
 	/** Collapse to first + … + last (maxItems-1) */
 	maxItems?: number;
 	size?: "sm" | "md" | "lg";
-	/** Accessible name for the nav landmark. Defaults to "Breadcrumb: <current page>" */
+	/** Accessible name for the nav landmark. Defaults to `"Breadcrumb: <current page>"` */
 	label?: string;
 	"aria-label"?: string;
 	className?: string;
@@ -55,6 +51,10 @@ function Crumb({ it, current }: { it: BreadcrumbItem; current: boolean }) {
 	);
 }
 
+/**
+ * Sentence-case trail separated by /. Collapses the middle into a "more" button.
+ * @startingPoint section="Navigation" subtitle="Mono path trail" viewport="700x160"
+ */
 export function Breadcrumb({
 	items = [],
 	separator = "/",

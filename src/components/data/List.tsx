@@ -3,10 +3,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon } from "../core/Icon";
 import "./List.scss";
 
-/**
- * Rows: leading, primary/secondary text, trailing meta. Interactive rows take a soft ground on hover and nudge an arrow.
- * @startingPoint section="Data" subtitle="Lists" viewport="700x400"
- */
 export interface ListProps {
 	items?: Array<{
 		id?: string | number;
@@ -92,6 +88,10 @@ function LI({
 	);
 }
 
+/**
+ * Rows: leading, primary/secondary text, trailing meta. Interactive rows take a soft ground on hover and nudge an arrow.
+ * @startingPoint section="Data" subtitle="Lists" viewport="700x400"
+ */
 export function List({
 	items,
 	groups,

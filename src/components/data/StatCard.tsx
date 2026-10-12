@@ -3,11 +3,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon, type IconName } from "../core/Icon";
 import "./StatCard.scss";
 
-/**
- * Dashboard metric on a soft ground: label, metric value, and a neutral delta whose direction is
- * an arrow icon and words, never a colour.
- * @startingPoint section="Data" subtitle="Dashboard metrics" viewport="800x240"
- */
 export interface StatCardProps {
 	label: React.ReactNode;
 	value: number | string;
@@ -67,6 +62,11 @@ function useCount(target: number | string, on: boolean, dur = 1200) {
 	return v;
 }
 
+/**
+ * Dashboard metric on a soft ground: label, metric value, and a neutral delta whose direction is
+ * an arrow icon and words, never a colour.
+ * @startingPoint section="Data" subtitle="Dashboard metrics" viewport="800x240"
+ */
 export function StatCard({
 	label,
 	value,

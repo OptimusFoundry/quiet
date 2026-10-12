@@ -1,11 +1,6 @@
 import React from "react";
 import "./HonestButton.scss";
 
-/**
- * A button whose length is its expected wait. Pressing it turns the button itself into the
- * progress bar: it fills, counts down, and says "Done". Evolved from Button + progress bar.
- * @startingPoint section="Future" subtitle="Honest button" viewport="700x180"
- */
 export interface HonestButtonProps
 	extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
 	/** Expected duration in seconds (e.g. the median of recent runs). Sets the length and the countdown. */
@@ -26,6 +21,12 @@ export interface HonestButtonProps
 const reach = (s: number) => Math.min(1, Math.log10(1 + Math.max(0, s)) / Math.log10(61));
 const fmtSecs = (s: number) => (s < 1 ? "<1s" : `${Math.ceil(s)}s`);
 
+/**
+ * A button whose length is its expected wait, learned from past runs (a 0.3s save is short, a 40s
+ * render is long). Pressing it doesn't spawn a spinner elsewhere: the button itself becomes the
+ * progress bar, fills, counts down and says "Done". Evolved from Button + progress bar.
+ * @startingPoint section="Future" subtitle="Honest button" viewport="700x180"
+ */
 export function HonestButton({
 	expected = 1,
 	onPress,

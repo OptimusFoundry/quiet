@@ -1,0 +1,7 @@
+/* An accent ground for the on-accent tone (Spinner.stories.tsx). */
+.q-sb-spinner__on-accent {
+	display: inline-flex;
+	padding: var(--q-space-1);
+	border-radius: var(--q-radius-pill);
+	background: var(--q-accent-bg);
+}

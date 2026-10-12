@@ -2,11 +2,6 @@ import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
 import "./Tabs.scss";
 
-/**
- * Sentence-case tabs. Enclosed (default: a segmented control, the selected tab a raised chip on a
- * --q-bg-subtle track), line (underline) or pill (accent-filled selected tab).
- * @startingPoint section="Navigation" subtitle="Segmented, line, pill" viewport="700x220"
- */
 export interface TabsProps {
 	/** `id` sets the tab's id; `panelId` links it to its tabpanel (aria-controls). Both are generated when `panels` is set */
 	tabs: Array<
@@ -44,10 +39,6 @@ export interface TabsProps {
 	style?: React.CSSProperties;
 }
 
-/**
- * A tabpanel for layouts where the panel sits away from its Tabs: pass the ids you gave the tab
- * (`tabs[].id` → `tabId`, `tabs[].panelId` → `id`). Tabs with `panels` renders these for you.
- */
 export interface TabPanelProps {
 	id: string;
 	/** id of the tab that labels this panel */
@@ -100,6 +91,10 @@ function Tab({
 	);
 }
 
+/**
+ * A tabpanel for layouts where the panel sits away from its Tabs: pass the ids you gave the tab
+ * (`tabs[].id` → `tabId`, `tabs[].panelId` → `id`). Tabs with `panels` renders these for you.
+ */
 export function TabPanel({ id, tabId, hidden, children, className, style }: TabPanelProps) {
 	return (
 		<div
@@ -116,6 +111,11 @@ export function TabPanel({ id, tabId, hidden, children, className, style }: TabP
 	);
 }
 
+/**
+ * Sentence-case tabs. Enclosed (default: a segmented control, the selected tab a raised chip on a
+ * --q-bg-subtle track), line (underline) or pill (accent-filled selected tab).
+ * @startingPoint section="Navigation" subtitle="Segmented, line, pill" viewport="700x220"
+ */
 export function Tabs({
 	tabs = [],
 	value,

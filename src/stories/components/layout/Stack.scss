@@ -1,0 +1,62 @@
+/* Layout for the Stack stories: labelled boxes, and panes of different widths (one resizable) to
+   show a Stack switching direction by its parent's width. */
+.q-sb-stack {
+	&__box {
+		display: grid;
+		place-items: center;
+		min-width: var(--q-control-lg);
+		min-height: var(--q-control-md);
+		padding: var(--q-space-1) var(--q-space-1-5);
+		border-radius: var(--q-radius-md);
+		background: var(--q-bg-subtle);
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+	}
+
+	&__box--tall {
+		min-height: var(--q-control-lg);
+	}
+
+	&__frame {
+		padding: var(--q-space-1);
+		border-radius: var(--q-radius-md);
+		box-shadow: inset 0 0 0 var(--q-hairline) var(--q-border);
+	}
+
+	/* Fields share the row and shrink with the pane, so the buttons never spill out. */
+	&__filters > .q-text-field {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+
+	&__panes {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: start;
+		gap: var(--q-space-3);
+	}
+
+	&__pane {
+		box-sizing: border-box;
+		min-width: 0;
+		padding: var(--q-space-2);
+		border-radius: var(--q-radius-lg);
+		background: var(--q-bg-subtle);
+	}
+
+	&__pane--wide {
+		flex: 2 1 320px;
+	}
+
+	&__pane--narrow {
+		flex: 1 1 240px;
+	}
+
+	&__pane--resizable {
+		width: 1000px;
+		min-width: 240px;
+		max-width: 100%;
+		resize: horizontal;
+		overflow: auto;
+	}
+}

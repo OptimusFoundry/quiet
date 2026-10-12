@@ -2,10 +2,6 @@ import React from "react";
 import { useEscape } from "../../a11y/hooks";
 import "./Tooltip.scss";
 
-/**
- * Ink tooltip in sans sentence case, soft corners (--q-radius-sm). Four placements, optional delay.
- * @startingPoint section="Feedback" subtitle="Ink tooltips, 4 placements" viewport="600x200"
- */
 export interface TooltipProps {
 	content: React.ReactNode;
 	children: React.ReactNode;
@@ -16,6 +12,10 @@ export interface TooltipProps {
 
 const INTERACTIVE: string[] = ["a", "button", "input", "select", "textarea"];
 
+/**
+ * Ink tooltip in sans sentence case, soft corners (--q-radius-sm). Four placements, optional delay.
+ * @startingPoint section="Feedback" subtitle="Ink tooltips, 4 placements" viewport="600x200"
+ */
 export function Tooltip({ content, children, placement = "top", delay = 0 }: TooltipProps) {
 	const [open, setOpen] = React.useState(false);
 	const t = React.useRef<ReturnType<typeof setTimeout>>(undefined);

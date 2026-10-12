@@ -2,11 +2,6 @@ import type React from "react";
 import { Icon } from "../core/Icon";
 import "./StepIndicator.scss";
 
-/**
- * Numbered steps with hairline connectors. Arabic numerals by default; a check marks a complete step,
- * the accent ring the current one, a warning icon an error.
- * @startingPoint section="Navigation" subtitle="Multi-step progress" viewport="800x260"
- */
 export interface StepIndicatorProps {
 	steps: Array<{
 		label: React.ReactNode;
@@ -29,6 +24,11 @@ export interface StepIndicatorProps {
 
 const ROMAN = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"];
 
+/**
+ * Numbered steps with hairline connectors. Arabic numerals by default; a check marks a complete step,
+ * the accent ring the current one, a warning icon an error.
+ * @startingPoint section="Navigation" subtitle="Multi-step progress" viewport="800x260"
+ */
 export function StepIndicator({
 	steps = [],
 	current = 0,

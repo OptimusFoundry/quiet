@@ -2,10 +2,6 @@ import React from "react";
 import { Icon } from "../core/Icon";
 import "./Progress.scss";
 
-/**
- * Thin progress bar with a sans, sentence-case label. The accent fills it; status variants read --q-status-*.
- * @startingPoint section="Feedback" subtitle="Hairline progress" viewport="600x260"
- */
 export interface ProgressProps {
 	value?: number;
 	max?: number;
@@ -24,6 +20,10 @@ export interface ProgressProps {
 const SIZES: string[] = ["sm", "md", "lg"];
 const VARIANTS: string[] = ["success", "warning", "error", "heat"];
 
+/**
+ * Thin progress bar with a sans, sentence-case label. The accent fills it; status variants read --q-status-*.
+ * @startingPoint section="Feedback" subtitle="Hairline progress" viewport="600x260"
+ */
 export function Progress({
 	value = 0,
 	max = 100,

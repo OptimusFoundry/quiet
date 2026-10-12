@@ -1,0 +1,7 @@
+/* The app-state readout in the FileUpload Controlled story. */
+.q-sb-file-upload__state {
+	font-family: var(--q-font-mono);
+	font-size: var(--q-text-hint);
+	color: var(--q-fg-muted);
+	white-space: pre-wrap;
+}

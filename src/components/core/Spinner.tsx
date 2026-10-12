@@ -1,11 +1,6 @@
 import type React from "react";
 import "./Spinner.scss";
 
-/**
- * Hairline ring spinner. Linear, 0.9s, stops under reduced motion.
- * Other attributes go on the role="status" root.
- * @startingPoint section="Feedback" subtitle="Hairline loading ring" viewport="600x140"
- */
 export interface SpinnerProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> {
 	ref?: React.Ref<HTMLSpanElement>;
@@ -22,6 +17,11 @@ const SIZES = { xs: 12, sm: 16, md: 24, lg: 32, xl: 48 };
 const TONES: string[] = ["default", "muted", "on-accent", "accent"];
 const ALIASES: Record<string, string> = { paper: "on-accent", molten: "accent" };
 
+/**
+ * Hairline ring spinner. Linear, 0.9s, stops under reduced motion.
+ * Other attributes go on the role="status" root.
+ * @startingPoint section="Feedback" subtitle="Hairline loading ring" viewport="600x140"
+ */
 export function Spinner({
 	size = "md",
 	tone = "default",

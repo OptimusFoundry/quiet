@@ -1,0 +1,7 @@
+/* Layout for the Table stories. A grid item's min-width is its content's, so without a 0 floor a
+   wide table widens the page instead of scrolling inside .q-table. */
+.q-sb-table {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	max-width: var(--q-w-form);
+}

@@ -1,10 +1,6 @@
 import React from "react";
 import "./Grid.scss";
 
-/**
- * CSS grid on the 8px scale. Fixed columns or responsive auto-fit by min child width.
- * @startingPoint section="Layout" subtitle="Grids — fixed or auto-fit" viewport="800x260"
- */
 export interface GridProps {
 	/** Count or a raw grid-template-columns string */
 	columns?: number | string;
@@ -27,6 +23,10 @@ const GAPS: (string | number)[] = ["none", "xs", "sm", "md", "lg", "xl", "2xl"];
 const GridCtx = React.createContext<"sm" | "md" | "lg" | null>(null);
 const px = (v: string | number | undefined) => (typeof v === "number" ? `${v}px` : v);
 
+/**
+ * CSS grid on the 8px scale. Fixed columns or responsive auto-fit by min child width.
+ * @startingPoint section="Layout" subtitle="Grids — fixed or auto-fit" viewport="800x260"
+ */
 export function Grid({
 	columns = 3,
 	minChildWidth,

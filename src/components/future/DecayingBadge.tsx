@@ -1,11 +1,6 @@
 import React from "react";
 import "./DecayingBadge.scss";
 
-/**
- * A status badge whose fact ages. It fades from ink toward grey over `staleAfter`, then strikes
- * itself through; with `onRecheck` it is the button that refreshes the fact.
- * @startingPoint section="Future" subtitle="Status that shows its age" viewport="700x180"
- */
 export interface DecayingBadgeProps {
 	/** What was true when someone looked */
 	children?: React.ReactNode;
@@ -47,8 +42,13 @@ function age(ms: number) {
 	return { long: "just now", short: "now" };
 }
 
-// A status badge whose fact ages: it fades from ink toward grey over `staleAfter`, then strikes
-// itself through. With `onRecheck` it becomes the button that refreshes the fact.
+/**
+ * A status badge whose fact ages. "Verified" was true when someone looked: the badge fades from
+ * ink toward grey over `staleAfter`, then strikes itself through, so the age of a fact is visible
+ * and re-checking is the obvious gesture. With `onRecheck` it is the button that refreshes the
+ * fact. Evolved from the status badge.
+ * @startingPoint section="Future" subtitle="Status that shows its age" viewport="700x180"
+ */
 export function DecayingBadge({
 	children = "Verified",
 	checkedAt,

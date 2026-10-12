@@ -2,11 +2,6 @@ import type React from "react";
 import { useLinkElement } from "../../lib/link";
 import "./Card.scss";
 
-/**
- * Content on a soft ground (`--q-bg-subtle`, `--q-radius-lg`), no border. When it is a link or a
- * button, the ground deepens on hover and keyboard focus.
- * @startingPoint section="Display" subtitle="Work card on a ground" viewport="700x320"
- */
 export interface CardProps {
 	eyebrow?: React.ReactNode;
 	title?: React.ReactNode;
@@ -22,6 +17,11 @@ export interface CardProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * Content on a soft ground (`--q-bg-subtle`, `--q-radius-lg`), no border. When it is a link or a
+ * button, the ground deepens on hover and keyboard focus.
+ * @startingPoint section="Display" subtitle="Work card on a ground" viewport="700x320"
+ */
 export function Card({
 	eyebrow,
 	title,

@@ -3,10 +3,6 @@ import { Button } from "../core/Button";
 import { useCopy } from "./chat-utils";
 import "./CodeBlock.scss";
 
-/**
- * Code in a reply: mono, scrolls sideways rather than wrapping (unless `wrap`), with a language label
- * and a Copy button. No highlighter; pass highlighted `children` with `code` for the copy text.
- */
 export interface CodeBlockProps {
 	/** The source; also what Copy copies */
 	code?: string;
@@ -21,8 +17,11 @@ export interface CodeBlockProps {
 	style?: React.CSSProperties;
 }
 
-// Code in a reply: mono, scrolls sideways rather than wrapping (unless `wrap`), language label and
-// a Copy button. No highlighter — plain ink keeps it quiet; products can pass highlighted children.
+/**
+ * Code in a reply: mono, scrolls sideways rather than wrapping (unless `wrap`), with a language label
+ * and a Copy button. No highlighter, so plain ink keeps a reply quiet; pass highlighted `children`
+ * with `code` for the copy text.
+ */
 export function CodeBlock({
 	code,
 	children,

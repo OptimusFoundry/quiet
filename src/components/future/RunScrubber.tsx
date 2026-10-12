@@ -1,12 +1,6 @@
 import React from "react";
 import "./RunScrubber.scss";
 
-/**
- * Scrub a finished agent run like a video. The thumb is a slider over the steps (arrows,
- * Home/End, PageUp/PageDown, or drag); the panel shows what the agent was thinking at that step,
- * and `actions` can branch or correct from there.
- * @startingPoint section="Future" subtitle="Replay a run, step by step" viewport="680x300"
- */
 export interface RunScrubberStep {
 	/** Short step name, shown under the track and spoken by the slider */
 	label: string;
@@ -33,9 +27,13 @@ export interface RunScrubberProps {
 	style?: React.CSSProperties;
 }
 
-// Scrub a finished agent run like a video, with what it was thinking at each frame. The thumb is a
-// slider over the steps (arrows, Home/End, or drag); the panel below shows that step's state, and
-// `actions` can offer to branch or correct from there.
+/**
+ * Scrub a finished agent run like a video. The thumb is a slider over the steps (arrows,
+ * Home/End, PageUp/PageDown, or drag); the panel shows what the agent was thinking at that step,
+ * and `actions` can branch or correct from there (the product reruns from that step, keeping
+ * everything before). Evolved from agent logs.
+ * @startingPoint section="Future" subtitle="Replay a run, step by step" viewport="680x300"
+ */
 export function RunScrubber({
 	steps = [],
 	value,

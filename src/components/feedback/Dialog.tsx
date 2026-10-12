@@ -3,10 +3,6 @@ import { useEscape, useFocusTrap, usePresence } from "../../a11y/hooks";
 import "./Dialog.scss";
 import { CloseButton, isStatus, StatusIcon } from "./parts";
 
-/**
- * Modal dialog. Rounded (--q-radius-xl), floats on --q-shadow-float over the scrim. Sizes, status icon, non-dismissible.
- * @startingPoint section="Overlays" subtitle="Modal dialogs" viewport="700x480"
- */
 export interface DialogProps {
 	open: boolean;
 	onClose?: () => void;
@@ -52,6 +48,10 @@ function useModalBackground(ref: React.RefObject<HTMLElement | null>, active: bo
 	}, [active, ref]);
 }
 
+/**
+ * Modal dialog. Rounded (--q-radius-xl), floats on --q-shadow-float over the scrim. Sizes, status icon, non-dismissible.
+ * @startingPoint section="Overlays" subtitle="Modal dialogs" viewport="700x480"
+ */
 export function Dialog({
 	open,
 	onClose,

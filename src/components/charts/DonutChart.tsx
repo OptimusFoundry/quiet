@@ -5,11 +5,6 @@ import { arcPath, formatNumber, seriesColor } from "./chart-utils";
 import "./chart.scss";
 import "./DonutChart.scss";
 
-/**
- * Share of a total. Largest segment in the accent, the rest ink then greys, with a centre total that
- * turns into the active segment's share on hover or focus. Segments are focusable marks.
- * @startingPoint section="Charts" subtitle="Share of a total" viewport="600x260"
- */
 export interface DonutChartDatum {
 	id?: string | number;
 	label: string;
@@ -37,9 +32,13 @@ export interface DonutChartProps {
 	style?: React.CSSProperties;
 }
 
-// Share of a total. Segments are ordered largest first, so the largest carries the accent and the
-// rest step through ink and greys; a 2px surface gap separates them. Each segment is a focusable
-// mark (one tab stop, arrows move); the centre shows the total, or the active segment's share.
+/**
+ * Share of a total, and only that. Segments are ordered largest first, so the largest carries the
+ * accent and the rest step through ink and greys, with a 2px surface gap between them. Each segment
+ * is a focusable mark (one tab stop, arrows move); the centre shows the total, or the active
+ * segment's share on hover or focus.
+ * @startingPoint section="Charts" subtitle="Share of a total" viewport="600x260"
+ */
 export function DonutChart({
 	data = [],
 	size = 200,

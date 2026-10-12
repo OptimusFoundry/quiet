@@ -1,0 +1,202 @@
+/* The UI kit overview (Overview.stories.tsx): the canvas, then a section of tiles per group. */
+.q-sb-kit {
+	box-sizing: border-box;
+	min-height: 100vh;
+	padding: var(--q-space-section) var(--q-space-page-x);
+	background: var(--q-bg-canvas);
+	color: var(--q-fg-body);
+	font-family: var(--q-font-sans);
+	display: grid;
+	gap: var(--q-space-section);
+	align-content: start;
+
+	@media (width < 720px) {
+		padding: var(--q-space-block) var(--q-space-2);
+	}
+
+	&__hero {
+		display: grid;
+		gap: var(--q-space-stack);
+		max-width: 720px;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: var(--q-text-display);
+		line-height: var(--q-leading-display);
+		letter-spacing: var(--q-tracking-display);
+		color: var(--q-fg);
+		font-weight: 600;
+	}
+
+	&__intro {
+		margin: 0;
+		font-size: var(--q-text-intro);
+		line-height: var(--q-leading-body);
+		color: var(--q-fg-body);
+
+		& code {
+			font-family: var(--q-font-mono);
+			font-size: 0.9em;
+		}
+	}
+
+	&__facts {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--q-space-inline);
+	}
+
+	&__hint {
+		font-size: var(--q-text-sm);
+		color: var(--q-fg-muted);
+	}
+
+	&__toc {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--q-space-1);
+	}
+
+	&__toc-link {
+		padding: var(--q-space-0-5) var(--q-space-1-5);
+		border-radius: var(--q-radius-pill);
+		background: var(--q-bg-well);
+		color: var(--q-fg);
+		font-size: var(--q-text-sm);
+		text-decoration: none;
+		transition: background var(--q-dur-hover) var(--q-ease-soft);
+
+		&:is(:hover, :focus-visible) {
+			background: var(--q-bg-subtle-hover);
+		}
+	}
+
+	&__group {
+		display: grid;
+		gap: var(--q-space-stack);
+		scroll-margin-top: var(--q-space-block);
+	}
+
+	&__group-head {
+		display: grid;
+		gap: var(--q-space-0-5);
+	}
+
+	&__group-title {
+		margin: 0;
+		font-size: var(--q-text-heading-2);
+		line-height: var(--q-text-h2-leading);
+		letter-spacing: var(--q-tracking-h2);
+		color: var(--q-fg);
+		font-weight: 600;
+	}
+
+	&__group-blurb {
+		margin: 0;
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+	}
+
+	&__grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+		/* Wide tiles leave holes; a later narrow tile fills them. */
+		grid-auto-flow: row dense;
+		gap: var(--q-space-card-gap);
+	}
+
+	/* A tile: the live preview on the panel white, the caption on the warm ground. The whole tile
+	   is the link (the name's ::after stretches over it). */
+	&__tile {
+		position: relative;
+		display: grid;
+		grid-template-rows: 180px auto;
+		border-radius: var(--q-radius-lg);
+		background: var(--q-bg-subtle);
+		overflow: hidden;
+		transition: background var(--q-dur-hover) var(--q-ease-soft);
+
+		&:has(.q-sb-kit__name:is(:hover, :focus-visible)) {
+			background: var(--q-bg-subtle-hover);
+		}
+	}
+
+	&__tile--wide {
+		grid-column: span 2;
+
+		@media (width < 600px) {
+			grid-column: auto;
+		}
+	}
+
+	&__preview {
+		display: grid;
+		place-items: center;
+		padding: var(--q-space-2);
+		margin: var(--q-space-0-75) var(--q-space-0-75) 0;
+		border-radius: var(--q-radius-md);
+		background: var(--q-bg);
+		overflow: hidden;
+		min-width: 0;
+
+		& > * {
+			max-width: 100%;
+		}
+	}
+
+	&__caption {
+		display: grid;
+		gap: var(--q-space-0-25);
+		padding: var(--q-space-1-5) var(--q-space-2) var(--q-space-2);
+	}
+
+	&__name {
+		color: var(--q-fg);
+		font-weight: 500;
+		font-size: var(--q-text-md);
+		text-decoration: none;
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border-radius: inherit;
+		}
+
+		&:focus-visible {
+			outline: none;
+		}
+	}
+
+	&__tile:has(.q-sb-kit__name:focus-visible) {
+		outline: 2px solid var(--q-accent-border);
+		outline-offset: 2px;
+	}
+
+	&__blurb {
+		margin: 0;
+		font-size: var(--q-text-sm);
+		line-height: var(--q-leading-snug);
+		color: var(--q-fg-muted);
+	}
+}
+
+/* Layout inside a tile's preview (tiles/*.tsx): a wrapping row, or a column filling the width. */
+.q-sb-tile-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--q-space-1);
+}
+
+.q-sb-tile-stack {
+	display: grid;
+	gap: var(--q-space-1);
+	width: 100%;
+}
