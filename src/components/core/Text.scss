@@ -48,7 +48,7 @@ $colors: default, heading, muted, quiet, primary, success, warning, error;
       }
     }
 
-    // Heading levels size through the type roles, so data-density="app" can shrink them.
+    // Heading levels size through the type roles, so a product theme can retune them.
     @each $level in 1, 2, 3, 4 {
       &--size-heading-#{$level} {
         font-size: var(--q-text-heading-#{$level});

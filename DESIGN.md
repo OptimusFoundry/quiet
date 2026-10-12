@@ -1,14 +1,13 @@
 # quiet — DESIGN.md
 
-quiet is its own design system. It began as a copy of the Optimus Foundry "Soft" design system from
-Claude Design (project "Rounder softer design system"); that reference is now history. quiet no
-longer keeps pixel parity with it, and it has one look, specified in
-[docs/plans/2026-10-12-one-look.md](docs/plans/2026-10-12-one-look.md): soft ink, the lava accent,
-grounds instead of rules, Geist with sentence-case labels, dense pill controls, panes over drawers.
+quiet is its own design system with one look
+([docs/plans/2026-10-12-one-look.md](docs/plans/2026-10-12-one-look.md)): an inset three-pane shell
+with a push inspector, soft ink, the lava accent, grounds instead of rules, Geist in sentence case,
+dense pill controls, panes over drawers. How to build screens with it is in
+[docs/guidelines/](docs/guidelines/README.md).
 
-The reference mirror in [`docs/reference/optimus-design/`](docs/reference/optimus-design/) stays
-until the one-look plan removes it. Read it for history (its `readme.md` rules and per-component
-`.prompt.md` usage notes), not as the spec: where it and quiet differ, quiet wins.
+It began as a port of the Optimus Foundry "Soft" design system from Claude Design. That mirror was
+removed in 1.0; the git tag `reference-archive` keeps it for history.
 
 ## What quiet is made of
 
@@ -30,15 +29,13 @@ Status is a tier-2 role, like `--q-fg` or `--q-border`: three tokens per status,
 
 | Token | Job | foundry / foundry-dark |
 |---|---|---|
-| `--q-status-info-fg` / `-bg` / `-border` | neutral notices | `--q-fg-muted` / `--q-bg` / `--q-border` |
-| `--q-status-success-fg` / `-bg` / `-border` | done, healthy | `--q-fg` / `--q-bg` / `--q-fg` |
-| `--q-status-warning-fg` / `-bg` / `-border` | needs attention | `--q-accent` / `--q-bg` / `--q-border` |
-| `--q-status-error-fg` / `-bg` / `-border` | failed, blocking | `--q-accent` / `--q-bg` / `--q-accent` |
+| `--q-status-info-fg` / `-bg` / `-border` | neutral notices | `--q-fg-muted` / `--q-bg-subtle` / `--q-bg-subtle` |
+| `--q-status-success-fg` / `-bg` / `-border` | done, healthy | `--q-fg` / `--q-bg-subtle` / `--q-bg-subtle` |
+| `--q-status-warning-fg` / `-bg` / `-border` | needs attention | `--q-accent-fg` / a 3% accent tint / the same tint |
+| `--q-status-error-fg` / `-bg` / `-border` | failed, blocking | `--q-accent-fg` / a 3% accent tint / `--q-accent-border` |
 
-`fg` colours glyphs, icons, fills and status text; `bg` is a status surface; `border` is its edge.
-In the app look the `bg`/`border` tint: info and success `--q-bg-subtle`, warning `--q-accent-subtle`,
-error `--q-accent-subtle` / `--q-accent-border`. A product theme's own status hues (in `q.themes`) win.
-The brand has no status hues, so the defaults are greys and the accent: info and success stay
+`fg` colours glyphs, icons, fills and status text (AA as text); `bg` is a status surface; `border`
+is its edge. A product theme's own status hues (in `q.themes`) win. The brand has no status hues, so the defaults are greys and the accent: info and success stay
 neutral, warning and error are hot. A product theme sets real hues here.
 
 Components read status through their own tier-3 tokens, which default to these:
@@ -54,10 +51,6 @@ Components read status through their own tier-3 tokens, which default to these:
 | Progress | `--q-progress-<status>-fill`, `--q-progress-error-value-fg` → fg. `heat` stays the accent |
 | Icon | `color="success\|warning\|error"`: `--q-icon-<status>-fg` → fg |
 
-A few foundry parts don't follow the shared mapping: the grey fill of success and warning Badges.
-`src/styles/themes/_foundry-status.scss` pins those for `foundry`, `foundry-dark` and an unthemed
-root only. A product theme on `<html>` therefore doesn't inherit them, and every part follows its
-`--q-status-*` hues.
 
 ## Product themes
 
@@ -125,6 +118,6 @@ the light defaults vanish on a dark ground.
 - **Density.** The density job tokens (`--q-space-card-pad`, `--q-space-section`…) switch on
   `data-density`. A theme that sets them wins over `data-density` on the same element, and
   `QuietRoot` puts both attributes on one element. Prefer setting density per surface.
-- **Fonts.** `quiet.css` loads Inter Tight and JetBrains Mono from Google Fonts. A theme that
-  sets `--q-font-*` loads its own font files.
+- **Fonts.** `fonts.css` loads Geist and Geist Mono from Google Fonts. A theme that sets
+  `--q-font-*` loads its own font files and can skip `fonts.css`.
 - **Contrast.** Check every theme for contrast: APCA for body text, with WCAG AA as the floor.

@@ -132,7 +132,6 @@ function AllDemo() {
 
 const meta: Meta = {
 	title: "App/PageHeader",
-	parameters: { density: "app" },
 };
 export default meta;
 

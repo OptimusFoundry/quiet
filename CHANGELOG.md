@@ -108,6 +108,12 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 ### Removed
 
+- **The Claude Design reference mirror** (`docs/reference/`), `scripts/serve-reference.py` and
+  `tokens/_reference-compat.scss` (the `--ink`, `--paper`, `--molten`… names for pasted Claude Design
+  code). The git tag `reference-archive` keeps them.
+- `QuietRoot density="app"` and `"marketing"`: use `"comfortable"` (the default) or `"compact"`.
+- `fonts.css` no longer loads Inter Tight and JetBrains Mono; it loads Geist and Geist Mono only.
+
 - `Headline accent` and `moltenAccent` (nothing used them). `lead` and `after` remain.
 - `Card accent` and `EmptyState accent` (the italic phrase after the title): no app used them.
 - `EmptyState`'s default `/` glyph: pass `icon` for one.

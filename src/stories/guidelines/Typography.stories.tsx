@@ -125,7 +125,7 @@ function TypographyPage() {
 				title="Roles"
 				rule="Size / line height · weight, measured. Level follows the outline; size follows the role."
 			>
-				<div data-density="app">
+				<div>
 					{ROLES.map((r) => (
 						<RoleRow key={r.role} r={r} />
 					))}
@@ -133,7 +133,7 @@ function TypographyPage() {
 			</Part>
 			<Part
 				title="The six app sizes"
-				rule="11 · 13 · 15 · 17 · 24 · 40. 12 is in-component chrome; 19, 30, 52, 68 and display are marketing."
+				rule="11 · 12 · 14 · 17 · 20 · 24, each through a role. Nothing above 24 on a product screen."
 			>
 				<div className="q-sb-typography__sizes">
 					{SCALE.map((t) => (
@@ -153,7 +153,7 @@ function TypographyPage() {
 				title="Hierarchy on one screen"
 				rule="One 40, then 24 per section, 17 per panel. Never two equal headings stacked."
 			>
-				<div data-density="app" className="q-sb-typography__hierarchy">
+				<div className="q-sb-typography__hierarchy">
 					<PageHeader
 						as="h2"
 						eyebrow="Workspace"

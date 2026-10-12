@@ -39,7 +39,7 @@ check(
 );
 
 const fonts = readFileSync("dist/fonts.css", "utf8");
-for (const family of ["Inter+Tight", "JetBrains+Mono"]) {
+for (const family of ["Geist", "Geist+Mono"]) {
 	check(fonts.includes(`family=${family}`), `dist/fonts.css does not load ${family}`);
 }
 

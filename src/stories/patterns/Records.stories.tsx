@@ -395,7 +395,7 @@ function Records() {
 
 const meta: Meta = {
 	title: "Patterns/Records",
-	parameters: { layout: "fullscreen", density: "app" },
+	parameters: { layout: "fullscreen" },
 };
 export default meta;
 export const Default: StoryObj = {

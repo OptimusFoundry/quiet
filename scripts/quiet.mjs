@@ -6,7 +6,7 @@
 //
 // sync reads quiet as committed at --ref (a tag, branch or commit; default HEAD) with git archive,
 // never the working tree, so the manifest's commit is exactly what the app got; it warns when that
-// commit isn't on origin/main. It copies quiet's source (no stories, tests or reference mirror)
+// commit isn't on origin/main. It copies quiet's source (no stories or tests)
 // into the app, replacing what was there, and writes a package.json whose exports point at that
 // source, so the app depends on it with "@optimusfoundry/quiet": "file:./vendor/quiet" and imports
 // stay `@optimusfoundry/quiet`.

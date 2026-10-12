@@ -21,9 +21,8 @@ import "./AppFrame.scss";
 
 // The signed-in app frame every Patterns screen sits in, on quiet's AppShell: the Sidebar on a
 // canvas (WorkspaceSwitcher, ⌘K search, grouped nav with AppIcons, AccountMenu at the foot), the
-// screen an inset panel with a TopBar (breadcrumb + global actions) pinned inside it. Stories set
-// density "app". Below 720px the panel goes flush and the Sidebar becomes a drawer, opened from the
-// TopBar. Toasts go through one Toaster and toast(). Pages use the helper classes in AppFrame.scss:
+// screen an inset panel with a TopBar (breadcrumb + global actions) pinned inside it. Below 720px
+// the panel goes flush and the Sidebar becomes a drawer, opened from the TopBar. Toasts go through one Toaster and toast(). Pages use the helper classes in AppFrame.scss:
 // q-sb-app-frame__stack (--section, --stack, --field, --inline), __row (--stack) and __hero.
 
 export const NAV: NonNullable<SidebarProps["groups"]> = [

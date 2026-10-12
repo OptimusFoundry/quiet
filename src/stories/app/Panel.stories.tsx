@@ -182,6 +182,6 @@ function PanelPage() {
 	);
 }
 
-const meta: Meta = { title: "App/Panel", parameters: { layout: "fullscreen", density: "app" } };
+const meta: Meta = { title: "App/Panel", parameters: { layout: "fullscreen" } };
 export default meta;
 export const All: StoryObj = { render: () => <PanelPage /> };

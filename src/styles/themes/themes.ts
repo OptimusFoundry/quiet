@@ -65,8 +65,7 @@ export function getTheme(
 
 /**
  * Applies a theme to an element (default: the document root) and returns the theme it applied.
- * `data-quiet` marks the element as quiet-owned, so quiet's base styles and reference-compat names
- * reach it and its subtree.
+ * `data-quiet` marks the element as quiet-owned, so quiet's base styles reach it and its subtree.
  */
 export function applyTheme(
 	theme: ThemeName,

@@ -574,6 +574,6 @@ export const SignIn: StoryObj = {
 
 const meta: Meta = {
 	title: "Patterns/Agentworks",
-	parameters: { layout: "fullscreen", density: "app" },
+	parameters: { layout: "fullscreen" },
 };
 export default meta;

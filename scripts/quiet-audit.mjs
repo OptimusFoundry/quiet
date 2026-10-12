@@ -50,14 +50,6 @@ const browser = await chromium.launch();
 const page = await browser.newPage();
 const results = [];
 for (const url of targets) {
-	if (/[?&]id=catalog--/.test(url)) {
-		results.push({
-			url,
-			skipped:
-				"the catalog is the Claude Design reference copied as-is; audit quiet's own screens instead",
-		});
-		continue;
-	}
 	for (const width of widths) {
 		for (const theme of themes.length ? themes : [undefined]) {
 			const r = await auditUrl(page, url, { width, theme });

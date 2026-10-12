@@ -64,10 +64,10 @@ function StatusSampler() {
 export const ExternalTheme: StoryObj = {
 	render: () => (
 		<Stack direction="row" gap="lg" align="flex-start">
-			<QuietRoot theme="acme" density="app" data-testid="acme">
+			<QuietRoot theme="acme" data-testid="acme">
 				<StatusSampler />
 			</QuietRoot>
-			<QuietRoot theme="acme-dark" density="app" data-testid="acme-dark">
+			<QuietRoot theme="acme-dark" data-testid="acme-dark">
 				<StatusSampler />
 			</QuietRoot>
 		</Stack>
@@ -106,7 +106,7 @@ function ThemeSwitch() {
 export const WithThemeProvider: StoryObj = {
 	render: () => (
 		<ThemeProvider defaultValue="acme">
-			<QuietRoot density="app" data-testid="inherits">
+			<QuietRoot data-testid="inherits">
 				<ThemeSwitch />
 			</QuietRoot>
 		</ThemeProvider>
