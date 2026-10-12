@@ -2,7 +2,34 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
-## Unreleased
+## 1.0.0
+
+quiet's own: one look everywhere (an inset three-pane shell with a push inspector, soft ink, the
+lava accent, grounds instead of rules, Geist in sentence case, dense pill controls, panes over
+drawers), and no tie to the Claude Design reference.
+
+### Migrating from 0.9
+
+Vendored apps: `node ../quiet/scripts/quiet.mjs sync --ref v1.0.0`, then typecheck and look at
+your screens in a production build (`npx quiet check` must pass).
+
+| If your app uses | Do this |
+|---|---|
+| `QuietRoot density="app"` or `"marketing"` | Drop it (`comfortable` is the default) or pass `"compact"` |
+| `--ink`, `--paper`, `--molten` and other reference names | Use the `--q-*` tokens (`--q-fg`, `--q-bg`, `--q-accent`…) |
+| `Headline accent`/`moltenAccent`, `Card accent`, `EmptyState accent`, `Dialog accent` | Put the words in the title |
+| `Text italic`, `Drawer accent`, `Banner variant="outline"` | Still accepted, do nothing, warn in dev; remove them |
+| `Banner variant="ink"` | Use the default Banner |
+| `Icon glyph` or a unicode mark in your markup | `Icon name="…"` (`ICONS` lists the set); `glyph` still renders text for now |
+| `APP_ICONS`, `AppIconName` | `ICONS`, `IconName` (the old names are aliases) |
+| `ApprovalConsequence.glyph` | `icon`, a stroke-icon name |
+| `EmptyState` without `icon` | It no longer draws a default `/`; pass `icon="search"` or another name |
+| `Tabs` with no `variant` | Now segmented (`enclosed`); pass `variant="line"` to keep the underline |
+| `StepIndicator` with no `numerals` | Now arabic; pass `numerals="roman"` to keep roman |
+| `StatCard` with no `variant` | Now `filled`; pass `variant="outlined"` to keep the frame |
+| `List bordered`, `EmptyState bordered` | Now a ground, not a frame: check the screens |
+| A page-wide `Banner` on every page | `ShellNotice` (urgent), `SidebarNotice` (nudge) or `NoticeChip` (this page) |
+| A component's private `--q-<component>-*` tokens in app CSS | Render the component, or use tier-2 tokens; several tier-3 tokens were renamed or removed (below) |
 
 ### Added
 
