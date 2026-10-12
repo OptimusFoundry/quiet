@@ -1,0 +1,85 @@
+// TopBar — the slim bar above an app screen: drawer trigger, breadcrumb or title, actions.
+// BEM: .q-top-bar, __trigger, __lead, __crumbs, __title, __middle, __actions. Sticky to the top of
+// its scroller; a size container, so a narrow bar shows only the current crumb. AppShell turns the
+// rule off until its panel scrolls (it sets --q-top-bar-border).
+// App look only, so the tokens default to app values.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-top-bar-height: 44px; // the app look's slim bar; the reference's --q-h-topbar is 64
+    --q-top-bar-px: var(--q-space-page-x);
+    --q-top-bar-gap: var(--q-space-1-5);
+    --q-top-bar-actions-gap: var(--q-space-1);
+    --q-top-bar-bg: var(--q-bg);
+    --q-top-bar-border: var(--q-border);
+    --q-top-bar-z: var(--q-z-sticky);
+    --q-top-bar-dur: var(--q-dur-hover);
+    --q-top-bar-title-fg: var(--q-fg);
+    --q-top-bar-title-font-size: var(--q-text-sm);
+    --q-top-bar-title-weight: var(--q-weight-semibold);
+  }
+}
+
+@layer q.components {
+  .q-top-bar {
+    container: q-top-bar / inline-size;
+    position: sticky;
+    top: 0;
+    z-index: var(--q-top-bar-z);
+    display: flex;
+    align-items: center;
+    gap: var(--q-top-bar-gap);
+    box-sizing: border-box;
+    height: var(--q-top-bar-height);
+    padding: 0 var(--q-top-bar-px);
+    border-bottom: var(--q-hairline) solid var(--q-top-bar-border);
+    background: var(--q-top-bar-bg);
+    font-family: var(--q-font-sans);
+    transition: border-color var(--q-top-bar-dur) var(--q-ease-soft);
+  }
+
+  .q-top-bar__lead {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  // The trail stays on one line; a narrow bar (a phone) keeps only the current page.
+  .q-top-bar__crumbs .q-breadcrumb__list {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  @container q-top-bar (max-width: 520px) {
+    .q-top-bar__crumbs .q-breadcrumb__item:not(:last-child),
+    .q-top-bar__crumbs .q-breadcrumb__item:last-child .q-breadcrumb__separator {
+      display: none;
+    }
+  }
+
+  .q-top-bar__title {
+    overflow: hidden;
+    color: var(--q-top-bar-title-fg);
+    font-size: var(--q-top-bar-title-font-size);
+    font-weight: var(--q-top-bar-title-weight);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .q-top-bar__middle {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .q-top-bar__actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--q-top-bar-actions-gap);
+  }
+}

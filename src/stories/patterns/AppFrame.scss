@@ -1,79 +1,75 @@
-// The signed-in app frame: 240 sidebar + main (a slim top bar only under 720px, for the drawer), plus the layout helpers every
-// Patterns page uses inside it (stack, row, page hero). Plain CSS on --q-* tokens.
+// The signed-in app frame's own parts (sidebar head and search; AppShell does the layout), plus the
+// layout helpers every Patterns page uses inside it (stack, row, page hero). Plain CSS on --q-* tokens.
 
 // Shared by every page that imports this file, so the selectors are wrapped in :where() (no
 // specificity): a page's own class always overrides them, whatever order the stylesheets load in.
-:where(.q-sb-app-frame) {
-	display: grid;
-	grid-template-columns: var(--q-w-sidebar) minmax(0, 1fr);
-	min-height: 100vh;
-	background: var(--q-bg);
-	color: var(--q-fg-body);
-	font-family: var(--q-font-body);
-}
-
-// Under 720px the Sidebar is a drawer and leaves the grid.
-:where(.q-sb-app-frame--narrow) {
-	grid-template-columns: minmax(0, 1fr);
-}
-
-:where(.q-sb-app-frame__sidebar) {
-	position: sticky;
-	top: 0;
-	height: 100vh;
-}
-
-:where(.q-sb-app-frame__body) {
+// Sidebar head: the WorkspaceSwitcher, then a search field that opens the command palette.
+:where(.q-sb-app-frame__head) {
 	display: flex;
 	flex-direction: column;
-	min-width: 0;
-}
-
-// Sidebar head: the brand, then Search beside the account menu.
-:where(.q-sb-app-frame__brand) {
-	display: flex;
-	flex-direction: column;
-	gap: var(--q-space-stack);
+	gap: var(--q-space-1);
 	width: 100%;
-}
-
-:where(.q-sb-app-frame__brand-row) {
-	display: flex;
-	align-items: center;
-	gap: var(--q-space-inline);
+	min-width: 0;
 }
 
 :where(.q-sb-app-frame__search) {
-	flex: 1;
-	min-width: 0;
-}
-
-:where(.q-sb-app-frame__topbar) {
 	display: flex;
-	height: var(--q-h-topbar);
 	align-items: center;
-	gap: var(--q-space-stack);
-	flex-wrap: nowrap;
-	min-width: 0;
-	position: sticky;
-	top: 0;
-	z-index: var(--q-z-sticky);
-	padding: 0 var(--q-space-page-x);
-	border-bottom: var(--q-hairline) solid var(--q-border);
+	gap: var(--q-space-1);
+	box-sizing: border-box;
+	height: var(--q-control-sm);
+	padding: 0 var(--q-space-1);
+	border: var(--q-hairline) solid var(--q-border);
+	border-radius: var(--q-radius-sm);
 	background: var(--q-bg);
+	color: var(--q-fg-muted);
+	font: inherit;
+	font-size: var(--q-text-sm);
+	cursor: pointer;
+	transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+
+	&:is(:hover, :focus-visible) {
+		border-color: var(--q-border-strong);
+	}
 }
 
-:where(.q-sb-app-frame__title) {
+:where(.q-sb-app-frame__search-label) {
 	flex: 1;
-	min-width: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	text-align: left;
+}
+
+:where(.q-sb-app-frame__kbd) {
+	color: var(--q-fg-subtle);
+	font-family: var(--q-font-mono);
+	font-size: var(--q-text-xs);
+}
+
+:where(.q-sb-app-frame__note) {
+	color: var(--q-fg-body);
+	font-size: var(--q-text-sm);
+	line-height: var(--q-leading-snug);
+
+	& strong {
+		color: var(--q-fg);
+		font-weight: var(--q-weight-semibold);
+	}
+}
+
+:where(.q-sb-app-frame__note-meta) {
+	display: flex;
+	align-items: center;
+	gap: var(--q-space-0-75);
+	color: var(--q-fg-muted);
+	font-size: var(--q-text-xs);
 	white-space: nowrap;
 }
 
-:where(.q-sb-app-frame__person) {
-	display: flex;
-	flex-direction: column;
+// An unread dot in the brand colour: a mark, so --q-accent itself.
+:where(.q-sb-app-frame__unread) {
+	width: var(--q-space-0-75);
+	height: var(--q-space-0-75);
+	border-radius: var(--q-radius-pill);
+	background: var(--q-accent);
 }
 
 :where(.q-sb-app-frame__main) {
@@ -88,7 +84,8 @@
 	width: 100%;
 	max-width: var(--q-w-max);
 	margin: 0 auto;
-	padding: var(--q-space-section) var(--q-space-page-x);
+	// The TopBar above already gives the page its top edge.
+	padding: var(--q-space-block) var(--q-space-page-x) var(--q-space-section);
 	box-sizing: border-box;
 }
 

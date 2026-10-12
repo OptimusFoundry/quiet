@@ -27,5 +27,10 @@
   --q-shadow-3: 0 0 0 1px var(--q-border), 0 24px 64px rgb(0 0 0 / 60%);
   --q-ring-soft: 0 0 0 4px color-mix(in srgb, var(--q-fg) 12%, transparent);
 
+  // AppShell: the canvas sits darker than the page ground, so the panel reads as the lifted one;
+  // shadows don't show on dark, the panel's hairline does the work.
+  --q-app-shell-canvas: color-mix(in srgb, black 45%, var(--q-bg));
+  --q-app-shell-panel-shadow: none;
+
   color-scheme: dark;
 }

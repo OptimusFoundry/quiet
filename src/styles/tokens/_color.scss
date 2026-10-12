@@ -28,12 +28,12 @@
   // The one accent. On marketing pages it is punctuation only; in the app look (data-density
   // app/compact) it is the brand colour: links, primary actions, current and selected states.
   // --q-accent itself is ≈3.87:1, so it marks graphics, rings and dots; text and fills use the
-  // darker -fg/-bg steps (≈5.6:1 on paper). Derived from --q-accent so QuietRoot accent follows;
+  // darker -fg/-bg steps (lava, below). Derived from --q-accent so QuietRoot accent follows;
   // a dark theme lifts them instead (themes/_foundry-dark.scss).
   --q-accent: var(--q-molten-500);
   --q-accent-fg: color-mix(in oklab, var(--q-accent) 85%, black);       // accent text, links
-  --q-accent-bg: var(--q-accent-fg);                                     // accent fills
-  --q-accent-bg-hover: color-mix(in oklab, var(--q-accent) 75%, black);
+  --q-accent-bg: color-mix(in oklab, var(--q-accent) 90%, black);       // accent fills
+  --q-accent-bg-hover: color-mix(in oklab, var(--q-accent) 80%, black);
   --q-fg-on-accent: var(--q-bg);                                         // text on an accent fill
   --q-accent-subtle: color-mix(in srgb, var(--q-accent) 6%, var(--q-bg)); // selected; muted text on it stays AA
   --q-accent-subtle-hover: color-mix(in srgb, var(--q-accent) 10%, var(--q-bg));
@@ -65,12 +65,10 @@
 
 // The app look: focus and selection carry the brand.
 @include app.look {
-  // Panels sit on a lighter grey than the editorial alternate sections, warmed by a breath of the
-  // accent (1%) so the greys belong to the brand. A theme without a 25 step keeps its 50.
-  --q-bg-subtle: color-mix(in srgb, var(--q-accent) 1%, var(--q-gray-25, var(--q-gray-50)));
-  // Text a touch softer than the editorial ink, so dense screens don't read as black on white.
-  --q-fg: color-mix(in srgb, var(--q-gray-900) 75%, var(--q-gray-800));
-  --q-fg-body: color-mix(in srgb, var(--q-gray-800) 75%, var(--q-gray-500));
+  // Panels sit on a lighter grey than the editorial alternate sections (#fcfbfb in foundry), warmed
+  // by a breath of the accent (0.5%) so the greys belong to the brand. A theme without a 25 step
+  // keeps its 50.
+  --q-bg-subtle: color-mix(in srgb, var(--q-accent) 0.5%, var(--q-gray-25, var(--q-gray-50)));
   --q-focus-ring-color: var(--q-accent);
   --q-selection-bg: var(--q-accent-subtle);
   --q-selection-fg: var(--q-fg);
@@ -81,15 +79,14 @@
   --q-status-info-border: var(--q-bg-subtle);
   --q-status-success-bg: var(--q-bg-subtle);
   --q-status-success-border: var(--q-bg-subtle);
-  --q-status-warning-bg: var(--q-accent-subtle);
-  --q-status-warning-border: var(--q-accent-subtle);
-  --q-status-error-bg: var(--q-accent-subtle);
+  // Attention surfaces are a breath of the accent (3%), lighter than a selected row's tint.
+  --q-status-warning-bg: color-mix(in srgb, var(--q-accent) 3%, var(--q-bg));
+  --q-status-warning-border: var(--q-status-warning-bg);
+  --q-status-error-bg: color-mix(in srgb, var(--q-accent) 3%, var(--q-bg));
   --q-status-error-border: var(--q-accent-border);
 }
 
 @include app.reset {
-  --q-fg: var(--q-gray-900);
-  --q-fg-body: var(--q-gray-800);
   --q-bg-subtle: var(--q-gray-50);
   --q-focus-ring-color: var(--q-fg);
   --q-selection-bg: var(--q-bg-inverse);
@@ -102,4 +99,17 @@
   --q-status-warning-border: var(--q-border);
   --q-status-error-bg: var(--q-bg);
   --q-status-error-border: var(--q-accent);
+}
+
+// Lava, not rust: mixing the accent with black greys it toward brown. Where relative colour works,
+// the text and fill steps keep it saturated instead: a little darker, more chroma, nudged toward
+// red. For molten: fill #db3a00 (white label 4.6:1), text #d23300 (5.0:1 on paper). Older browsers
+// keep the mixes above, which also pass.
+@supports (color: oklch(from red l c h)) {
+  :root,
+  [data-theme] {
+    --q-accent-fg: oklch(from var(--q-accent) calc(l - 0.058) calc(c + 0.014) calc(h - 4.7));
+    --q-accent-bg: oklch(from var(--q-accent) calc(l - 0.036) calc(c + 0.0175) calc(h - 3.8));
+    --q-accent-bg-hover: oklch(from var(--q-accent) calc(l - 0.07) calc(c + 0.015) calc(h - 5));
+  }
 }

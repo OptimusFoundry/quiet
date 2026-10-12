@@ -58,6 +58,8 @@ attention status), links read as links at rest, and sections group with surfaces
   no press shrink, one moving thing per surface, reduced motion respected.
 - Keep edits minimal and in the reference's style (`React.useState`, classes from the component's
   `.scss`); never change what renders at rest. Colour contrast is a deliberate exception (exact colours kept).
+- Ink is a second deliberate exception: the light foundry theme sets `--q-fg`/`--q-fg-body` to softer
+  `gray-700`/`gray-600` than the reference (`themes/_foundry.scss`), so catalog text is lighter than the reference.
 
 ## Styling conventions (BEM + tokens)
 
@@ -129,8 +131,10 @@ colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `
 (AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
 inside; the product wires it to Claude). Stories: Charts, Chat.
 
-And `src/components/app/`: SaaS screen parts — `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`,
-`FileCard`, `Transcript`. They only render in the app look, so their tier-3 tokens default straight to
+And `src/components/app/`: SaaS screen parts — the frame (`AppShell`: Sidebar on a canvas, inset main
+panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppIcon` (quiet's own stroke
+icon set, `icons.ts`; marketing keeps the reference's glyphs), `PageHeader`, `Panel`, `DescriptionList`,
+`EntityLink`, `FileCard`, `Transcript`. They only render in the app look, so their tier-3 tokens default straight to
 app values (no `app.look` block). Stories: `src/stories/app/` (App/…, `parameters: { density: "app" }`). `npm run new -- app <Name>` scaffolds.
 
 Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in

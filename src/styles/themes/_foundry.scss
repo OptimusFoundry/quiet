@@ -3,16 +3,26 @@
 :root,
 [data-theme="foundry"] {
   --q-gray-0: #fff;
-  --q-gray-25: #fafafa; // the app look's panel ground, a step lighter than 50
+  --q-gray-25: #fcfcfc; // the app look's panel ground: barely off white, no edge needed beside it
   --q-gray-50: #f6f6f7;
   --q-gray-100: #eaeaed;
   --q-gray-200: #d3d3d9;
   --q-gray-400: #95959c;
   --q-gray-500: #6e6e75;
+  --q-gray-600: #5b5b63; // body ink, softer than the reference's 800 (6.7:1)
+  --q-gray-700: #3b3b42; // heading ink, softer than the reference's 900
   --q-gray-800: #36363c;
   --q-gray-900: #1b1b1f;
   --q-molten-500: #e0531a;
   --q-shadow-rgb: 27 27 31;
 
   color-scheme: light;
+}
+
+// Softer ink than the reference (a deliberate break from parity): headings 700, body 600.
+// Scoped like _foundry-status.scss, never plain :root, so foundry-dark or a product theme on
+// <html> keeps its own 900/800.
+:is(:root:not([data-theme]), [data-theme="foundry"]) {
+  --q-fg: var(--q-gray-700);
+  --q-fg-body: var(--q-gray-600);
 }

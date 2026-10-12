@@ -1,0 +1,100 @@
+// AccountMenu — sidebar foot: avatar + name (+ detail) opening the account menu upward.
+// BEM: .q-account-menu (the menu anchor), __button, __text, __name, __detail, __more.
+// Opens above its trigger: it sits at the bottom of the viewport. App look only.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-account-menu-height: var(--q-control-md);
+    --q-account-menu-gap: var(--q-space-1);
+    --q-account-menu-px: var(--q-space-0-75);
+    --q-account-menu-radius: var(--q-radius-sm);
+    --q-account-menu-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-account-menu-dur: var(--q-dur-hover);
+    --q-account-menu-name-fg: var(--q-fg);
+    --q-account-menu-name-font-size: var(--q-text-sm);
+    --q-account-menu-name-weight: var(--q-weight-medium);
+    --q-account-menu-detail-fg: var(--q-fg-muted);
+    --q-account-menu-detail-font-size: var(--q-text-xs);
+    --q-account-menu-more-fg: var(--q-fg-muted);
+  }
+}
+
+@layer q.components {
+  .q-account-menu {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+
+    // The button fills the row: DropdownMenu's trigger wrapper is inline by default.
+    > .q-dropdown-menu__trigger {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+    }
+
+    // The menu opens upward from the foot of the sidebar, as wide as it (the sidebar clips sideways).
+    > .q-dropdown-menu__menu {
+      width: 100%;
+      top: auto;
+      bottom: 100%;
+      margin-top: 0;
+      margin-bottom: var(--q-dropdown-menu-offset);
+    }
+  }
+
+  .q-account-menu__button {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--q-account-menu-gap);
+    box-sizing: border-box;
+    min-width: 0;
+    height: var(--q-account-menu-height);
+    padding: 0 var(--q-account-menu-px);
+    border: 0;
+    border-radius: var(--q-account-menu-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--q-account-menu-dur) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible, [aria-expanded="true"]) {
+      background: var(--q-account-menu-bg-hover);
+    }
+  }
+
+  .q-account-menu__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .q-account-menu__name,
+  .q-account-menu__detail {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .q-account-menu__name {
+    color: var(--q-account-menu-name-fg);
+    font-size: var(--q-account-menu-name-font-size);
+    font-weight: var(--q-account-menu-name-weight);
+    line-height: var(--q-leading-snug);
+  }
+
+  .q-account-menu__detail {
+    color: var(--q-account-menu-detail-fg);
+    font-size: var(--q-account-menu-detail-font-size);
+    line-height: var(--q-leading-snug);
+  }
+
+  .q-account-menu__more {
+    color: var(--q-account-menu-more-fg);
+  }
+}

@@ -1,0 +1,234 @@
+// AppShell — the signed-in frame: Sidebar on a canvas, the screen an inset raised panel.
+// BEM: .q-app-shell, __skip, __sidebar, __panel, __sentinel; --narrow (below the breakpoint).
+// The panel carries [data-scrolled] for the TopBar's rule. Sets the Sidebar's and TopBar's tier-3
+// tokens for its slots, so both read as part of the frame. App look only: tokens default to app values.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    // A breath darker than the page ground; foundry-dark sets its own (darker, not lighter).
+    --q-app-shell-canvas: color-mix(in srgb, rgb(var(--q-shadow-rgb)) 5%, var(--q-bg));
+    --q-app-shell-inset: var(--q-space-1);
+    --q-app-shell-panel-bg: var(--q-bg);
+    --q-app-shell-panel-border: var(--q-border);
+    --q-app-shell-panel-radius: var(--q-radius-md);
+    --q-app-shell-panel-shadow: var(--q-shadow-1);
+
+    --q-app-shell-nav-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-app-shell-nav-fg-current: var(--q-fg);
+    --q-app-shell-nav-icon-fg-current: var(--q-accent-fg);
+    --q-app-shell-nav-shadow-current: var(--q-shadow-1);
+    --q-app-shell-nav-close-offset: var(--q-space-0-5); // (switcher row 40 − button 32) / 2
+
+    --q-app-shell-top-bar-border-scrolled: var(--q-border);
+
+    --q-app-shell-aside-width: 360px; // a readable notification column; no tier-2 width fits
+    --q-app-shell-aside-dur: var(--q-dur-expand);
+    --q-app-shell-sheet-z: var(--q-z-overlay);
+    --q-app-shell-aside-head-height: 44px; // lines up with the TopBar
+    --q-app-shell-aside-px: var(--q-space-2);
+    --q-app-shell-aside-title-fg: var(--q-fg);
+    --q-app-shell-aside-title-font-size: var(--q-text-sm);
+    --q-app-shell-aside-title-weight: var(--q-weight-semibold);
+    --q-app-shell-aside-close-size: var(--q-control-sm);
+    --q-app-shell-aside-close-fg: var(--q-fg-muted);
+    --q-app-shell-aside-close-radius: var(--q-radius-sm);
+
+    --q-app-shell-skip-z: var(--q-z-toast);
+    --q-app-shell-skip-bg: var(--q-bg);
+    --q-app-shell-skip-fg: var(--q-fg);
+    --q-app-shell-skip-radius: var(--q-radius-sm);
+    --q-app-shell-skip-shadow: var(--q-shadow-2);
+  }
+}
+
+@layer q.components {
+  .q-app-shell {
+    position: relative;
+    display: grid;
+    --_aside: 0px;
+
+    grid-template-columns: auto minmax(0, 1fr) var(--_aside);
+    box-sizing: border-box;
+    height: 100dvh;
+    transition: grid-template-columns var(--q-app-shell-aside-dur) var(--q-ease-forge);
+    background: var(--q-app-shell-canvas);
+    color: var(--q-fg-body);
+    font-family: var(--q-font-body);
+
+    &--aside-open {
+      --_aside: var(--q-app-shell-aside-width);
+    }
+
+    &--narrow {
+      display: block;
+      height: auto;
+      min-height: 100dvh;
+      background: var(--q-app-shell-panel-bg);
+    }
+  }
+
+  .q-app-shell__skip {
+    position: absolute;
+    top: var(--q-app-shell-inset);
+    left: var(--q-app-shell-inset);
+    z-index: var(--q-app-shell-skip-z);
+    padding: var(--q-space-1) var(--q-space-1-5);
+    border-radius: var(--q-app-shell-skip-radius);
+    background: var(--q-app-shell-skip-bg);
+    box-shadow: var(--q-app-shell-skip-shadow);
+    color: var(--q-app-shell-skip-fg);
+    font-size: var(--q-text-sm);
+    font-weight: var(--q-weight-medium);
+    text-decoration: none;
+
+    &:not(:focus) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  // The Sidebar sits on the canvas: no ground of its own, no edge; the current item is a raised
+  // pill of panel ground. The drawer (narrow) keeps the canvas ground.
+  .q-app-shell__sidebar {
+    --q-sidebar-bg: var(--q-app-shell-canvas);
+    --q-sidebar-border: transparent;
+    --q-sidebar-item-bg-hover: var(--q-app-shell-nav-bg-hover);
+    --q-sidebar-item-bg-current: var(--q-app-shell-panel-bg);
+    --q-sidebar-item-fg-current: var(--q-app-shell-nav-fg-current);
+    --q-sidebar-icon-fg-current: var(--q-app-shell-nav-icon-fg-current);
+    --q-sidebar-item-shadow-current: var(--q-app-shell-nav-shadow-current);
+    // The drawer's close button: tops the header beside the WorkspaceSwitcher row, quiet like the
+    // pane's close button.
+    --q-sidebar-header-align: flex-start;
+    --q-sidebar-toggle-offset: var(--q-app-shell-nav-close-offset);
+    --q-sidebar-toggle-bg: transparent;
+    --q-sidebar-toggle-fg: var(--q-app-shell-aside-close-fg);
+    --q-sidebar-toggle-radius: var(--q-app-shell-aside-close-radius);
+
+    position: sticky;
+    top: 0;
+    display: grid;
+    height: 100dvh;
+    min-height: 0;
+
+    .q-app-shell--narrow & {
+      display: contents;
+    }
+  }
+
+  .q-app-shell__panel {
+    --q-top-bar-border: transparent;
+
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+    margin: var(--q-app-shell-inset) var(--q-app-shell-inset) var(--q-app-shell-inset) 0;
+    overflow: auto;
+    border: var(--q-hairline) solid var(--q-app-shell-panel-border);
+    border-radius: var(--q-app-shell-panel-radius);
+    outline: none;
+    background: var(--q-app-shell-panel-bg);
+    box-shadow: var(--q-app-shell-panel-shadow);
+
+    &[data-scrolled="true"] {
+      --q-top-bar-border: var(--q-app-shell-top-bar-border-scrolled);
+    }
+
+    .q-app-shell--narrow & {
+      margin: 0;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+
+  // Third pane: a column that grows from 0, holding a raised panel of its own width, so its
+  // content doesn't reflow while the column opens; the screen narrows beside it.
+  .q-app-shell__aside-slot {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .q-app-shell__aside {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: calc(var(--q-app-shell-aside-width) - var(--q-app-shell-inset));
+    height: calc(100% - 2 * var(--q-app-shell-inset));
+    margin: var(--q-app-shell-inset) var(--q-app-shell-inset) var(--q-app-shell-inset) 0;
+    overflow: hidden;
+    border: var(--q-hairline) solid var(--q-app-shell-panel-border);
+    border-radius: var(--q-app-shell-panel-radius);
+    outline: none;
+    background: var(--q-app-shell-panel-bg);
+    box-shadow: var(--q-app-shell-panel-shadow);
+  }
+
+  // Phone: the same pane, flush and full screen above the screen.
+  .q-app-shell__aside--sheet {
+    position: fixed;
+    inset: 0;
+    z-index: var(--q-app-shell-sheet-z);
+    width: auto;
+    height: auto;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .q-app-shell__aside-head {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--q-app-shell-aside-head-height);
+    padding: 0 var(--q-space-1) 0 var(--q-app-shell-aside-px);
+  }
+
+  .q-app-shell__aside-title {
+    margin: 0;
+    color: var(--q-app-shell-aside-title-fg);
+    font-size: var(--q-app-shell-aside-title-font-size);
+    font-weight: var(--q-app-shell-aside-title-weight);
+  }
+
+  .q-app-shell__aside-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--q-app-shell-aside-close-size);
+    height: var(--q-app-shell-aside-close-size);
+    padding: 0;
+    border: 0;
+    border-radius: var(--q-app-shell-aside-close-radius);
+    background: transparent;
+    color: var(--q-app-shell-aside-close-fg);
+    cursor: pointer;
+    transition: background var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-app-shell-nav-bg-hover);
+    }
+  }
+
+  .q-app-shell__aside-body {
+    flex: 1;
+    min-height: 0;
+    padding: 0 var(--q-app-shell-aside-px) var(--q-app-shell-aside-px);
+    overflow: auto;
+  }
+
+  .q-app-shell__sentinel {
+    height: var(--q-hairline);
+    margin-bottom: calc(var(--q-hairline) * -1);
+  }
+}

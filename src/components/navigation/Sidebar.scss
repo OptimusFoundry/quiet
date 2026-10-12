@@ -22,6 +22,8 @@
 
     --q-sidebar-header-gap: var(--q-space-1);
     --q-sidebar-header-min-height: var(--q-control-sm);
+    --q-sidebar-header-align: center; // quiet: AppShell tops it, beside a tall header
+    --q-sidebar-toggle-offset: 0; // quiet: nudges the toggle to line up with a taller first row
     --q-sidebar-toggle-size: var(--q-control-sm);
     --q-sidebar-toggle-radius: var(--q-radius-pill);
     --q-sidebar-toggle-bg: var(--q-bg);
@@ -49,6 +51,7 @@
     --q-sidebar-item-fg-current: var(--q-fg);
     --q-sidebar-item-bg-hover: var(--q-bg-subtle);
     --q-sidebar-item-bg-current: var(--q-bg-subtle);
+    --q-sidebar-item-shadow-current: none; // quiet: AppShell raises the current item off its canvas
     --q-sidebar-item-disabled-opacity: 0.4;
     --q-sidebar-icon-width: var(--q-space-2-5);
     --q-sidebar-icon-font-size: var(--q-text-md);
@@ -133,7 +136,7 @@
 
   .q-sidebar__header {
     display: flex;
-    align-items: center;
+    align-items: var(--q-sidebar-header-align);
     justify-content: space-between;
     gap: var(--q-sidebar-header-gap);
     min-height: var(--q-sidebar-header-min-height);
@@ -147,6 +150,7 @@
 
   .q-sidebar__toggle {
     flex: none;
+    margin-top: var(--q-sidebar-toggle-offset);
     width: var(--q-sidebar-toggle-size);
     height: var(--q-sidebar-toggle-size);
     border: var(--q-hairline) solid var(--q-sidebar-border);
@@ -262,6 +266,7 @@
 
     &[aria-current="page"] {
       background: var(--q-sidebar-item-bg-current);
+      box-shadow: var(--q-sidebar-item-shadow-current);
       color: var(--q-sidebar-item-fg-current);
       font-weight: var(--q-sidebar-item-weight-current);
     }

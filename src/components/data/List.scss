@@ -59,13 +59,17 @@
 
   // The app look (styles/_app.scss).
   @include app.look {
-    --q-list-label-border: var(--q-border);
+    // Surfaces, not rules: no line under group labels or between rows; interactive rows show a
+    // hover surface instead.
+    --q-list-label-border: transparent;
+    --q-list-item-divider: transparent;
     --q-list-item-bg-selected: var(--q-accent-subtle);
     --q-list-arrow-color-hover: var(--q-accent-fg);
   }
 
   @include app.reset {
     --q-list-label-border: var(--q-fg);
+    --q-list-item-divider: var(--q-border);
     --q-list-item-bg-selected: var(--q-bg-subtle);
     --q-list-arrow-color-hover: var(--q-accent);
   }

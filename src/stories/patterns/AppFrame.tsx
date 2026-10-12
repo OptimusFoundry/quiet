@@ -1,40 +1,42 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
+	AccountMenu,
+	AppIcon,
+	type AppIconName,
+	AppShell,
 	Avatar,
 	Button,
 	CommandPalette,
-	DropdownMenu,
+	List,
 	Sidebar,
-	SidebarProvider,
-	SidebarTrigger,
-	Text,
+	type SidebarProps,
 	Toaster,
-	useSidebar,
-	Wordmark,
+	TopBar,
+	WorkspaceSwitcher,
 } from "../../index";
 import "./AppFrame.scss";
 
-// The signed-in app frame every Patterns screen sits in — the reference app kit's AppShell
-// (ui_kits/app/AppShell.jsx) rebuilt on quiet: 240 sidebar + 64 top bar + main; stories set density "app".
-// Below 720px the Sidebar becomes its own off-canvas drawer, opened by the SidebarTrigger in the
-// top bar (SidebarProvider shares the state). Toasts go through one Toaster and toast().
-// Layout lives in AppFrame.scss, on --q-* tokens. Pages use its helper classes:
+// The signed-in app frame every Patterns screen sits in, on quiet's AppShell: the Sidebar on a
+// canvas (WorkspaceSwitcher, ⌘K search, grouped nav with AppIcons, AccountMenu at the foot), the
+// screen an inset panel with a TopBar (breadcrumb + global actions) pinned inside it. Stories set
+// density "app". Below 720px the panel goes flush and the Sidebar becomes a drawer, opened from the
+// TopBar. Toasts go through one Toaster and toast(). Pages use the helper classes in AppFrame.scss:
 // q-sb-app-frame__stack (--section, --stack, --field, --inline), __row (--stack) and __hero.
 
-export const NAV = [
+export const NAV: NonNullable<SidebarProps["groups"]> = [
 	{
 		label: "Workspace",
 		items: [
 			{
 				label: "Overview",
 				value: "dashboard",
-				icon: "·",
+				icon: <AppIcon name="home" />,
 				href: "?path=/story/patterns-dashboard--default",
 			},
 			{
 				label: "Campaigns",
 				value: "records",
-				icon: "/",
+				icon: <AppIcon name="campaigns" />,
 				badge: 14,
 				badgeLabel: "14 campaigns",
 				href: "?path=/story/patterns-records--default",
@@ -42,7 +44,7 @@ export const NAV = [
 			{
 				label: "Assistant",
 				value: "assistant",
-				icon: "✳",
+				icon: <AppIcon name="assistant" />,
 				href: "?path=/story/patterns-assistant--default",
 			},
 		],
@@ -53,13 +55,13 @@ export const NAV = [
 			{
 				label: "Settings",
 				value: "settings",
-				icon: "…",
+				icon: <AppIcon name="settings" />,
 				href: "?path=/story/patterns-settings--default",
 			},
 			{
 				label: "Billing",
 				value: "billing",
-				icon: "$",
+				icon: <AppIcon name="billing" />,
 				href: "?path=/story/patterns-billing--default",
 			},
 		],
@@ -76,6 +78,74 @@ const COMMANDS = [
 	{ label: "Spring waitlist", description: "Live · 1,240 signups", group: "Campaigns" },
 	{ label: "Founding members", description: "Paused · 862 signups", group: "Campaigns" },
 ];
+
+// The notifications pane (AppShell's third pane): today's first, unread marked.
+const NOTIFICATIONS = [
+	{
+		id: 1,
+		who: "Meerkat",
+		what: "Drafted pause notices for 3 bouncing campaigns. Waiting for your approval.",
+		group: "Today",
+		when: "4m",
+		unread: true,
+	},
+	{
+		id: 2,
+		who: "Leo Brandt",
+		what: "Verified join.sjocamp.co (DNS and DKIM).",
+		group: "Today",
+		when: "1h",
+		unread: true,
+	},
+	{
+		id: 3,
+		who: "Meerkat",
+		what: "Posted the release notes to Bluesky and X.",
+		group: "Today",
+		when: "09:12",
+		unread: false,
+	},
+	{
+		id: 4,
+		who: "Billing",
+		what: "Invoice 0032 paid: $49, Pro.",
+		group: "Earlier",
+		when: "Sep 1",
+		unread: false,
+	},
+];
+
+function Notifications() {
+	const row = (n: (typeof NOTIFICATIONS)[number]) => ({
+		id: n.id,
+		leading: <Avatar name={n.who} size="sm" />,
+		primary: (
+			<span className="q-sb-app-frame__note">
+				<strong>{n.who}</strong> {n.what}
+			</span>
+		),
+		trailing: (
+			<span className="q-sb-app-frame__note-meta">
+				{n.when}
+				{n.unread && (
+					<span className="q-sb-app-frame__unread">
+						<span className="q-sr-only">Unread</span>
+					</span>
+				)}
+			</span>
+		),
+		onClick: () => {},
+	});
+	return (
+		<List
+			size="sm"
+			groups={["Today", "Earlier"].map((g) => ({
+				label: g,
+				items: NOTIFICATIONS.filter((n) => n.group === g).map(row),
+			}))}
+		/>
+	);
+}
 
 /** Narrow = under 720px, the width at which Grid/Col and PageShell stack too. */
 export function useNarrow(max = 719) {
@@ -101,128 +171,127 @@ type FrameProps = {
 	padded?: boolean;
 	/** Another product's sidebar (default: the Sjocamp campaigns app) */
 	nav?: typeof NAV;
-	brand?: ReactNode;
+	workspace?: { name: string; detail?: string };
 	user?: { name: string; detail: string };
+	/** Global actions in the TopBar, before the pane toggles */
+	actions?: ReactNode;
+	/** The screen's own third pane (e.g. the assistant's Changes), toggled from the TopBar.
+	 *  It shares AppShell's pane with Notifications: one open at a time. */
+	pane?: { title: string; icon: AppIconName; content: ReactNode; defaultOpen?: boolean };
 };
 
-export function AppFrame(props: FrameProps) {
-	return (
-		<SidebarProvider breakpoint={720}>
-			<Frame {...props} />
-		</SidebarProvider>
-	);
-}
-
-function Frame({
+export function AppFrame({
 	active,
 	crumbs,
 	children,
 	padded = true,
 	nav = NAV,
-	brand = <Wordmark size="nav" />,
-	user = { name: "Ada Park", detail: "Owner · Sjocamp" },
+	workspace = { name: "Sjocamp", detail: "Growth plan" },
+	user = { name: "Ada Park", detail: "ada@sjocamp.com" },
+	actions,
+	pane,
 }: FrameProps) {
-	const { isMobile: narrow } = useSidebar();
 	const [palette, setPalette] = useState(false);
-	const account = (
-		<div className="q-sb-app-frame__row">
-			<Avatar name={user.name} size="sm" />
-			<div className="q-sb-app-frame__person">
-				<Text size="sm" color="heading" weight="medium">
-					{user.name}
-				</Text>
-				<Text size="xs" color="muted">
-					{user.detail}
-				</Text>
-			</div>
+	// Which pane is open. A screen's own pane starts open beside it on desktop, never over it on a phone.
+	const [open, setOpen] = useState<"pane" | "notes" | null>(() =>
+		pane?.defaultOpen && !window.matchMedia("(max-width: 719px)").matches ? "pane" : null,
+	);
+	const toggle = (which: "pane" | "notes") => setOpen((o) => (o === which ? null : which));
+	// The pane keeps showing what was open while it slides out.
+	const shown = useRef(open);
+	if (open) shown.current = open;
+	const showPane = shown.current === "pane" && pane;
+	const header = (
+		<div className="q-sb-app-frame__head">
+			<WorkspaceSwitcher
+				name={workspace.name}
+				detail={workspace.detail}
+				items={[
+					{ group: "Workspaces" },
+					{ label: workspace.name, active: true, icon: <AppIcon name="check" size="sm" /> },
+					{ label: "Optimus Foundry", icon: <span /> },
+					{ divider: true },
+					{ label: "Workspace settings", icon: <AppIcon name="settings" size="sm" /> },
+					{ label: "New workspace", icon: <AppIcon name="plus" size="sm" /> },
+				]}
+			/>
+			{/* Search first after the switcher: it is where the drawer puts focus when it opens. */}
+			<button type="button" className="q-sb-app-frame__search" onClick={() => setPalette(true)}>
+				<AppIcon name="search" size="sm" />
+				<span className="q-sb-app-frame__search-label">Search</span>
+				<kbd className="q-sb-app-frame__kbd">⌘K</kbd>
+			</button>
 		</div>
 	);
-	const search = (
-		<Button
-			size="sm"
-			variant="outline"
-			fullWidth
-			className="q-sb-app-frame__search"
-			onClick={() => setPalette(true)}
-			rightIcon={
-				<Text size="xs" color="muted" mono>
-					⌘K
-				</Text>
-			}
-		>
-			Search
-		</Button>
-	);
-	const accountMenu = (
-		<DropdownMenu
-			size="sm"
-			align="end"
-			width={220}
-			label="Account"
-			trigger={
-				<Button
-					size="sm"
-					variant="ghost"
-					icon={<Avatar name={user.name} size="xs" />}
-					aria-label="Account menu"
-				/>
-			}
-			header={account}
+	const footer = (
+		<AccountMenu
+			name={user.name}
+			detail={user.detail}
 			items={[
-				{ label: "Settings" },
-				{ label: "Keyboard shortcuts", shortcut: "?" },
+				{ label: "Profile", icon: <AppIcon name="user" size="sm" /> },
+				{ label: "Keyboard shortcuts", shortcut: "?", icon: <AppIcon name="help" size="sm" /> },
 				{ divider: true },
-				{ label: "Sign out" },
+				{ label: "Sign out", icon: <AppIcon name="sign-out" size="sm" /> },
 			]}
 		/>
 	);
 	return (
-		<div className={narrow ? "q-sb-app-frame q-sb-app-frame--narrow" : "q-sb-app-frame"}>
-			<Sidebar
-				label="Main"
-				mobile="drawer"
-				value={active}
-				header={
-					<div className="q-sb-app-frame__brand">
-						{brand}
-						{/* Search first: it is where the drawer puts focus when it opens. */}
-						<div className="q-sb-app-frame__brand-row">
-							{search}
-							{accountMenu}
-						</div>
-					</div>
+		<>
+			<AppShell
+				sidebar={
+					<Sidebar
+						label="Main"
+						compact
+						value={active}
+						header={header}
+						footer={footer}
+						groups={nav}
+					/>
 				}
-				groups={nav}
-				className={narrow ? undefined : "q-sb-app-frame__sidebar"}
-			/>
-			<div className="q-sb-app-frame__body">
-				{/* No top bar on desktop: PageHeader in main says where you are, the sidebar holds
-				    search and the account. A phone keeps a slim bar for the drawer trigger. */}
-				{narrow && (
-					<header className="q-sb-app-frame__topbar">
-						<SidebarTrigger />
-						<Text size="sm" weight="semibold" color="heading" className="q-sb-app-frame__title">
-							{crumbs[crumbs.length - 1]?.label}
-						</Text>
-						<Button
-							size="sm"
-							variant="ghost"
-							icon="/"
-							aria-label="Search"
-							onClick={() => setPalette(true)}
-						/>
-					</header>
-				)}
-				<main
-					id="app-main"
-					aria-label="Content"
+				topBar={
+					<TopBar
+						crumbs={crumbs}
+						actions={
+							<>
+								{actions}
+								{pane && (
+									<Button
+										size="sm"
+										variant={open === "pane" ? "secondary" : "ghost"}
+										leftIcon={<AppIcon name={pane.icon} />}
+										aria-expanded={open === "pane"}
+										aria-controls="app-aside"
+										onClick={() => toggle("pane")}
+									>
+										{pane.title}
+									</Button>
+								)}
+								<Button
+									size="sm"
+									variant={open === "notes" ? "secondary" : "ghost"}
+									icon={<AppIcon name="bell" />}
+									aria-label="Notifications, 2 unread"
+									aria-expanded={open === "notes"}
+									aria-controls="app-aside"
+									onClick={() => toggle("notes")}
+								/>
+							</>
+						}
+					/>
+				}
+				aside={showPane ? pane.content : <Notifications />}
+				asideTitle={showPane ? pane.title : "Notifications"}
+				asideOpen={open !== null}
+				onAsideClose={() => setOpen(null)}
+			>
+				<div
 					className={
 						padded ? "q-sb-app-frame__main q-sb-app-frame__main--padded" : "q-sb-app-frame__main"
 					}
 				>
 					{children}
-				</main>
-			</div>
+				</div>
+			</AppShell>
 			{/* Transient feedback on the user's own actions: bottom-right, three at most. */}
 			<Toaster position="bottom-right" max={3} />
 			<CommandPalette
@@ -231,6 +300,6 @@ function Frame({
 				onClose={() => setPalette(false)}
 				items={COMMANDS}
 			/>
-		</div>
+		</>
 	);
 }

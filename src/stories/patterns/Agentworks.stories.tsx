@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
+	AppIcon,
 	Badge,
 	Button,
 	DescriptionList,
@@ -37,42 +38,40 @@ const NAV = [
 			{
 				label: "Approvals",
 				value: "approvals",
-				icon: "✓",
+				icon: <AppIcon name="approvals" />,
 				badge: 2,
 				badgeLabel: "2 waiting",
 				href: RUNS,
 			},
-			{ label: "Chats", value: "chats", icon: "✳", href: RUNS },
+			{ label: "Chats", value: "chats", icon: <AppIcon name="chat" />, href: RUNS },
 		],
 	},
 	{
 		label: "Agents",
 		items: [
-			{ label: "Projects", value: "projects", icon: "▢", href: RUNS },
-			{ label: "Runs", value: "runs", icon: "▷", href: RUNS },
-			{ label: "Artifacts", value: "artifacts", icon: "◇", href: ARTIFACT },
+			{ label: "Projects", value: "projects", icon: <AppIcon name="folder" />, href: RUNS },
+			{ label: "Runs", value: "runs", icon: <AppIcon name="runs" />, href: RUNS },
+			{ label: "Artifacts", value: "artifacts", icon: <AppIcon name="file" />, href: ARTIFACT },
 		],
 	},
 	{
 		label: "Developer",
 		items: [
-			{ label: "API keys", value: "keys", icon: "⚿", href: RUNS },
-			{ label: "Webhooks", value: "webhooks", icon: "↯", href: RUNS },
-			{ label: "Integrations", value: "integrations", icon: "⊕", href: RUNS },
+			{ label: "API keys", value: "keys", icon: <AppIcon name="key" />, href: RUNS },
+			{ label: "Webhooks", value: "webhooks", icon: <AppIcon name="link" />, href: RUNS },
+			{ label: "Integrations", value: "integrations", icon: <AppIcon name="grid" />, href: RUNS },
 		],
 	},
 	{
 		label: "Organization",
-		items: [{ label: "Settings", value: "settings", icon: "…", href: RUNS }],
+		items: [
+			{ label: "Settings", value: "settings", icon: <AppIcon name="settings" />, href: RUNS },
+		],
 	},
 ];
 
-const brand = (
-	<Text size="md" weight="semibold" color="heading">
-		agentworks
-	</Text>
-);
-const user = { name: "Shubhanshu Aarsay", detail: "Free plan" };
+const workspace = { name: "agentworks", detail: "Free plan" };
+const user = { name: "Shubhanshu Aarsay", detail: "Owner" };
 
 type Status = "working" | "idle" | "awaiting_human" | "failed" | "closed";
 const STATUS: Record<
@@ -151,7 +150,13 @@ const RUN_ROWS: RunRow[] = [
 function RunsScreen() {
 	const narrow = useNarrow();
 	return (
-		<AppFrame active="runs" nav={NAV} brand={brand} user={user} crumbs={[{ label: "Runs" }]}>
+		<AppFrame
+			active="runs"
+			nav={NAV}
+			workspace={workspace}
+			user={user}
+			crumbs={[{ label: "Runs" }]}
+		>
 			<div className="q-sb-agentworks">
 				<PageHeader
 					title="Runs"
@@ -352,7 +357,7 @@ export const Run: StoryObj = {
 		<AppFrame
 			active="runs"
 			nav={NAV}
-			brand={brand}
+			workspace={workspace}
 			user={user}
 			crumbs={[{ label: "Runs", href: RUNS }, { label: "233f76c2" }]}
 		>
@@ -445,7 +450,7 @@ export const Artifact: StoryObj = {
 		<AppFrame
 			active="artifacts"
 			nav={NAV}
-			brand={brand}
+			workspace={workspace}
 			user={user}
 			crumbs={[{ label: "Artifacts", href: ARTIFACT }, { label: "assistant-capabilities-xlsx" }]}
 		>
@@ -538,7 +543,9 @@ export const SignIn: StoryObj = {
 		<main className="q-sb-signin" aria-label="Sign in">
 			<div className="q-sb-signin__card">
 				<div className="q-sb-signin__head">
-					{brand}
+					<Text size="md" weight="semibold" color="heading">
+						agentworks
+					</Text>
 					<Text as="h1" size="xl" weight="semibold" color="heading">
 						Sign in
 					</Text>
