@@ -1,5 +1,5 @@
 // List — rows of primary/secondary text with leading and trailing slots; optional groups.
-// BEM: .q-list (--sm/--md/--lg, --grouped, --bordered), __group, __label, __row, __item
+// BEM: .q-list (--sm/--md/--lg, --grouped, --bordered: set on a ground), __group, __label, __row, __item
 // (--divided, --interactive, --disabled, --animated), __leading, __text, __primary, __secondary,
 // __trailing (--text), __arrow.
 @use "../../styles/layers";
@@ -8,7 +8,7 @@
   :root,
   [data-theme] {
     --q-list-group-gap: var(--q-space-3);
-    --q-list-border: var(--q-border);
+    --q-list-bordered-bg: var(--q-bg-subtle);
     --q-list-radius: var(--q-radius-lg);
     --q-list-label-font-size: var(--q-text-label);
     --q-list-label-tracking: var(--q-tracking-label);
@@ -34,6 +34,7 @@
     --q-list-item-gap: var(--q-space-2);
     --q-list-item-divider: transparent;
     --q-list-item-bg-hover: var(--q-bg-subtle);
+    --q-list-item-bg-hover-bordered: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle));
     --q-list-item-bg-selected: var(--q-accent-subtle);
     --q-list-item-radius: var(--q-radius-sm);
     --q-list-item-bleed: var(--q-space-1); // interactive rows bleed past the text edge
@@ -45,8 +46,8 @@
     --q-list-secondary-color: var(--q-fg-muted);
     --q-list-slot-color: var(--q-fg-muted);
     --q-list-trailing-gap: var(--q-space-1);
-    --q-list-trailing-font-size: var(--q-text-2xs);
-    --q-list-trailing-tracking: var(--q-tracking-mono);
+    --q-list-trailing-font-size: var(--q-text-label);
+    --q-list-trailing-tracking: var(--q-tracking-label);
     --q-list-arrow-color: var(--q-fg-muted);
     --q-list-arrow-color-hover: var(--q-accent-fg);
     --q-list-arrow-nudge: var(--q-space-0-5);
@@ -89,8 +90,8 @@
 
     &--bordered {
       overflow: hidden;
-      border: var(--q-hairline) solid var(--q-list-border);
       border-radius: var(--q-list-radius);
+      background: var(--q-list-bordered-bg);
     }
   }
 
@@ -167,6 +168,10 @@
     &--interactive:is(:hover, :focus-visible) {
       background: var(--q-list-item-bg-hover);
 
+      .q-list--bordered & {
+        background: var(--q-list-item-bg-hover-bordered);
+      }
+
       .q-list__arrow {
         color: var(--q-list-arrow-color-hover);
         transform: translateX(var(--q-list-arrow-nudge));
@@ -227,14 +232,17 @@
     color: var(--q-list-slot-color);
 
     &--text {
-      font-family: var(--q-font-mono);
+      font-family: var(--q-font-label);
       font-size: var(--q-list-trailing-font-size);
+      font-weight: var(--q-weight-label);
       letter-spacing: var(--q-list-trailing-tracking);
-      text-transform: uppercase;
+      text-transform: var(--q-case-label);
     }
   }
 
   .q-list__arrow {
+    display: inline-flex;
+    flex: none;
     color: var(--q-list-arrow-color);
     transform: none;
     transition:

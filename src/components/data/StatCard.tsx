@@ -1,9 +1,11 @@
 import React from "react";
 import { useLinkElement } from "../../lib/link";
+import { Icon, type IconName } from "../core/Icon";
 import "./StatCard.scss";
 
 /**
- * Dashboard metric. Mono label, 40px 700 value, mono delta with ↗ / ↘ glyph.
+ * Dashboard metric on a soft ground: label, metric value, and a neutral delta whose direction is
+ * an arrow icon and words, never a colour.
  * @startingPoint section="Data" subtitle="Dashboard metrics" viewport="800x240"
  */
 export interface StatCardProps {
@@ -18,7 +20,9 @@ export interface StatCardProps {
 	/** e.g. "vs last month" */
 	period?: React.ReactNode;
 	previousValue?: number | string;
-	icon?: React.ReactNode;
+	/** An icon name from the set (`Icon` `name`) or your own node, top right */
+	icon?: IconName | React.ReactNode;
+	/** filled (default): on a `--q-bg-subtle` ground · outlined: a hairline frame · plain: no frame */
 	variant?: "outlined" | "filled" | "plain";
 	/** Count up from 0 (ease-in-out, 1.2s). Later numeric value changes always ease from the old value (0.6s). */
 	animate?: boolean;
@@ -72,7 +76,7 @@ export function StatCard({
 	period,
 	previousValue,
 	icon,
-	variant = "outlined",
+	variant = "filled",
 	animate = false,
 	onClick,
 	href,
@@ -95,7 +99,9 @@ export function StatCard({
 					? "down"
 					: "up"
 				: "neutral");
-	const glyph = { up: "\u2197", down: "\u2198", neutral: "\u2192" }[tr];
+	const arrow = (
+		{ up: "arrow-up-right", down: "arrow-down-right", neutral: "arrow-right" } as const
+	)[tr];
 	const deltaText =
 		typeof delta === "number"
 			? `${(delta > 0 ? "+" : delta < 0 ? "\u2212" : "") + Math.abs(delta)}%`
@@ -117,7 +123,7 @@ export function StatCard({
 				<span className="q-stat-card__label">{label}</span>
 				{icon && (
 					<span aria-hidden="true" className="q-stat-card__icon">
-						{icon}
+						{typeof icon === "string" ? <Icon name={icon} /> : icon}
 					</span>
 				)}
 			</div>
@@ -129,11 +135,8 @@ export function StatCard({
 				<div className="q-stat-card__meta">
 					{delta != null && (
 						<span className="q-stat-card__delta">
-							<span
-								aria-hidden="true"
-								className={`q-stat-card__glyph${tr === "down" ? " q-stat-card__glyph--down" : ""}`}
-							>
-								{glyph}
+							<span aria-hidden="true" className="q-stat-card__trend">
+								<Icon name={arrow} />
 							</span>
 							<span className="q-sr-only">
 								{{ up: "Up", down: "Down", neutral: "Unchanged" }[tr]}{" "}

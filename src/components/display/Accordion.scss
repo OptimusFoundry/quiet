@@ -1,51 +1,44 @@
-// Accordion — disclosure rows under hairlines. BEM: .q-accordion, __item, __heading, __header,
-// __icon, __text, __title, __description, __toggle, __content (--with-icon).
+// Accordion — disclosure rows, set apart by space and faint row dividers. BEM: .q-accordion,
+// __item, __heading, __header, __icon, __text, __title, __description, __toggle, __content
+// (--with-icon).
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
-    --q-accordion-border: var(--q-border);
-    --q-accordion-border-first: var(--q-fg);
-    --q-accordion-header-gap: var(--q-space-2);
-    --q-accordion-header-padding-y: var(--q-space-3);
+    --q-accordion-divider: var(--q-border);
+    --q-accordion-header-gap: var(--q-space-1-5);
+    --q-accordion-header-padding-y: var(--q-space-1-5);
+    --q-accordion-header-bleed: var(--q-space-1); // the hover ground reaches past the text edge
+    --q-accordion-header-radius: var(--q-radius-sm);
+    --q-accordion-header-bg-hover: var(--q-bg-subtle);
     --q-accordion-disabled-opacity: 0.4;
-    --q-accordion-icon-width: 20px; // icon column; aligns with the 36px content indent
+    --q-accordion-icon-width: 20px; // icon column; the content indents by it plus the gap
     --q-accordion-icon-padding-top: var(--q-space-0-25);
     --q-accordion-icon-color: var(--q-fg-muted);
-    --q-accordion-text-gap: var(--q-space-0-5);
-    --q-accordion-title-font-size: var(--q-text-xl);
+    --q-accordion-text-gap: var(--q-space-0-25);
+    --q-accordion-title-font-size: var(--q-text-heading-4);
     --q-accordion-title-weight: var(--q-weight-semibold);
-    --q-accordion-title-tracking: -0.015em; // between --q-tracking-tight and -h4; reference value
-    --q-accordion-title-leading: 1.3; // reference value, no tier-2 leading at 1.3
+    --q-accordion-title-leading: var(--q-leading-ui);
     --q-accordion-title-color: var(--q-fg);
-    --q-accordion-title-color-hover: var(--q-accent);
-    --q-accordion-description-font-size: var(--q-text-md);
+    --q-accordion-description-font-size: var(--q-text-sm);
     --q-accordion-description-leading: var(--q-leading-compact);
     --q-accordion-description-color: var(--q-fg-muted);
-    --q-accordion-toggle-font-size: 20px; // the "+" glyph; no tier-2 size at 20
-    --q-accordion-toggle-leading: 1.2; // reference value
-    --q-accordion-toggle-color: var(--q-fg);
-    --q-accordion-content-indent: 36px; // icon width + header gap
-    --q-accordion-content-padding-bottom: var(--q-space-3);
+    --q-accordion-toggle-size: var(--q-icon-md);
+    --q-accordion-toggle-color: var(--q-fg-muted);
+    --q-accordion-toggle-color-hover: var(--q-fg);
+    --q-accordion-content-indent: calc(var(--q-accordion-icon-width) + var(--q-accordion-header-gap));
+    --q-accordion-content-padding-bottom: var(--q-space-2);
     --q-accordion-content-font-size: var(--q-text-md);
-    --q-accordion-content-leading: 1.6; // reference value
+    --q-accordion-content-leading: var(--q-leading-body);
     --q-accordion-content-color: var(--q-fg-body);
     --q-accordion-content-max-width: 720px;
   }
 }
 
 @layer q.components {
-  .q-accordion {
-    border-bottom: var(--q-hairline) solid var(--q-accordion-border);
-  }
-
-  .q-accordion__item {
-    border-top: var(--q-hairline) solid var(--q-accordion-border);
-
-    &:first-child {
-      border-top-color: var(--q-accordion-border-first);
-    }
+  .q-accordion__item + .q-accordion__item {
+    border-top: var(--q-hairline) solid var(--q-accordion-divider);
   }
 
   .q-accordion__heading {
@@ -58,29 +51,40 @@
     display: flex;
     align-items: flex-start;
     gap: var(--q-accordion-header-gap);
-    width: 100%;
-    padding: var(--q-accordion-header-padding-y) 0;
+    box-sizing: border-box;
+    width: calc(100% + var(--q-accordion-header-bleed) * 2);
+    margin: 0 calc(var(--q-accordion-header-bleed) * -1);
+    padding: var(--q-accordion-header-padding-y) var(--q-accordion-header-bleed);
     border: 0;
-    background: none;
+    border-radius: var(--q-accordion-header-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
     text-align: left;
     cursor: pointer;
+    transition: background var(--q-dur-hover) var(--q-ease-soft);
 
     &:disabled {
       opacity: var(--q-accordion-disabled-opacity);
       cursor: not-allowed;
     }
 
-    &:is(:hover, :focus-visible):not(:disabled) .q-accordion__title {
-      color: var(--q-accordion-title-color-hover);
+    &:is(:hover, :focus-visible):not(:disabled) {
+      background: var(--q-accordion-header-bg-hover);
+
+      .q-accordion__toggle {
+        color: var(--q-accordion-toggle-color-hover);
+      }
     }
 
     &[aria-expanded="true"] .q-accordion__toggle {
-      transform: rotate(45deg);
+      transform: rotate(180deg);
     }
   }
 
   .q-accordion__icon {
     display: inline-flex;
+    flex: none;
     justify-content: center;
     width: var(--q-accordion-icon-width);
     padding-top: var(--q-accordion-icon-padding-top);
@@ -92,15 +96,14 @@
     flex: 1;
     flex-direction: column;
     gap: var(--q-accordion-text-gap);
+    min-width: 0;
   }
 
   .q-accordion__title {
     color: var(--q-accordion-title-color);
     font-size: var(--q-accordion-title-font-size);
     font-weight: var(--q-accordion-title-weight);
-    letter-spacing: var(--q-accordion-title-tracking);
     line-height: var(--q-accordion-title-leading);
-    transition: color var(--q-dur-hover) var(--q-ease-soft);
   }
 
   .q-accordion__description {
@@ -109,12 +112,22 @@
     line-height: var(--q-accordion-description-leading);
   }
 
+  // Sits on the title's first line: the title's line box, centred.
   .q-accordion__toggle {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    height: calc(var(--q-accordion-title-font-size) * var(--q-accordion-title-leading));
     color: var(--q-accordion-toggle-color);
-    font-size: var(--q-accordion-toggle-font-size);
-    line-height: var(--q-accordion-toggle-leading);
+    font-size: var(--q-accordion-toggle-size);
     transform: none;
-    transition: transform var(--q-dur-expand) var(--q-ease-soft);
+    transition:
+      color var(--q-dur-hover) var(--q-ease-soft),
+      transform var(--q-dur-expand) var(--q-ease-soft);
+
+    > .q-icon {
+      font-size: inherit;
+    }
   }
 
   .q-accordion__content {

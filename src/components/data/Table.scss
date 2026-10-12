@@ -1,5 +1,6 @@
-// Table — sortable, selectable, expandable data table. BEM: .q-table (--sm/--md/--lg, --bordered),
-// __table, __caption, __head, __sort, __row (--clickable, --stripe), __cell (--first, --control),
+// Table — sortable, selectable, expandable data table: label headers, faint row dividers, no
+// vertical rules. BEM: .q-table (--sm/--md/--lg, --bordered: an outer frame only), __table,
+// __caption, __head, __sort, __sort-icon, __row (--clickable, --stripe), __cell (--first, --control),
 // __check, __expand, __detail, __skeleton-cell, __skeleton (--first), __empty,
 // __foot (--control, --nowrap, --numeric).
 @use "../../styles/layers";
@@ -13,7 +14,7 @@
     --q-table-sm-py: var(--q-space-1);
     --q-table-sm-px: var(--q-space-1-5);
     --q-table-sm-font-size: var(--q-text-sm);
-    --q-table-sm-head-font-size: var(--q-text-3xs);
+    --q-table-sm-head-font-size: var(--q-text-label);
     --q-table-md-py: var(--q-space-1-75);
     --q-table-md-px: var(--q-space-2);
     --q-table-md-font-size: var(--q-text-md);
@@ -31,6 +32,8 @@
     --q-table-head-border: var(--q-border);
     --q-table-sort-gap: var(--q-space-0-75);
     --q-table-sort-color-active: var(--q-fg);
+    --q-table-sort-icon-size: var(--q-icon-sm);
+    --q-table-sort-icon-color: var(--q-fg-subtle);
 
     --q-table-row-bg-hover: var(--q-bg-subtle);
     --q-table-row-bg-selected: var(--q-accent-subtle);
@@ -45,10 +48,11 @@
     --q-table-check-bg: var(--q-bg);
     --q-table-check-bg-checked: var(--q-accent-bg);
     --q-table-check-fg: var(--q-fg-on-accent);
-    --q-table-check-font-size: var(--q-text-2xs);
+    --q-table-check-icon-size: var(--q-icon-sm);
 
-    --q-table-expand-font-size: var(--q-text-md);
-    --q-table-expand-color: var(--q-fg);
+    --q-table-expand-size: var(--q-icon-md);
+    --q-table-expand-color: var(--q-fg-muted);
+    --q-table-expand-color-hover: var(--q-fg);
     --q-table-detail-padding-top: var(--q-space-2);
     --q-table-detail-padding-bottom: var(--q-space-3);
     --q-table-detail-bg: var(--q-bg-subtle);
@@ -127,6 +131,7 @@
     color: var(--q-table-label-color);
     font-family: var(--q-font-label);
     font-size: var(--q-table-label-font-size);
+    font-weight: var(--q-table-head-weight);
     letter-spacing: var(--q-table-label-tracking);
     text-align: left;
     text-transform: var(--q-case-label);
@@ -138,14 +143,6 @@
   .q-table__foot {
     width: var(--_width);
     padding: var(--_py) var(--_px);
-
-    .q-table--bordered & {
-      border-left: var(--q-hairline) solid var(--q-table-border);
-    }
-
-    .q-table--bordered &:first-child {
-      border-left: 0;
-    }
   }
 
   // Control headers keep the user-agent's centred th alignment, as in the reference.
@@ -180,6 +177,22 @@
     cursor: pointer;
 
     [aria-sort] > & {
+      color: var(--q-table-sort-color-active);
+    }
+  }
+
+  .q-table__sort-icon {
+    display: inline-flex;
+    color: var(--q-table-sort-icon-color);
+    font-size: var(--q-table-sort-icon-size);
+    transition: color var(--q-dur-hover) var(--q-ease-soft);
+
+    > .q-icon {
+      font-size: inherit;
+    }
+
+    .q-table__sort:is(:hover, :focus-visible) &,
+    [aria-sort] > .q-table__sort & {
       color: var(--q-table-sort-color-active);
     }
   }
@@ -254,29 +267,46 @@
     border-radius: var(--q-table-check-radius);
     background: var(--q-table-check-bg);
     color: var(--q-table-check-fg);
-    font-size: var(--q-table-check-font-size);
+    font-size: var(--q-table-check-icon-size);
     line-height: var(--q-leading-none);
     vertical-align: middle;
     cursor: pointer;
     transition: background var(--q-dur-hover) var(--q-ease-soft);
 
     &:is([aria-checked="true"], [aria-checked="mixed"]) {
+      border-color: var(--q-table-check-bg-checked);
       background: var(--q-table-check-bg-checked);
+    }
+
+    > .q-icon {
+      font-size: inherit;
     }
   }
 
   .q-table__expand {
+    display: inline-flex;
     padding: 0;
     border: 0;
     background: none;
     color: var(--q-table-expand-color);
-    font-size: var(--q-table-expand-font-size);
+    font-size: var(--q-table-expand-size);
+    vertical-align: middle;
     transform: none;
     cursor: pointer;
-    transition: transform var(--q-dur-expand) var(--q-ease-soft);
+    transition:
+      color var(--q-dur-hover) var(--q-ease-soft),
+      transform var(--q-dur-expand) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--q-table-expand-color-hover);
+    }
 
     &[aria-expanded="true"] {
-      transform: rotate(45deg);
+      transform: rotate(90deg);
+    }
+
+    > .q-icon {
+      font-size: inherit;
     }
   }
 

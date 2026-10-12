@@ -27,8 +27,7 @@
     display: grid;
     grid-template-columns: repeat(var(--_cols), minmax(0, 1fr));
     align-items: var(--_align);
-    // Rows don't gap unless rowGap is set: the reference clears row-gap (its inline rowGap: undefined
-    // follows the gap shorthand), and the catalog must match it pixel for pixel.
+    // Rows don't gap unless rowGap is set.
     gap: var(--_row-gap) var(--_gap);
 
     &--auto { grid-template-columns: repeat(auto-fit, minmax(min(var(--_min), 100%), 1fr)); }

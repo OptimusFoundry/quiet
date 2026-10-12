@@ -1,0 +1,16 @@
+// Layout for the Extensions/Display stories.
+.q-sb-display {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--q-space-2);
+	max-width: var(--q-w-content);
+
+	&--narrow {
+		max-width: var(--q-w-form);
+	}
+
+	&--grid {
+		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+		align-items: start;
+	}
+}

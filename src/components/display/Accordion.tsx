@@ -1,9 +1,10 @@
 import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./Accordion.scss";
 
 /**
- * Hairline-separated disclosure list. + rotates to × ; content eases open.
+ * Disclosure list: rows set apart by space and faint dividers; the chevron turns and the content eases open.
  * @startingPoint section="Display" subtitle="Disclosure list" viewport="800x420"
  */
 export interface AccordionProps {
@@ -64,7 +65,7 @@ function Row({
 						{it.description && <span className="q-accordion__description">{it.description}</span>}
 					</span>
 					<span aria-hidden="true" className="q-accordion__toggle">
-						+
+						<Icon name="chevron-down" />
 					</span>
 				</button>
 			</H>
