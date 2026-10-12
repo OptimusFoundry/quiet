@@ -10,7 +10,10 @@ export interface Anomaly {
 	/** What's unexpected, e.g. "+38 vs expected" */
 	detail?: string;
 }
-export interface AnomalyRibbonProps {
+export interface AnomalyRibbonProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect" | "children"> {
+	/** The root <div>. */
+	ref?: React.Ref<HTMLDivElement>;
 	anomalies: Anomaly[];
 	/** Series length when there's no `data` (e.g. a ribbon above a table of N rows) */
 	count?: number;
@@ -54,6 +57,8 @@ export function AnomalyRibbon({
 	children,
 	className,
 	style,
+	ref,
+	...rest
 }: AnomalyRibbonProps) {
 	const n = count ?? (data ? data.length : 0);
 	const [inner, setInner] = React.useState<number | null>(defaultSelected);
@@ -77,7 +82,7 @@ export function AnomalyRibbon({
 			: anomalies[0]?.at;
 	const cls = ["q-anomaly-ribbon", className].filter(Boolean).join(" ");
 	return (
-		<div className={cls} style={style}>
+		<div {...rest} ref={ref} className={cls} style={style}>
 			<div
 				role="group"
 				aria-label={label}

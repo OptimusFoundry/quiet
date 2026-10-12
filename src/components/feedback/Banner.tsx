@@ -2,7 +2,9 @@ import React from "react";
 import "./Banner.scss";
 import { CloseButton, isStatus, StatusIcon, warnDeprecated } from "./parts";
 
-export interface BannerProps {
+export interface BannerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+	/** The root <div> (the strip). */
+	ref?: React.Ref<HTMLDivElement>;
 	/**
 	 * @deprecated Banner has one look (its status ground); drop the prop. `"paper"` is accepted
 	 * silently, `"outline"` warns once in development.
@@ -35,6 +37,8 @@ export function Banner({
 	label,
 	className,
 	style,
+	ref,
+	...rest
 }: BannerProps) {
 	// quiet: dismiss collapses the strip's height (0 rest · 1 wrapped · 2 collapsing · 3 gone).
 	const [leave, setLeave] = React.useState(0);
@@ -66,9 +70,11 @@ export function Banner({
 	const cls = ["q-banner", `q-banner--${st}`, className].filter(Boolean).join(" ");
 	const box = (
 		<div
+			{...rest}
+			ref={ref}
 			role={status === "error" ? "alert" : "region"}
-			aria-labelledby={title ? id : undefined}
-			aria-label={title ? undefined : label || "Notice"}
+			aria-labelledby={title ? id : rest["aria-labelledby"]}
+			aria-label={rest["aria-label"] ?? (title ? undefined : label || "Notice")}
 			className={cls}
 			style={style}
 		>

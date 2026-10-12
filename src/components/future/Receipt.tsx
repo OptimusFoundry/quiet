@@ -12,7 +12,7 @@ export interface ReceiptLine {
 	/** Controlled: the effect has been undone */
 	undone?: boolean;
 }
-export interface ReceiptProps {
+export interface ReceiptProps extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
 	/** Who acted, e.g. "Meerkat" */
 	actor: React.ReactNode;
 	/** When, e.g. "14:02" */
@@ -28,6 +28,8 @@ export interface ReceiptProps {
 	undoneLabel?: string;
 	/** Usually the undo window, e.g. "Reversible until tomorrow 14:02" */
 	footer?: React.ReactNode;
+	/** The root <article>. */
+	ref?: React.Ref<HTMLElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -47,8 +49,10 @@ export function Receipt({
 	undoLabel = "Undo",
 	undoneLabel = "Undone",
 	footer,
+	ref,
 	className,
 	style,
+	...rest
 }: ReceiptProps) {
 	const uid = React.useId();
 	const [undone, setUndone] = React.useState(() => new Set<string | number>());
@@ -70,6 +74,8 @@ export function Receipt({
 	return (
 		<article
 			aria-labelledby={`${uid}t`}
+			{...rest}
+			ref={ref}
 			className={["q-receipt", className].filter(Boolean).join(" ")}
 			style={style}
 		>

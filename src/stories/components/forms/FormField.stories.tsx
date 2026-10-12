@@ -61,14 +61,14 @@ export const States: Story = {
 		docs: {
 			description: {
 				story:
-					"`error` replaces the helper text and sets `aria-invalid` on the control; `required` adds the mark and `aria-required`.",
+					"`error` replaces the helper text and sets `aria-invalid` on the control; `required` adds the mark, `aria-required` and the control's native `required`.",
 			},
 		},
 	},
 	render: () => (
 		<>
 			<FormField label="Billing email" required error="Enter a full email address.">
-				<TextField type="email" defaultValue="finance@" required />
+				<TextField type="email" defaultValue="finance@" />
 			</FormField>
 			<FormField label="Workspace ID" subText="Set when the workspace was created.">
 				<TextField defaultValue="ws_7h2k9" disabled />
@@ -106,26 +106,20 @@ export const NativeForm: Story = {
 		docs: {
 			description: {
 				story:
-					"Every field in one native `<form>`: `name` submits, `required` blocks submit, disabled fields aren't sent.",
+					"Every field in one native `<form>`: `name` submits, FormField's `required` blocks submit (it passes `required` to the control), disabled fields aren't sent.",
 			},
 		},
 	},
 	render: () => (
 		<FormDemo label="New workspace" submit="Create workspace" multipart>
 			<FormField label="Workspace name" required helperText="Shown on invoices.">
-				<TextField name="workspace" required placeholder="Acme research" />
+				<TextField name="workspace" placeholder="Acme research" />
 			</FormField>
 			<FormField label="Data region" required>
-				<Select name="region" required placeholder="Choose a region" options={REGIONS} />
+				<Select name="region" placeholder="Choose a region" options={REGIONS} />
 			</FormField>
 			<FormField label="Default runner" required>
-				<Dropdown
-					name="runner"
-					required
-					fullWidth
-					options={RUNNERS}
-					placeholder="Choose a runner"
-				/>
+				<Dropdown name="runner" fullWidth options={RUNNERS} placeholder="Choose a runner" />
 			</FormField>
 			<FormField label="Approvers" helperText="Runs over $50 wait for one of them.">
 				<MultiSelect name="approvers" fullWidth options={APPROVERS} defaultValue={["Mira Chen"]} />

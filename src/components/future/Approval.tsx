@@ -20,7 +20,9 @@ export interface ApprovalConsequence {
 	icon?: IconName;
 	label: React.ReactNode;
 }
-export interface ApprovalProps {
+export interface ApprovalProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
+	/** The root <section>. */
+	ref?: React.Ref<HTMLElement>;
 	title: React.ReactNode;
 	description?: React.ReactNode;
 	changes?: ApprovalChange[];
@@ -69,12 +71,16 @@ export function Approval({
 	confirmed,
 	className,
 	style,
+	ref,
+	...rest
 }: ApprovalProps) {
 	const uid = React.useId();
 	const [inner, setInner] = React.useState(false);
 	const done = confirmed ?? inner;
 	return (
 		<section
+			{...rest}
+			ref={ref}
 			aria-labelledby={`${uid}t`}
 			aria-describedby={description ? `${uid}d` : undefined}
 			className={["q-approval", className].filter(Boolean).join(" ")}

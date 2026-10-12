@@ -4,7 +4,9 @@ import { Button } from "../core/Button";
 import { Tabs } from "../navigation/Tabs";
 import "./BudgetLeash.scss";
 
-export interface BudgetLeashProps {
+export interface BudgetLeashProps extends React.HTMLAttributes<HTMLElement> {
+	/** The root <section>. */
+	ref?: React.Ref<HTMLElement>;
 	/** The run or agent, e.g. "Meerkat · research run" */
 	label: string;
 	/**
@@ -15,7 +17,7 @@ export interface BudgetLeashProps {
 	spent: number;
 	cap: number;
 	onCapChange?: (cap: number) => void;
-	/** Leash lengths to pick from */
+	/** Leash lengths to pick from; shown only with `onCapChange` */
 	presets?: number[];
 	/** Amount "Give slack" adds to the cap */
 	slack?: number;
@@ -55,7 +57,7 @@ export function BudgetLeash({
 	spent = 0,
 	cap,
 	onCapChange,
-	presets = [],
+	presets: presetList = [],
 	slack,
 	slackLabel = "Give slack",
 	slowAt = 0.6,
@@ -65,6 +67,8 @@ export function BudgetLeash({
 	format = usd,
 	className,
 	style,
+	ref,
+	...rest
 }: BudgetLeashProps) {
 	const pct = cap > 0 ? Math.min(1, Math.max(0, spent / cap)) : 0;
 	const level = pct >= 1 ? 3 : pct >= crawlAt ? 2 : pct >= slowAt ? 1 : 0;
@@ -75,8 +79,12 @@ export function BudgetLeash({
 	const cls = ["q-budget-leash", level >= 2 && "q-budget-leash--taut", className]
 		.filter(Boolean)
 		.join(" ");
+	// Presets change the cap, so without onCapChange there is nothing for them to do.
+	const presets = onCapChange ? presetList : [];
 	return (
 		<section
+			{...rest}
+			ref={ref}
 			aria-labelledby={`${uid}l`}
 			className={cls}
 			style={{ "--_pct": `${x}%`, ...style } as React.CSSProperties}

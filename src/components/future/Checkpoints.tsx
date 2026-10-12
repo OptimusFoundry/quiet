@@ -15,7 +15,10 @@ export interface Checkpoint {
 	/** How many changes this snapshot made (default 1); restoring before it reverts them */
 	changes?: number;
 }
-export interface CheckpointsProps {
+export interface CheckpointsProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange"> {
+	/** The root <div> (the listbox of snapshots is inside it). */
+	ref?: React.Ref<HTMLDivElement>;
 	/** Oldest first; the last one is the current state */
 	checkpoints?: Checkpoint[];
 	/** Selected index (controlled) */
@@ -56,13 +59,17 @@ export function Checkpoints({
 	changeWord = "change",
 	className,
 	style,
+	ref,
+	...rest
 }: CheckpointsProps) {
 	const last = checkpoints.length - 1;
 	const [inner, setInner] = React.useState(defaultValue ?? last);
-	const sel = Math.min(last, Math.max(0, value ?? inner));
+	// Clamped to the list; with no checkpoints there is nothing to select (-1).
+	const sel = last < 0 ? -1 : Math.min(last, Math.max(0, value ?? inner));
 	const uid = React.useId();
 	const list = React.useRef<HTMLDivElement>(null);
 	const select = (i: number, focus?: boolean) => {
+		if (last < 0) return;
 		const to = Math.min(last, Math.max(0, i));
 		setInner(to);
 		onChange?.(to);
@@ -95,6 +102,8 @@ export function Checkpoints({
 	const cls = ["q-checkpoints", className].filter(Boolean).join(" ");
 	return (
 		<div
+			{...rest}
+			ref={ref}
 			className={cls}
 			style={
 				{
@@ -112,7 +121,7 @@ export function Checkpoints({
 					role="listbox"
 					aria-orientation="horizontal"
 					aria-label={label}
-					aria-describedby={`${uid}d`}
+					aria-describedby={c ? `${uid}d` : undefined}
 					className="q-checkpoints__list"
 					onKeyDown={key}
 				>

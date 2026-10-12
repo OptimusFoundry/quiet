@@ -8,7 +8,7 @@ import "./StreamingTable.scss";
 export interface StreamingTableProps<
 	Row = Record<string, unknown>,
 	Key extends React.Key = React.Key,
-> {
+> extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
 	/** The latest rows, newest first. Pass a new array as rows arrive. */
 	rows: Row[];
 	columns: TableProps<Row, Key>["columns"];
@@ -33,6 +33,8 @@ export interface StreamingTableProps<
 	newLabel?: (count: number) => React.ReactNode;
 	/** Announcements are batched to at most one per this many ms (default 2000) */
 	announceEvery?: number;
+	/** The root <div> (the live bar, the "Show N new" bar and the table). */
+	ref?: React.Ref<HTMLDivElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -62,8 +64,10 @@ export function StreamingTable<Row = Record<string, unknown>, Key extends React.
 	resumeLabel = "Resume",
 	newLabel = (n) => `Show ${n} new`,
 	announceEvery = 2000,
+	ref,
 	className,
 	style,
+	...rest
 }: StreamingTableProps<Row, Key>) {
 	const keyOf = React.useCallback(
 		(r: Row, i?: number) =>
@@ -183,7 +187,7 @@ export function StreamingTable<Row = Record<string, unknown>, Key extends React.
 	const visible = maxRows ? shown.slice(0, maxRows) : shown;
 	const cls = ["q-streaming-table", className].filter(Boolean).join(" ");
 	return (
-		<div className={cls} data-paused={isPaused || undefined} style={style}>
+		<div {...rest} ref={ref} className={cls} data-paused={isPaused || undefined} style={style}>
 			<div className="q-streaming-table__bar">
 				<span className="q-streaming-table__state">
 					<span aria-hidden="true" className="q-streaming-table__dot" />

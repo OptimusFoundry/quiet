@@ -1,9 +1,11 @@
 import React from "react";
-import { focusNeighbour } from "../../a11y/hooks";
+import { focusNeighbour, useMergedRef } from "../../a11y/hooks";
 import "./Alert.scss";
 import { CloseButton, StatusIcon } from "./parts";
 
-export interface AlertProps {
+export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+	/** The root <div> (the message box). */
+	ref?: React.Ref<HTMLDivElement>;
 	variant?: "info" | "success" | "warning" | "error";
 	title?: React.ReactNode;
 	children?: React.ReactNode;
@@ -32,10 +34,13 @@ export function Alert({
 	onDismiss,
 	className,
 	style,
+	ref,
+	...rest
 }: AlertProps) {
 	// quiet: dismiss collapses the alert's height (0 rest · 1 wrapped · 2 collapsing · 3 gone), then calls onDismiss.
 	const [leave, setLeave] = React.useState(0);
 	const boxRef = React.useRef<HTMLDivElement>(null);
+	const rootRef = useMergedRef(boxRef, ref);
 	// The latest onDismiss runs when the collapse ends; a new handler identity doesn't restart the timer.
 	const dismissed = React.useEffectEvent(() => onDismiss?.());
 	React.useEffect(() => {
@@ -61,7 +66,8 @@ export function Alert({
 	const glyph = icon === false ? null : icon || <StatusIcon status={v} />;
 	const box = (
 		<div
-			ref={boxRef}
+			{...rest}
+			ref={rootRef}
 			role={variant === "error" ? "alert" : "status"}
 			className={["q-alert", `q-alert--${v}`, className].filter(Boolean).join(" ")}
 			style={style}

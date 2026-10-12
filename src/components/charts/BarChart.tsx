@@ -1,5 +1,6 @@
 import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
+import { nodeText } from "../../lib/text";
 import { ChartLegend, ChartTable, ChartTooltip } from "./ChartParts";
 import { formatNumber, linear, seriesColor, useWidth, valueDomain } from "./chart-utils";
 import "./chart.scss";
@@ -91,7 +92,7 @@ export function BarChart({
 	const [active, setActive] = React.useState<[number, number] | null>(null); // [category, series]
 	const [focusKey, setFocusKey] = React.useState("0-0");
 	const horizontal = orientation === "horizontal";
-	const name = ariaLabel ?? title ?? "Bar chart";
+	const name = ariaLabel ?? (nodeText(title) || "Bar chart");
 	const nC = categories.length;
 	const H =
 		height ??
@@ -196,7 +197,7 @@ export function BarChart({
 					width={width}
 					height={H}
 					role="group"
-					aria-label={name as string}
+					aria-label={name}
 					onKeyDown={rovingKeyDown(".q-bar-chart__bar", "both")}
 					onPointerLeave={() => setActive(null)}
 				>

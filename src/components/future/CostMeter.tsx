@@ -11,7 +11,9 @@ export interface CostMeterItem {
 	/** Cap for this kind of work; omit for no bar */
 	cap?: number;
 }
-export interface CostMeterProps {
+export interface CostMeterProps extends React.HTMLAttributes<HTMLElement> {
+	/** The root <section>. */
+	ref?: React.Ref<HTMLElement>;
 	/** Mono caption above the total, e.g. "Agents · today" */
 	label: React.ReactNode;
 	items: CostMeterItem[];
@@ -45,11 +47,15 @@ export function CostMeter({
 	warnAt = 0.9,
 	className,
 	style,
+	ref,
+	...rest
 }: CostMeterProps) {
 	const total = items.reduce((a, it) => a + it.value, 0);
 	const uid = React.useId();
 	return (
 		<section
+			{...rest}
+			ref={ref}
 			aria-labelledby={`${uid}l`}
 			className={["q-cost-meter", className].filter(Boolean).join(" ")}
 			style={style}

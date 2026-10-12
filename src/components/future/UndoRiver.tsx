@@ -14,7 +14,7 @@ export interface UndoRiverItem {
 	/** When it happened */
 	at: number | string | Date;
 }
-export interface UndoRiverProps {
+export interface UndoRiverProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
 	items: UndoRiverItem[];
 	/** Current time; without it the river re-reads the clock every 30s */
 	now?: number;
@@ -27,6 +27,8 @@ export interface UndoRiverProps {
 	endLabel?: React.ReactNode;
 	/** Line under the river before anything is undone */
 	hint?: React.ReactNode;
+	/** The root <div>. */
+	ref?: React.Ref<HTMLDivElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -63,8 +65,10 @@ export function UndoRiver({
 	startLabel = "Just now",
 	endLabel = "24 h · gone",
 	hint = "Pick anything still drifting by to undo it.",
+	ref,
 	className,
 	style,
+	...rest
 }: UndoRiverProps) {
 	const [clock, setClock] = React.useState(() => Date.now());
 	React.useEffect(() => {
@@ -96,7 +100,12 @@ export function UndoRiver({
 		onUndo?.(it);
 	};
 	return (
-		<div className={["q-undo-river", className].filter(Boolean).join(" ")} style={style}>
+		<div
+			{...rest}
+			ref={ref}
+			className={["q-undo-river", className].filter(Boolean).join(" ")}
+			style={style}
+		>
 			<div className="q-undo-river__band">
 				<ul
 					ref={list}

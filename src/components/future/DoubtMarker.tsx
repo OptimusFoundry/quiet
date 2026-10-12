@@ -2,7 +2,9 @@ import React from "react";
 import { useEscape } from "../../a11y/hooks";
 import "./DoubtMarker.scss";
 
-export interface DoubtMarkerProps {
+export interface DoubtMarkerProps extends React.HTMLAttributes<HTMLSpanElement> {
+	/** The root <span> (the claim and its tooltip are inside it). */
+	ref?: React.Ref<HTMLSpanElement>;
 	/** The claim as originally written */
 	children: React.ReactNode;
 	/** Why the system isn't sure, shown on hover and focus */
@@ -45,6 +47,10 @@ export function DoubtMarker({
 	recheckLabel = "Re-check",
 	className,
 	style,
+	ref,
+	onMouseEnter,
+	onMouseLeave,
+	...rest
 }: DoubtMarkerProps) {
 	const [open, setOpen] = React.useState(false);
 	const t = React.useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -95,7 +101,20 @@ export function DoubtMarker({
 		onBlur: hide,
 	};
 	return (
-		<span className={cls} style={style} onMouseEnter={show} onMouseLeave={leave}>
+		<span
+			{...rest}
+			ref={ref}
+			className={cls}
+			style={style}
+			onMouseEnter={(e) => {
+				show();
+				onMouseEnter?.(e);
+			}}
+			onMouseLeave={(e) => {
+				leave();
+				onMouseLeave?.(e);
+			}}
+		>
 			{actionable ? (
 				<button type="button" {...triggerProps} onClick={onRecheck}>
 					{claim}

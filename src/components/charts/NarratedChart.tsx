@@ -1,5 +1,6 @@
 import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
+import { nodeText } from "../../lib/text";
 import type { LineChartProps } from "./LineChart";
 import { LineChart } from "./LineChart";
 import "./NarratedChart.scss";
@@ -45,17 +46,17 @@ export function NarratedChart({
 		onBeatChange?.(i);
 	};
 	const b = beats[cur];
-	const name = ariaLabel ?? title ?? "Narrated chart";
+	const name = ariaLabel ?? (nodeText(title) || "Narrated chart");
 	return (
 		<section
-			aria-label={name as string}
+			aria-label={name}
 			className={["q-narrated-chart", className].filter(Boolean).join(" ")}
 			style={style}
 		>
 			<LineChart
 				{...chart}
 				title={title}
-				aria-label={name as string}
+				aria-label={name}
 				highlight={b ? { index: b.index, range: b.range } : undefined}
 			/>
 			<ol

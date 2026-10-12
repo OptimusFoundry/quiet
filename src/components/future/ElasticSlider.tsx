@@ -1,7 +1,11 @@
 import React from "react";
 import "./ElasticSlider.scss";
 
-export interface ElasticSliderProps {
+export interface ElasticSliderProps
+	extends Omit<
+		React.HTMLAttributes<HTMLSpanElement>,
+		"onChange" | "defaultValue" | "color" | "role"
+	> {
 	label?: React.ReactNode;
 	value?: number;
 	defaultValue?: number;
@@ -25,6 +29,8 @@ export interface ElasticSliderProps {
 	disabled?: boolean;
 	/** Accessible name when there is no visible label */
 	"aria-label"?: string;
+	/** Reaches the role="slider" thumb, so it can be focused; other HTML attributes (id, aria-*, data-*, onBlur…) land there too. `className`/`style` stay on the root. */
+	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -57,8 +63,12 @@ export function ElasticSlider({
 	formatValue,
 	disabled = false,
 	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	ref,
+	onKeyDown,
 	className,
 	style,
+	...rest
 }: ElasticSliderProps) {
 	const limit = safe ?? max;
 	const [inner, setInner] = React.useState(defaultValue ?? min);
@@ -181,6 +191,8 @@ export function ElasticSlider({
 				<span className="q-elastic-slider__fill" />
 				{safe != null && <span aria-hidden="true" className="q-elastic-slider__line" />}
 				<span
+					{...rest}
+					ref={ref}
 					role="slider"
 					tabIndex={disabled ? -1 : 0}
 					aria-valuemin={min}
@@ -188,10 +200,13 @@ export function ElasticSlider({
 					aria-valuenow={cur}
 					aria-valuetext={String(text) + (over ? ", past the safe line" : "")}
 					aria-disabled={disabled || undefined}
-					aria-labelledby={label ? `${uid}l` : undefined}
+					aria-labelledby={label ? `${uid}l` : ariaLabelledby}
 					aria-label={label ? undefined : ariaLabel}
 					aria-describedby={`${uid}h`}
-					onKeyDown={key}
+					onKeyDown={(e) => {
+						key(e);
+						onKeyDown?.(e);
+					}}
 					className="q-elastic-slider__thumb"
 				/>
 			</div>

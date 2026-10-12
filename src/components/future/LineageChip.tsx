@@ -1,5 +1,5 @@
 import React from "react";
-import { useEscape } from "../../a11y/hooks";
+import { useEscape, useMergedRef } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./LineageChip.scss";
 
@@ -12,7 +12,7 @@ export interface LineageStep {
 	/** This step is behind; the chip turns to attention */
 	stale?: boolean;
 }
-export interface LineageChipProps {
+export interface LineageChipProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	/** What the number is, for the accessible name ("lineage of MRR") */
 	label?: string;
 	/** Source first, the value last */
@@ -25,6 +25,8 @@ export interface LineageChipProps {
 	defaultOpen?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	size?: "sm" | "md";
+	/** The root <span> (the trigger and the unfolding chain). */
+	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -46,8 +48,10 @@ export function LineageChip({
 	defaultOpen = false,
 	onOpenChange,
 	size = "md",
+	ref,
 	className,
 	style,
+	...rest
 }: LineageChipProps) {
 	const [inner, setInner] = React.useState(defaultOpen);
 	const cur = open ?? inner;
@@ -64,6 +68,7 @@ export function LineageChip({
 		onOpenChange?.(!cur);
 	};
 	const root = React.useRef<HTMLSpanElement>(null);
+	const rootRef = useMergedRef(root, ref);
 	const trigger = React.useRef<HTMLButtonElement>(null);
 	// Escape closes the chain; focus inside it goes back to the trigger.
 	useEscape(cur, () => {
@@ -76,7 +81,13 @@ export function LineageChip({
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<span ref={root} className={cls} style={style} data-stale={stale.length > 0 || undefined}>
+		<span
+			{...rest}
+			ref={rootRef}
+			className={cls}
+			style={style}
+			data-stale={stale.length > 0 || undefined}
+		>
 			<button
 				ref={trigger}
 				type="button"

@@ -2,7 +2,9 @@ import React from "react";
 import { Icon } from "../core/Icon";
 import "./Progress.scss";
 
-export interface ProgressProps {
+export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
+	/** The root <div> (label row and track); the track inside carries role="progressbar". */
+	ref?: React.Ref<HTMLDivElement>;
 	value?: number;
 	max?: number;
 	/** 1px · 2px · 4px */
@@ -35,6 +37,8 @@ export function Progress({
 	"aria-label": ariaLabel,
 	className,
 	style,
+	ref,
+	...rest
 }: ProgressProps) {
 	const id = React.useId();
 	const pct = Math.max(0, Math.min(100, (value / max) * 100));
@@ -48,7 +52,7 @@ export function Progress({
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<div className={cls} style={style}>
+		<div {...rest} ref={ref} className={cls} style={style}>
 			{(label || showValue) && (
 				<div className="q-progress__meta">
 					<span id={id}>{label}</span>

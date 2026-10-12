@@ -2,7 +2,9 @@ import React from "react";
 import "./Toast.scss";
 import { CloseButton, StatusIcon } from "./parts";
 
-export interface ToastProps {
+export interface ToastProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+	/** The root <div> (the toast). */
+	ref?: React.Ref<HTMLDivElement>;
 	title?: React.ReactNode;
 	/** Body sentence */
 	description?: React.ReactNode;
@@ -43,6 +45,8 @@ export function Toast({
 	duration,
 	className,
 	style,
+	ref,
+	...rest
 }: ToastProps) {
 	// quiet: rise in on mount, fade out before onClose; an auto-dismiss timer pauses while hovered or focused.
 	const [closing, setClosing] = React.useState(false);
@@ -78,13 +82,27 @@ export function Toast({
 		.join(" ");
 	return (
 		<div
+			{...rest}
+			ref={ref}
 			role={kind === "error" ? "alert" : "status"}
 			className={cls}
 			data-state={closing ? "closing" : "open"}
-			onMouseEnter={() => setPaused(true)}
-			onMouseLeave={() => setPaused(false)}
-			onFocus={() => setPaused(true)}
-			onBlur={() => setPaused(false)}
+			onMouseEnter={(e) => {
+				setPaused(true);
+				rest.onMouseEnter?.(e);
+			}}
+			onMouseLeave={(e) => {
+				setPaused(false);
+				rest.onMouseLeave?.(e);
+			}}
+			onFocus={(e) => {
+				setPaused(true);
+				rest.onFocus?.(e);
+			}}
+			onBlur={(e) => {
+				setPaused(false);
+				rest.onBlur?.(e);
+			}}
 			style={style}
 		>
 			<span aria-hidden="true" className="q-toast__mark">

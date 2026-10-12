@@ -1,5 +1,6 @@
 import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
+import { nodeText } from "../../lib/text";
 import { ChartLegend, ChartTable } from "./ChartParts";
 import { arcPath, formatNumber, seriesColor } from "./chart-utils";
 import "./chart.scss";
@@ -55,7 +56,7 @@ export function DonutChart({
 }: DonutChartProps) {
 	const [active, setActive] = React.useState<number | null>(null);
 	const [focusI, setFocusI] = React.useState(0);
-	const name = ariaLabel ?? title ?? "Donut chart";
+	const name = ariaLabel ?? (nodeText(title) || "Donut chart");
 	const items = (sort ? [...data].sort((a, b) => b.value - a.value) : data).map((d, i) => ({
 		...d,
 		color: d.color ?? seriesColor(i),
@@ -88,7 +89,7 @@ export function DonutChart({
 						height={size}
 						viewBox={`0 0 ${size} ${size}`}
 						role="group"
-						aria-label={name as string}
+						aria-label={name}
 						onKeyDown={rovingKeyDown(".q-donut-chart__segment", "both")}
 						onPointerLeave={() => setActive(null)}
 					>

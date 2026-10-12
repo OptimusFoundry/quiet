@@ -1,7 +1,10 @@
 import React from "react";
 import "./BorderProgress.scss";
 
-export interface BorderProgressProps {
+export interface BorderProgressProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+	/** The root <div> (the progressbar is its edge <svg>; `aria-label` names that). */
+	ref?: React.Ref<HTMLDivElement>;
 	value?: number;
 	max?: number;
 	/** Unknown length: a short segment travels the edge */
@@ -35,6 +38,8 @@ export function BorderProgress({
 	children,
 	className,
 	style,
+	ref,
+	...rest
 }: BorderProgressProps) {
 	const id = React.useId();
 	const pct = Math.max(0, Math.min(1, value / max));
@@ -44,6 +49,8 @@ export function BorderProgress({
 		.join(" ");
 	return (
 		<div
+			{...rest}
+			ref={ref}
 			className={cls}
 			data-state={done ? "done" : pct === 0 && !indeterminate ? "idle" : "running"}
 			aria-busy={!done || undefined}

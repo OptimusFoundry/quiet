@@ -13,6 +13,8 @@ export interface HonestButtonProps
 	doneFor?: number;
 	size?: "sm" | "md" | "lg";
 	disabled?: boolean;
+	/** The <button>. */
+	ref?: React.Ref<HTMLButtonElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -35,6 +37,7 @@ export function HonestButton({
 	doneFor = 1200,
 	size = "md",
 	disabled = false,
+	ref,
 	className,
 	style,
 	...rest
@@ -111,6 +114,7 @@ export function HonestButton({
 			<button
 				type="button"
 				{...rest}
+				ref={ref}
 				onClick={start}
 				disabled={disabled}
 				aria-busy={running || undefined}

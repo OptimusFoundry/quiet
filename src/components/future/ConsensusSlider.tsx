@@ -12,7 +12,10 @@ export interface ConsensusPosition {
 	/** Show the agent mark instead of an avatar */
 	agent?: boolean;
 }
-export interface ConsensusSliderProps {
+export interface ConsensusSliderProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange"> {
+	/** The root <div> (the slider role is on its thumb, which `aria-label` names). */
+	ref?: React.Ref<HTMLDivElement>;
 	label?: React.ReactNode;
 	/** Your position */
 	value?: number;
@@ -61,6 +64,8 @@ export function ConsensusSlider({
 	"aria-label": ariaLabel,
 	className,
 	style,
+	ref,
+	...rest
 }: ConsensusSliderProps) {
 	const [inner, setInner] = React.useState(defaultValue ?? min);
 	const [glide, setGlide] = React.useState(false);
@@ -125,6 +130,8 @@ export function ConsensusSlider({
 	const cls = ["q-consensus-slider", className].filter(Boolean).join(" ");
 	return (
 		<div
+			{...rest}
+			ref={ref}
 			aria-disabled={disabled || undefined}
 			className={cls}
 			style={

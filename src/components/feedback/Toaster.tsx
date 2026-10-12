@@ -4,7 +4,9 @@ import type { ToastProps } from "./Toast";
 import { Toast } from "./Toast";
 import "./Toaster.scss";
 
-export interface ToasterProps {
+export interface ToasterProps extends React.HTMLAttributes<HTMLElement> {
+	/** The portalled <section> (the notifications region), rendered only by the host Toaster. */
+	ref?: React.Ref<HTMLElement>;
 	position?:
 		| "top-left"
 		| "top-center"
@@ -105,6 +107,8 @@ export function Toaster({
 	label = "Notifications",
 	className,
 	style,
+	ref,
+	...rest
 }: ToasterProps) {
 	const { toasts, hosts } = React.useSyncExternalStore(subscribe, snapshot, snapshot);
 	const token = React.useId();
@@ -140,6 +144,8 @@ export function Toaster({
 				createPortal(
 					<section
 						aria-label={label}
+						{...rest}
+						ref={ref}
 						className={cls}
 						data-quiet=""
 						{...scope}

@@ -15,7 +15,10 @@ export interface DraftDiffHunk {
 	tail?: React.ReactNode;
 }
 export type DraftDiffState = "pending" | "accepted" | "rejected";
-export interface DraftDiffProps {
+export interface DraftDiffProps
+	extends Omit<React.HTMLAttributes<HTMLElement>, "defaultValue" | "onChange"> {
+	/** The root <section>. */
+	ref?: React.Ref<HTMLElement>;
 	hunks: DraftDiffHunk[];
 	/** Controlled state per hunk */
 	value?: DraftDiffState[];
@@ -52,6 +55,8 @@ export function DraftDiff({
 	onShip,
 	className,
 	style,
+	ref,
+	...rest
 }: DraftDiffProps) {
 	const [inner, setInner] = React.useState<DraftDiffState[]>(
 		() => defaultValue ?? hunks.map(() => "pending"),
@@ -79,6 +84,8 @@ export function DraftDiff({
 	return (
 		<section
 			aria-label={typeof label === "string" ? label : "Suggested edits"}
+			{...rest}
+			ref={ref}
 			className={["q-draft-diff", className].filter(Boolean).join(" ")}
 			style={style}
 		>

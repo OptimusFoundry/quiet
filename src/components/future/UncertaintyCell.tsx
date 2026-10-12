@@ -1,7 +1,8 @@
 import type React from "react";
 import "./UncertaintyCell.scss";
 
-export interface UncertaintyCellProps {
+export interface UncertaintyCellProps
+	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	value: number;
 	/** Symmetric error: shown as ±error, range value−error … value+error */
 	error?: number;
@@ -15,6 +16,8 @@ export interface UncertaintyCellProps {
 	showBand?: boolean;
 	/** Spoken text for an uncertain value; default `"<value>, likely between <low> and <high>"` */
 	describe?: (value: number, low: number, high: number) => string;
+	/** The root <span>. */
+	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -38,8 +41,10 @@ export function UncertaintyCell({
 	format,
 	showBand = true,
 	describe,
+	ref,
 	className,
 	style,
+	...rest
 }: UncertaintyCellProps) {
 	const lo = low ?? (error != null ? value - error : undefined);
 	const hi = high ?? (error != null ? value + error : undefined);
@@ -66,6 +71,8 @@ export function UncertaintyCell({
 		.join(" ");
 	return (
 		<span
+			{...rest}
+			ref={ref}
 			className={cls}
 			style={
 				band
