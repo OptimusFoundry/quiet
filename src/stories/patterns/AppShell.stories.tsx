@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Col, Grid, List, PageHeader, Panel, Text } from "../../index";
+import { useState } from "react";
+import { Button, Col, Grid, Link, List, PageHeader, Panel, ShellNotice, Text } from "../../index";
 import { AppFrame } from "./AppFrame";
 
 // App shell — the frame every signed-in screen sits in: AppShell with the Sidebar on a canvas, the
@@ -95,3 +96,57 @@ export const Default: StoryObj = {
 		</AppFrame>
 	),
 };
+
+// Notices by urgency, not by page: a workspace-wide condition that needs action is a line on the
+// canvas (ShellNotice); a slow account nudge is a card in the Sidebar (SidebarNotice); a condition
+// on this page is a chip in the TopBar (NoticeChip) that opens its details in the pane.
+function WithNoticesScreen() {
+	const [nudge, setNudge] = useState(true);
+	return (
+		<AppFrame
+			active="dashboard"
+			crumbs={[{ label: "Workspace", href: "#" }, { label: "Overview" }]}
+			notice={
+				<ShellNotice action={<Link href="#">Update billing</Link>}>
+					Your card was declined, so campaigns pause on Oct 15.
+				</ShellNotice>
+			}
+			nudge={
+				nudge
+					? {
+							title: "Trial: 3 days left",
+							progress: 0.78,
+							progressLabel: "Trial used",
+							action: { label: "Choose a plan", href: "#" },
+							onDismiss: () => setNudge(false),
+						}
+					: undefined
+			}
+			pageNotice={{
+				label: "2 campaigns paused",
+				title: "Paused campaigns",
+				content: (
+					<List
+						size="sm"
+						items={[
+							{
+								id: 1,
+								primary: "Spring waitlist",
+								secondary: "Bounce rate over 8%. Meerkat paused it at 09:12.",
+							},
+							{
+								id: 2,
+								primary: "Founding members",
+								secondary: "Paused by Leo Brandt yesterday.",
+							},
+						]}
+					/>
+				),
+			}}
+		>
+			<Shell />
+		</AppFrame>
+	);
+}
+
+export const WithNotices: StoryObj = { render: () => <WithNoticesScreen /> };

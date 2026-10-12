@@ -17,6 +17,8 @@ export interface AppShellProps {
 	sidebar: React.ReactNode;
 	/** A `TopBar`, pinned to the top of the panel; its rule shows once the panel scrolls */
 	topBar?: React.ReactNode;
+	/** A workspace-wide notice (`ShellNotice`), one line on the canvas above the panel. At most one */
+	notice?: React.ReactNode;
 	/** The screen: usually a `PageHeader` and the page's sections */
 	children?: React.ReactNode;
 	/** Content of the third pane, e.g. a notification list */
@@ -55,6 +57,7 @@ const ASIDE_EXIT_MS = 280;
 function ShellView({
 	sidebar,
 	topBar,
+	notice,
 	children,
 	aside,
 	asideOpen = false,
@@ -109,6 +112,7 @@ function ShellView({
 	const cls = [
 		"q-app-shell",
 		isMobile && "q-app-shell--narrow",
+		notice && "q-app-shell--notice",
 		paneOpen && !isMobile && "q-app-shell--aside-open",
 		className,
 	]
@@ -120,6 +124,7 @@ function ShellView({
 				{skipLabel}
 			</a>
 			<div className="q-app-shell__sidebar">{sidebar}</div>
+			{notice && <div className="q-app-shell__notice">{notice}</div>}
 			<main
 				id={mainId}
 				aria-label={mainLabel}

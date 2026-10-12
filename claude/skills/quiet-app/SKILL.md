@@ -108,6 +108,10 @@ import { AccountMenu, AppIcon, AppShell, Button, CommandPalette, Sidebar, TopBar
 - **Third pane** (`aside`): notifications, an inspector, the assistant. One at a time, 360 wide,
   pushes the screen; a phone gets the same pane as a full-screen sheet. Never a `Drawer` or
   `Dialog` for this, and never a fixed column the page builds.
+- **Notices** by urgency: an urgent workspace-wide condition is a `ShellNotice` in AppShell
+  `notice` (one line on the canvas); a slow account nudge a `SidebarNotice` in the Sidebar footer,
+  above the `AccountMenu`; a condition on this page a `NoticeChip` in the TopBar that opens the
+  third pane. Never a `Banner` repeated on every page.
 - **Page column:** padded 32 / 32 / 48, max 1280. List-detail and chat lay out their own panes
   edge to edge.
 

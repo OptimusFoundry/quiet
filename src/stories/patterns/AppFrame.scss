@@ -137,3 +137,10 @@
 :where(.q-sb-app-frame__row--stack) {
 	gap: var(--q-space-stack);
 }
+
+/* The Sidebar's foot: a nudge card above the account menu. */
+.q-sb-app-frame__foot {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-1);
+}

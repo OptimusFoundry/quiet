@@ -8,7 +8,10 @@ import {
 	CommandPalette,
 	type IconName,
 	List,
+	NoticeChip,
 	Sidebar,
+	SidebarNotice,
+	type SidebarNoticeProps,
 	type SidebarProps,
 	Toaster,
 	TopBar,
@@ -178,6 +181,12 @@ type FrameProps = {
 	/** The screen's own third pane (e.g. the assistant's Changes), toggled from the TopBar.
 	 *  It shares AppShell's pane with Notifications: one open at a time. */
 	pane?: { title: string; icon: IconName; content: ReactNode; defaultOpen?: boolean };
+	/** A workspace-wide ShellNotice on the canvas above the panel */
+	notice?: ReactNode;
+	/** A slow nudge in the Sidebar, above the account */
+	nudge?: SidebarNoticeProps;
+	/** A notice about this page: a NoticeChip in the TopBar that opens its details in the pane */
+	pageNotice?: { label: string; title: string; content: ReactNode };
 };
 
 export function AppFrame({
@@ -190,17 +199,22 @@ export function AppFrame({
 	user = { name: "Ada Park", detail: "ada@sjocamp.com" },
 	actions,
 	pane,
+	notice,
+	nudge,
+	pageNotice,
 }: FrameProps) {
 	const [palette, setPalette] = useState(false);
 	// Which pane is open. A screen's own pane starts open beside it on desktop, never over it on a phone.
-	const [open, setOpen] = useState<"pane" | "notes" | null>(() =>
+	const [open, setOpen] = useState<"pane" | "notes" | "notice" | null>(() =>
 		pane?.defaultOpen && !window.matchMedia("(max-width: 719px)").matches ? "pane" : null,
 	);
-	const toggle = (which: "pane" | "notes") => setOpen((o) => (o === which ? null : which));
+	const toggle = (which: "pane" | "notes" | "notice") =>
+		setOpen((o) => (o === which ? null : which));
 	// The pane keeps showing what was open while it slides out.
 	const shown = useRef(open);
 	if (open) shown.current = open;
 	const showPane = shown.current === "pane" && pane;
+	const showNotice = shown.current === "notice" && pageNotice;
 	// Functions, so the switcher, search and account menu stay in the collapsed rail as icons.
 	const header = (collapsed: boolean) => (
 		<div className="q-sb-app-frame__head">
@@ -236,17 +250,20 @@ export function AppFrame({
 		</div>
 	);
 	const footer = (collapsed: boolean) => (
-		<AccountMenu
-			collapsed={collapsed}
-			name={user.name}
-			detail={user.detail}
-			items={[
-				{ label: "Profile", icon: <AppIcon name="user" size="sm" /> },
-				{ label: "Keyboard shortcuts", shortcut: "?", icon: <AppIcon name="help" size="sm" /> },
-				{ divider: true },
-				{ label: "Sign out", icon: <AppIcon name="sign-out" size="sm" /> },
-			]}
-		/>
+		<div className="q-sb-app-frame__foot">
+			{nudge && <SidebarNotice {...nudge} collapsed={collapsed} />}
+			<AccountMenu
+				collapsed={collapsed}
+				name={user.name}
+				detail={user.detail}
+				items={[
+					{ label: "Profile", icon: <AppIcon name="user" size="sm" /> },
+					{ label: "Keyboard shortcuts", shortcut: "?", icon: <AppIcon name="help" size="sm" /> },
+					{ divider: true },
+					{ label: "Sign out", icon: <AppIcon name="sign-out" size="sm" /> },
+				]}
+			/>
+		</div>
 	);
 	return (
 		<>
@@ -266,6 +283,15 @@ export function AppFrame({
 						crumbs={crumbs}
 						actions={
 							<>
+								{pageNotice && (
+									<NoticeChip
+										aria-expanded={open === "notice"}
+										aria-controls="app-aside"
+										onClick={() => toggle("notice")}
+									>
+										{pageNotice.label}
+									</NoticeChip>
+								)}
 								{actions}
 								{pane && (
 									<Button
@@ -292,8 +318,9 @@ export function AppFrame({
 						}
 					/>
 				}
-				aside={showPane ? pane.content : <Notifications />}
-				asideTitle={showPane ? pane.title : "Notifications"}
+				notice={notice}
+				aside={showNotice ? pageNotice.content : showPane ? pane.content : <Notifications />}
+				asideTitle={showNotice ? pageNotice.title : showPane ? pane.title : "Notifications"}
 				asideOpen={open !== null}
 				onAsideClose={() => setOpen(null)}
 			>

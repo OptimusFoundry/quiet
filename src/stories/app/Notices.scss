@@ -1,0 +1,72 @@
+.q-sb-notices {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-section);
+	max-width: var(--q-w-content);
+	padding: var(--q-space-block) var(--q-space-page-x);
+	background: var(--q-bg);
+}
+
+.q-sb-notices__section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-stack);
+}
+
+.q-sb-notices__title {
+	margin: 0;
+	color: var(--q-fg);
+	font: var(--q-weight-semibold) var(--q-text-md) / var(--q-leading-ui) var(--q-font-sans);
+}
+
+.q-sb-notices__note {
+	margin: 0;
+	max-width: var(--q-w-form);
+	color: var(--q-fg-muted);
+	font-size: var(--q-text-sm);
+}
+
+/* The shell's canvas, so the notices sit on the ground they're drawn for. */
+.q-sb-notices__canvas {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-1);
+	padding: var(--q-space-2);
+	border-radius: var(--q-radius-md);
+	background: color-mix(in srgb, rgb(var(--q-shadow-rgb)) 5%, var(--q-bg));
+}
+
+.q-sb-notices__rail {
+	flex-flow: row wrap;
+	align-items: flex-end;
+	gap: var(--q-space-3);
+}
+
+.q-sb-notices__sidebar {
+	width: calc(var(--q-w-sidebar) - var(--q-space-2));
+}
+
+.q-sb-notices__bars {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-stack);
+}
+
+.q-sb-notices__bars .q-top-bar {
+	border-radius: var(--q-radius-md);
+	background: var(--q-bg-subtle);
+}
+
+.q-sb-notices__narrow {
+	max-width: 390px;
+}
+
+.q-sb-notices__reset {
+	align-self: flex-start;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--q-accent-fg);
+	font: inherit;
+	cursor: pointer;
+}

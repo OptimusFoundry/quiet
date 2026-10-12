@@ -1,5 +1,6 @@
 // AppShell — the signed-in frame: Sidebar on a canvas, the screen an inset raised panel.
-// BEM: .q-app-shell, __skip, __sidebar, __panel, __sentinel; --narrow (below the breakpoint).
+// BEM: .q-app-shell, __skip, __sidebar, __notice, __panel, __sentinel; --narrow (below the
+// breakpoint), --notice (a ShellNotice row on the canvas above the panel and pane).
 // The panel carries [data-scrolled] for the TopBar's rule. Sets the Sidebar's and TopBar's tier-3
 // tokens for its slots, so both read as part of the frame.
 @use "../../styles/layers";
@@ -62,6 +63,10 @@
       --_aside: var(--q-app-shell-aside-width);
     }
 
+    &--notice {
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
     &--narrow {
       display: block;
       height: auto;
@@ -116,12 +121,30 @@
     top: 0;
     z-index: var(--q-app-shell-sidebar-z);
     display: grid;
+    grid-row: 1 / -1;
     height: 100dvh;
     min-height: 0;
 
     .q-app-shell--narrow & {
       display: contents;
     }
+  }
+
+  // The notice row: text on the canvas, lined up with the panel's edge. On a phone it keeps the
+  // canvas as a strip above the flush panel.
+  .q-app-shell__notice {
+    grid-column: 2 / -1;
+    min-width: 0;
+    padding: 0 var(--q-app-shell-inset) 0 var(--q-space-1);
+
+    .q-app-shell--narrow & {
+      padding: var(--q-space-0-5) var(--q-space-2);
+      background: var(--q-app-shell-canvas);
+    }
+  }
+
+  .q-app-shell--notice > :is(.q-app-shell__panel, .q-app-shell__aside-slot) {
+    grid-row: 2;
   }
 
   .q-app-shell__panel {
@@ -141,6 +164,10 @@
 
     &[data-scrolled="true"] {
       --q-top-bar-border: var(--q-app-shell-top-bar-border-scrolled);
+    }
+
+    .q-app-shell--notice & {
+      margin-top: 0;
     }
 
     .q-app-shell--narrow & {
@@ -172,6 +199,11 @@
     outline: none;
     background: var(--q-app-shell-panel-bg);
     box-shadow: var(--q-app-shell-panel-shadow);
+
+    .q-app-shell--notice &:not(.q-app-shell__aside--sheet) {
+      height: calc(100% - var(--q-app-shell-inset));
+      margin-top: 0;
+    }
   }
 
   // Phone: the same pane, flush and full screen above the screen.

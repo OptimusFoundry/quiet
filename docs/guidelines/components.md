@@ -45,7 +45,9 @@ the wrong option it prevents.
 |---|---|---|
 | the user's own action succeeded or failed | `toast({ title, status, action })` | auto-dismisses, max 3, never logged |
 | a system event (build finished, invite received) | the notifications list in AppShell's third pane | stays until read |
-| one page-wide condition (trial ending, degraded) | `Banner`, once per page, under the `PageHeader` inside the panel | stays while the condition holds |
+| an urgent workspace-wide condition (payment failed, outage, read-only, viewing as someone) | `ShellNotice` in AppShell `notice`: one line on the canvas | stays while the condition holds; at most one |
+| a slow account nudge (trial ending, usage at 80%, a new version) | `SidebarNotice` above the `AccountMenu` | dismissible; an icon with a mark in the rail |
+| a condition on this page (campaign paused, domain not verified) | `NoticeChip` in the TopBar, opening its details in the third pane | stays while the condition holds |
 | a problem with the content beside it | `Alert` in that block | stays until resolved |
 | a field is wrong | the field's `error` | on blur or submit |
 

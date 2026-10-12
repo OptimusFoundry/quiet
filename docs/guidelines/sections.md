@@ -67,7 +67,7 @@ row hairlines, never another box.
 | Type | Build | Spacing |
 |---|---|---|
 | Page header | `PageHeader` (back link or eyebrow, title, status, meta, description, actions, tabs), under the TopBar's breadcrumb | then `--q-space-block` |
-| Page status | one `Alert` or `Banner` directly under the header, inside the panel (never above the TopBar or outside the frame) | `--q-space-block` |
+| Page status | a `NoticeChip` in the TopBar for a condition on this page; an `Alert` in the block it concerns. Workspace-wide conditions are the frame's (`ShellNotice`) | — |
 | Toolbar / filter bar | a row: segmented `Tabs variant="enclosed" size="sm"`, search `TextField size="sm"`, `Select size="sm"` filters, then ghost actions on the right | `--q-space-inline` within, `--q-space-stack` to the table |
 | Content block | a surface `Panel` | `--q-space-block` between blocks |
 | Card group | `Grid columns={12}` of `Card`s or outlined `Panel`s, equal spans | gutter |
@@ -91,7 +91,7 @@ Never put tabs inside tabs, and never put tabs and a section nav on one page.
 
 ## Order
 
-1. **Status first:** the one `Alert`/`Banner` sits under the header, never below the fold.
+1. **Status first:** a page's condition is its TopBar `NoticeChip`; a problem with one block is an `Alert` at the top of that block.
 2. **The most-used block next, and it gets the most width** (the main column, or first in the stack).
 3. Supporting blocks after, narrower (the right rail) or lower.
 4. **Empty blocks last and collapsed.**
@@ -109,7 +109,7 @@ point, so give one block the lead.
 | Seven sections with the same small heading and no ground | one lead (`plain`), the rest surface `Panel`s, empty ones collapsed |
 | Label at the far left, value at the far right | `DescriptionList` |
 | Card in a card, a table on a surface or in a frame | one container level; a table on the panel's white (`Panel variant="plain"`) |
-| Two `Alert`s stacked | one status, the highest severity |
+| Two `Alert`s stacked, or a `Banner` repeated on every page | one status, the highest severity; workspace conditions go in the frame (`ShellNotice`) |
 | Section actions in the page header (or the reverse) | actions sit with what they act on |
 | Equal-weight blocks in a 4 + 4 + 4 with no lead | 8 + 4, or put the lead first |
 | A "danger" button in the middle of a page | the danger zone, last |

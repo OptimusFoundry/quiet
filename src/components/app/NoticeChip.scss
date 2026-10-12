@@ -1,0 +1,90 @@
+// NoticeChip — a pill in the TopBar naming a condition on this page; opens the third pane. In a
+// TopBar narrower than 520 only the mark shows (the label stays for screen readers).
+// BEM: .q-notice-chip, __mark, __label; --urgent, --info.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-notice-chip-height: var(--q-control-sm);
+    --q-notice-chip-px: var(--q-space-1-5);
+    --q-notice-chip-gap: var(--q-space-0-75);
+    --q-notice-chip-radius: var(--q-radius-pill);
+    --q-notice-chip-fg: var(--q-fg);
+    --q-notice-chip-font-size: var(--q-text-sm);
+    --q-notice-chip-weight: var(--q-weight-medium);
+    --q-notice-chip-max-width: var(--q-w-settings-nav);
+    --q-notice-chip-mark-size: var(--q-space-0-75);
+    --q-notice-chip-urgent-bg: var(--q-status-warning-bg);
+    --q-notice-chip-urgent-bg-hover: var(--q-accent-subtle);
+    --q-notice-chip-urgent-mark: var(--q-accent);
+    --q-notice-chip-info-bg: var(--q-bg-subtle);
+    --q-notice-chip-info-bg-hover: color-mix(in srgb, var(--q-fg) 6%, var(--q-bg));
+    --q-notice-chip-info-mark: var(--q-fg-muted);
+  }
+}
+
+@layer q.components {
+  .q-notice-chip {
+    --_bg: var(--q-notice-chip-urgent-bg);
+    --_bg-hover: var(--q-notice-chip-urgent-bg-hover);
+    --_mark: var(--q-notice-chip-urgent-mark);
+
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--q-notice-chip-gap);
+    box-sizing: border-box;
+    max-width: var(--q-notice-chip-max-width);
+    height: var(--q-notice-chip-height);
+    padding: 0 var(--q-notice-chip-px);
+    border: 0;
+    border-radius: var(--q-notice-chip-radius);
+    background: var(--_bg);
+    color: var(--q-notice-chip-fg);
+    font-family: var(--q-font-sans);
+    font-size: var(--q-notice-chip-font-size);
+    font-weight: var(--q-notice-chip-weight);
+    cursor: pointer;
+    transition: background var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible),
+    &[aria-expanded="true"] {
+      background: var(--_bg-hover);
+    }
+
+    &--info {
+      --_bg: var(--q-notice-chip-info-bg);
+      --_bg-hover: var(--q-notice-chip-info-bg-hover);
+      --_mark: var(--q-notice-chip-info-mark);
+    }
+
+    @container q-top-bar (max-width: 520px) {
+      justify-content: center;
+      width: var(--q-notice-chip-height);
+      padding: 0;
+    }
+  }
+
+  .q-notice-chip__mark {
+    flex: none;
+    width: var(--q-notice-chip-mark-size);
+    height: var(--q-notice-chip-mark-size);
+    border-radius: var(--q-radius-pill);
+    background: var(--_mark);
+  }
+
+  .q-notice-chip__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @container q-top-bar (max-width: 520px) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+  }
+}

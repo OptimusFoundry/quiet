@@ -6,7 +6,6 @@ for quiet. A gap leaves this list only when a rule, a component or a pattern sto
 
 | Area | Closest thing today | Status |
 |---|---|---|
-| Page-wide notices in the new shell (trial ending, degraded service, impersonation) | one `Banner` under the `PageHeader`, inside the panel | being designed: where a notice centre lives in the shell |
 | Marketing and landing pages | none; quiet is app-only | out of scope for now |
 | Onboarding and first run (checklists, tours, sample data) | `EmptyState` + one create action; a Wizard for ordered setup | no pattern story |
 | The third pane's own layouts (inspector sections, pane-in-pane navigation) | `List size="sm"` or `Panel variant="plain"` stacks in the pane | only notifications and the assistant's changes are shown |

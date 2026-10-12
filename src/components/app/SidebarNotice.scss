@@ -1,0 +1,154 @@
+// SidebarNotice — a small raised card at the foot of the Sidebar for slow account nudges; an icon
+// with a mark in the collapsed rail. BEM: .q-sidebar-notice, __head, __title, __dismiss,
+// __description, __bar, __action, __rail, __mark; --collapsed. The bar fill arrives as --_progress.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-sidebar-notice-bg: var(--q-bg);
+    --q-sidebar-notice-radius: var(--q-radius-md);
+    --q-sidebar-notice-shadow: var(--q-shadow-1);
+    --q-sidebar-notice-pad: var(--q-space-1-5);
+    --q-sidebar-notice-gap: var(--q-space-0-75);
+    --q-sidebar-notice-title-fg: var(--q-fg);
+    --q-sidebar-notice-title-weight: var(--q-weight-semibold);
+    --q-sidebar-notice-fg: var(--q-fg-muted);
+    --q-sidebar-notice-font-size: var(--q-text-sm);
+    --q-sidebar-notice-bar-height: var(--q-space-0-5);
+    --q-sidebar-notice-bar-track: var(--q-bg-subtle);
+    --q-sidebar-notice-bar-fill: var(--q-accent-bg);
+    --q-sidebar-notice-action-fg: var(--q-accent-fg);
+    --q-sidebar-notice-action-weight: var(--q-weight-medium);
+    --q-sidebar-notice-dismiss-fg: var(--q-fg-muted);
+    --q-sidebar-notice-dismiss-size: var(--q-space-3);
+    --q-sidebar-notice-hover-bg: color-mix(in srgb, var(--q-fg) 6%, transparent);
+    --q-sidebar-notice-rail-size: var(--q-control-sm);
+    --q-sidebar-notice-rail-fg: var(--q-fg-muted);
+    --q-sidebar-notice-mark: var(--q-accent);
+    --q-sidebar-notice-mark-size: var(--q-space-0-75);
+  }
+}
+
+@layer q.components {
+  .q-sidebar-notice {
+    display: flex;
+    flex-direction: column;
+    gap: var(--q-sidebar-notice-gap);
+    box-sizing: border-box;
+    padding: var(--q-sidebar-notice-pad);
+    border-radius: var(--q-sidebar-notice-radius);
+    background: var(--q-sidebar-notice-bg);
+    box-shadow: var(--q-sidebar-notice-shadow);
+    color: var(--q-sidebar-notice-fg);
+    font-family: var(--q-font-sans);
+    font-size: var(--q-sidebar-notice-font-size);
+    line-height: var(--q-leading-ui);
+
+    &--collapsed {
+      align-items: center;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+
+  .q-sidebar-notice__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--q-sidebar-notice-gap);
+  }
+
+  .q-sidebar-notice__title {
+    margin: 0;
+    color: var(--q-sidebar-notice-title-fg);
+    font-weight: var(--q-sidebar-notice-title-weight);
+  }
+
+  .q-sidebar-notice__description {
+    margin: 0;
+  }
+
+  .q-sidebar-notice__dismiss {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--q-sidebar-notice-dismiss-size);
+    height: var(--q-sidebar-notice-dismiss-size);
+    margin: calc(var(--q-space-0-25) * -1) calc(var(--q-space-0-5) * -1) 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--q-radius-pill);
+    background: transparent;
+    color: var(--q-sidebar-notice-dismiss-fg);
+    cursor: pointer;
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-sidebar-notice-hover-bg);
+    }
+  }
+
+  .q-sidebar-notice__bar {
+    position: relative;
+    height: var(--q-sidebar-notice-bar-height);
+    overflow: hidden;
+    border-radius: var(--q-radius-pill);
+    background: var(--q-sidebar-notice-bar-track);
+
+    &::before {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--_progress, 0%);
+      border-radius: inherit;
+      background: var(--q-sidebar-notice-bar-fill);
+      content: "";
+    }
+  }
+
+  .q-sidebar-notice__action {
+    align-self: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--q-sidebar-notice-action-fg);
+    font: inherit;
+    font-weight: var(--q-sidebar-notice-action-weight);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:is(:hover, :focus-visible) {
+      text-decoration: underline;
+    }
+  }
+
+  .q-sidebar-notice__rail {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--q-sidebar-notice-rail-size);
+    height: var(--q-sidebar-notice-rail-size);
+    padding: 0;
+    border: 0;
+    border-radius: var(--q-radius-pill);
+    background: transparent;
+    color: var(--q-sidebar-notice-rail-fg);
+    cursor: pointer;
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-sidebar-notice-hover-bg);
+    }
+  }
+
+  .q-sidebar-notice__mark {
+    position: absolute;
+    top: var(--q-space-0-75);
+    right: var(--q-space-0-75);
+    width: var(--q-sidebar-notice-mark-size);
+    height: var(--q-sidebar-notice-mark-size);
+    border-radius: var(--q-radius-pill);
+    background: var(--q-sidebar-notice-mark);
+  }
+}
