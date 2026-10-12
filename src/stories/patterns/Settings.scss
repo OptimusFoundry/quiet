@@ -12,7 +12,12 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
+	// A section nav inside the panel: no ground of its own; the current section is a warm ground.
 	&__nav {
+		--q-sidebar-bg: transparent;
+		--q-sidebar-item-bg-current: var(--q-bg-subtle);
+		--q-sidebar-item-shadow-current: none;
+
 		position: sticky;
 		top: calc(var(--q-h-topbar) + var(--q-space-stack));
 		border: 0;

@@ -42,7 +42,7 @@
     --q-date-picker-nav-size: var(--q-control-sm);
     --q-date-picker-nav-icon-size: var(--q-icon-md);
     // Hovers are a soft grey wash, visible on the white dialog.
-    --q-date-picker-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-date-picker-bg-hover: var(--q-bg-hover);
     --q-date-picker-month-font-size: var(--q-text-md);
     --q-date-picker-month-weight: var(--q-weight-semibold);
     --q-date-picker-month-tracking: var(--q-tracking-tight);

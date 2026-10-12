@@ -23,6 +23,22 @@ export function focusables(root: HTMLElement | null): HTMLElement[] {
 }
 
 /**
+ * Before `el` leaves the page while focus is inside it (a dismissed alert, a removed chip), moves
+ * focus to the next focusable element after it, else the one before it, so focus never falls to
+ * <body>. Returns the element focused, if any.
+ */
+export function focusNeighbour(el: HTMLElement | null): HTMLElement | undefined {
+	if (!el?.contains(document.activeElement)) return undefined;
+	const all = focusables(document.body).filter((f) => !el.contains(f));
+	const after = all.find((f) => el.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_FOLLOWING);
+	const target =
+		after ??
+		all.filter((f) => el.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_PRECEDING).at(-1);
+	target?.focus();
+	return target;
+}
+
+/**
  * While active: moves focus into `ref`, keeps Tab inside it, restores focus on deactivate.
  * It takes hold in a layout effect, in the commit that shows `ref`: as a passive effect it can run
  * after the first click on the new surface (a scrim mousedown has already moved focus to <body>)

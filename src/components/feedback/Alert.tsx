@@ -1,4 +1,5 @@
 import React from "react";
+import { focusNeighbour } from "../../a11y/hooks";
 import "./Alert.scss";
 import { CloseButton, StatusIcon } from "./parts";
 
@@ -34,6 +35,7 @@ export function Alert({
 }: AlertProps) {
 	// quiet: dismiss collapses the alert's height (0 rest · 1 wrapped · 2 collapsing · 3 gone), then calls onDismiss.
 	const [leave, setLeave] = React.useState(0);
+	const boxRef = React.useRef<HTMLDivElement>(null);
 	// The latest onDismiss runs when the collapse ends; a new handler identity doesn't restart the timer.
 	const dismissed = React.useEffectEvent(() => onDismiss?.());
 	React.useEffect(() => {
@@ -59,6 +61,7 @@ export function Alert({
 	const glyph = icon === false ? null : icon || <StatusIcon status={v} />;
 	const box = (
 		<div
+			ref={boxRef}
 			role={variant === "error" ? "alert" : "status"}
 			className={["q-alert", `q-alert--${v}`, className].filter(Boolean).join(" ")}
 			style={style}
@@ -76,7 +79,11 @@ export function Alert({
 			{onDismiss && (
 				<CloseButton
 					label="Dismiss alert"
-					onClick={() => setLeave((l) => l || 1)}
+					onClick={() => {
+						// The alert goes inert as it collapses: hand focus on before it does.
+						focusNeighbour(boxRef.current);
+						setLeave((l) => l || 1);
+					}}
 					className="q-alert__dismiss"
 				/>
 			)}

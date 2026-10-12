@@ -26,7 +26,7 @@
     --q-sidebar-toggle-size: var(--q-control-sm);
     --q-sidebar-toggle-radius: var(--q-radius-pill);
     --q-sidebar-toggle-bg: transparent;
-    --q-sidebar-toggle-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-sidebar-toggle-bg-hover: var(--q-bg-hover);
     --q-sidebar-toggle-fg: var(--q-fg-muted);
     --q-sidebar-toggle-fg-hover: var(--q-fg);
     --q-sidebar-toggle-font-size: var(--q-icon-md);
@@ -51,7 +51,7 @@
     --q-sidebar-item-weight-current: var(--q-weight-semibold);
     --q-sidebar-item-fg: var(--q-fg-body);
     --q-sidebar-item-fg-current: var(--q-fg);
-    --q-sidebar-item-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent); // reads on any ground
+    --q-sidebar-item-bg-hover: var(--q-bg-hover); // reads on any ground
     --q-sidebar-item-bg-current: var(--q-bg);
     --q-sidebar-item-shadow-current: var(--q-shadow-1); // the current item: a raised white pill
     --q-sidebar-item-disabled-opacity: 0.4;
@@ -76,7 +76,7 @@
     --q-sidebar-trigger-size: var(--q-control-sm);
     --q-sidebar-trigger-radius: var(--q-radius-pill);
     --q-sidebar-trigger-bg: transparent;
-    --q-sidebar-trigger-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-sidebar-trigger-bg-hover: var(--q-bg-hover);
     --q-sidebar-trigger-fg: var(--q-fg);
     --q-sidebar-trigger-font-size: var(--q-icon-lg);
   }

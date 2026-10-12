@@ -15,6 +15,9 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   `menuitemradio` with `aria-checked` and a trailing accent check on the `checked` one. Enter or a
   click picks and closes, Space picks and keeps the menu open. Story: Extensions/DropdownMenu
   "Single choice".
+- Tier-2 grounds `--q-bg-hover` (a soft wash for hovers on any ground), `--q-bg-subtle-hover` (the
+  warm ground, hovered) and `--q-bg-well` (a resting track or chip ground that shows on white and on
+  a `Panel`). Components use them instead of their own `color-mix` washes.
 
 ### Changed
 
@@ -69,10 +72,6 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 - `Dropdown`, `MultiSelect` and `DatePicker` popups float on `--q-shadow-float` with no border;
   `MultiSelect`'s footer and `DatePicker`'s footer drop their rules.
 - `Skeleton` is a soft grey wash that shows on white and on a `Panel`.
-
-### Removed
-
-- `Headline accent` and `moltenAccent` (nothing used them). `lead` and `after` remain.
 - **Display, data and layout in the one look.** `Accordion`: a chevron icon, a 14px title, rows set
   apart by space and faint dividers (no ink top rule), a soft hover ground. `Card`: a
   `--q-bg-subtle` ground instead of a border, no footer rule, the ground deepens on hover.
@@ -84,11 +83,6 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   arrow is an icon, trailing text is a sans label, `bordered` is a ground. `DataGrid`: a field-height
   search with a search icon and a focus ring, a 14px title. `AspectRatio`: a sentence-case label
   ("Video · 1.78") on a ground, no dashed border.
-
-### Removed
-
-- `Card accent` and `EmptyState accent` (the italic phrase after the title): no app used them.
-- `EmptyState`'s default `/` glyph: pass `icon` for one.
 - **future, charts, chat, app: one-look sweep.** Labels, captions, timestamps, durations and chart
   axes drop mono caps for the label role (`--q-font-label`, `--q-text-label`, `--q-case-label`); mono
   stays for code, IDs and lineage table names. Unicode marks become `Icon` (Approval, HoldButton,
@@ -99,15 +93,11 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   `--q-bg-subtle` with no border; ScopeGrant loses its footer rule. Chart tooltips and the
   DoubtMarker bubble float on `--q-shadow-float` with no border. Text that leaned on CSS uppercase is
   now sentence case ("Hold", "Just now", "Low"/"High", "Failed").
-- Private tier-3 tokens renamed or removed with this: `--q-consensus-slider-mono-*` and
-  `--q-receipt-mono-*` become `-meta-*`; `--q-tool-call-border(-hover)` becomes `--q-tool-call-bg(-hover)`;
-  `--q-code-block-border`, `--q-approval-border`, `--q-scope-grant-border`, `--q-chart-tooltip-border`,
-  `--q-doubt-marker-bubble-border`, `--q-transcript-session-border`, `--q-transcript-session-bg`,
-  `--q-transcript-head-divider` and `--q-transcript-head-bg-open` are gone.
-
-### Removed
-
-- `ApprovalConsequence.glyph` (no app used it): pass `icon`, a stroke-icon name, instead.
+- `--q-status-warning-fg` and `--q-status-error-fg` are `--q-accent-fg` (AA as text) instead of the
+  raw accent (3.87:1).
+- The segmented `Tabs` track is `--q-bg-well`, so it shows on a `Panel` as well as on white.
+- Dismissing an `Alert` moves focus to the next control instead of dropping it on the page
+  (`focusNeighbour` in `src/a11y/hooks.ts`).
 
 ### Deprecated
 
@@ -118,6 +108,15 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 ### Removed
 
+- `Headline accent` and `moltenAccent` (nothing used them). `lead` and `after` remain.
+- `Card accent` and `EmptyState accent` (the italic phrase after the title): no app used them.
+- `EmptyState`'s default `/` glyph: pass `icon` for one.
+- Private tier-3 tokens renamed or removed with this: `--q-consensus-slider-mono-*` and
+  `--q-receipt-mono-*` become `-meta-*`; `--q-tool-call-border(-hover)` becomes `--q-tool-call-bg(-hover)`;
+  `--q-code-block-border`, `--q-approval-border`, `--q-scope-grant-border`, `--q-chart-tooltip-border`,
+  `--q-doubt-marker-bubble-border`, `--q-transcript-session-border`, `--q-transcript-session-bg`,
+  `--q-transcript-head-divider` and `--q-transcript-head-bg-open` are gone.
+- `ApprovalConsequence.glyph` (no app used it): pass `icon`, a stroke-icon name, instead.
 - `Dialog accent` (the italic phrase after the title); nothing used it.
 - `Banner variant="ink"`; nothing used it. Banner's `--q-banner-ink-*`, `--q-banner-outline-border`
   and ring/glyph tokens, Alert's `-ring`/`-glyph` tokens and Toast's glyph and border tokens are gone.

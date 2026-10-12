@@ -14,7 +14,7 @@
     --q-shell-notice-urgent-mark: var(--q-accent);
     --q-shell-notice-info-mark: var(--q-fg-muted);
     --q-shell-notice-dismiss-fg: var(--q-fg-muted);
-    --q-shell-notice-dismiss-bg-hover: color-mix(in srgb, var(--q-fg) 6%, transparent);
+    --q-shell-notice-dismiss-bg-hover: var(--q-bg-hover);
     --q-shell-notice-dismiss-radius: var(--q-radius-pill);
   }
 }
