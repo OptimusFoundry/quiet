@@ -5,7 +5,7 @@ import { Icon } from "../core/Icon";
 import "./Checkbox.scss";
 
 /**
- * Soft-cornered checkbox (--radius-xs), accent fill with a check icon. Indeterminate, description, error, sizes.
+ * Soft-cornered checkbox (--q-radius-xs), accent fill with a check icon. Indeterminate, description, error, sizes.
  * @startingPoint section="Forms" subtitle="Soft checks" viewport="600x220"
  */
 export interface CheckboxProps

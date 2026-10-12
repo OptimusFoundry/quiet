@@ -13,7 +13,7 @@ export interface AvatarProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,
 	name?: string;
 	alt?: string;
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number;
-	/** circle = full round · square = soft rounded-rect (--radius-md) */
+	/** circle = full round · square = soft rounded-rect (--q-radius-md) */
 	shape?: "circle" | "square";
 	fallback?: React.ReactNode;
 	className?: string;
