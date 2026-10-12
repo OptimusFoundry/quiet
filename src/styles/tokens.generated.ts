@@ -1988,6 +1988,7 @@ export type TokenName =
 	| "--q-shadow-1"
 	| "--q-shadow-2"
 	| "--q-shadow-3"
+	| "--q-shadow-float"
 	| "--q-shadow-none"
 	| "--q-shadow-rgb"
 	| "--q-sidebar-badge-fg"

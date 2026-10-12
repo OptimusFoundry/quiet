@@ -8,7 +8,7 @@
 @layer q.tokens {
   :root,
   [data-theme] {
-    --q-top-bar-height: 44px; // the app look's slim bar; the reference's --q-h-topbar is 64
+    --q-top-bar-height: var(--q-h-topbar);
     --q-top-bar-px: var(--q-space-page-x);
     --q-top-bar-gap: var(--q-space-1-5);
     --q-top-bar-actions-gap: var(--q-space-1);
