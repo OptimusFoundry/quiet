@@ -125,7 +125,7 @@ page layouts: [grid.md](grid.md), [layouts.md](layouts.md), [sections.md](sectio
   the app panel · `lg` 20 `Panel`s, cards, popovers, toasts · `xl` 28 dialogs, the command palette ·
   `pill` controls. Never 0 on a container.
 - **Grounds, not rules:** sections group with `Panel` surfaces (`--q-bg-subtle`, `--q-radius-lg`, no
-  edge) and spacing. Lines only as faint dividers between table and list rows and as the edge between
+  edge) and spacing. Lines only as faint dividers between table rows and as the edge between
   two panes. No ink rules, no hairline between sections, no border round a surface.
 
 ## Depth

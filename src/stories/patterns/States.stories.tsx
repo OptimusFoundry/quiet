@@ -59,7 +59,7 @@ function Loading() {
 					{["Verified signups", "MRR", "Bounce rate"].map((label, i) => (
 						<Col key={label} span={4}>
 							<Skeleton
-								variant="rounded"
+								variant="rectangular"
 								height={112}
 								loading={loading}
 								label={i === 0 ? "Loading stats" : undefined}

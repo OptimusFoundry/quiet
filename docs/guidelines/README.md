@@ -56,7 +56,7 @@ one `AppShell`. Details: the package [README](../../README.md) and the `quiet-ap
    Everything is sentence case. No mono caps and no italics; mono is only for code, IDs and keys.
    Text is soft ink, never black.
 6. **Grounds, not rules.** Sections group with `Panel` surfaces (a warm grey, no edge) and spacing.
-   The only lines are the faint dividers between table and list rows, and the edge between two panes. No card-in-card. A table lies
+   The only lines are the faint dividers between table rows, and the edge between two panes. No card-in-card. A table lies
    on the panel's white under its filters. At most 3 levels.
 7. **One lead per page.** Status goes under the title, the main block comes first and widest, and
    destructive actions come last. Equal-weight sections are a bug, and an empty section collapses (`Panel empty`).

@@ -46,7 +46,7 @@ Each is a finding (`docs/plans/2026-10-12-one-look.md`, `docs/guidelines/foundat
 - **Ink:** text from a gray palette step, black or near-black; `--q-accent` (raw) as text instead of
   `--q-accent-fg`; an accent mixed toward black.
 - **Rules:** a border or divider that groups (a card edge, a section rule, a ruled footer). Only
-  table and list rows, and pane edges, get lines; grouping is a `--q-bg-subtle` ground.
+  table rows, and pane edges, get lines; grouping is a `--q-bg-subtle` ground.
 - **Overlays:** a menu, popover, dialog or toast with a border; it floats on `--q-shadow-float`.
 - **Type:** mono caps, `text-transform: uppercase`, letter-spaced labels, italics, a hard-coded font
   size or family instead of a role token.

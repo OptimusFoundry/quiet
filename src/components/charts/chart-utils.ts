@@ -123,8 +123,18 @@ export function useWidth(fallback = 600): [React.RefObject<HTMLDivElement | null
 }
 
 /** Picks ~`count` evenly spaced indices out of n (always first and last). */
+/** Which of n x-axis labels to draw when at most `count` fit: every label when they fit, else an
+ *  even integer step from the first, ending on the last (moved onto it when the step would leave
+ *  it no more than half a step away), so gaps never alternate 1-2-1 and drop labels unevenly. */
 export function sparseIndices(n: number, count: number) {
 	if (n <= count) return Array.from({ length: n }, (_, i) => i);
-	const step = (n - 1) / (count - 1);
-	return Array.from({ length: count }, (_, i) => Math.round(i * step));
+	const step = Math.ceil((n - 1) / Math.max(1, count - 1));
+	const out: number[] = [];
+	for (let i = 0; i < n; i += step) out.push(i);
+	const last = out[out.length - 1]!;
+	if (last !== n - 1) {
+		if (n - 1 - last > step / 2) out.push(n - 1);
+		else out[out.length - 1] = n - 1;
+	}
+	return out;
 }

@@ -187,25 +187,28 @@ export function LineChart({
 						</g>
 					))}
 					{n > 0 &&
-						sparseIndices(n, Math.min(xTicks, Math.max(2, Math.floor(plotW / 64)))).map(
-							(i, k, arr) => (
-								<text
-									key={i}
-									className={
-										"q-chart__axis-label" +
-										(k === arr.length - 1 && arr.length > 1
-											? " q-chart__axis-label--end"
-											: k === 0
-												? ""
-												: " q-chart__axis-label--middle")
-									}
-									x={x(i)}
-									y={height - 6}
-								>
-									{label(i)}
-								</text>
-							),
-						)}
+						sparseIndices(
+							n,
+							n <= Math.floor(plotW / 56)
+								? n
+								: Math.min(xTicks, Math.max(2, Math.floor(plotW / 64))),
+						).map((i, k, arr) => (
+							<text
+								key={i}
+								className={
+									"q-chart__axis-label" +
+									(k === arr.length - 1 && arr.length > 1
+										? " q-chart__axis-label--end"
+										: k === 0
+											? ""
+											: " q-chart__axis-label--middle")
+								}
+								x={x(i)}
+								y={height - 6}
+							>
+								{label(i)}
+							</text>
+						))}
 					{reference && (
 						<g className="q-line-chart__reference">
 							<line
