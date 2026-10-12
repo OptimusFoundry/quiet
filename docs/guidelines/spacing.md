@@ -19,7 +19,7 @@ Screens and layouts never use them.
 Set density once on the root (`QuietRoot density`, or `data-density` on a container). The tokens
 follow it; raw steps don't.
 
-| Job: the gap between… | Token | **app** | compact |
+| Job: the gap between… | Token | **comfortable** | compact |
 |---|---|---|---|
 | icon ↔ label, chip ↔ chip, button ↔ button | `--q-space-inline` | **8** | 8 |
 | lines/blocks inside a card or panel; label ↔ value | `--q-space-stack` | **16** | 8 |
@@ -27,7 +27,7 @@ follow it; raw steps don't.
 | card/panel padding | `--q-space-card-pad` | **24** | 16 |
 | card ↔ card | `--q-space-card-gap` | **24** | 16 |
 | block ↔ block; section header ↔ its content | `--q-space-block` | **32** | 24 |
-| page top/bottom padding; settings section ↔ section | `--q-space-section` | **48** | 32 |
+| page bottom padding; settings section ↔ section | `--q-space-section` | **48** | 32 |
 | page side padding | `--q-space-page-x` | **32** | 24 |
 | grid column gap | `--q-grid-gutter` | **24** | 16 |
 
@@ -39,12 +39,12 @@ follow it; raw steps don't.
 | Two fields in a form | `--q-space-field` | `stack`, so the form looks cramped |
 | Field groups (Profile vs Address) | `--q-space-block` + a titled `Panel variant="plain"` | a bigger raw gap with no header |
 | Title and body inside a panel | `--q-space-stack` | `block`, so the panel looks hollow |
-| Panel edge and its content | `--q-space-card-pad` | 16 in app density |
+| Panel edge and its content | `--q-space-card-pad` | 16 in comfortable density |
 | Cards in a row or grid | `--q-grid-gutter` (grid) / `--q-space-card-gap` (stack) | 12, 20 or 28 |
 | A `Panel` title and its content | `--q-space-block` | `stack`, which glues the header to the first row |
 | Section and section on a page | `--q-space-block` (same parent stack) | stacked margins that add up |
 | Settings section and section | `--q-space-section` | `block`, so sections blur together |
-| Page edge and content | `--q-space-section` top/bottom, `--q-space-page-x` sides | centring a narrow column in a wide page |
+| Panel edge and content | `--q-space-block` top, `--q-space-page-x` sides, `--q-space-section` bottom (the frame's padded column does it) | centring a narrow column in a wide page |
 | Phone (≤ 390) page sides | `--q-space-2` (16) | 32, which wastes 16% of a phone |
 
 **Inside vs outside.** A component owns its inner spacing; the parent owns the gap between
@@ -55,7 +55,7 @@ components. Never add margin to a quiet component. Wrap it in a stack with the r
 Lay out with `gap` on a flex or grid parent. The first and last child never carry space.
 
 - `Stack` and `Grid` named gaps are **fixed px**, not density-aware: `xs 8 · sm 16 · md 24 · lg 32 · xl 48 · 2xl 64`.
-  In **app** density they line up with the jobs: `xs`=inline, `sm`=stack, `md`=field/card-gap/gutter,
+  In **comfortable** density they line up with the jobs: `xs`=inline, `sm`=stack, `md`=field/card-gap/gutter,
   `lg`=block, `xl`=section. In **compact**, lay out with a plain element and
   `gap: var(--q-space-*)` instead (the props are typed to names or numbers).
 - `Grid` puts **no row gap** unless you pass `rowGap`. Always pass `rowGap` equal to `gap`, or
@@ -64,12 +64,10 @@ Lay out with `gap` on a flex or grid parent. The first and last child never carr
 ## Rhythm
 
 - 4px unit for **boxes**: control and field heights and every gap are multiples of 4. Text line
-  heights come from ratios (`--q-leading-body` 1.55, `--q-leading-snug` 1.15), so they render
-  as body 15/23, body-lg 17/26, small 13/20 and section 24/28. Quiet doesn't use a baseline grid, so
-  never pad text to force it onto one.
-- Control heights `--q-control-sm|md|lg` = 32 / 40 / 52; fields `--q-field-*` = 36 / 48 / 56;
-  rows `--q-row-compact` 32 / `--q-row` 48. The reference readme says controls are "32 / 40 / 48";
-  the token is 52, and the token wins.
+  heights come from ratios (`--q-leading-body` 1.55, `--q-leading-ui` 1.4), so body renders 14/22.
+  quiet doesn't use a baseline grid, so never pad text to force it onto one.
+- Dense controls: `--q-control-sm|md` 32, `--q-control-lg` 36; fields `--q-field-sm|md|lg` =
+  32 / 36 / 40; rows `--q-row-compact` 32 / `--q-row` 48; the TopBar `--q-h-topbar` 44.
 - Optical exception: the only allowed offsets are inside components (e.g. a 3px icon nudge). On a
   screen, if something looks misaligned, the structure is wrong. Don't patch it with a pixel.
 
@@ -80,5 +78,5 @@ Lay out with `gap` on a flex or grid parent. The first and last child never carr
 | 12, 20 or 28 between blocks | off the job scale, so neighbours drift | `--q-space-block` |
 | Every gap the same | flattens the hierarchy, so sections read as one list | inline < stack < field < block < section |
 | Margins on components | they double up at edges and break when reordered | `gap` on the parent |
-| Card padding 16 in app | cramped and off-token | `--q-space-card-pad` (24) |
+| Card padding 16 in comfortable | cramped and off-token | `--q-space-card-pad` (24) |
 | A taller gap to "separate" with no heading | the reader can't tell why | a titled `Panel` |

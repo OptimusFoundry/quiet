@@ -7,13 +7,18 @@ the wrong option it prevents.
 
 | Need | Use | Not |
 |---|---|---|
-| main action | `Button variant="primary"`, one per view (molten) | a second primary, a link styled as a button |
+| main action | `Button variant="primary"`, one per view (the accent fill) | a second primary, a link styled as a button |
+| a secondary or toolbar action | `Button variant="ghost" size="sm"` (padded, soft grey hover), or `secondary` beside a primary | a second primary, bare text that acts |
 | go to a URL | `Link`, `Button href` (routed by `linkComponent`) | `onClick` + `location.href`, a router `<Link>` wrapped round a quiet component, plain text that navigates |
 | name another record (a run, project, artifact, ticket) | `EntityLink` (`kind`, `mono` for IDs, `state` done/blocked, `external`) | bold text, a `Badge`, an ID in plain mono |
 | open a row of a table | `EntityLink` in the name cell (plus `onRowClick` for the hit area) | `onRowClick` alone: the row isn't a link |
 | a file or a version of one | `FileCard` (kind from the MIME type, size, Download, `badge` "Current") | a raw MIME type, "Download" as plain text |
 | an object's properties | `DescriptionList` (`inline`; `stacked` in a rail; `copy` on IDs) | key/value rows with the value right-aligned 900px away |
-| the top of a screen | `PageHeader` (title, `status`, `meta`, `actions`, `back`, `tabs`) | a breadcrumb top bar above it |
+| the frame of a signed-in screen | `AppShell` + `Sidebar` (`WorkspaceSwitcher`, `AccountMenu`) + `TopBar` | a header, nav or account menu built by the page; your own header on `--q-top-bar-*` tokens |
+| where you are, and screen-wide actions | `TopBar` (`crumbs`, `actions`) | a second breadcrumb bar, a back link standing in for the trail on desktop |
+| the top of a page | `PageHeader` (title, `status`, `meta`, `actions`, `back`, `eyebrow`, `tabs`) under the TopBar | a heading with a rule, the page name only in the TopBar |
+| secondary content beside the screen (notifications, an inspector, the assistant) | AppShell's third pane (`aside`, `asideTitle`, `asideOpen`) | a `Drawer` or `Dialog` over the screen; a fixed column built by the page |
+| an icon | `AppIcon` (quiet's stroke set, `name`) | unicode glyphs (→ ✕ ✓), emoji, a second icon library |
 | a titled section | `Panel` (surface; `outlined` in a grid; `plain` for the lead; `empty` collapses) | a heading with a rule, a hand-built bordered `<section>` |
 | an agent run's history | `Transcript` (sessions, grouped messages, `ToolCall`s, events) | raw `[chat · @name] text` lines, empty session headings |
 | on/off that applies now | `Switch` | `Checkbox` + Save |
@@ -21,10 +26,11 @@ the wrong option it prevents.
 | a limit with a safe range | `ElasticSlider` | a validation message after the fact |
 | an exact number | `Stepper` or number `TextField` | `Slider` |
 | one of ≤ 5 | `Radio`, or `Tabs variant="enclosed"` as a segmented control | a dropdown hiding 3 options |
+| filter a list or switch its view | segmented `Tabs variant="enclosed" size="sm"` with a `count` per tab | `Tabs` line variant, a row of toggle buttons |
 | one of a long or plain list | `Select size="sm"` | `Dropdown` |
 | options with descriptions or icons | `Dropdown` | `Select` |
 | switch views in place | `Tabs panels`, or `Tabs` + `TabPanel` | buttons toggling `display` |
-| a status word | `Badge` with its status `variant` (tinted in an app) or `StatusDot` | coloured text, a row tint, every status in the same grey pill |
+| a status word | `Badge` with its status `variant` (tinted) or `StatusDot` | coloured text, a row tint, every status in the same grey pill |
 | read-mostly rows | `Table` | `DataGrid` with every feature off |
 | search, select and page | `DataGrid` | `Table` + a hand-built toolbar |
 | an openable object in a grid | `Card` | `Card` as a generic box; use `Panel` (see [sections.md](sections.md)) |
@@ -38,8 +44,8 @@ the wrong option it prevents.
 | What happened | Use | Behaviour |
 |---|---|---|
 | the user's own action succeeded or failed | `toast({ title, status, action })` | auto-dismisses, max 3, never logged |
-| a system event (build finished, invite received) | the notification drawer | stays until read |
-| one page-wide condition (trial ending, degraded) | `Banner`, once per page | stays while the condition holds |
+| a system event (build finished, invite received) | the notifications list in AppShell's third pane | stays until read |
+| one page-wide condition (trial ending, degraded) | `Banner`, once per page, under the `PageHeader` inside the panel | stays while the condition holds |
 | a problem with the content beside it | `Alert` in that block | stays until resolved |
 | a field is wrong | the field's `error` | on blur or submit |
 
@@ -109,8 +115,9 @@ reads as broken.
 
 Overlays (`Dialog`, `Drawer`, `Popover`, `DropdownMenu`, `Tooltip`, `CommandPalette`), every form
 control, `Tabs`, `Accordion`, `Table`, `DataGrid`, `Sidebar` (including its mobile drawer), every
-chart, the chat set, the app set (`PageHeader`, `Panel`, `DescriptionList`, `EntityLink`,
-`FileCard`, `Transcript`) and `Toaster`. They carry keyboard, focus, ARIA and motion. Never rebuild them,
+chart, the chat set, the app set (`AppShell`, `TopBar`, `WorkspaceSwitcher`, `AccountMenu`,
+`AppIcon`, `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`, `Transcript`) and
+`Toaster`. They carry keyboard, focus, ARIA and motion. Never rebuild them,
 restyle them into another look, or swap in a third-party equivalent.
 
 If a component lacks a feature, add it to quiet (`AGENTS.md`). A component only one product needs
@@ -118,8 +125,8 @@ lives in that product's repo, built on quiet tokens and BEM.
 
 ## Don't mix
 
-- one control `size` per screen (`sm` in apps) and one density per surface
+- one control `size` per screen (`sm`) and one density per surface
 - `Table` and `DataGrid` in one block
 - `Headline size="display"` in apps
-- icon sets: quiet uses unicode glyphs through `Icon`. A product that needs more picks one thin
-  stroke set in its theme.
+- icon sets: quiet draws its own stroke icons (`AppIcon`). An icon quiet lacks is added to quiet's
+  set (`src/components/app/icons.ts`), not drawn from a second library.

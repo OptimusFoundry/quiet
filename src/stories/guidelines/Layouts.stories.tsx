@@ -4,7 +4,7 @@ import { Text } from "../../index";
 import { GuidePage, Mono, Part } from "./Guide";
 import "./Layouts.scss";
 
-// docs/guidelines/layouts.md as miniatures: the ten page layouts drawn from the real width tokens at
+// docs/guidelines/layouts.md as miniatures: the page layouts drawn from the real width tokens at
 // 1/5 scale, each with when to choose it and what collapses under 720.
 
 /** App frame at 1/5: sidebar 240 + main (padding 48/32 scaled). */
@@ -71,8 +71,8 @@ const LAYOUTS: L[] = [
 	{
 		name: "Detail + inspector",
 		when: "stay on one object, tools at the side",
-		dims: "content fluid · panel 400, hairline left",
-		collapse: "panel → Drawer under 720",
+		dims: "content fluid · third pane 360, pushes the screen",
+		collapse: "pane → full-screen sheet under 720",
 		art: (
 			<App>
 				<div className="q-sb-layouts__inspector-split">
@@ -186,8 +186,8 @@ const LAYOUTS: L[] = [
 	{
 		name: "Chat",
 		when: "a conversation is the task",
-		dims: "640 column · optional 400 panel",
-		collapse: "full width · panel → drawer",
+		dims: "640 column · optional third pane 360",
+		collapse: "full width · pane → full-screen sheet",
 		art: (
 			<App>
 				<div className="q-sb-layouts__chat-split">
@@ -210,29 +210,12 @@ const LAYOUTS: L[] = [
 	{
 		name: "App shell",
 		when: "every signed-in screen",
-		dims: "sidebar 240 · top bar 64 · main pad 48 / 32 · max 1280",
-		collapse: "sidebar → drawer · page-x 16",
+		dims: "sidebar 240 on the canvas · inset panel · top bar 44 · pad 32 / 32 / 48 · max 1280",
+		collapse: "sidebar → drawer · panel flush · page-x 16",
 		art: (
 			<App>
 				<div className="q-sb-layouts__fill q-sb-layouts__shell-main" />
 			</App>
-		),
-	},
-	{
-		name: "Marketing",
-		when: "signed-out pages",
-		dims: "NavBar · density marketing · sections 128 · gutter 32",
-		collapse: "columns stack",
-		art: (
-			<div className="q-sb-layouts__site">
-				<div className="q-sb-layouts__site-nav" />
-				<div className="q-sb-layouts__title q-sb-layouts__site-hero" />
-				<div className="q-sb-layouts__site-section">
-					<div className="q-sb-layouts__title q-sb-layouts__site-heading" />
-					<span />
-					<div className="q-sb-layouts__fill q-sb-layouts__site-art" />
-				</div>
-			</div>
 		),
 	},
 ];
@@ -245,7 +228,7 @@ function LayoutsPage() {
 			intro="Ten layouts, drawn at 1/5 scale from the width tokens. Pick by what the user does. Never compose a new one."
 		>
 			<Part
-				title="The ten"
+				title="The shapes"
 				rule="Each: when to choose it, its dimensions, what collapses under 720."
 			>
 				<div className="q-sb-layouts__list">
@@ -258,7 +241,7 @@ function LayoutsPage() {
 								<Text as="h3" size="md" weight="semibold" color="heading">
 									{l.name}
 								</Text>
-								<Text size="sm">Choose to {l.when}.</Text>
+								<Text size="sm">Choose when: {l.when}.</Text>
 								<Mono>{l.dims}</Mono>
 								<Mono>&lt; 720: {l.collapse}</Mono>
 							</figcaption>

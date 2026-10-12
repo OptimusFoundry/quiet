@@ -128,7 +128,7 @@ function GridPage() {
 			</Part>
 			<Part
 				title="Fixed panes"
-				rule="Never % or invented widths. Under 720 a pane leaves the layout (drawer or its own route)."
+				rule="Never % or invented widths. Under 720 a pane leaves the layout (a full-screen sheet or its own route)."
 			>
 				<div className="q-sb-grid__panes">
 					{PANES.map(([t, l]) => (

@@ -3,14 +3,14 @@
 The voice comes from the brand: **say the literal thing.** It should be confident, quiet, technical and honest.
 Use the active voice and short sentences.
 
-## Product UI vs marketing
+## In the product
 
-| | Marketing site | Product UI |
-|---|---|---|
-| Voice | "we" (the studio) / "you" | plain imperative and labels; "you" when a sentence is needed |
-| Foundry verbs (cast, forge, temper, stamp) | one per paragraph | **never.** Say "create", "build", "publish", "delete" |
-| Headlines | end with a period, one italic accent phrase | page titles have no period (`density="app"` hides it); no italic flourish |
-| Roman numerals, serials ("01 / 14") | process steps, years (MMXXVI) | serials in mono labels only; no Roman numerals for data |
+| | Rule |
+|---|---|
+| Voice | plain imperative and labels; "you" when a sentence is needed |
+| Foundry verbs (cast, forge, temper, stamp) | **never.** Say "create", "build", "publish", "delete" |
+| Titles and labels | sentence case, no period, no italic flourish, no mono caps |
+| Serials and IDs | in mono only where they are IDs (`EntityLink mono`); no Roman numerals for data |
 
 ## Banned words
 
