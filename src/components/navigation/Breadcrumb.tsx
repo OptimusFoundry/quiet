@@ -1,9 +1,10 @@
 import React from "react";
 import { useLinkElement } from "../../lib/link";
+import { Icon } from "../core/Icon";
 import "./Breadcrumb.scss";
 
 /**
- * Mono caps trail separated by /. Collapses the middle into … .
+ * Sentence-case trail separated by /. Collapses the middle into a "more" button.
  * @startingPoint section="Navigation" subtitle="Mono path trail" viewport="700x160"
  */
 export interface BreadcrumbProps {
@@ -122,7 +123,7 @@ export function Breadcrumb({
 								}}
 								className="q-breadcrumb__more"
 							>
-								{"…"}
+								<Icon name="more" size="sm" />
 							</button>
 						) : (
 							<Crumb it={it} current={it._i === items.length - 1} />

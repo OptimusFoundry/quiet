@@ -1,13 +1,17 @@
 import React from "react";
 import "./Banner.scss";
+import { CloseButton, isStatus, StatusIcon, warnDeprecated } from "./parts";
 
 /**
- * Full-width page-level strip above the header or app content.
+ * Full-width page-level strip above the header or app content, on its status ground.
  * @startingPoint section="Feedback" subtitle="Page-level strips" viewport="900x320"
  */
 export interface BannerProps {
-	/** ink = one-line ink strip · paper = paper-2 · outline = ink hairlines on white */
-	variant?: "ink" | "paper" | "outline";
+	/**
+	 * The strip sits on its status ground. `paper` is the only look.
+	 * @deprecated `outline` is gone and renders as `paper`; drop the prop.
+	 */
+	variant?: "paper" | "outline";
 	status?: "info" | "success" | "warning" | "error";
 	title?: React.ReactNode;
 	children?: React.ReactNode;
@@ -19,9 +23,6 @@ export interface BannerProps {
 	className?: string;
 	style?: React.CSSProperties;
 }
-
-const GLYPH: Record<string, string> = { info: "i", success: "✓", warning: "!", error: "!" };
-const VARIANTS: string[] = ["paper", "ink", "outline"];
 
 export function Banner({
 	variant = "paper",
@@ -58,15 +59,11 @@ export function Banner({
 		);
 		return () => clearTimeout(t);
 	}, [leave]);
+	if (variant === "outline")
+		warnDeprecated('Banner variant="outline" is deprecated and renders as the default; remove it.');
 	if (leave === 3) return null;
-	const cls = [
-		"q-banner",
-		VARIANTS.includes(variant) && `q-banner--${variant}`,
-		GLYPH[status] && `q-banner--${status}`,
-		className,
-	]
-		.filter(Boolean)
-		.join(" ");
+	const st = isStatus(status) ? status : "info";
+	const cls = ["q-banner", `q-banner--${st}`, className].filter(Boolean).join(" ");
 	const box = (
 		<div
 			role={status === "error" ? "alert" : "region"}
@@ -76,9 +73,7 @@ export function Banner({
 			style={style}
 		>
 			<div className="q-banner__inner">
-				<span aria-hidden="true" className="q-banner__glyph">
-					{GLYPH[status]}
-				</span>
+				<StatusIcon status={st} className="q-banner__icon" />
 				<div className="q-banner__text">
 					{title && (
 						<strong id={id} className="q-banner__title">
@@ -90,14 +85,11 @@ export function Banner({
 				</div>
 				{action}
 				{dismissible && (
-					<button
-						type="button"
-						aria-label="Dismiss banner"
+					<CloseButton
+						label="Dismiss banner"
 						onClick={() => setLeave((l) => l || 1)}
 						className="q-banner__dismiss"
-					>
-						{"×"}
-					</button>
+					/>
 				)}
 			</div>
 		</div>

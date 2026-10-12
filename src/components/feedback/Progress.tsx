@@ -1,8 +1,9 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import "./Progress.scss";
 
 /**
- * Hairline progress bar. Ink by default; molten only for heat (process rail), warning, error.
+ * Thin progress bar with a sans, sentence-case label. The accent fills it; status variants read --q-status-*.
  * @startingPoint section="Feedback" subtitle="Hairline progress" viewport="600x260"
  */
 export interface ProgressProps {
@@ -53,7 +54,9 @@ export function Progress({
 					<span id={id}>{label}</span>
 					{showValue && !indeterminate && (
 						<span className="q-progress__value">
-							{done && variant === "success" ? "✓ " : ""}
+							{done && variant === "success" && (
+								<Icon name="check" size="sm" className="q-progress__check" />
+							)}
 							{Math.round(pct)}%
 						</span>
 					)}

@@ -13,28 +13,25 @@
     --q-drawer-lg-width: 640px;
     --q-drawer-bg: var(--q-bg);
     --q-drawer-radius: var(--q-radius-xl);
-    --q-drawer-shadow: var(--q-shadow-3);
-    --q-drawer-border: var(--q-border);
-    --q-drawer-padding: var(--q-space-4);
-    --q-drawer-header-pb: var(--q-space-3);
+    --q-drawer-shadow: var(--q-shadow-float);
+    --q-drawer-padding: var(--q-space-3);
+    --q-drawer-header-pb: var(--q-space-1);
     --q-drawer-header-gap: var(--q-space-2);
     --q-drawer-heading-gap: var(--q-space-1);
     --q-drawer-eyebrow-fg: var(--q-fg-muted);
     --q-drawer-title-fg: var(--q-fg);
-    --q-drawer-title-size: var(--q-text-2xl);
-    --q-drawer-title-weight: var(--q-weight-semibold);
-    --q-drawer-title-leading: var(--q-leading-snug);
-    --q-drawer-title-tracking: var(--q-tracking-h4);
+    --q-drawer-title-size: var(--q-text-heading-2);
+    --q-drawer-title-weight: var(--q-weight-heading);
+    --q-drawer-title-leading: var(--q-leading-ui);
+    --q-drawer-title-tracking: var(--q-tracking-h2);
     --q-drawer-dot: var(--q-accent);
     --q-drawer-description-fg: var(--q-fg-muted);
     --q-drawer-text-size: var(--q-text-md);
     --q-drawer-text-leading: var(--q-leading-body);
     --q-drawer-body-fg: var(--q-fg-body);
-    --q-drawer-close-fg: var(--q-fg);
-    --q-drawer-close-size: 20px; // the × glyph; between --q-text-xl and --q-text-2xl
-    --q-drawer-close-padding: var(--q-space-0-5);
+    --q-drawer-close-nudge: calc(var(--q-space-0-5) * -1); // pulls the button's ground into the corner
     --q-drawer-footer-gap: var(--q-space-2);
-    --q-drawer-footer-py: var(--q-space-3);
+    --q-drawer-footer-py: var(--q-space-2);
   }
 }
 
@@ -80,7 +77,6 @@
     justify-content: space-between;
     gap: var(--q-drawer-header-gap);
     padding: var(--q-drawer-padding) var(--q-drawer-padding) var(--q-drawer-header-pb);
-    border-bottom: var(--q-hairline) solid var(--q-drawer-border);
   }
 
   .q-drawer__heading {
@@ -119,13 +115,7 @@
   }
 
   .q-drawer__close {
-    padding: var(--q-drawer-close-padding);
-    border: 0;
-    background: none;
-    color: var(--q-drawer-close-fg);
-    font-size: var(--q-drawer-close-size);
-    line-height: var(--q-leading-none);
-    cursor: pointer;
+    margin: var(--q-drawer-close-nudge) var(--q-drawer-close-nudge) 0 0;
   }
 
   .q-drawer__body {
@@ -142,6 +132,5 @@
     justify-content: flex-end;
     gap: var(--q-drawer-footer-gap);
     padding: var(--q-drawer-footer-py) var(--q-drawer-padding);
-    border-top: var(--q-hairline) solid var(--q-drawer-border);
   }
 }

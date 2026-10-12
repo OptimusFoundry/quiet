@@ -1,9 +1,10 @@
 import React from "react";
 import { useEscape, useFocusTrap, useModalBackground, usePresence } from "../../a11y/hooks";
+import { CloseButton } from "../feedback/parts";
 import "./Drawer.scss";
 
 /**
- * Side sheet. Full height, rounded inner corners (--radius-xl), soft shadow, slow ease-in-out slide.
+ * Side sheet. Full height, rounded inner corners (--q-radius-xl), floats on its shadow, slow ease-in-out slide.
  * @startingPoint section="Overlays" subtitle="Side sheets" viewport="900x560"
  */
 export interface DrawerProps {
@@ -11,6 +12,7 @@ export interface DrawerProps {
 	onClose?: () => void;
 	eyebrow?: React.ReactNode;
 	title?: React.ReactNode;
+	/** @deprecated Text run on after the title, in the title's own style. Put it in `title` */
 	accent?: React.ReactNode;
 	description?: React.ReactNode;
 	children?: React.ReactNode;
@@ -81,12 +83,7 @@ export function Drawer({
 						{title && (
 							<div id={`${id}-t`} className="q-drawer__title">
 								{title}
-								{accent && (
-									<>
-										{" "}
-										<em>{accent}</em>
-									</>
-								)}
+								{accent && <> {accent}</>}
 								<span className="q-drawer__dot">.</span>
 							</div>
 						)}
@@ -97,14 +94,7 @@ export function Drawer({
 						)}
 					</div>
 					{dismissible && (
-						<button
-							type="button"
-							onClick={onClose}
-							aria-label="Close drawer"
-							className="q-drawer__close"
-						>
-							{"×"}
-						</button>
+						<CloseButton label="Close drawer" onClick={onClose} className="q-drawer__close" />
 					)}
 				</header>
 				<div className="q-drawer__body">{children}</div>

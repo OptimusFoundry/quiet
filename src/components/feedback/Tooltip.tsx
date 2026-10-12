@@ -3,7 +3,7 @@ import { useEscape } from "../../a11y/hooks";
 import "./Tooltip.scss";
 
 /**
- * Ink tooltip, mono caps, soft corners (--radius-sm). Four placements, optional delay.
+ * Ink tooltip in sans sentence case, soft corners (--q-radius-sm). Four placements, optional delay.
  * @startingPoint section="Feedback" subtitle="Ink tooltips, 4 placements" viewport="600x200"
  */
 export interface TooltipProps {

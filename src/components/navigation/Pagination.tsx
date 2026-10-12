@@ -1,8 +1,9 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import "./Pagination.scss";
 
 /**
- * Page navigation with mono, zero-padded numbers in circles.
+ * Page navigation: round page pills with tabular numbers; the current page takes the accent tint.
  * @startingPoint section="Navigation" subtitle="Page controls" viewport="700x180"
  */
 export interface PaginationProps {
@@ -109,19 +110,19 @@ export function Pagination({
 				.join(" ")}
 			style={style}
 		>
-			{showFirstLast && b("f", "\u00ab", 1, "First page")}
-			{b("p", "\u2190", cur - 1, "Previous page")}
+			{showFirstLast && b("f", <Icon name="chevrons-left" />, 1, "First page")}
+			{b("p", <Icon name="chevron-left" />, cur - 1, "Previous page")}
 			{range(cur, total, siblings).map((p) =>
 				typeof p === "string" ? (
 					<span key={p} aria-hidden="true" className="q-pagination__ellipsis">
-						{"\u2026"}
+						<Icon name="more" />
 					</span>
 				) : (
-					b(p, String(p).padStart(2, "0"), p, `Page ${p}`, p === cur)
+					b(p, p, p, `Page ${p}`, p === cur)
 				),
 			)}
-			{b("n", "\u2192", cur + 1, "Next page")}
-			{showFirstLast && b("l", "\u00bb", total, "Last page")}
+			{b("n", <Icon name="chevron-right" />, cur + 1, "Next page")}
+			{showFirstLast && b("l", <Icon name="chevrons-right" />, total, "Last page")}
 		</nav>
 	);
 }

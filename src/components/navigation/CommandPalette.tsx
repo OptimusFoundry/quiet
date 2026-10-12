@@ -1,9 +1,10 @@
 import React from "react";
 import { useEscape, useFocusTrap, usePresence } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./CommandPalette.scss";
 
 /**
- * ⌘K palette. Filter-as-you-type, grouped results, full keyboard control.
+ * ⌘K palette. Filter-as-you-type, grouped results, full keyboard control. Floats on --q-shadow-float.
  * @startingPoint section="Navigation" subtitle="⌘K command palette" viewport="900x600"
  */
 export interface CommandPaletteItem {
@@ -132,9 +133,7 @@ export function CommandPalette<Item extends CommandPaletteItem = CommandPaletteI
 				onClick={(e) => e.stopPropagation()}
 			>
 				<div className="q-command-palette__search">
-					<span aria-hidden="true" className="q-command-palette__slash">
-						/
-					</span>
+					<Icon name="search" size="lg" className="q-command-palette__search-icon" />
 					<input
 						role="combobox"
 						aria-expanded="true"
@@ -151,9 +150,9 @@ export function CommandPalette<Item extends CommandPaletteItem = CommandPaletteI
 						aria-label="Search commands"
 						className="q-command-palette__input"
 					/>
-					<span aria-hidden="true" className="q-command-palette__hint">
+					<kbd aria-hidden="true" className="q-command-palette__kbd">
 						Esc
-					</span>
+					</kbd>
 				</div>
 				<div className="q-sr-only" role="status">
 					{q
@@ -214,15 +213,11 @@ export function CommandPalette<Item extends CommandPaletteItem = CommandPaletteI
 											)}
 										</span>
 										{it.shortcut && (
-											<span aria-hidden="true" className="q-command-palette__hint">
+											<kbd aria-hidden="true" className="q-command-palette__kbd">
 												{it.shortcut}
-											</span>
+											</kbd>
 										)}
-										{on && (
-											<span aria-hidden="true" className="q-command-palette__option-enter">
-												{"\u21b5"}
-											</span>
-										)}
+										{on && <Icon name="enter" className="q-command-palette__option-enter" />}
 									</div>
 								);
 							})}
@@ -230,9 +225,19 @@ export function CommandPalette<Item extends CommandPaletteItem = CommandPaletteI
 					))}
 				</div>
 				<div aria-hidden="true" className="q-command-palette__footer">
-					<span>{"\u2191\u2193"} Navigate</span>
-					<span>{"\u21b5"} Select</span>
-					<span>Esc Close</span>
+					<span className="q-command-palette__footer-item">
+						<Icon name="arrow-up" size="sm" />
+						<Icon name="arrow-down" size="sm" />
+						Navigate
+					</span>
+					<span className="q-command-palette__footer-item">
+						<Icon name="enter" size="sm" />
+						Select
+					</span>
+					<span className="q-command-palette__footer-item">
+						<kbd className="q-command-palette__kbd">Esc</kbd>
+						Close
+					</span>
 				</div>
 			</div>
 		</div>

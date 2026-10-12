@@ -17,9 +17,6 @@
     --q-app-shell-panel-shadow: var(--q-shadow-1);
 
     --q-app-shell-nav-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
-    --q-app-shell-nav-fg-current: var(--q-fg);
-    --q-app-shell-nav-icon-fg-current: var(--q-accent-fg);
-    --q-app-shell-nav-shadow-current: var(--q-shadow-1);
     --q-app-shell-nav-close-offset: var(--q-space-0-5); // (switcher row 40 − button 32) / 2
     --q-app-shell-sidebar-z: var(--q-z-raised); // above the panel: a collapsed rail's menus open over it
 
@@ -99,16 +96,11 @@
     }
   }
 
-  // The Sidebar sits on the canvas: no ground of its own, no edge; the current item is a raised
-  // pill of panel ground. The drawer (narrow) keeps the canvas ground.
+  // The Sidebar sits on the canvas: no ground of its own, no edge (its current item is already a
+  // raised white pill). The drawer (narrow) keeps the canvas ground.
   .q-app-shell__sidebar {
     --q-sidebar-bg: var(--q-app-shell-canvas);
     --q-sidebar-border: transparent;
-    --q-sidebar-item-bg-hover: var(--q-app-shell-nav-bg-hover);
-    --q-sidebar-item-bg-current: var(--q-app-shell-panel-bg);
-    --q-sidebar-item-fg-current: var(--q-app-shell-nav-fg-current);
-    --q-sidebar-icon-fg-current: var(--q-app-shell-nav-icon-fg-current);
-    --q-sidebar-item-shadow-current: var(--q-app-shell-nav-shadow-current);
     // The drawer's close button: tops the header beside the WorkspaceSwitcher row, quiet like the
     // pane's close button.
     --q-sidebar-header-align: flex-start;

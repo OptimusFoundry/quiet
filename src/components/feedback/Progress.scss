@@ -1,4 +1,4 @@
-// Progress — thin bar. BEM: .q-progress, __meta, __value, __track, __fill (--indeterminate);
+// Progress — thin bar. BEM: .q-progress, __meta, __value, __check, __track, __fill (--indeterminate);
 // --{sm|md|lg}, --{success|warning|error|heat}. The fill width comes in as --_progress.
 @use "../../styles/layers";
 
@@ -8,6 +8,10 @@
     --q-progress-gap: var(--q-space-1);
     --q-progress-meta-gap: var(--q-space-2);
     --q-progress-meta-fg: var(--q-fg-muted);
+    --q-progress-meta-font: var(--q-font-label);
+    --q-progress-meta-size: var(--q-text-label);
+    --q-progress-meta-weight: var(--q-weight-label);
+    --q-progress-value-gap: var(--q-space-0-5);
     --q-progress-value-fg: var(--q-fg);
     --q-progress-track-bg: var(--q-bg-subtle);
     --q-progress-fill: var(--q-accent);
@@ -63,13 +67,17 @@
     justify-content: space-between;
     gap: var(--q-progress-meta-gap);
     color: var(--q-progress-meta-fg);
-    font-family: var(--q-font-mono);
-    font-size: var(--q-text-2xs);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    font-family: var(--q-progress-meta-font);
+    font-size: var(--q-progress-meta-size);
+    font-weight: var(--q-progress-meta-weight);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
 
   .q-progress__value {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--q-progress-value-gap);
     color: var(--q-progress-value-fg);
     font-variant-numeric: tabular-nums;
 

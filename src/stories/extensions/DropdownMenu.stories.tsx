@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useRef, useState } from "react";
-import { Button, DropdownMenu } from "../../index";
+import { Button, DropdownMenu, Icon } from "../../index";
 import "./DropdownMenu.scss";
 
 // Additions on top of the Claude Design catalog: controlled open state (open, defaultOpen, onOpenChange).
@@ -99,3 +99,43 @@ export const DefaultOpen: StoryObj = {
 		</div>
 	),
 };
+
+// Single choice (menuitemradio): a `{ group, radio: true }` label makes the items under it one set;
+// the checked one gets a trailing check. Enter or a click picks and closes, Space picks and stays.
+function SingleChoiceDemo({ startOpen = false }: { startOpen?: boolean }) {
+	const [sort, setSort] = useState("Updated");
+	const [archived, setArchived] = useState(false);
+	return (
+		<div id="single-choice" className="q-sb-dropdown-menu">
+			<div className="q-sb-dropdown-menu__row">
+				<DropdownMenu
+					trigger={
+						<Button variant="secondary" rightIcon={<Icon name="chevron-down" />}>
+							Sort: {sort}
+						</Button>
+					}
+					defaultOpen={startOpen}
+					header="Runs view"
+					items={[
+						{ group: "Sort by", radio: true },
+						...["Updated", "Created", "Name", "Cost"].map((label) => ({
+							label,
+							checked: sort === label,
+							onSelect: () => setSort(label),
+						})),
+						{ divider: true },
+						{
+							label: "Show archived",
+							checked: archived,
+							onSelect: () => setArchived((a) => !a),
+						},
+					]}
+				/>
+			</div>
+			<output aria-live="polite">{`Sorted by ${sort.toLowerCase()}${archived ? ", archived shown" : ""}.`}</output>
+		</div>
+	);
+}
+
+export const SingleChoice: StoryObj = { render: () => <SingleChoiceDemo /> };
+export const SingleChoiceOpen: StoryObj = { render: () => <SingleChoiceDemo startOpen /> };

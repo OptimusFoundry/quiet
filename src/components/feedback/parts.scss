@@ -1,0 +1,51 @@
+// Shared feedback marks. BEM: .q-close-button (the square × button); .q-status-icon
+// (--{info|success|warning|error}), a bare stroke icon in its status colour.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-close-button-size: var(--q-space-3);
+    --q-close-button-radius: var(--q-radius-pill);
+    --q-close-button-fg: var(--q-fg-muted);
+    --q-close-button-fg-hover: var(--q-fg);
+    --q-close-button-bg-hover: var(--q-bg-subtle);
+
+    --q-status-icon-info-fg: var(--q-status-info-fg);
+    --q-status-icon-success-fg: var(--q-status-success-fg);
+    --q-status-icon-warning-fg: var(--q-status-warning-fg);
+    --q-status-icon-error-fg: var(--q-status-error-fg);
+  }
+}
+
+@layer q.components {
+  .q-close-button {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: var(--q-close-button-size);
+    height: var(--q-close-button-size);
+    padding: 0;
+    border: 0;
+    border-radius: var(--q-close-button-radius);
+    background: transparent;
+    color: var(--q-close-button-fg);
+    cursor: pointer;
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      color var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-close-button-bg-hover);
+      color: var(--q-close-button-fg-hover);
+    }
+  }
+
+  .q-status-icon {
+    @each $status in info, success, warning, error {
+      &--#{$status} {
+        color: var(--q-status-icon-#{$status}-fg);
+      }
+    }
+  }
+}

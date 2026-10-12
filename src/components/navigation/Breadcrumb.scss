@@ -1,4 +1,4 @@
-// Breadcrumb — mono caps trail. BEM: .q-breadcrumb, __list, __item, __separator, __crumb, __more;
+// Breadcrumb — sentence-case trail. BEM: .q-breadcrumb, __list, __item, __separator, __crumb, __more;
 // --{size}; __crumb--action (a link or a button with onClick). Current crumb: [aria-current="page"].
 @use "../../styles/layers";
 
@@ -8,8 +8,9 @@
     --q-breadcrumb-gap: var(--q-space-1-25);
     --q-breadcrumb-crumb-gap: var(--q-space-0-75);
     --q-breadcrumb-font: var(--q-font-label);
+    --q-breadcrumb-weight: var(--q-weight-label);
     --q-breadcrumb-tracking: var(--q-tracking-label);
-    --q-breadcrumb-sm-font-size: var(--q-text-3xs);
+    --q-breadcrumb-sm-font-size: var(--q-text-2xs);
     --q-breadcrumb-md-font-size: var(--q-text-label);
     --q-breadcrumb-lg-font-size: var(--q-text-sm);
     --q-breadcrumb-separator-fg: var(--q-fg-subtle);
@@ -32,6 +33,7 @@
     list-style: none;
     font-family: var(--q-breadcrumb-font);
     font-size: var(--q-breadcrumb-md-font-size);
+    font-weight: var(--q-breadcrumb-weight);
     letter-spacing: var(--q-breadcrumb-tracking);
     text-transform: var(--q-case-label);
   }
@@ -83,6 +85,8 @@
   }
 
   .q-breadcrumb__more {
+    display: inline-flex;
+    align-items: center;
     padding: 0;
     border: 0;
     background: none;

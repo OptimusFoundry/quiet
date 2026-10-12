@@ -1,16 +1,17 @@
-// Tooltip — ink bubble, mono caps. BEM: .q-tooltip (trigger wrapper), __bubble with
+// Tooltip — ink bubble, sans sentence case. BEM: .q-tooltip (trigger wrapper), __bubble with
 // [data-placement="top|bottom|left|right"] and [data-state="open|closed"] (the delay/grace timer is JS).
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
-    --q-tooltip-bg: var(--q-fg);
-    --q-tooltip-fg: var(--q-bg);
-    --q-tooltip-font-size: var(--q-text-3xs);
-    --q-tooltip-leading: 1.5; // mono caps at 10px need a little more air than --q-leading-compact
-    --q-tooltip-py: var(--q-space-0-75);
-    --q-tooltip-px: var(--q-space-1-25);
+    --q-tooltip-bg: var(--q-bg-inverse);
+    --q-tooltip-fg: var(--q-fg-on-inverse);
+    --q-tooltip-font-size: var(--q-text-sm);
+    --q-tooltip-weight: var(--q-weight-medium);
+    --q-tooltip-leading: var(--q-leading-ui);
+    --q-tooltip-py: var(--q-space-0-5);
+    --q-tooltip-px: var(--q-space-1);
     --q-tooltip-max-width: 240px;
     --q-tooltip-radius: var(--q-radius-sm);
     --q-tooltip-offset: var(--q-space-1);
@@ -34,11 +35,10 @@
     border-radius: var(--q-tooltip-radius);
     background: var(--q-tooltip-bg);
     color: var(--q-tooltip-fg);
-    font-family: var(--q-font-mono);
+    font-family: var(--q-font-sans);
     font-size: var(--q-tooltip-font-size);
+    font-weight: var(--q-tooltip-weight);
     line-height: var(--q-tooltip-leading);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
     opacity: 0;
     pointer-events: none;
     transition:

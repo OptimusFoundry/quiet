@@ -1,0 +1,24 @@
+// Layout for the Extensions/Navigation stories.
+.q-sb-navigation {
+	display: grid;
+	gap: 28px;
+	max-width: 760px;
+	padding: 32px 16px;
+
+	&__section {
+		display: grid;
+		gap: 12px;
+		justify-items: start;
+	}
+
+	&__title {
+		margin: 0;
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+		font-weight: var(--q-weight-medium);
+	}
+
+	&__full {
+		justify-self: stretch;
+	}
+}

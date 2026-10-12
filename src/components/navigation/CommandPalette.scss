@@ -1,6 +1,7 @@
-// CommandPalette — ⌘K dialog. BEM: .q-command-palette (scrim), __dialog, __search, __slash, __input,
-// __hint, __list, __empty, __group-label, __option, __option-icon, __option-text, __option-label,
-// __option-description, __option-enter, __footer. Active option: [aria-selected="true"].
+// CommandPalette — ⌘K dialog, floating on its shadow. BEM: .q-command-palette (scrim), __dialog,
+// __search, __search-icon, __input, __kbd, __list, __empty, __group-label, __option, __option-icon,
+// __option-text, __option-label, __option-description, __option-enter, __footer, __footer-item.
+// Active option: [aria-selected="true"].
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -13,22 +14,26 @@
     --q-command-palette-width: var(--q-w-form);
     --q-command-palette-max-height: 70vh;
     --q-command-palette-bg: var(--q-bg);
-    --q-command-palette-border: var(--q-border);
     --q-command-palette-radius: var(--q-radius-xl);
-    --q-command-palette-shadow: var(--q-shadow-3);
-    --q-command-palette-px: var(--q-space-2-5);
+    --q-command-palette-shadow: var(--q-shadow-float);
+    --q-command-palette-px: var(--q-space-2);
 
-    --q-command-palette-mono-font: var(--q-font-mono);
-    --q-command-palette-mono-font-size: var(--q-text-3xs);
-    --q-command-palette-mono-tracking: var(--q-tracking-mono);
-    --q-command-palette-mono-fg: var(--q-fg-muted);
+    --q-command-palette-label-fg: var(--q-fg-muted);
+    --q-command-palette-label-font: var(--q-font-label);
+    --q-command-palette-label-size: var(--q-text-label);
+    --q-command-palette-label-weight: var(--q-weight-label);
+    --q-command-palette-kbd-font: var(--q-font-mono);
+    --q-command-palette-kbd-size: var(--q-text-2xs);
+    --q-command-palette-kbd-fg: var(--q-fg-muted);
+    --q-command-palette-kbd-bg: var(--q-bg-subtle);
+    --q-command-palette-kbd-px: var(--q-space-0-5);
+    --q-command-palette-kbd-radius: var(--q-radius-2xs);
 
-    --q-command-palette-search-gap: var(--q-space-1-5);
-    --q-command-palette-slash-font-size: var(--q-text-2xs);
-    --q-command-palette-slash-fg: var(--q-fg);
+    --q-command-palette-search-gap: var(--q-space-1);
+    --q-command-palette-search-icon-fg: var(--q-fg-muted);
     --q-command-palette-input-height: var(--q-field-lg);
     --q-command-palette-input-font: var(--q-font-sans);
-    --q-command-palette-input-font-size: var(--q-text-xl);
+    --q-command-palette-input-font-size: var(--q-text-lg);
     --q-command-palette-input-fg: var(--q-fg);
 
     --q-command-palette-list-py: var(--q-space-1);
@@ -51,11 +56,13 @@
     --q-command-palette-option-label-fg: var(--q-fg);
     --q-command-palette-option-description-font-size: var(--q-text-sm);
     --q-command-palette-option-description-fg: var(--q-fg-muted);
-    --q-command-palette-option-enter-font-size: var(--q-text-sm);
-    --q-command-palette-option-enter-fg: var(--q-fg);
+    --q-command-palette-option-enter-fg: var(--q-fg-muted);
 
-    --q-command-palette-footer-gap: var(--q-space-3);
-    --q-command-palette-footer-py: var(--q-space-1-25);
+    --q-command-palette-footer-gap: var(--q-space-2);
+    --q-command-palette-footer-item-gap: var(--q-space-0-5);
+    --q-command-palette-footer-py: var(--q-space-1);
+    --q-command-palette-footer-bg: var(--q-bg-subtle);
+
   }
 }
 
@@ -90,21 +97,30 @@
     max-width: var(--q-command-palette-width);
     max-height: var(--q-command-palette-max-height);
     overflow: hidden;
-    border: var(--q-hairline) solid var(--q-command-palette-border);
+    border: 0;
     border-radius: var(--q-command-palette-radius);
     background: var(--q-command-palette-bg);
     box-shadow: var(--q-command-palette-shadow);
   }
 
-  .q-command-palette__hint,
-  .q-command-palette__slash,
   .q-command-palette__group-label,
   .q-command-palette__footer {
-    color: var(--q-command-palette-mono-fg);
-    font-family: var(--q-command-palette-mono-font);
-    font-size: var(--q-command-palette-mono-font-size);
-    letter-spacing: var(--q-command-palette-mono-tracking);
-    text-transform: uppercase;
+    color: var(--q-command-palette-label-fg);
+    font-family: var(--q-command-palette-label-font);
+    font-size: var(--q-command-palette-label-size);
+    font-weight: var(--q-command-palette-label-weight);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
+  }
+
+  .q-command-palette__kbd {
+    padding: 0 var(--q-command-palette-kbd-px);
+    border-radius: var(--q-command-palette-kbd-radius);
+    background: var(--q-command-palette-kbd-bg);
+    color: var(--q-command-palette-kbd-fg);
+    font-family: var(--q-command-palette-kbd-font);
+    font-size: var(--q-command-palette-kbd-size);
+    font-weight: var(--q-weight-regular);
   }
 
   .q-command-palette__search {
@@ -112,12 +128,10 @@
     align-items: center;
     gap: var(--q-command-palette-search-gap);
     padding: 0 var(--q-command-palette-px);
-    border-bottom: var(--q-hairline) solid var(--q-command-palette-border);
   }
 
-  .q-command-palette__slash {
-    color: var(--q-command-palette-slash-fg);
-    font-size: var(--q-command-palette-slash-font-size);
+  .q-command-palette__search-icon {
+    color: var(--q-command-palette-search-icon-fg);
   }
 
   .q-command-palette__input {
@@ -191,13 +205,19 @@
 
   .q-command-palette__option-enter {
     color: var(--q-command-palette-option-enter-fg);
-    font-size: var(--q-command-palette-option-enter-font-size);
   }
 
   .q-command-palette__footer {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--q-command-palette-footer-gap);
     padding: var(--q-command-palette-footer-py) var(--q-command-palette-px);
-    border-top: var(--q-hairline) solid var(--q-command-palette-border);
+    background: var(--q-command-palette-footer-bg);
+  }
+
+  .q-command-palette__footer-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--q-command-palette-footer-item-gap);
   }
 }

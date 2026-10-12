@@ -1,8 +1,9 @@
 import React from "react";
 import "./Alert.scss";
+import { CloseButton, StatusIcon } from "./parts";
 
 /**
- * Inline, in-flow message box. Rounded (--radius-md), hairline; status reads through the ringed glyph.
+ * Inline, in-flow message box on its status ground (--q-radius-md); status reads through the icon.
  * @startingPoint section="Feedback" subtitle="Info · success · warning · error" viewport="700x420"
  */
 export interface AlertProps {
@@ -13,13 +14,13 @@ export interface AlertProps {
 	icon?: false | React.ReactNode;
 	/** e.g. an ArrowLink or small Button */
 	action?: React.ReactNode;
-	/** Shows × */
+	/** Shows the close button */
 	onDismiss?: () => void;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-const GLYPH: Record<string, string> = { info: "i", success: "✓", warning: "!", error: "!" };
+const VARIANTS: string[] = ["info", "success", "warning", "error"];
 
 export function Alert({
 	variant = "info",
@@ -54,8 +55,8 @@ export function Alert({
 		return () => clearTimeout(t);
 	}, [leave]);
 	if (leave === 3) return null;
-	const v = GLYPH[variant] ? variant : "info";
-	const glyph = icon === false ? null : icon || <span className="q-alert__glyph">{GLYPH[v]}</span>;
+	const v = (VARIANTS.includes(variant) ? variant : "info") as NonNullable<AlertProps["variant"]>;
+	const glyph = icon === false ? null : icon || <StatusIcon status={v} />;
 	const box = (
 		<div
 			role={variant === "error" ? "alert" : "status"}
@@ -73,14 +74,11 @@ export function Alert({
 				{action && <div className="q-alert__actions">{action}</div>}
 			</div>
 			{onDismiss && (
-				<button
-					type="button"
-					aria-label="Dismiss alert"
+				<CloseButton
+					label="Dismiss alert"
 					onClick={() => setLeave((l) => l || 1)}
 					className="q-alert__dismiss"
-				>
-					{"×"}
-				</button>
+				/>
 			)}
 		</div>
 	);

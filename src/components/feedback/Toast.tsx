@@ -1,15 +1,16 @@
 import React from "react";
 import "./Toast.scss";
+import { CloseButton, StatusIcon } from "./parts";
 
 /**
- * Rounded notification with a soft hairline and shadow. Variants mark status with a dot or glyph.
+ * Rounded notification floating on --q-shadow-float. Variants mark status with a dot or a status icon.
  * @startingPoint section="Feedback" subtitle="Transient notifications" viewport="600x360"
  */
 export interface ToastProps {
 	title?: React.ReactNode;
 	/** Body sentence */
 	description?: React.ReactNode;
-	/** Mono caps metadata line */
+	/** Secondary metadata line (muted, small) */
 	meta?: React.ReactNode;
 	variant?: "default" | "neutral" | "success" | "warning" | "error";
 	/** Legacy: live = molten dot, neutral = ink dot */
@@ -26,9 +27,9 @@ export interface ToastProps {
 const MARK: Record<string, React.ReactNode> = {
 	default: <span className="q-toast__dot" />,
 	neutral: <span className="q-toast__dot" />,
-	success: <span className="q-toast__glyph">{"✓"}</span>,
-	warning: <span className="q-toast__dot" />,
-	error: <span className="q-toast__glyph">!</span>,
+	success: <StatusIcon status="success" />,
+	warning: <StatusIcon status="warning" />,
+	error: <StatusIcon status="error" />,
 };
 
 export function Toast({
@@ -96,14 +97,7 @@ export function Toast({
 				{action && <div className="q-toast__action">{action}</div>}
 			</div>
 			{onClose && (
-				<button
-					type="button"
-					onClick={close}
-					aria-label="Dismiss notification"
-					className="q-toast__close"
-				>
-					{"×"}
-				</button>
+				<CloseButton label="Dismiss notification" onClick={close} className="q-toast__close" />
 			)}
 		</div>
 	);

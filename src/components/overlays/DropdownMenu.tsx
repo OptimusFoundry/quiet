@@ -1,5 +1,6 @@
 import React from "react";
 import { rovingKeyDown, useEscape, useOutside, usePresence } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./DropdownMenu.scss";
 
 /** One action in a DropdownMenu. `Item` is the item's own type, so its handlers receive it whole. */
@@ -11,22 +12,32 @@ type DropdownMenuAction<Item> = {
 	onSelect?: (item: Item) => void;
 	disabled?: boolean;
 	danger?: boolean;
+	/** Makes it a checkbox item (`menuitemcheckbox`), or with `radio` the chosen one of a single-choice set */
 	checked?: boolean;
+	/** A single-choice item (`menuitemradio`): a trailing check marks the one whose `checked` is true. Items under a `{ group, radio: true }` label are radio items without it */
+	radio?: boolean;
 	active?: boolean;
 };
 interface DropdownMenuItem extends DropdownMenuAction<DropdownMenuItem> {}
 
 /**
- * Action menu: icons, shortcuts, checkbox items, group labels, header, caption, context-menu mode.
+ * Action menu: icons, shortcuts, checkbox items, single-choice (radio) groups, group labels, header,
+ * caption, context-menu mode. Floats on --q-shadow-float.
  * @startingPoint section="Overlays" subtitle="Action & context menus" viewport="600x440"
  */
 export interface DropdownMenuProps<Item extends DropdownMenuAction<Item> = DropdownMenuItem> {
 	/** Clickable element that opens the menu */
 	trigger?: React.ReactNode;
-	items: Array<Item | { divider: true } | { group: React.ReactNode }>;
+	/**
+	 * Actions, `{ divider: true }` and `{ group: "Label" }` headings. `{ group, radio: true }` makes the
+	 * items under it one single-choice set (`menuitemradio`): the item with `checked` gets a trailing
+	 * check. Picking one calls `onSelect`; set `checked` from your state. Enter or a click picks and
+	 * closes, Space picks and keeps the menu open.
+	 */
+	items: Array<Item | { divider: true } | { group: React.ReactNode; radio?: boolean }>;
 	/** e.g. account name + email */
 	header?: React.ReactNode;
-	/** Mono footer line */
+	/** Muted footer line */
 	caption?: React.ReactNode;
 	size?: "sm" | "md";
 	align?: "start" | "end";
@@ -50,6 +61,7 @@ export interface DropdownMenuProps<Item extends DropdownMenuAction<Item> = Dropd
 }
 
 type MenuFlat<Item> = Item & { divider?: true; group?: React.ReactNode };
+type Kind = "menuitem" | "menuitemcheckbox" | "menuitemradio";
 
 const ITEM = '[role^="menuitem"]';
 const roving = rovingKeyDown(ITEM, "vertical");
@@ -57,14 +69,19 @@ const roving = rovingKeyDown(ITEM, "vertical");
 function MenuItem<Item extends DropdownMenuAction<Item>>({
 	it,
 	size,
+	radio,
 	onPick,
 }: {
 	it: Item;
 	size: string;
-	onPick: (it: Item) => void;
+	/** Set by a `{ group, radio: true }` label above it */
+	radio?: boolean;
+	onPick: (it: Item, keepOpen: boolean) => void;
 }) {
 	const armed = React.useRef(false);
 	const off = it.disabled;
+	const kind: Kind =
+		radio || it.radio ? "menuitemradio" : it.checked != null ? "menuitemcheckbox" : "menuitem";
 	const cls = [
 		"q-dropdown-menu__item",
 		size === "sm" && "q-dropdown-menu__item--sm",
@@ -75,25 +92,25 @@ function MenuItem<Item extends DropdownMenuAction<Item>>({
 		.join(" ");
 	return (
 		<div
-			role={it.checked != null ? "menuitemcheckbox" : "menuitem"}
-			aria-checked={it.checked}
+			role={kind}
+			aria-checked={kind === "menuitem" ? undefined : !!it.checked}
 			aria-disabled={off || undefined}
 			tabIndex={-1}
 			className={cls}
-			onClick={() => !off && onPick(it)}
+			onClick={() => !off && onPick(it, false)}
 			onKeyDown={(e) =>
 				(e.key === "Enter" || e.key === " ") &&
 				(e.preventDefault(),
 				(armed.current = e.key === " "),
-				e.key === "Enter" && !off && onPick(it))
+				e.key === "Enter" && !off && onPick(it, false))
 			}
 			onKeyUp={(e) =>
-				e.key === " " && armed.current && ((armed.current = false), !off && onPick(it))
+				e.key === " " && armed.current && ((armed.current = false), !off && onPick(it, true))
 			}
 		>
-			{it.checked != null ? (
+			{kind === "menuitemcheckbox" ? (
 				<span aria-hidden="true" className="q-dropdown-menu__check">
-					{it.checked ? "✓" : ""}
+					{it.checked && <Icon name="check" size="sm" />}
 				</span>
 			) : (
 				it.icon && (
@@ -109,6 +126,11 @@ function MenuItem<Item extends DropdownMenuAction<Item>>({
 			{it.shortcut && (
 				<span aria-hidden="true" className="q-dropdown-menu__shortcut">
 					{it.shortcut}
+				</span>
+			)}
+			{kind === "menuitemradio" && (
+				<span aria-hidden="true" className="q-dropdown-menu__selected">
+					{it.checked && <Icon name="check" />}
 				</span>
 			)}
 		</div>
@@ -222,10 +244,11 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 		from.current = document.activeElement as HTMLElement | null;
 		setOpen(true);
 	};
-	const pick = (it: Item) => {
+	// A checkbox item keeps the menu open; a radio item closes it unless picked with Space (APG menu).
+	const pick = (it: Item, keepOpen: boolean, radio?: boolean) => {
 		it.onSelect?.(it);
 		onSelect?.(it);
-		if (it.checked == null) close();
+		if (radio || it.radio ? !keepOpen : it.checked == null) close();
 	};
 	const onMenuKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === "Tab") {
@@ -254,7 +277,7 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 	// Items after a group label (up to the next divider or label) sit in a labelled role="group".
 	const body: React.ReactElement[] = [];
 	for (let i = 0; i < items.length; i++) {
-		const it = items[i] as MenuFlat<Item>;
+		const it = items[i] as MenuFlat<Item> & { radio?: boolean };
 		if (it.divider)
 			body.push(<div key={i} role="separator" className="q-dropdown-menu__separator" />);
 		else if (it.group) {
@@ -267,7 +290,15 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 				!(items[j] as MenuFlat<Item>).group;
 				j++
 			)
-				kids.push(<MenuItem key={j} it={items[j] as Item} size={size} onPick={pick} />);
+				kids.push(
+					<MenuItem
+						key={j}
+						it={items[j] as Item}
+						size={size}
+						radio={it.radio}
+						onPick={(x, keep) => pick(x, keep, it.radio)}
+					/>,
+				);
 			body.push(
 				<div key={i} role="group" aria-labelledby={`${id}-g${i}`}>
 					<div id={`${id}-g${i}`} role="presentation" className="q-dropdown-menu__group-label">
