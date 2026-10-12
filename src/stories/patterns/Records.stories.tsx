@@ -372,7 +372,7 @@ function Records() {
 									status={
 										c.status === "live" ? "live" : c.status === "paused" ? "archived" : "prototype"
 									}
-									label={c.status[0].toUpperCase() + c.status.slice(1)}
+									label={c.status.charAt(0).toUpperCase() + c.status.slice(1)}
 								/>
 							),
 						}))}
