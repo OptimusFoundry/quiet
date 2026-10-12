@@ -3,7 +3,6 @@
 // --collapsed, --compact, --dividers, --drawer; __icon--initials. Current item: [aria-current="page"].
 // Mobile drawer: .q-sidebar-drawer, __scrim, __panel. External opener: .q-sidebar-trigger.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -22,6 +21,8 @@
 
     --q-sidebar-header-gap: var(--q-space-1);
     --q-sidebar-header-min-height: var(--q-control-sm);
+    --q-sidebar-header-align: center; // quiet: AppShell tops it, beside a tall header
+    --q-sidebar-toggle-offset: 0; // quiet: nudges the toggle to line up with a taller first row
     --q-sidebar-toggle-size: var(--q-control-sm);
     --q-sidebar-toggle-radius: var(--q-radius-pill);
     --q-sidebar-toggle-bg: var(--q-bg);
@@ -33,28 +34,29 @@
     --q-sidebar-label-font: var(--q-font-label);
     --q-sidebar-label-font-size: var(--q-text-3xs);
     --q-sidebar-label-tracking: var(--q-tracking-label);
-    --q-sidebar-label-fg: var(--q-fg-subtle);
+    --q-sidebar-label-fg: var(--q-fg-muted);
     --q-sidebar-label-pb: var(--q-space-1);
 
     --q-sidebar-item-gap: var(--q-space-1-5);
-    --q-sidebar-item-height: var(--q-control-md);
+    --q-sidebar-item-height: var(--q-control-sm);
     --q-sidebar-item-compact-height: var(--q-control-sm);
     --q-sidebar-item-radius: var(--q-radius-sm);
     --q-sidebar-item-font: var(--q-font-sans);
-    --q-sidebar-item-font-size: var(--q-text-md);
+    --q-sidebar-item-font-size: var(--q-text-sm);
     --q-sidebar-item-compact-font-size: var(--q-text-sm);
-    --q-sidebar-item-weight: var(--q-weight-regular);
+    --q-sidebar-item-weight: var(--q-weight-medium);
     --q-sidebar-item-weight-current: var(--q-weight-semibold);
     --q-sidebar-item-fg: var(--q-fg-body);
-    --q-sidebar-item-fg-current: var(--q-fg);
+    --q-sidebar-item-fg-current: var(--q-accent-fg);
     --q-sidebar-item-bg-hover: var(--q-bg-subtle);
-    --q-sidebar-item-bg-current: var(--q-bg-subtle);
+    --q-sidebar-item-bg-current: var(--q-accent-subtle);
+    --q-sidebar-item-shadow-current: none; // quiet: AppShell raises the current item off its canvas
     --q-sidebar-item-disabled-opacity: 0.4;
     --q-sidebar-icon-width: var(--q-space-2-5);
-    --q-sidebar-icon-font-size: var(--q-text-md);
+    --q-sidebar-icon-font-size: var(--q-text-sm);
     --q-sidebar-icon-tracking: var(--q-tracking-wide);
     --q-sidebar-icon-fg: var(--q-fg-muted);
-    --q-sidebar-icon-fg-current: var(--q-fg);
+    --q-sidebar-icon-fg-current: var(--q-accent-fg);
     --q-sidebar-initials-font: var(--q-font-mono);
     --q-sidebar-initials-font-size: var(--q-text-3xs);
     --q-sidebar-badge-font: var(--q-font-mono);
@@ -84,30 +86,6 @@
     }
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-sidebar-label-fg: var(--q-fg-muted);
-    --q-sidebar-item-height: var(--q-control-sm);
-    --q-sidebar-item-font-size: var(--q-text-sm);
-    --q-sidebar-item-weight: var(--q-weight-medium);
-    --q-sidebar-item-weight-current: var(--q-weight-semibold);
-    --q-sidebar-icon-font-size: var(--q-text-sm);
-    --q-sidebar-item-fg-current: var(--q-accent-fg);
-    --q-sidebar-item-bg-current: var(--q-accent-subtle);
-    --q-sidebar-icon-fg-current: var(--q-accent-fg);
-  }
-
-  @include app.reset {
-    --q-sidebar-label-fg: var(--q-fg-subtle);
-    --q-sidebar-item-height: var(--q-control-md);
-    --q-sidebar-item-font-size: var(--q-text-md);
-    --q-sidebar-item-weight: var(--q-weight-regular);
-    --q-sidebar-item-weight-current: var(--q-weight-semibold);
-    --q-sidebar-icon-font-size: var(--q-text-md);
-    --q-sidebar-item-fg-current: var(--q-fg);
-    --q-sidebar-item-bg-current: var(--q-bg-subtle);
-    --q-sidebar-icon-fg-current: var(--q-fg);
-  }
 }
 
 @layer q.components {
@@ -133,7 +111,7 @@
 
   .q-sidebar__header {
     display: flex;
-    align-items: center;
+    align-items: var(--q-sidebar-header-align);
     justify-content: space-between;
     gap: var(--q-sidebar-header-gap);
     min-height: var(--q-sidebar-header-min-height);
@@ -147,6 +125,7 @@
 
   .q-sidebar__toggle {
     flex: none;
+    margin-top: var(--q-sidebar-toggle-offset);
     width: var(--q-sidebar-toggle-size);
     height: var(--q-sidebar-toggle-size);
     border: var(--q-hairline) solid var(--q-sidebar-border);
@@ -262,6 +241,7 @@
 
     &[aria-current="page"] {
       background: var(--q-sidebar-item-bg-current);
+      box-shadow: var(--q-sidebar-item-shadow-current);
       color: var(--q-sidebar-item-fg-current);
       font-weight: var(--q-sidebar-item-weight-current);
     }

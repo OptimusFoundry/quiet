@@ -15,4 +15,5 @@ playwright-report
 .ds-sync/
 ds-bundle/
 .playwright-mcp/
+.superpowers/
 .ds-artifact/

@@ -2,6 +2,48 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.8.0
+
+quiet starts becoming its own design system: one look everywhere (the former app look), no
+editorial "marketing" look. Plan: docs/plans/2026-10-12-one-look.md (this release is phases 1–2).
+
+### Added
+
+- **App shell** (`src/components/app/`): `AppShell` (Sidebar on a canvas, the screen an inset
+  raised panel, an optional third pane beside it on desktop and full screen on a phone), `TopBar`,
+  `WorkspaceSwitcher`, `AccountMenu`, and `AppIcon` with quiet's own stroke icon set (`icons.ts`).
+- `--q-shadow-float` for floating layers; `scripts/check-one-look.mjs` in `npm run lint`.
+
+### Changed
+
+- **One look.** Every component renders what was the app look: Geist and Geist Mono, sentence-case
+  sans labels and hints, the app type scale and spacing, accent as the brand colour (links, primary
+  action, current and selected states, focus).
+- **Colour.** Softer ink (headings `#3b3b42`, body `#5b5b63`); the "lava" accent steps keep molten
+  saturated instead of mixing it with black (fill `#db3a00`, text `#d23300`); panels `#fcfbfb`
+  without an edge; warning and error surfaces a 3% accent tint; `--q-bg-inverse` is the soft ink.
+- **Dense sizes.** `--q-control-md` 32px, `--q-control-lg` 36px, fields 32/36/40px, `--q-h-topbar`
+  44px.
+- Lists drop their row and label rules; Panel header actions centre on the title line.
+- Patterns run on `AppShell`; Assistant's changes and Notifications open as panes; Billing is
+  rebuilt on PageHeader and Panels.
+
+### Deprecated
+
+- `QuietRoot density="app"` and `"marketing"`: both mean `"comfortable"` and warn once. Density is
+  spacing only: `"comfortable"` (default) or `"compact"`. Drop the prop, or pass `"compact"`.
+
+### Removed
+
+- The two-look plumbing: `styles/_app.scss` (`app.look` / `app.reset` / `app.rules`),
+  `scripts/check-app-look.mjs`, and `themes/_foundry-status.scss`.
+- Pixel parity with the Optimus reference no longer holds: the catalog renders the one look.
+
+### Fixed
+
+- A scoped product theme's `--q-font-sans` and `--q-text-*` reach labels, hints and headings, and
+  its panels use its own 50 step (they inherited foundry's near-white).
+
 ## 0.7.1
 
 ### Docs

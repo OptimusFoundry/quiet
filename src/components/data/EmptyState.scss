@@ -116,7 +116,7 @@
     text-wrap: balance;
   }
 
-  // The title's full stop follows the type role: shown on editorial pages, none in the app look.
+  // The title's full stop follows the type role (--q-period-display, none in the one look).
   .q-empty-state__dot {
     display: var(--q-period-display);
     color: var(--q-empty-state-dot-color);

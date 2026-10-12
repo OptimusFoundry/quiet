@@ -1,11 +1,11 @@
 // Tier 2 — sizes: controls, fields, rows, fixed layout widths, icons.
 :root {
   --q-control-sm: 32px;
-  --q-control-md: 40px;
-  --q-control-lg: 52px;
-  --q-field-sm: 36px;
-  --q-field-md: 48px;
-  --q-field-lg: 56px;
+  --q-control-md: 32px; // dense: one control height; md differs from sm by padding and type
+  --q-control-lg: 36px;
+  --q-field-sm: 32px;
+  --q-field-md: 36px;
+  --q-field-lg: 40px;
   --q-row-compact: 32px;
   --q-row: 48px;
 
@@ -24,7 +24,7 @@
   --q-w-form: 640px;
   --q-w-content: 1040px;
   --q-w-max: 1280px;
-  --q-h-topbar: 64px;
+  --q-h-topbar: 44px;
   --q-gutter: 32px;
   --q-hairline: 1px;
 }

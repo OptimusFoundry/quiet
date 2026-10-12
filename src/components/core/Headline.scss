@@ -1,7 +1,6 @@
 // Headline — display/h2/h3/h4 with an italic accent and the molten period.
 // BEM: .q-headline, __accent(--molten), __period; --display, --h2, --h3, --h4.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -10,11 +9,11 @@
     --q-headline-accent-molten-fg: var(--q-accent);
     --q-headline-period-fg: var(--q-accent);
 
-    --q-headline-display-font-size: var(--q-text-display);
+    --q-headline-display-font-size: var(--q-text-4xl);
     --q-headline-display-leading: var(--q-leading-display);
     --q-headline-display-tracking: var(--q-tracking-display);
     --q-headline-display-weight: var(--q-weight-bold);
-    --q-headline-h2-font-size: var(--q-text-6xl);
+    --q-headline-h2-font-size: var(--q-text-3xl);
     --q-headline-h2-leading: var(--q-leading-none);
     --q-headline-h2-tracking: var(--q-tracking-h2);
     --q-headline-h2-weight: var(--q-weight-bold);
@@ -28,16 +27,6 @@
     --q-headline-h4-weight: var(--q-weight-semibold);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-headline-h2-font-size: var(--q-text-3xl);
-    --q-headline-display-font-size: var(--q-text-4xl);
-  }
-
-  @include app.reset {
-    --q-headline-h2-font-size: var(--q-text-6xl);
-    --q-headline-display-font-size: var(--q-text-display);
-  }
 }
 
 @layer q.components {

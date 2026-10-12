@@ -1,0 +1,35 @@
+// AppIcon — a stroke icon from quiet's app set. BEM: .q-app-icon; --{sm|md|lg}. A pixel size
+// arrives as --_size.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-app-icon-sm-size: var(--q-space-1-75);
+    --q-app-icon-md-size: var(--q-space-2);
+    --q-app-icon-lg-size: var(--q-space-2-5);
+    --q-app-icon-stroke: 1.6; // the set is drawn for this weight
+  }
+}
+
+@layer q.components {
+  .q-app-icon {
+    --_size: var(--q-app-icon-md-size);
+
+    flex: none;
+    width: var(--_size);
+    height: var(--_size);
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: var(--q-app-icon-stroke);
+    vertical-align: middle;
+
+    @each $size in sm, md, lg {
+      &--#{$size} {
+        --_size: var(--q-app-icon-#{$size}-size);
+      }
+    }
+  }
+}

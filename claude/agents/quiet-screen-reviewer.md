@@ -27,7 +27,7 @@ CSS, a token, the component choice or the markup) and the fix, citing the guidel
      `EntityLink`s; no table row is clickable without a link in its name cell.
    - **Components:** each chosen by `components.md`; nothing hand-rolled that quiet has; states
      (loading, empty, error) designed for every data block.
-   - **Colour:** the app look is on (`density="app"`): molten on the primary action, current nav,
+   - **Colour:** molten on the primary action, current nav,
      links, selected/checked states; never a section background or body text; one primary per view.
      Status only through `--q-status-*` and component props, and each status reads without its dot.
    - **Content:** `content.md` voice, no banned words, labels and numbers formatted as it says.

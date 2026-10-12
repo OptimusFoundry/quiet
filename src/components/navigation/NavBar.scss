@@ -1,6 +1,5 @@
 // NavBar — site header. BEM: .q-nav-bar, __home, __links, __link. Current link: [aria-current="page"].
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -16,20 +15,10 @@
     --q-nav-bar-link-font-size: var(--q-text-md);
     --q-nav-bar-link-weight: var(--q-weight-medium);
     --q-nav-bar-link-fg: var(--q-fg);
-    --q-nav-bar-link-fg-hover: var(--q-accent);
-    --q-nav-bar-link-fg-current: var(--q-nav-bar-link-fg); // the app look marks the current page
-  }
-
-  // The app look (styles/_app.scss).
-  @include app.look {
     --q-nav-bar-link-fg-hover: var(--q-accent-fg);
-    --q-nav-bar-link-fg-current: var(--q-accent-fg);
+    --q-nav-bar-link-fg-current: var(--q-accent-fg); // marks the current page
   }
 
-  @include app.reset {
-    --q-nav-bar-link-fg-hover: var(--q-accent);
-    --q-nav-bar-link-fg-current: var(--q-nav-bar-link-fg);
-  }
 }
 
 @layer q.components {

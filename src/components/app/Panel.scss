@@ -137,9 +137,14 @@
   }
 
   .q-panel__actions {
+    // Centred on the title's line, not its top: pulled up (and the header kept its height) by half
+    // the difference between a small control and the title's line box.
+    --_pull: calc((var(--q-panel-title-font-size) * var(--q-panel-title-leading) - var(--q-control-sm)) / 2);
+
     display: flex;
     flex: none;
     align-items: center;
+    margin-block: var(--_pull);
     gap: var(--q-space-stack);
     font-size: var(--q-panel-actions-font-size);
   }

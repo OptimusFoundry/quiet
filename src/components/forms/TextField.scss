@@ -1,7 +1,6 @@
 // TextField — label, field chrome with optional icons, hint. BEM: .q-text-field, __field, __icon,
 // __input; --{size}, --filled, --invalid, --disabled. Focus reads :focus-within on the field.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -21,7 +20,7 @@
     --q-text-field-radius: var(--q-radius-md);
     --q-text-field-bg: var(--q-bg);
     --q-text-field-border: var(--q-border);
-    --q-text-field-border-focus: var(--q-fg);
+    --q-text-field-border-focus: var(--q-accent);
     --q-text-field-border-invalid: var(--q-accent);
     --q-text-field-ring-focus: var(--q-ring-soft);
     --q-text-field-filled-bg: var(--q-bg-subtle);
@@ -30,14 +29,6 @@
     --q-text-field-fg: var(--q-fg);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-text-field-border-focus: var(--q-accent);
-  }
-
-  @include app.reset {
-    --q-text-field-border-focus: var(--q-fg);
-  }
 }
 
 @layer q.components {

@@ -1,14 +1,13 @@
 // Badge — sans pill for counts and statuses; status reads through the dot.
 // BEM: .q-badge, __dot(--solid-ink, --hollow, --molten, --paper); --{variant}, --{size}, --count.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
   [data-theme] {
     --q-badge-gap: var(--q-space-0-75);
     --q-badge-radius: var(--q-radius-pill);
-    --q-badge-weight: var(--q-weight-semibold);
+    --q-badge-weight: var(--q-weight-medium);
     --q-badge-tracking: -0.005em; // a hair tighter than --q-tracking-tight, for small sans caps
     --q-badge-count-px: var(--q-space-0-75);
     --q-badge-dot-size: var(--q-space-0-75);
@@ -23,18 +22,18 @@
     --q-badge-lg-px: var(--q-space-1-5);
     --q-badge-lg-font-size: var(--q-text-sm);
 
-    --q-badge-default-bg: var(--q-bg-subtle);
+    --q-badge-default-bg: var(--q-border);
     --q-badge-default-fg: var(--q-fg);
-    --q-badge-default-border: var(--q-bg-subtle);
-    --q-badge-primary-bg: var(--q-fg);
-    --q-badge-primary-fg: var(--q-bg);
-    --q-badge-primary-border: var(--q-fg);
+    --q-badge-default-border: var(--q-border);
+    --q-badge-primary-bg: var(--q-accent-subtle);
+    --q-badge-primary-fg: var(--q-accent-fg);
+    --q-badge-primary-border: var(--q-accent-subtle);
     --q-badge-secondary-bg: transparent;
     --q-badge-secondary-fg: var(--q-fg-muted);
     --q-badge-secondary-border: var(--q-border);
     --q-badge-outline-bg: transparent;
     --q-badge-outline-fg: var(--q-fg);
-    --q-badge-outline-border: var(--q-fg);
+    --q-badge-outline-border: var(--q-border-strong);
     --q-badge-success-bg: var(--q-status-success-bg);
     --q-badge-success-fg: var(--q-fg);
     --q-badge-success-border: var(--q-status-success-border);
@@ -54,26 +53,6 @@
     --q-badge-dot-hollow-border: var(--q-accent);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-badge-weight: var(--q-weight-medium);
-    --q-badge-default-bg: var(--q-border); // reads on a Panel's subtle ground too
-    --q-badge-default-border: var(--q-border);
-    --q-badge-primary-bg: var(--q-accent-subtle);
-    --q-badge-primary-fg: var(--q-accent-fg);
-    --q-badge-primary-border: var(--q-accent-subtle);
-    --q-badge-outline-border: var(--q-border-strong);
-  }
-
-  @include app.reset {
-    --q-badge-default-bg: var(--q-bg-subtle);
-    --q-badge-default-border: var(--q-bg-subtle);
-    --q-badge-weight: var(--q-weight-semibold);
-    --q-badge-primary-bg: var(--q-fg);
-    --q-badge-primary-fg: var(--q-bg);
-    --q-badge-primary-border: var(--q-fg);
-    --q-badge-outline-border: var(--q-fg);
-  }
 }
 
 @layer q.components {

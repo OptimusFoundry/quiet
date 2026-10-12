@@ -3,7 +3,7 @@ import "../src/styles/fonts.css";
 import { QuietRoot, type QuietRootProps } from "../src/QuietRoot";
 import { defaultTheme, type ThemeName, themeNames, themes } from "../src/styles/themes/themes";
 
-// Pattern screens set parameters.density = "app": density has to sit on the themed root, as in an app.
+// Stories may set parameters.density ("compact"); the old "app" value is a deprecated alias.
 const withQuiet: Decorator = (Story, ctx) => (
 	<QuietRoot
 		theme={(ctx.globals.theme as ThemeName) ?? defaultTheme}

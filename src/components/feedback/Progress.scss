@@ -1,7 +1,6 @@
 // Progress — thin bar. BEM: .q-progress, __meta, __value, __track, __fill (--indeterminate);
 // --{sm|md|lg}, --{success|warning|error|heat}. The fill width comes in as --_progress.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -10,8 +9,8 @@
     --q-progress-meta-gap: var(--q-space-2);
     --q-progress-meta-fg: var(--q-fg-muted);
     --q-progress-value-fg: var(--q-fg);
-    --q-progress-track-bg: var(--q-border);
-    --q-progress-fill: var(--q-fg);
+    --q-progress-track-bg: var(--q-bg-subtle);
+    --q-progress-fill: var(--q-accent);
     --q-progress-fill-hot: var(--q-accent);
     --q-progress-success-fill: var(--q-status-success-fg);
     --q-progress-warning-fill: var(--q-status-warning-fg);
@@ -25,16 +24,6 @@
     --q-progress-indeterminate-width: 30%;
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-progress-track-bg: var(--q-bg-subtle);
-    --q-progress-fill: var(--q-accent);
-  }
-
-  @include app.reset {
-    --q-progress-track-bg: var(--q-border);
-    --q-progress-fill: var(--q-fg);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

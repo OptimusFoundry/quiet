@@ -3,7 +3,6 @@
 // __grid, __row, __weekday, __cell, __day, __today, __footer, __action(--muted), __hint(--error);
 // --{size}, --disabled. Open reads aria-expanded; the selected day reads its cell's aria-selected.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -305,14 +304,12 @@
     }
   }
 
-  // The app look: the field label is sans and sentence case like every other field's.
-  @include app.rules {
-    .q-date-picker__label {
-      font-family: var(--q-font-label);
-      font-size: var(--q-text-label);
-      font-weight: var(--q-weight-label);
-      letter-spacing: var(--q-tracking-label);
-      text-transform: var(--q-case-label);
-    }
+  .q-date-picker__label {
+    font-family: var(--q-font-label);
+    font-size: var(--q-text-label);
+    font-weight: var(--q-weight-label);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
+
 }

@@ -19,7 +19,7 @@ import "@optimusfoundry/quiet/fonts.css"; // skip if your theme sets its own fon
 import { QuietRoot, ThemeProvider, Toaster } from "@optimusfoundry/quiet";
 
 <ThemeProvider defaultValue="foundry" linkComponent={RouterLink}>
-  <QuietRoot density="app">  {/* no theme prop: follows ThemeProvider, dark included */}
+  <QuietRoot>  {/* no theme prop: follows ThemeProvider, dark included; density="compact" for dense tools */}
     <App />
     <Toaster position="bottom-right" max={3} />
   </QuietRoot>
@@ -63,7 +63,7 @@ Decide on paper before writing JSX.
 - Raw colours, px or durations. Status colour only from `--q-status-*` and component props.
 - Guessed or invented `--q-*` names. Look them up in `dist/tokens.json`; `TokenName` + `cssVar()` in TS;
   the `quiet/known-tokens` Stylelint rule (README). Your own custom properties are `--app-*`.
-- Molten by hand. In `density="app"` the components make it the brand colour (links, the one primary
+- Molten by hand. The components make it the brand colour (links, the one primary
   action, current nav, selected and checked states, focus); never use it for a section background
   or body text, and never write `--q-accent` for text (it's 3.87:1; components use `--q-accent-fg`).
 - Text that navigates but doesn't look like a link, or a clickable table row with no link in it.

@@ -1,6 +1,5 @@
 // ArrowLink — sans link with a trailing arrow and a hairline underline. BEM: .q-arrow-link.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -9,26 +8,12 @@
     --q-arrow-link-pad-bottom: var(--q-space-0-25);
     --q-arrow-link-font-size: var(--q-text-md);
     --q-arrow-link-weight: var(--q-weight-semibold);
-    --q-arrow-link-fg: var(--q-fg);
-    --q-arrow-link-fg-hover: var(--q-accent);
-    --q-arrow-link-border: var(--q-border);
-    --q-arrow-link-border-hover: var(--q-accent);
-  }
-
-  // The app look (styles/_app.scss).
-  @include app.look {
     --q-arrow-link-fg: var(--q-accent-fg);
     --q-arrow-link-fg-hover: var(--q-accent-fg);
     --q-arrow-link-border: var(--q-accent-border);
     --q-arrow-link-border-hover: var(--q-accent-fg);
   }
 
-  @include app.reset {
-    --q-arrow-link-fg: var(--q-fg);
-    --q-arrow-link-fg-hover: var(--q-accent);
-    --q-arrow-link-border: var(--q-border);
-    --q-arrow-link-border-hover: var(--q-accent);
-  }
 }
 
 @layer q.components {

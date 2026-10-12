@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useRef, useState } from "react";
 import {
-	Button,
 	type ChatAttachment,
 	ChatComposer,
 	ChatDivider,
@@ -9,7 +8,6 @@ import {
 	ChatThread,
 	Checkpoints,
 	CodeBlock,
-	Drawer,
 	PromptSuggestions,
 	Receipt,
 	SectionHeader,
@@ -20,8 +18,9 @@ import {
 import { AppFrame, useNarrow } from "./AppFrame";
 import "./Assistant.scss";
 
-// Assistant — a full chat-with-Claude page. The thread and composer take the main column; the side
-// panel holds what the assistant changed (Checkpoints) and the receipt for its last action.
+// Assistant — a full chat-with-Claude page. The thread and composer fill the main panel; AppShell's
+// third pane ("Changes", open by default on desktop, toggled from the TopBar) holds what the assistant
+// changed (Checkpoints) and the receipt for its last action. Notifications share that pane.
 // The reply is faked with a timer; a product wires onSubmit to the API and streams into ChatMessage.
 
 const IMAGE = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -225,7 +224,7 @@ function SidePanel() {
 				<SectionHeader
 					size="sm"
 					as="h2"
-					title="Changes"
+					title="Steps"
 					description="Every step you or Meerkat took in this conversation."
 				/>
 				<Checkpoints
@@ -267,43 +266,15 @@ function SidePanel() {
 }
 
 function AssistantPage() {
-	const narrow = useNarrow();
-	const [panel, setPanel] = useState(false);
 	return (
-		<div className={narrow ? "q-sb-assistant q-sb-assistant--narrow" : "q-sb-assistant"}>
-			<section
-				aria-label="Conversation: Bouncing campaigns"
-				className="q-sb-assistant__conversation"
-			>
-				<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-assistant__header">
-					<Text as="h1" heading={4}>
-						Bouncing campaigns
-					</Text>
-					{narrow && (
-						<Button
-							size="sm"
-							variant="outline"
-							aria-expanded={panel}
-							onClick={() => setPanel(true)}
-						>
-							Changes
-						</Button>
-					)}
-				</div>
-				<div className="q-sb-assistant__column">
-					<Conversation />
-				</div>
-			</section>
-			{narrow ? (
-				<Drawer open={panel} onClose={() => setPanel(false)} size="md" title="Changes">
-					<SidePanel />
-				</Drawer>
-			) : (
-				<aside aria-label="Changes and receipts" className="q-sb-assistant__panel">
-					<SidePanel />
-				</aside>
-			)}
-		</div>
+		<section aria-label="Conversation: Bouncing campaigns" className="q-sb-assistant">
+			<Text as="h1" heading={4}>
+				Bouncing campaigns
+			</Text>
+			<div className="q-sb-assistant__column">
+				<Conversation />
+			</div>
+		</section>
 	);
 }
 
@@ -317,6 +288,7 @@ export const Default: StoryObj = {
 		<AppFrame
 			active="assistant"
 			padded={false}
+			pane={{ title: "Changes", icon: "list", content: <SidePanel />, defaultOpen: true }}
 			crumbs={[
 				{ label: "Workspace", href: "#" },
 				{ label: "Assistant", href: "#" },

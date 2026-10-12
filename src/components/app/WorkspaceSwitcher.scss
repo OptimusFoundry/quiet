@@ -1,0 +1,117 @@
+// WorkspaceSwitcher — sidebar head: mark + name (+ detail) opening a switch menu.
+// BEM: .q-workspace-switcher (the menu anchor), __button, __mark, __text, __name, __detail, __chevron.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-workspace-switcher-height: var(--q-control-md);
+    --q-workspace-switcher-gap: var(--q-space-1);
+    --q-workspace-switcher-px: var(--q-space-0-75);
+    --q-workspace-switcher-radius: var(--q-radius-sm);
+    --q-workspace-switcher-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-workspace-switcher-dur: var(--q-dur-hover);
+
+    --q-workspace-switcher-mark-size: var(--q-space-3);
+    --q-workspace-switcher-mark-radius: var(--q-radius-xs);
+    --q-workspace-switcher-mark-bg: var(--q-accent-bg);
+    --q-workspace-switcher-mark-fg: var(--q-fg-on-accent);
+    --q-workspace-switcher-mark-font-size: var(--q-text-xs);
+
+    --q-workspace-switcher-name-fg: var(--q-fg);
+    --q-workspace-switcher-name-font-size: var(--q-text-sm);
+    --q-workspace-switcher-name-weight: var(--q-weight-semibold);
+    --q-workspace-switcher-detail-fg: var(--q-fg-muted);
+    --q-workspace-switcher-detail-font-size: var(--q-text-xs);
+    --q-workspace-switcher-chevron-fg: var(--q-fg-muted);
+  }
+}
+
+@layer q.components {
+  .q-workspace-switcher {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+
+    // The button fills the row: DropdownMenu's trigger wrapper is inline by default.
+    > .q-dropdown-menu__trigger {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+    }
+
+    // As wide as the sidebar, which clips sideways.
+    > .q-dropdown-menu__menu {
+      width: 100%;
+    }
+  }
+
+  .q-workspace-switcher__button {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--q-workspace-switcher-gap);
+    box-sizing: border-box;
+    min-width: 0;
+    height: var(--q-workspace-switcher-height);
+    padding: 0 var(--q-workspace-switcher-px);
+    border: 0;
+    border-radius: var(--q-workspace-switcher-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--q-workspace-switcher-dur) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible, [aria-expanded="true"]) {
+      background: var(--q-workspace-switcher-bg-hover);
+    }
+  }
+
+  .q-workspace-switcher__mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--q-workspace-switcher-mark-size);
+    height: var(--q-workspace-switcher-mark-size);
+    overflow: hidden;
+    border-radius: var(--q-workspace-switcher-mark-radius);
+    background: var(--q-workspace-switcher-mark-bg);
+    color: var(--q-workspace-switcher-mark-fg);
+    font-size: var(--q-workspace-switcher-mark-font-size);
+    font-weight: var(--q-weight-bold);
+  }
+
+  .q-workspace-switcher__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .q-workspace-switcher__name,
+  .q-workspace-switcher__detail {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .q-workspace-switcher__name {
+    color: var(--q-workspace-switcher-name-fg);
+    font-size: var(--q-workspace-switcher-name-font-size);
+    font-weight: var(--q-workspace-switcher-name-weight);
+    line-height: var(--q-leading-snug);
+  }
+
+  .q-workspace-switcher__detail {
+    color: var(--q-workspace-switcher-detail-fg);
+    font-size: var(--q-workspace-switcher-detail-font-size);
+    line-height: var(--q-leading-snug);
+  }
+
+  .q-workspace-switcher__chevron {
+    color: var(--q-workspace-switcher-chevron-fg);
+  }
+}

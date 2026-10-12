@@ -9,7 +9,7 @@
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
   font-family: var(--q-font-sans);
-  font-size: var(--q-text-lg);
+  font-size: var(--q-text-md);
   line-height: var(--q-leading-body);
 }
 
@@ -23,28 +23,20 @@
   transition: color var(--q-dur-hover) var(--q-ease-linear);
 }
 
-:where([data-quiet] a:hover) {
-  color: var(--q-accent);
+// A bare link (prose, rendered markdown: no class of its own) reads as a link: accent text on a
+// soft accent underline that fills in on hover. Classed anchors keep their component's look.
+:where([data-quiet] a:not([class])) {
+  color: var(--q-accent-fg);
+  text-decoration: underline;
+  text-decoration-color: var(--q-accent-border);
+  text-decoration-thickness: var(--q-hairline);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--q-dur-hover) var(--q-ease-linear);
 }
 
-// The app look: a bare link (prose, rendered markdown — no class of its own) reads as a link at
-// rest: accent text on a soft accent underline that fills in on hover. Classed anchors (cards,
-// nav items, an app's own row links) keep their component's look. @scope stops at a marketing
-// frame nested in the app.
-@scope ([data-density="app"], [data-density="compact"]) to ([data-density="marketing"]) {
-  :where(a:not([class])) {
-    color: var(--q-accent-fg);
-    text-decoration: underline;
-    text-decoration-color: var(--q-accent-border);
-    text-decoration-thickness: var(--q-hairline);
-    text-underline-offset: 0.2em;
-    transition: text-decoration-color var(--q-dur-hover) var(--q-ease-linear);
-  }
-
-  :where(a:not([class]):hover) {
-    color: var(--q-accent-fg);
-    text-decoration-color: currentcolor;
-  }
+:where([data-quiet] a:not([class]):hover) {
+  color: var(--q-accent-fg);
+  text-decoration-color: currentcolor;
 }
 
 [data-quiet]::selection,

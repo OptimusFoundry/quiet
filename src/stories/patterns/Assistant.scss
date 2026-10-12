@@ -1,26 +1,19 @@
-// Assistant — conversation beside a detail panel, filling the viewport under the top bar.
+// Assistant — the conversation fills the main panel under the TopBar: the thread scrolls and the
+// composer stays at the bottom. The Changes pane is AppShell's third pane (AppFrame `pane`).
 
 .q-sb-assistant {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) var(--q-w-detail-panel);
-	height: calc(100vh - var(--q-h-topbar));
+	grid-template-rows: auto minmax(0, 1fr);
+	gap: var(--q-space-stack);
+	box-sizing: border-box;
+	min-width: 0;
+	// The panel's height (viewport less the canvas inset and its hairlines) less the TopBar.
+	height: calc(100dvh - 2 * var(--q-app-shell-inset) - 2 * var(--q-hairline) - var(--q-top-bar-height));
+	padding: var(--q-space-stack) var(--q-space-page-x);
 
-	// Under 720px the panel moves into a Drawer.
-	&--narrow {
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	&__conversation {
-		display: grid;
-		grid-template-rows: auto minmax(0, 1fr);
-		gap: var(--q-space-stack);
-		padding: var(--q-space-stack) var(--q-space-page-x);
-		min-height: 0;
-		min-width: 0;
-	}
-
-	&__header {
-		justify-content: space-between;
+	// A phone: the panel is flush.
+	.q-app-shell--narrow & {
+		height: calc(100dvh - var(--q-top-bar-height));
 	}
 
 	&__column {
@@ -37,11 +30,5 @@
 		gap: var(--q-space-stack);
 		min-height: 0;
 		height: 100%;
-	}
-
-	&__panel {
-		padding: var(--q-space-block) var(--q-space-card-pad);
-		border-left: var(--q-hairline) solid var(--q-border);
-		overflow-y: auto;
 	}
 }

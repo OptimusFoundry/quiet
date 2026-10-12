@@ -3,7 +3,6 @@
 // __check, __expand, __detail, __skeleton-cell, __skeleton (--first), __empty,
 // __foot (--control, --nowrap, --numeric).
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -29,12 +28,12 @@
     --q-table-label-tracking: var(--q-tracking-label);
     --q-table-label-color: var(--q-fg-muted);
     --q-table-head-weight: var(--q-weight-label);
-    --q-table-head-border: var(--q-fg);
+    --q-table-head-border: var(--q-border);
     --q-table-sort-gap: var(--q-space-0-75);
     --q-table-sort-color-active: var(--q-fg);
 
     --q-table-row-bg-hover: var(--q-bg-subtle);
-    --q-table-row-bg-selected: var(--q-bg-subtle);
+    --q-table-row-bg-selected: var(--q-accent-subtle);
     --q-table-row-bg-stripe: var(--q-bg-subtle);
     --q-table-cell-color: var(--q-fg-body);
     --q-table-cell-first-color: var(--q-fg);
@@ -42,10 +41,10 @@
 
     --q-table-check-size: var(--q-space-2);
     --q-table-check-radius: var(--q-radius-2xs);
-    --q-table-check-border: var(--q-fg);
+    --q-table-check-border: var(--q-border-strong);
     --q-table-check-bg: var(--q-bg);
-    --q-table-check-bg-checked: var(--q-fg);
-    --q-table-check-fg: var(--q-bg);
+    --q-table-check-bg-checked: var(--q-accent-bg);
+    --q-table-check-fg: var(--q-fg-on-accent);
     --q-table-check-font-size: var(--q-text-2xs);
 
     --q-table-expand-font-size: var(--q-text-md);
@@ -62,7 +61,7 @@
     --q-table-skeleton-ease: ease-in-out; // reference pulse curve; no tier-2 symmetric ease
     --q-table-skeleton-dim: 0.45;
 
-    --q-table-foot-border: var(--q-fg);
+    --q-table-foot-border: var(--q-border);
     --q-table-foot-color: var(--q-fg);
     --q-table-foot-weight: var(--q-weight-medium);
 
@@ -72,24 +71,6 @@
     --q-table-empty-color: var(--q-fg-muted);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-table-head-border: var(--q-border);
-    --q-table-foot-border: var(--q-border);
-    --q-table-row-bg-selected: var(--q-accent-subtle);
-    --q-table-check-border: var(--q-border-strong);
-    --q-table-check-bg-checked: var(--q-accent-bg);
-    --q-table-check-fg: var(--q-fg-on-accent);
-  }
-
-  @include app.reset {
-    --q-table-head-border: var(--q-fg);
-    --q-table-foot-border: var(--q-fg);
-    --q-table-row-bg-selected: var(--q-bg-subtle);
-    --q-table-check-border: var(--q-fg);
-    --q-table-check-bg-checked: var(--q-fg);
-    --q-table-check-fg: var(--q-bg);
-  }
 }
 
 @layer q.components {

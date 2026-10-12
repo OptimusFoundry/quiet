@@ -24,32 +24,21 @@
   --q-space-20: 160px;
 }
 
-// Spacing by job — the reference's density modes. Set data-density on any container.
+// Spacing by job. data-density="compact" tightens it for dense tools; "comfortable" restores it
+// inside a compact subtree. (Not on [data-theme]: a themed root inside a compact one stays compact.)
 :root,
-[data-density="marketing"] {
+[data-density="comfortable"] {
   --q-space-inline: var(--q-space-1);
   --q-space-stack: var(--q-space-2);
   --q-space-field: var(--q-space-3);
-  --q-space-card-pad: var(--q-space-4);
-  --q-space-card-gap: var(--q-space-4);
-  --q-space-block: var(--q-space-8);
-  --q-space-section: var(--q-space-16);
-  --q-space-hero-top: var(--q-space-6);
-  --q-space-hero-bottom: var(--q-space-4);
-  --q-space-page-x: var(--q-space-4);
-  --q-grid-gutter: var(--q-space-4);
-  --q-font-body: var(--q-weight-regular) var(--q-text-lg) / 28px var(--q-font-sans);
-}
-
-[data-density="app"] {
   --q-space-card-pad: var(--q-space-3);
   --q-space-card-gap: var(--q-space-3);
   --q-space-block: var(--q-space-4);
   --q-space-section: var(--q-space-6);
   --q-space-hero-top: var(--q-space-2);
   --q-space-hero-bottom: var(--q-space-2);
+  --q-space-page-x: var(--q-space-4);
   --q-grid-gutter: var(--q-space-3);
-  --q-font-body: var(--q-weight-regular) var(--q-text-md) / 22px var(--q-font-sans);
 }
 
 [data-density="compact"] {

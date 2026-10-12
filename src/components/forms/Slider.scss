@@ -1,7 +1,6 @@
 // Slider — hairline track with an ink thumb. BEM: .q-slider, __header, __value, __track, __rail,
 // __fill, __thumb; --{size}. --_pct (set inline) is the value's position along the track.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -21,21 +20,11 @@
     --q-slider-lg-rail: var(--q-space-0-5);
     --q-slider-lg-thumb: var(--q-space-2-5);
     --q-slider-rail-bg: var(--q-border);
-    --q-slider-fill-bg: var(--q-fg);
-    --q-slider-thumb-bg: var(--q-fg);
+    --q-slider-fill-bg: var(--q-accent);
+    --q-slider-thumb-bg: var(--q-accent-bg);
     --q-slider-thumb-ring: 0 0 0 3px var(--q-bg), 0 0 0 4px var(--q-fg); // gap ring on focus
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-slider-fill-bg: var(--q-accent);
-    --q-slider-thumb-bg: var(--q-accent-bg);
-  }
-
-  @include app.reset {
-    --q-slider-fill-bg: var(--q-fg);
-    --q-slider-thumb-bg: var(--q-fg);
-  }
 }
 
 @layer q.components {
