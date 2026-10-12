@@ -45,16 +45,16 @@ Components read status through their own tier-3 tokens, which default to these:
 
 | Component | Tier-3 tokens (default → `--q-status-<status>-*`) |
 |---|---|
-| Alert | `--q-alert-<status>-bg` → bg, `-border` → border, `-ring` and `-glyph` → fg |
-| Banner | `--q-banner-<status>-ring`, `-glyph` → fg. On `variant="ink"`, info and success keep the strip's on-inverse colours |
-| Toast | `--q-toast-success-glyph`, `--q-toast-error-glyph`, `--q-toast-warning-ring` → fg; `--q-toast-error-border` → border |
+| Alert | `--q-alert-<status>-bg` → bg, `-border` → border; its status icon reads `--q-status-icon-<status>-fg` → fg |
+| Banner | `--q-banner-<status>-bg` → bg, `-border` → border; its status icon reads `--q-status-icon-<status>-fg` → fg |
+| Toast | success, warning and error draw the shared status icon (`--q-status-icon-<status>-fg` → fg); no border |
+| Dialog | `icon="<status>"` draws the shared status icon, bare |
 | Badge | `--q-badge-<status>-bg` → bg, `-border` → border, `-dot` → fg. Badge text stays `--q-fg` |
 | Tag | `status` prop (quiet addition): `--q-tag-<status>-fg`, `-bg`, `-border` |
 | Progress | `--q-progress-<status>-fill`, `--q-progress-error-value-fg` → fg. `heat` stays the accent |
 | Icon | `color="success\|warning\|error"`: `--q-icon-<status>-fg` → fg |
 
-A few foundry parts don't follow the shared mapping: the info Alert's ring, the info Banner's
-glyph and ring, and the grey fill of success and warning Badges.
+A few foundry parts don't follow the shared mapping: the grey fill of success and warning Badges.
 `src/styles/themes/_foundry-status.scss` pins those for `foundry`, `foundry-dark` and an unthemed
 root only. A product theme on `<html>` therefore doesn't inherit them, and every part follows its
 `--q-status-*` hues.

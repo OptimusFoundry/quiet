@@ -11,9 +11,32 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   (a slow account nudge at the Sidebar's foot, an icon with a mark in the rail) and `NoticeChip` (a
   condition on this page, a pill in the TopBar that opens the third pane). Stories: App/Notices,
   Patterns/App shell "With notices".
+- **`DropdownMenu` single choice:** `{ group, radio: true }` (or `radio` on an item) makes items
+  `menuitemradio` with `aria-checked` and a trailing accent check on the `checked` one. Enter or a
+  click picks and closes, Space picks and keeps the menu open. Story: Extensions/DropdownMenu
+  "Single choice".
 
 ### Changed
 
+- **Navigation, feedback and overlays in the one look.** Every glyph (×, ✓, ←, →, «, », …, ↵, ≡, ▾)
+  is a stroke `Icon`; labels are sans sentence case on the label role (no mono caps). Menus,
+  popovers, dialogs, the command palette, toasts and drawers float on `--q-shadow-float` with no
+  border; ruled headers and footers (Dialog actions, Drawer, CommandPalette, DropdownMenu header and
+  caption, Sidebar footer) became space or a `--q-bg-subtle` ground.
+- **One close button and one status icon** for Alert, Banner, Dialog, Toast, Popover and Drawer
+  (info, check, warning in `--q-status-*-fg`, no ring).
+- **`Sidebar`** takes AppShell's current item as its default: a raised white pill
+  (`--q-shadow-1`) in ink with an accent icon, and a soft ink veil on hover. Its default ground is
+  `--q-bg-subtle`; the toggle and trigger lose their borders. AppShell no longer overrides the
+  Sidebar's item tokens (`--q-app-shell-nav-fg-current`, `-icon-fg-current` and `-shadow-current`
+  are gone).
+- **`Tabs`** default to `enclosed`, now the segmented surface: pill track on `--q-bg-subtle`, the
+  selected tab a raised white chip, 32 high. `line` and `pill` still work (`pill` loses its border).
+- **`StepIndicator`** defaults to arabic numerals (`numerals="roman"` still works), no zero padding.
+- **`Pagination`** numbers are sans and not zero-padded; ghost hover is ink, not accent.
+- **`Dialog`**: a 17px title, a bare status icon, no ruled footer, 24 padding. **`Banner`** sits on
+  its status ground (`--q-status-*-bg`). **`Toast`** meta, **`Tooltip`** and **`Progress`** labels are
+  sans sentence case.
 - **`Icon` draws quiet's stroke set** (the one `AppIcon` used) instead of unicode glyphs, sized in
   em as before. The set moves to `src/components/core/icons.ts` and gains arrow-right, arrow-up,
   arrow-down, arrow-up-right, arrow-down-right, chevron-up, chevron-left, chevrons-left,
@@ -54,7 +77,15 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 ### Deprecated
 
 - `Text italic` does nothing (quiet has no italics) and warns once in development.
+- `Banner variant="outline"`: renders as the default and warns once in development; drop the prop.
+- `Drawer accent`: renders as plain text after the title (no italic); put it in `title`.
 - `Icon glyph`: a text fallback for one release. `Icon.glyphs` is removed.
+
+### Removed
+
+- `Dialog accent` (the italic phrase after the title); nothing used it.
+- `Banner variant="ink"`; nothing used it. Banner's `--q-banner-ink-*`, `--q-banner-outline-border`
+  and ring/glyph tokens, Alert's `-ring`/`-glyph` tokens and Toast's glyph and border tokens are gone.
 
 ## 0.9.1
 

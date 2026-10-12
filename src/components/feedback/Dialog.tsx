@@ -1,9 +1,10 @@
 import React from "react";
 import { useEscape, useFocusTrap, usePresence } from "../../a11y/hooks";
 import "./Dialog.scss";
+import { CloseButton, isStatus, StatusIcon } from "./parts";
 
 /**
- * Modal dialog. Rounded (--radius-xl), soft hairline, --shadow-3, ink scrim at 24%. Sizes, status icon, non-dismissible.
+ * Modal dialog. Rounded (--q-radius-xl), floats on --q-shadow-float over the scrim. Sizes, status icon, non-dismissible.
  * @startingPoint section="Overlays" subtitle="Modal dialogs" viewport="700x480"
  */
 export interface DialogProps {
@@ -11,16 +12,14 @@ export interface DialogProps {
 	onClose?: () => void;
 	eyebrow?: React.ReactNode;
 	title?: React.ReactNode;
-	/** Italic phrase after the title; a molten period follows */
-	accent?: React.ReactNode;
-	/** 'info' | 'success' | 'warning' | 'error' or a glyph node — rendered in a 40px ring */
+	/** 'info' | 'success' | 'warning' | 'error' (a bare status icon above the title) or your own node */
 	icon?: "info" | "success" | "warning" | "error" | React.ReactNode;
 	children?: React.ReactNode;
 	actions?: React.ReactNode;
 	size?: "sm" | "md" | "lg" | "xl";
 	/** px; overrides size */
 	width?: number;
-	/** false = no Esc, no scrim click, no × */
+	/** false = no Esc, no scrim click, no close button */
 	dismissible?: boolean;
 	showClose?: boolean;
 }
@@ -52,14 +51,12 @@ function useModalBackground(ref: React.RefObject<HTMLElement | null>, active: bo
 		};
 	}, [active, ref]);
 }
-const ICONS: Record<string, string> = { info: "i", success: "✓", warning: "!", error: "!" };
 
 export function Dialog({
 	open,
 	onClose,
 	eyebrow,
 	title,
-	accent,
 	icon,
 	children,
 	actions,
@@ -77,7 +74,6 @@ export function Dialog({
 	useFocusTrap(box, live);
 	useEscape(live && dismissible, onClose);
 	if (!mounted) return null;
-	const ic = typeof icon === "string" && ICONS[icon] ? icon : null;
 	const cls = [
 		"q-dialog__panel",
 		"q-anim-scale",
@@ -111,39 +107,20 @@ export function Dialog({
 				<div className="q-dialog__header">
 					<div className="q-dialog__heading">
 						{icon && (
-							<span
-								aria-hidden="true"
-								className={
-									"q-dialog__icon" +
-									(ic === "warning" || ic === "error" ? " q-dialog__icon--hot" : "")
-								}
-							>
-								{ic ? ICONS[ic] : icon}
+							<span aria-hidden="true" className="q-dialog__icon">
+								{isStatus(icon) ? <StatusIcon status={icon} size="lg" /> : icon}
 							</span>
 						)}
 						{eyebrow && <div className="q-dialog__eyebrow">{eyebrow}</div>}
 						{title && (
 							<div id={`${id}-t`} className="q-dialog__title">
 								{title}
-								{accent && (
-									<>
-										{" "}
-										<em>{accent}</em>
-									</>
-								)}
 								<span className="q-dialog__dot">.</span>
 							</div>
 						)}
 					</div>
 					{showClose && dismissible && (
-						<button
-							type="button"
-							onClick={onClose}
-							aria-label="Close dialog"
-							className="q-dialog__close"
-						>
-							{"×"}
-						</button>
+						<CloseButton label="Close dialog" onClick={onClose} className="q-dialog__close" />
 					)}
 				</div>
 				{children && (

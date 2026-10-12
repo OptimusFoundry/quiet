@@ -3,8 +3,9 @@ import { rovingKeyDown } from "../../a11y/hooks";
 import "./Tabs.scss";
 
 /**
- * Mono caps tabs. Line (default), enclosed (rounded segmented control) or pill (ink-filled active).
- * @startingPoint section="Navigation" subtitle="Line, enclosed, pill" viewport="700x220"
+ * Sentence-case tabs. Enclosed (default: a segmented control, the selected tab a raised chip on a
+ * --q-bg-subtle track), line (underline) or pill (accent-filled selected tab).
+ * @startingPoint section="Navigation" subtitle="Segmented, line, pill" viewport="700x220"
  */
 export interface TabsProps {
 	/** `id` sets the tab's id; `panelId` links it to its tabpanel (aria-controls). Both are generated when `panels` is set */
@@ -23,6 +24,7 @@ export interface TabsProps {
 	value?: string;
 	defaultValue?: string;
 	onChange?: (value: string) => void;
+	/** enclosed (default) = segmented surface · line = underline · pill = accent-filled selected tab */
 	variant?: "line" | "enclosed" | "pill";
 	size?: "sm" | "md" | "lg";
 	fullWidth?: boolean;
@@ -119,7 +121,7 @@ export function Tabs({
 	value,
 	defaultValue,
 	onChange,
-	variant = "line",
+	variant = "enclosed",
 	size = "md",
 	fullWidth = false,
 	label,
@@ -201,7 +203,7 @@ export function Tabs({
 	// Roving tabindex: only the selected tab (or the first enabled one) is in the tab order.
 	let focusIdx = list.findIndex((t) => t.value === cur && !t.disabled);
 	if (focusIdx < 0) focusIdx = list.findIndex((t) => !t.disabled);
-	const v = VARIANTS.includes(variant) ? variant : "line";
+	const v = VARIANTS.includes(variant) ? variant : "enclosed";
 	const cls = [
 		"q-tabs",
 		`q-tabs--${v}`,

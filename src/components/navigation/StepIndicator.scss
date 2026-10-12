@@ -16,24 +16,25 @@
     // Completion fills slightly slower than a hover; calc keeps it at 0s under reduced motion.
     --q-step-indicator-fill-dur: calc(var(--q-dur-hover) * 1.3);
 
-    --q-step-indicator-sm-marker-size: var(--q-space-3);
-    --q-step-indicator-sm-marker-font-size: var(--q-text-3xs);
+    --q-step-indicator-sm-marker-size: var(--q-space-2-5);
+    --q-step-indicator-sm-marker-font-size: var(--q-text-2xs);
     --q-step-indicator-sm-label-font-size: var(--q-text-sm);
-    --q-step-indicator-md-marker-size: var(--q-space-4);
-    --q-step-indicator-md-marker-font-size: var(--q-text-2xs);
+    --q-step-indicator-md-marker-size: var(--q-space-3);
+    --q-step-indicator-md-marker-font-size: var(--q-text-xs);
     --q-step-indicator-md-label-font-size: var(--q-text-md);
-    --q-step-indicator-lg-marker-size: var(--q-space-5);
+    --q-step-indicator-lg-marker-size: var(--q-space-4);
     --q-step-indicator-lg-marker-font-size: var(--q-text-sm);
     --q-step-indicator-lg-label-font-size: var(--q-text-lg);
 
-    --q-step-indicator-marker-font: var(--q-font-mono);
+    --q-step-indicator-marker-font: var(--q-font-sans);
+    --q-step-indicator-marker-weight: var(--q-weight-medium);
     --q-step-indicator-marker-bg: var(--q-bg);
     --q-step-indicator-marker-fg: var(--q-accent-fg);
     --q-step-indicator-marker-border: var(--q-accent);
     --q-step-indicator-marker-complete-bg: var(--q-accent-bg);
     --q-step-indicator-marker-complete-fg: var(--q-fg-on-accent);
     --q-step-indicator-marker-complete-border: var(--q-accent-bg);
-    --q-step-indicator-marker-upcoming-fg: var(--q-fg-subtle);
+    --q-step-indicator-marker-upcoming-fg: var(--q-fg-muted);
     --q-step-indicator-marker-upcoming-border: var(--q-border);
     --q-step-indicator-marker-error-fg: var(--q-accent);
     --q-step-indicator-marker-error-border: var(--q-accent);
@@ -45,7 +46,7 @@
     --q-step-indicator-label-weight-current: var(--q-weight-semibold);
     --q-step-indicator-label-fg: var(--q-fg);
     --q-step-indicator-label-upcoming-fg: var(--q-fg-muted);
-    --q-step-indicator-label-error-fg: var(--q-accent);
+    --q-step-indicator-label-error-fg: var(--q-accent-fg);
     --q-step-indicator-description-font-size: var(--q-text-sm);
     --q-step-indicator-description-leading: var(--q-leading-compact);
     --q-step-indicator-description-fg: var(--q-fg-muted);
@@ -110,7 +111,9 @@
   }
 
   .q-step-indicator__marker {
+    display: inline-grid;
     flex: none;
+    place-items: center;
     box-sizing: border-box;
     width: var(--_marker);
     height: var(--_marker);
@@ -121,6 +124,8 @@
     color: var(--q-step-indicator-marker-fg);
     font-family: var(--q-step-indicator-marker-font);
     font-size: var(--_marker-font-size);
+    font-weight: var(--q-step-indicator-marker-weight);
+    font-variant-numeric: tabular-nums;
     line-height: var(--q-leading-none);
     cursor: default;
     transition:

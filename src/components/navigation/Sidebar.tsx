@@ -1,10 +1,11 @@
 import React from "react";
 import { useEscape, useFocusTrap, useModalBackground, usePresence } from "../../a11y/hooks";
 import { useLinkElement } from "../../lib/link";
+import { Icon } from "../core/Icon";
 import "./Sidebar.scss";
 
 /**
- * App side navigation. Groups with mono labels, paper-2 active row, collapsible to a 64px rail, auto-collapse below a breakpoint (or, in a SidebarProvider, an off-canvas drawer).
+ * App side navigation. Groups with sentence-case labels; the current item is a raised white pill with an accent icon. Collapsible to a 64px rail, auto-collapse below a breakpoint (or, in a SidebarProvider, an off-canvas drawer).
  * @startingPoint section="Navigation" subtitle="App side navigation" viewport="900x560"
  */
 export interface SidebarProps {
@@ -36,7 +37,7 @@ export interface SidebarProps {
 	collapsed?: boolean;
 	defaultCollapsed?: boolean;
 	onCollapsedChange?: (collapsed: boolean) => void;
-	/** Shows the ← / → toggle */
+	/** Shows the collapse / expand toggle */
 	collapsible?: boolean;
 	compact?: boolean;
 	dividers?: boolean;
@@ -70,7 +71,7 @@ export interface SidebarTriggerProps {
 	"aria-label"?: string;
 	/** Also render above the breakpoint, collapsing and expanding the Sidebar's rail ("Collapse sidebar" / "Expand sidebar"). Leave off when the Sidebar shows its own `collapsible` toggle */
 	rail?: boolean;
-	/** Replaces the default ≡ glyph; a function gets the mode, to draw each its own icon */
+	/** Replaces the default menu icon; a function gets the mode, to draw each its own icon */
 	children?: React.ReactNode | ((mode: "drawer" | "rail") => React.ReactNode);
 	className?: string;
 	style?: React.CSSProperties;
@@ -205,7 +206,7 @@ export function SidebarTrigger({
 			className={["q-sidebar-trigger", className].filter(Boolean).join(" ")}
 			style={style}
 		>
-			{content ?? <span aria-hidden="true">{"≡"}</span>}
+			{content ?? <Icon name="menu" />}
 		</button>
 	);
 }
@@ -382,7 +383,7 @@ function SidebarView({
 							onClick={ctx.close}
 							className="q-sidebar__toggle"
 						>
-							{"×"}
+							<Icon name="close" />
 						</button>
 					) : (
 						collapsible && (
@@ -392,7 +393,7 @@ function SidebarView({
 								onClick={toggle}
 								className="q-sidebar__toggle"
 							>
-								{isCol ? "→" : "←"}
+								<Icon name={isCol ? "chevrons-right" : "chevrons-left"} />
 							</button>
 						)
 					)}
@@ -413,9 +414,7 @@ function SidebarView({
 									className="q-sidebar__group-label"
 								>
 									{g.label}
-									<span aria-hidden="true" className="q-sidebar__chevron">
-										{"▾"}
-									</span>
+									<Icon name="chevron-down" size="sm" className="q-sidebar__chevron" />
 								</button>
 							) : (
 								<div id={`${uid}g${gi}`} className="q-sidebar__group-label">

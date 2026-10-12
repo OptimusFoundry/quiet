@@ -1,0 +1,32 @@
+// Layout for the Extensions/Feedback stories.
+.q-sb-feedback {
+	display: grid;
+	gap: 24px;
+	max-width: 720px;
+	padding: 32px 16px;
+
+	&__section {
+		display: grid;
+		gap: 12px;
+	}
+
+	&__title {
+		margin: 0;
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+		font-weight: var(--q-weight-medium);
+	}
+
+	&__row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		align-items: center;
+	}
+
+	&__stack {
+		display: grid;
+		gap: 12px;
+		justify-items: start;
+	}
+}

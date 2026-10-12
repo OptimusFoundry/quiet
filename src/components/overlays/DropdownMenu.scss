@@ -1,7 +1,7 @@
 // DropdownMenu — menu button + menu. BEM: .q-dropdown-menu (anchor, --context), __trigger, __menu
 // (--end, --at-point: context-menu coordinates arrive as --_x/--_y; width as --_width), __header,
 // __caption, __separator, __group-label, __item (--sm, --active, --danger), __check, __icon,
-// __label, __sublabel, __shortcut. Item hover and keyboard focus share one look.
+// __label, __sublabel, __shortcut, __selected (the trailing check of a menuitemradio). Item hover and keyboard focus share one look.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -12,17 +12,22 @@
     --q-dropdown-menu-width: 240px;
     --q-dropdown-menu-padding: var(--q-space-0-75);
     --q-dropdown-menu-bg: var(--q-bg);
-    --q-dropdown-menu-border: var(--q-border);
+    --q-dropdown-menu-separator: var(--q-border);
     --q-dropdown-menu-radius: var(--q-radius-lg);
-    --q-dropdown-menu-shadow: var(--q-shadow-2);
+    --q-dropdown-menu-shadow: var(--q-shadow-float);
     --q-dropdown-menu-section-gap: var(--q-space-0-5);
     --q-dropdown-menu-header-py: var(--q-space-1-5);
     --q-dropdown-menu-label-px: var(--q-space-2);
     --q-dropdown-menu-label-pt: var(--q-space-1-25);
     --q-dropdown-menu-group-label-pb: var(--q-space-0-5);
     --q-dropdown-menu-caption-pb: var(--q-space-0-75);
-    --q-dropdown-menu-mono-fg: var(--q-fg-muted);
-    --q-dropdown-menu-mono-size: var(--q-text-3xs);
+    --q-dropdown-menu-label-fg: var(--q-fg-muted);
+    --q-dropdown-menu-label-font: var(--q-font-label);
+    --q-dropdown-menu-label-size: var(--q-text-label);
+    --q-dropdown-menu-label-weight: var(--q-weight-label);
+    --q-dropdown-menu-caption-size: var(--q-text-sm);
+    --q-dropdown-menu-shortcut-fg: var(--q-fg-muted);
+    --q-dropdown-menu-shortcut-size: var(--q-text-sm);
 
     --q-dropdown-menu-item-gap: var(--q-space-1-5);
     --q-dropdown-menu-item-py: var(--q-space-1-25);
@@ -36,14 +41,15 @@
     --q-dropdown-menu-item-weight: var(--q-weight-regular);
     --q-dropdown-menu-item-active-weight: var(--q-weight-semibold);
     --q-dropdown-menu-item-bg-hover: var(--q-bg-subtle);
-    --q-dropdown-menu-item-danger-fg-hover: var(--q-accent);
+    --q-dropdown-menu-item-danger-fg-hover: var(--q-accent-fg);
     --q-dropdown-menu-item-disabled-opacity: 0.4;
-    --q-dropdown-menu-check-size: var(--q-space-1-75);
+    --q-dropdown-menu-check-size: var(--q-space-2);
     --q-dropdown-menu-check-radius: var(--q-radius-2xs);
-    --q-dropdown-menu-check-border: var(--q-fg);
-    --q-dropdown-menu-check-bg-checked: var(--q-fg);
-    --q-dropdown-menu-check-fg: var(--q-bg);
-    --q-dropdown-menu-check-font-size: var(--q-text-3xs);
+    --q-dropdown-menu-check-border: var(--q-border-strong);
+    --q-dropdown-menu-check-bg-checked: var(--q-accent-bg);
+    --q-dropdown-menu-check-fg: var(--q-fg-on-accent);
+    --q-dropdown-menu-selected-fg: var(--q-accent-fg);
+
     --q-dropdown-menu-icon-width: var(--q-space-2);
     --q-dropdown-menu-icon-fg: var(--q-fg-muted);
     --q-dropdown-menu-label-gap: var(--q-space-0-25);
@@ -75,7 +81,7 @@
     width: var(--_width, var(--q-dropdown-menu-width));
     margin-top: var(--q-dropdown-menu-offset);
     padding: var(--q-dropdown-menu-padding);
-    border: var(--q-hairline) solid var(--q-dropdown-menu-border);
+    border: 0;
     border-radius: var(--q-dropdown-menu-radius);
     outline: none;
     background: var(--q-dropdown-menu-bg);
@@ -96,31 +102,30 @@
   .q-dropdown-menu__header {
     margin-bottom: var(--q-dropdown-menu-section-gap);
     padding: var(--q-dropdown-menu-header-py) var(--q-dropdown-menu-label-px);
-    border-bottom: var(--q-hairline) solid var(--q-dropdown-menu-border);
-  }
-
-  .q-dropdown-menu__group-label,
-  .q-dropdown-menu__caption {
-    color: var(--q-dropdown-menu-mono-fg);
-    font-family: var(--q-font-label);
-    font-size: var(--q-dropdown-menu-mono-size);
-    letter-spacing: var(--q-tracking-label);
-    text-transform: var(--q-case-label);
+    border-radius: var(--q-dropdown-menu-item-radius);
+    background: var(--q-dropdown-menu-item-bg-hover);
   }
 
   .q-dropdown-menu__group-label {
     padding: var(--q-dropdown-menu-label-pt) var(--q-dropdown-menu-label-px) var(--q-dropdown-menu-group-label-pb);
+    color: var(--q-dropdown-menu-label-fg);
+    font-family: var(--q-dropdown-menu-label-font);
+    font-size: var(--q-dropdown-menu-label-size);
+    font-weight: var(--q-dropdown-menu-label-weight);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
 
   .q-dropdown-menu__caption {
     margin-top: var(--q-dropdown-menu-section-gap);
     padding: var(--q-dropdown-menu-label-pt) var(--q-dropdown-menu-label-px) var(--q-dropdown-menu-caption-pb);
-    border-top: var(--q-hairline) solid var(--q-dropdown-menu-border);
+    color: var(--q-dropdown-menu-label-fg);
+    font-size: var(--q-dropdown-menu-caption-size);
   }
 
   .q-dropdown-menu__separator {
     margin: var(--q-dropdown-menu-section-gap) 0;
-    border-top: var(--q-hairline) solid var(--q-dropdown-menu-border);
+    border-top: var(--q-hairline) solid var(--q-dropdown-menu-separator);
   }
 
   .q-dropdown-menu__item {
@@ -173,12 +178,23 @@
     border-radius: var(--q-dropdown-menu-check-radius);
     background: transparent;
     color: var(--q-dropdown-menu-check-fg);
-    font-size: var(--q-dropdown-menu-check-font-size);
     line-height: var(--q-leading-none);
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      border-color var(--q-dur-hover) var(--q-ease-soft);
 
     [aria-checked="true"] > & {
+      border-color: var(--q-dropdown-menu-check-bg-checked);
       background: var(--q-dropdown-menu-check-bg-checked);
     }
+  }
+
+  .q-dropdown-menu__selected {
+    display: inline-flex;
+    flex: none;
+    justify-content: center;
+    width: var(--q-dropdown-menu-icon-width);
+    color: var(--q-dropdown-menu-selected-fg);
   }
 
   .q-dropdown-menu__icon {
@@ -203,9 +219,8 @@
   }
 
   .q-dropdown-menu__shortcut {
-    color: var(--q-dropdown-menu-mono-fg);
+    color: var(--q-dropdown-menu-shortcut-fg);
     font-family: var(--q-font-mono);
-    font-size: var(--q-dropdown-menu-mono-size);
-    letter-spacing: var(--q-tracking-mono);
+    font-size: var(--q-dropdown-menu-shortcut-size);
   }
 }

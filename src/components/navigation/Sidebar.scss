@@ -13,7 +13,7 @@
     --q-sidebar-py: var(--q-space-3);
     --q-sidebar-px: var(--q-space-2);
     --q-sidebar-collapsed-px: var(--q-space-1);
-    --q-sidebar-bg: var(--q-bg);
+    --q-sidebar-bg: var(--q-bg-subtle);
     --q-sidebar-border: var(--q-border);
     --q-sidebar-width-dur: 0.3s; // the reference's collapse timing (between --q-dur-expand and a slide)
     --q-sidebar-width-ease: var(--q-ease-forge);
@@ -25,14 +25,17 @@
     --q-sidebar-toggle-offset: 0; // quiet: nudges the toggle to line up with a taller first row
     --q-sidebar-toggle-size: var(--q-control-sm);
     --q-sidebar-toggle-radius: var(--q-radius-pill);
-    --q-sidebar-toggle-bg: var(--q-bg);
-    --q-sidebar-toggle-fg: var(--q-fg);
-    --q-sidebar-toggle-font-size: var(--q-text-sm);
+    --q-sidebar-toggle-bg: transparent;
+    --q-sidebar-toggle-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-sidebar-toggle-fg: var(--q-fg-muted);
+    --q-sidebar-toggle-fg-hover: var(--q-fg);
+    --q-sidebar-toggle-font-size: var(--q-icon-md);
 
     --q-sidebar-dividers-gap: var(--q-space-2);
     --q-sidebar-list-gap: var(--q-space-0-25);
     --q-sidebar-label-font: var(--q-font-label);
-    --q-sidebar-label-font-size: var(--q-text-3xs);
+    --q-sidebar-label-font-size: var(--q-text-label);
+    --q-sidebar-label-weight: var(--q-weight-label);
     --q-sidebar-label-tracking: var(--q-tracking-label);
     --q-sidebar-label-fg: var(--q-fg-muted);
     --q-sidebar-label-pb: var(--q-space-1);
@@ -47,20 +50,20 @@
     --q-sidebar-item-weight: var(--q-weight-medium);
     --q-sidebar-item-weight-current: var(--q-weight-semibold);
     --q-sidebar-item-fg: var(--q-fg-body);
-    --q-sidebar-item-fg-current: var(--q-accent-fg);
-    --q-sidebar-item-bg-hover: var(--q-bg-subtle);
-    --q-sidebar-item-bg-current: var(--q-accent-subtle);
-    --q-sidebar-item-shadow-current: none; // quiet: AppShell raises the current item off its canvas
+    --q-sidebar-item-fg-current: var(--q-fg);
+    --q-sidebar-item-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent); // reads on any ground
+    --q-sidebar-item-bg-current: var(--q-bg);
+    --q-sidebar-item-shadow-current: var(--q-shadow-1); // the current item: a raised white pill
     --q-sidebar-item-disabled-opacity: 0.4;
     --q-sidebar-icon-width: var(--q-space-2-5);
-    --q-sidebar-icon-font-size: var(--q-text-sm);
-    --q-sidebar-icon-tracking: var(--q-tracking-wide);
+    --q-sidebar-icon-font-size: var(--q-icon-md);
     --q-sidebar-icon-fg: var(--q-fg-muted);
     --q-sidebar-icon-fg-current: var(--q-accent-fg);
-    --q-sidebar-initials-font: var(--q-font-mono);
-    --q-sidebar-initials-font-size: var(--q-text-3xs);
-    --q-sidebar-badge-font: var(--q-font-mono);
-    --q-sidebar-badge-font-size: var(--q-text-2xs);
+    --q-sidebar-initials-font: var(--q-font-label);
+    --q-sidebar-initials-font-size: var(--q-text-label);
+    --q-sidebar-initials-weight: var(--q-weight-label);
+    --q-sidebar-badge-font: var(--q-font-sans);
+    --q-sidebar-badge-font-size: var(--q-text-sm);
     --q-sidebar-badge-fg: var(--q-fg-muted);
     --q-sidebar-footer-pt: var(--q-space-2);
 
@@ -68,15 +71,14 @@
     --q-sidebar-drawer-scrim: var(--q-scrim);
     --q-sidebar-drawer-width: var(--q-sidebar-width);
     --q-sidebar-drawer-gutter: var(--q-space-6); // scrim left showing at the narrowest widths
-    --q-sidebar-drawer-shadow: var(--q-shadow-3);
+    --q-sidebar-drawer-shadow: var(--q-shadow-float);
 
     --q-sidebar-trigger-size: var(--q-control-sm);
     --q-sidebar-trigger-radius: var(--q-radius-pill);
-    --q-sidebar-trigger-border: var(--q-border);
-    --q-sidebar-trigger-bg: var(--q-bg);
-    --q-sidebar-trigger-bg-hover: var(--q-bg-subtle);
+    --q-sidebar-trigger-bg: transparent;
+    --q-sidebar-trigger-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
     --q-sidebar-trigger-fg: var(--q-fg);
-    --q-sidebar-trigger-font-size: var(--q-text-md);
+    --q-sidebar-trigger-font-size: var(--q-icon-lg);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -130,12 +132,23 @@
     margin-top: var(--q-sidebar-toggle-offset);
     width: var(--q-sidebar-toggle-size);
     height: var(--q-sidebar-toggle-size);
-    border: var(--q-hairline) solid var(--q-sidebar-border);
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
     border-radius: var(--q-sidebar-toggle-radius);
     background: var(--q-sidebar-toggle-bg);
     color: var(--q-sidebar-toggle-fg);
     font-size: var(--q-sidebar-toggle-font-size);
     cursor: pointer;
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      color var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-sidebar-toggle-bg-hover);
+      color: var(--q-sidebar-toggle-fg-hover);
+    }
   }
 
   .q-sidebar__body {
@@ -167,6 +180,7 @@
     color: var(--q-sidebar-label-fg);
     font-family: var(--q-sidebar-label-font);
     font-size: var(--q-sidebar-label-font-size);
+    font-weight: var(--q-sidebar-label-weight);
     letter-spacing: var(--q-sidebar-label-tracking);
     text-transform: var(--q-case-label);
 
@@ -184,7 +198,6 @@
   }
 
   .q-sidebar__chevron {
-    display: inline-block;
     transition: transform var(--q-dur-hover) var(--q-ease-soft);
 
     [aria-expanded="false"] > & {
@@ -260,11 +273,11 @@
     color: var(--q-sidebar-icon-fg);
     font-family: inherit;
     font-size: var(--q-sidebar-icon-font-size);
-    letter-spacing: var(--q-sidebar-icon-tracking);
 
     &--initials {
       font-family: var(--q-sidebar-initials-font);
       font-size: var(--q-sidebar-initials-font-size);
+      font-weight: var(--q-sidebar-initials-weight);
     }
 
     [aria-current="page"] > & {
@@ -284,11 +297,11 @@
     color: var(--q-sidebar-badge-fg);
     font-family: var(--q-sidebar-badge-font);
     font-size: var(--q-sidebar-badge-font-size);
+    font-variant-numeric: tabular-nums;
   }
 
   .q-sidebar__footer {
     padding-top: var(--q-sidebar-footer-pt);
-    border-top: var(--q-hairline) solid var(--q-sidebar-border);
   }
 
   .q-sidebar--drawer {
@@ -325,7 +338,7 @@
     width: var(--q-sidebar-trigger-size);
     height: var(--q-sidebar-trigger-size);
     padding: 0;
-    border: var(--q-hairline) solid var(--q-sidebar-trigger-border);
+    border: 0;
     border-radius: var(--q-sidebar-trigger-radius);
     background: var(--q-sidebar-trigger-bg);
     color: var(--q-sidebar-trigger-fg);

@@ -1,4 +1,4 @@
-// Tabs — mono caps tabs. BEM: .q-tabs (tablist), __tab, __icon, __count, __indicator;
+// Tabs — sentence-case tabs, segmented by default. BEM: .q-tabs (tablist), __tab, __icon, __count, __indicator;
 // --{variant} (line, enclosed, pill), --{size}, --full. Selected tab: [aria-selected="true"].
 // While the sliding indicator moves (FLIP between two selections) the tablist carries
 // [data-sliding]; the indicator's geometry comes in as --_left/--_top/--_width/--_height.
@@ -9,24 +9,25 @@
   :root,
   [data-theme] {
     --q-tabs-font: var(--q-font-label);
+    --q-tabs-weight: var(--q-weight-label);
     --q-tabs-tracking: var(--q-tracking-label);
     --q-tabs-tab-gap: var(--q-space-1);
     --q-tabs-disabled-opacity: 0.4;
-    --q-tabs-count-fg: var(--q-fg-subtle);
+    --q-tabs-count-fg: var(--q-fg-muted);
     --q-tabs-indicator-dur: var(--q-dur-expand);
 
-    --q-tabs-sm-font-size: var(--q-text-3xs);
-    --q-tabs-sm-icon-size: var(--q-text-sm);
-    --q-tabs-sm-height: 28px; // segment height inside the 4px enclosed/pill track
-    --q-tabs-sm-px: var(--q-space-1-5);
+    --q-tabs-sm-font-size: var(--q-text-label);
+    --q-tabs-sm-icon-size: var(--q-icon-sm);
+    --q-tabs-sm-height: var(--q-space-3); // segment inside the 2px track: 28 overall
+    --q-tabs-sm-px: var(--q-space-1-25);
     --q-tabs-md-font-size: var(--q-text-label);
-    --q-tabs-md-icon-size: 14px; // label size + 3px; no text step at 14
-    --q-tabs-md-height: var(--q-field-sm);
-    --q-tabs-md-px: var(--q-space-2);
+    --q-tabs-md-icon-size: var(--q-icon-sm);
+    --q-tabs-md-height: 28px; // segment inside the 2px track: 32 overall (--q-control-sm)
+    --q-tabs-md-px: var(--q-space-1-5);
     --q-tabs-lg-font-size: var(--q-text-sm);
-    --q-tabs-lg-icon-size: var(--q-text-md);
-    --q-tabs-lg-height: 44px; // segment height inside the 4px enclosed/pill track
-    --q-tabs-lg-px: var(--q-space-2-5);
+    --q-tabs-lg-icon-size: var(--q-icon-md);
+    --q-tabs-lg-height: var(--q-control-sm); // segment inside the 2px track: 36 overall
+    --q-tabs-lg-px: var(--q-space-2);
 
     --q-tabs-line-gap: var(--q-space-4);
     --q-tabs-line-border: var(--q-border);
@@ -36,17 +37,17 @@
     --q-tabs-line-fg-selected: var(--q-accent-fg);
     --q-tabs-line-indicator: var(--q-accent);
 
-    --q-tabs-track-gap: var(--q-space-0-5);
-    --q-tabs-track-pad: var(--q-space-0-5);
+    --q-tabs-track-gap: var(--q-space-0-25);
+    --q-tabs-track-pad: var(--q-space-0-25);
     --q-tabs-enclosed-bg: var(--q-bg-subtle);
-    --q-tabs-enclosed-radius: var(--q-radius-md);
-    --q-tabs-enclosed-tab-radius: var(--q-radius-sm);
+    --q-tabs-enclosed-radius: var(--q-radius-pill);
+    --q-tabs-enclosed-tab-radius: var(--q-radius-pill);
+    --q-tabs-enclosed-fg-hover: var(--q-fg);
     --q-tabs-enclosed-fg: var(--q-fg-muted);
     --q-tabs-enclosed-fg-selected: var(--q-fg);
     --q-tabs-enclosed-bg-selected: var(--q-bg);
     --q-tabs-enclosed-shadow-selected: var(--q-shadow-1);
 
-    --q-tabs-pill-border: var(--q-border);
     --q-tabs-pill-radius: var(--q-radius-pill);
     --q-tabs-pill-fg: var(--q-fg);
     --q-tabs-pill-bg-hover: var(--q-bg-subtle);
@@ -97,7 +98,6 @@
       display: inline-flex;
       gap: var(--q-tabs-track-gap);
       padding: var(--q-tabs-track-pad);
-      border: var(--q-hairline) solid var(--q-tabs-pill-border);
       border-radius: var(--q-tabs-pill-radius);
     }
 
@@ -119,6 +119,7 @@
     background: none;
     font-family: var(--q-tabs-font);
     font-size: var(--_font-size);
+    font-weight: var(--q-tabs-weight);
     letter-spacing: var(--q-tabs-tracking);
     text-transform: var(--q-case-label);
     white-space: nowrap;
@@ -167,6 +168,10 @@
     box-shadow: none;
     color: var(--q-tabs-enclosed-fg);
 
+    &:is(:hover, :focus-visible):not(:disabled) {
+      color: var(--q-tabs-enclosed-fg-hover);
+    }
+
     &[aria-selected="true"] {
       color: var(--q-tabs-enclosed-fg-selected);
     }
@@ -213,6 +218,11 @@
 
   .q-tabs__count {
     color: var(--q-tabs-count-fg);
+
+    // On the accent fill the count takes the tab's own on-accent colour.
+    .q-tabs--pill [aria-selected="true"] > & {
+      color: inherit;
+    }
   }
 
   .q-tabs__indicator {

@@ -1,9 +1,10 @@
 import React from "react";
 import { focusables, useEscape, useOutside, usePresence } from "../../a11y/hooks";
+import { CloseButton } from "../feedback/parts";
 import "./Popover.scss";
 
 /**
- * Click-triggered floating panel for rich content. Rounded (--radius-lg), soft hairline + shadow.
+ * Click-triggered floating panel for rich content. Rounded (--q-radius-lg), floats on --q-shadow-float.
  * @startingPoint section="Overlays" subtitle="Floating panels" viewport="600x360"
  */
 export interface PopoverProps {
@@ -22,7 +23,7 @@ export interface PopoverProps {
 	closeOnClickOutside?: boolean;
 	/** Close on Escape and return focus to the trigger (default true) */
 	closeOnEscape?: boolean;
-	/** Show a × button in the panel's corner (default false) */
+	/** Show a close button in the panel's corner (default false) */
 	showClose?: boolean;
 	className?: string;
 	style?: React.CSSProperties;
@@ -132,9 +133,7 @@ export function Popover({
 					)}
 					{children}
 					{showClose && (
-						<button type="button" onClick={dismiss} aria-label="Close" className="q-popover__close">
-							{"×"}
-						</button>
+						<CloseButton label="Close" onClick={dismiss} className="q-popover__close" />
 					)}
 				</div>
 			)}

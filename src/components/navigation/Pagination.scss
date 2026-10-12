@@ -1,4 +1,4 @@
-// Pagination — mono page pills. BEM: .q-pagination, __page, __ellipsis; --{variant} (default,
+// Pagination — page pills. BEM: .q-pagination, __page, __ellipsis; --{variant} (default,
 // outline, ghost), --{size}. Current page: [aria-current="page"].
 @use "../../styles/layers";
 
@@ -8,17 +8,17 @@
     --q-pagination-gap: var(--q-space-0-5);
     --q-pagination-page-px: var(--q-space-1);
     --q-pagination-page-radius: var(--q-radius-pill);
-    --q-pagination-font: var(--q-font-mono);
+    --q-pagination-font: var(--q-font-sans);
+    --q-pagination-weight: var(--q-weight-medium);
     --q-pagination-disabled-opacity: 0.3;
     --q-pagination-ellipsis-fg: var(--q-fg-subtle);
-    --q-pagination-ellipsis-font-size: var(--q-text-xs);
 
     --q-pagination-sm-size: var(--q-control-sm);
-    --q-pagination-sm-font-size: var(--q-text-xs);
+    --q-pagination-sm-font-size: var(--q-text-sm);
     --q-pagination-md-size: var(--q-control-md);
-    --q-pagination-md-font-size: var(--q-text-xs);
-    --q-pagination-lg-size: var(--q-field-md);
-    --q-pagination-lg-font-size: var(--q-text-sm);
+    --q-pagination-md-font-size: var(--q-text-md);
+    --q-pagination-lg-size: var(--q-control-lg);
+    --q-pagination-lg-font-size: var(--q-text-md);
 
     --q-pagination-fg: var(--q-fg);
     --q-pagination-bg-hover: var(--q-bg-subtle);
@@ -28,7 +28,7 @@
     --q-pagination-outline-border: var(--q-border);
     --q-pagination-outline-border-current: var(--q-accent);
     --q-pagination-ghost-fg: var(--q-fg-muted);
-    --q-pagination-ghost-fg-hover: var(--q-accent-fg);
+    --q-pagination-ghost-fg-hover: var(--q-fg);
     --q-pagination-ghost-bg-current: var(--q-accent-subtle);
   }
 
@@ -66,8 +66,12 @@
     color: var(--q-pagination-fg);
     font-family: var(--q-pagination-font);
     font-size: var(--_font-size);
+    font-weight: var(--q-pagination-weight);
     font-variant-numeric: tabular-nums;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition:
       background var(--q-dur-hover) var(--q-ease-soft),
       color var(--q-dur-hover) var(--q-ease-soft),
@@ -102,7 +106,6 @@
     color: var(--q-pagination-ghost-fg);
 
     &:is(:hover, :focus-visible):not(:disabled, [aria-current="page"]) {
-      background: transparent;
       color: var(--q-pagination-ghost-fg-hover);
     }
 
@@ -113,10 +116,10 @@
   }
 
   .q-pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: var(--_size);
     color: var(--q-pagination-ellipsis-fg);
-    font-family: var(--q-pagination-font);
-    font-size: var(--q-pagination-ellipsis-font-size);
-    text-align: center;
   }
 }

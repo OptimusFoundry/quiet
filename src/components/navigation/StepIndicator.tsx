@@ -1,8 +1,10 @@
 import type React from "react";
+import { Icon } from "../core/Icon";
 import "./StepIndicator.scss";
 
 /**
- * Numbered steps with hairline connectors. Roman numerals by default; ✓ complete, ink ring current, molten ! error.
+ * Numbered steps with hairline connectors. Arabic numerals by default; a check marks a complete step,
+ * the accent ring the current one, a warning icon an error.
  * @startingPoint section="Navigation" subtitle="Multi-step progress" viewport="800x260"
  */
 export interface StepIndicatorProps {
@@ -15,6 +17,7 @@ export interface StepIndicatorProps {
 	current?: number;
 	orientation?: "horizontal" | "vertical";
 	size?: "sm" | "md" | "lg";
+	/** Marker numbers (default "arabic") */
 	numerals?: "roman" | "arabic";
 	/** Makes completed steps clickable */
 	onStepClick?: (index: number) => void;
@@ -31,7 +34,7 @@ export function StepIndicator({
 	current = 0,
 	orientation = "horizontal",
 	size = "md",
-	numerals = "roman",
+	numerals = "arabic",
 	onStepClick,
 	label,
 	className,
@@ -55,13 +58,15 @@ export function StepIndicator({
 				const st = s.status || (i < current ? "complete" : i === current ? "current" : "upcoming");
 				const click = onStepClick && st === "complete";
 				const glyph =
-					st === "complete"
-						? "\u2713"
-						: st === "error"
-							? "!"
-							: numerals === "roman"
-								? ROMAN[i]
-								: String(i + 1).padStart(2, "0");
+					st === "complete" ? (
+						<Icon name="check" size="sm" />
+					) : st === "error" ? (
+						<Icon name="warning" size="sm" />
+					) : numerals === "roman" ? (
+						ROMAN[i]
+					) : (
+						String(i + 1)
+					);
 				const last = i === steps.length - 1;
 				const name = typeof s.label === "string" ? s.label : `step ${i + 1}`;
 				return (
