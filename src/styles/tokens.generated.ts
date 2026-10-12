@@ -1318,6 +1318,7 @@ export type TokenName =
 	| "--q-icon-primary-fg"
 	| "--q-icon-quiet-fg"
 	| "--q-icon-sm"
+	| "--q-icon-stroke"
 	| "--q-icon-success-fg"
 	| "--q-icon-warning-fg"
 	| "--q-icon-weight"

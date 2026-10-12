@@ -1,16 +1,20 @@
 import type React from "react";
+import { ICON_ALIASES, ICONS, type IconName } from "./icons";
 import "./Icon.scss";
 
+export { ICON_ALIASES, ICONS, type IconName } from "./icons";
+
 /**
- * Unicode glyph icon. The brand has no icon set — glyphs carry meaning (→ ↘ ↗ × ✓ · …).
- * @startingPoint section="Primitives" subtitle="Named unicode glyphs" viewport="600x160"
+ * A stroke icon from quiet's set (`icons.ts`: a 24 grid, round caps, `currentColor`), sized in em so
+ * it follows the text beside it. Decorative unless `label` is given.
+ * @startingPoint section="Primitives" subtitle="Stroke icons" viewport="600x160"
  */
 export interface IconProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
 	ref?: React.Ref<HTMLSpanElement>;
-	/** Named glyph: arrow-right, arrow-left, arrow-up, arrow-down, expand, external, close, check, plus, minus, dot, more, slash, command, enter, info, warning, help, first, last, sort, prev, next */
-	name?: string;
-	/** Any literal glyph; overrides name */
+	/** Icon name from the set (`ICONS`), e.g. "arrow-right", "close", "check", "info". The old glyph names expand, first, last, prev and next still resolve */
+	name?: IconName | (string & {});
+	/** @deprecated A literal text glyph instead of the icon; overrides name. Add a stroke icon to the set instead */
 	glyph?: string;
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number;
 	color?:
@@ -23,37 +27,12 @@ export interface IconProps
 		| "warning"
 		| "error"
 		| string;
-	/** Accessible label; omit for decorative glyphs */
+	/** Accessible label; omit for decorative icons */
 	label?: string;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-const GLYPHS: Record<string, string> = {
-	"arrow-right": "→",
-	"arrow-left": "←",
-	"arrow-up": "↑",
-	"arrow-down": "↓",
-	expand: "↘",
-	external: "↗",
-	close: "×",
-	check: "✓",
-	plus: "+",
-	minus: "−",
-	dot: "·",
-	more: "…",
-	slash: "/",
-	command: "⌘",
-	enter: "↵",
-	info: "i",
-	warning: "!",
-	help: "?",
-	first: "«",
-	last: "»",
-	sort: "↕",
-	prev: "‹",
-	next: "›",
-};
 const SIZES: unknown[] = ["xs", "sm", "md", "lg", "xl", "2xl"];
 const COLORS: string[] = [
 	"default",
@@ -65,6 +44,10 @@ const COLORS: string[] = [
 	"error",
 	"inherit",
 ];
+
+function pathOf(name: string): string | undefined {
+	return (ICONS as Record<string, string>)[ICON_ALIASES[name] ?? name];
+}
 
 export function Icon({
 	name = "arrow-right",
@@ -81,10 +64,12 @@ export function Icon({
 	const vars: Record<string, string> = {};
 	if (numeric) vars["--_size"] = `${size}px`;
 	if (!knownColor) vars["--_color"] = color;
+	const d = glyph === undefined ? pathOf(name) : undefined;
 	const cls = [
 		"q-icon",
 		numeric ? "q-icon--custom-size" : `q-icon--${SIZES.includes(size) ? size : "md"}`,
 		`q-icon--${knownColor ? color : "custom-color"}`,
+		d === undefined && "q-icon--glyph",
 		className,
 	]
 		.filter(Boolean)
@@ -98,8 +83,14 @@ export function Icon({
 			className={cls}
 			style={numeric || !knownColor ? { ...vars, ...style } : style}
 		>
-			{glyph ?? GLYPHS[name] ?? name}
+			{d === undefined ? (
+				(glyph ?? name)
+			) : (
+				<svg viewBox="0 0 24 24" className="q-icon__svg" focusable="false" aria-hidden="true">
+					<path d={d} />
+				</svg>
+			)}
 		</span>
 	);
 }
-Icon.glyphs = GLYPHS;
+Icon.names = Object.keys(ICONS) as IconName[];

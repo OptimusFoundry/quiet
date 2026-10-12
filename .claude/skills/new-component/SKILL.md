@@ -36,7 +36,7 @@ The one look, built in from the start (`docs/plans/2026-10-12-one-look.md`):
 - **Type:** sizes from the roles and `--q-text-*`; labels sans, sentence case (`--q-font-label`,
   `--q-case-label`). No mono caps, no italics, mono only for code, IDs and kbd.
 - **Shape:** controls are pills at the dense heights (`--q-control-sm`, `--q-field-md`).
-- **Icons:** `AppIcon` by name (`src/components/app/icons.ts`); add a missing stroke icon there.
+- **Icons:** `AppIcon` by name (`src/components/core/icons.ts`); add a missing stroke icon there.
   Never a unicode glyph (→ ✕ ✓ ⌄).
 - **Inside AppShell:** it must work in the 360 pane and at 390 wide; lay it out by container
   (`Grid`, `Stack`, container queries), not by viewport.

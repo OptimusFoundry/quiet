@@ -2,11 +2,11 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
 	AccountMenu,
 	AppIcon,
-	type AppIconName,
 	AppShell,
 	Avatar,
 	Button,
 	CommandPalette,
+	type IconName,
 	List,
 	Sidebar,
 	type SidebarProps,
@@ -177,7 +177,7 @@ type FrameProps = {
 	actions?: ReactNode;
 	/** The screen's own third pane (e.g. the assistant's Changes), toggled from the TopBar.
 	 *  It shares AppShell's pane with Notifications: one open at a time. */
-	pane?: { title: string; icon: AppIconName; content: ReactNode; defaultOpen?: boolean };
+	pane?: { title: string; icon: IconName; content: ReactNode; defaultOpen?: boolean };
 };
 
 export function AppFrame({

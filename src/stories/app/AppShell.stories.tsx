@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 import { AccountMenu } from "../../components/app/AccountMenu";
-import { APP_ICONS, AppIcon, type AppIconName } from "../../components/app/AppIcon";
+import { AppIcon } from "../../components/app/AppIcon";
 import { TopBar } from "../../components/app/TopBar";
 import { WorkspaceSwitcher } from "../../components/app/WorkspaceSwitcher";
 import { Button } from "../../components/core/Button";
+import { ICONS, type IconName } from "../../components/core/icons";
 import "./AppShell.scss";
 
 // The app frame's parts on their own: the icon set, the sidebar head and foot, the TopBar.
@@ -24,7 +25,7 @@ function AppShellParts() {
 		<main className="q-sb-app-shell">
 			<Demo id="app-icon" label="AppIcon: the set (md 16)">
 				<ul className="q-sb-app-shell__icons">
-					{(Object.keys(APP_ICONS) as AppIconName[]).map((n) => (
+					{(Object.keys(ICONS) as IconName[]).map((n) => (
 						<li key={n} className="q-sb-app-shell__icon">
 							<AppIcon name={n} size="lg" />
 							<span>{n}</span>
