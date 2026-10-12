@@ -2,7 +2,8 @@ import type React from "react";
 import "./Eyebrow.scss";
 
 /** Mono section label: "01 The studio". */
-export interface EyebrowProps {
+export interface EyebrowProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+	ref?: React.Ref<HTMLDivElement>;
 	/** Serial number shown in ink before the label, e.g. "01" */
 	index?: string;
 	tone?: "muted" | "ink";
@@ -11,9 +12,17 @@ export interface EyebrowProps {
 	style?: React.CSSProperties;
 }
 
-export function Eyebrow({ index, children, tone = "muted", className, style }: EyebrowProps) {
+export function Eyebrow({
+	index,
+	children,
+	tone = "muted",
+	className,
+	style,
+	...rest
+}: EyebrowProps) {
 	return (
 		<div
+			{...rest}
 			className={["q-eyebrow", tone === "ink" && "q-eyebrow--ink", className]
 				.filter(Boolean)
 				.join(" ")}

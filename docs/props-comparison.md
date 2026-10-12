@@ -1,5 +1,7 @@
 # Proto → quiet props comparison
 
+> **Stale:** this describes quiet 0.1.0. The current map is [proto-migration.md](proto-migration.md).
+
 Sources: `docs/proto-props-inventory.json` (Proto, from `saas-template/webapp/src/proto-design-system`) and `src/components/<group>/<Name>.d.ts` + `.jsx` (quiet 0.1.0, React 19). Proto→quiet name mapping per `docs/reference/optimus-design/readme.md`.
 
 Legend: **P** = Proto, **Q** = quiet. "↔" = same concept, different name. "—" = absent.

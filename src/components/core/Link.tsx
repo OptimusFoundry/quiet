@@ -12,6 +12,7 @@ export interface LinkProps
 		"href" | "children" | "className" | "style"
 	> {
 	href?: string;
+	ref?: React.Ref<HTMLAnchorElement>;
 	variant?: "default" | "primary" | "muted";
 	size?: "inherit" | "sm" | "md" | "lg";
 	underline?: "hover" | "always" | "none";

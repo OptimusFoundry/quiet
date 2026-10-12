@@ -1,0 +1,20 @@
+// Layout for the Extensions/Core stories.
+.q-sb-core {
+	display: grid;
+	gap: 16px;
+	max-width: 560px;
+	padding: 32px;
+
+	&__row {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	&__note {
+		margin: 0;
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+	}
+}

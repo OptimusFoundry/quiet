@@ -8,6 +8,7 @@ import "./Spinner.scss";
  */
 export interface SpinnerProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> {
+	ref?: React.Ref<HTMLSpanElement>;
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | number;
 	tone?: "default" | "muted" | "paper" | "molten";
 	/** Mono caps label beside the ring (null hides it) */

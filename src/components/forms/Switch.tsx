@@ -7,7 +7,11 @@ import "./Switch.scss";
  * Pill switch for immediate settings. Ink when on.
  * @startingPoint section="Forms" subtitle="Pill toggles" viewport="600x200"
  */
-export interface SwitchProps {
+export interface SwitchProps
+	extends Omit<
+		React.HTMLAttributes<HTMLSpanElement>,
+		"onChange" | "defaultChecked" | "defaultValue" | "color" | "role"
+	> {
 	label?: React.ReactNode;
 	description?: React.ReactNode;
 	checked?: boolean;
@@ -27,7 +31,7 @@ export interface SwitchProps {
 	required?: boolean;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the role="switch" element, so it can be focused */
+	/** Reaches the role="switch" element, so it can be focused; other HTML attributes (id, aria-*, data-*, onBlur…) land there too */
 	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -50,8 +54,14 @@ export function Switch({
 	form,
 	ref,
 	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	"aria-describedby": ariaDescribedby,
+	"aria-required": ariaRequired,
+	onClick,
+	onKeyDown,
 	className,
 	style,
+	...rest
 }: SwitchProps) {
 	const track = React.useRef<HTMLSpanElement>(null);
 	const trackRef = useMergedRef(track, ref);
@@ -87,17 +97,29 @@ export function Switch({
 		<label className={cls} style={style}>
 			{labelPosition === "left" && text}
 			<span
+				{...rest}
 				ref={trackRef}
 				role="switch"
 				aria-checked={on}
-				aria-required={required || undefined}
-				aria-labelledby={label ? `${uid}l` : undefined}
+				aria-required={required || ariaRequired || undefined}
+				aria-labelledby={label ? `${uid}l` : ariaLabelledby}
 				aria-label={label ? undefined : ariaLabel}
-				aria-describedby={description ? `${uid}d` : undefined}
+				aria-describedby={
+					[ariaDescribedby, description && `${uid}d`].filter(Boolean).join(" ") || undefined
+				}
 				aria-disabled={disabled || undefined}
 				tabIndex={disabled ? -1 : 0}
-				onClick={toggle}
-				onKeyDown={(e) => (e.key === " " || e.key === "Enter") && (e.preventDefault(), toggle())}
+				onClick={(e) => {
+					onClick?.(e);
+					toggle();
+				}}
+				onKeyDown={(e) => {
+					onKeyDown?.(e);
+					if (e.key === " " || e.key === "Enter") {
+						e.preventDefault();
+						toggle();
+					}
+				}}
 				className="q-switch__track"
 			>
 				<span className="q-switch__thumb" />
@@ -115,3 +137,5 @@ export function Switch({
 		</label>
 	);
 }
+/** FormField wires id / aria-* onto the role="switch" track (its Label can't name a span; use `label` or `aria-label`) */
+Switch.fieldControl = true;

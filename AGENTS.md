@@ -1,34 +1,44 @@
 # quiet — agent guide
 
-quiet is a **TypeScript port** of the Optimus Foundry "Soft" design system in Claude Design, plus an
-**accessibility + motion layer** on top. The rule: at rest, every component renders pixel-identical
-to the reference; the layer only shows on interaction — keyboard focus,
-hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESIGN.md](DESIGN.md) first.
+quiet is its own design system: React + TypeScript components on 3-tier `--q-*` tokens, with
+keyboard operation, ARIA and soft motion built in. It began as a TypeScript port of the Optimus
+Foundry "Soft" design system in Claude Design. **That reference is now history:** quiet no longer
+keeps pixel parity with it, and components and their APIs change here, in this repo. Read
+[DESIGN.md](DESIGN.md) first.
 
-## What is copied, and from where
+## Where it came from
 
-| quiet path | source | how |
-|---|---|---|
-| `src/components/<group>/*.tsx` | `docs/reference/optimus-design/components/*.jsx` + `*.d.ts` | ported to TypeScript (props interface from the `.d.ts`, JSDoc and `@startingPoint` kept), then the a11y + motion layer edited in |
-| `src/styles/tokens/` | `docs/reference/optimus-design/tokens/` | rebuilt as 3-tier `--q-*` tokens with the same values; the reference names live in `tokens/_reference-compat.scss` |
-| `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest |
-| `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
-| `src/styles/tokens.generated.{ts,json}` | the compiled SCSS | `npm run gen` (`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`) |
-| `src/stories/catalog.generated.tsx` | `components/index.html` App script | `npm run gen` (verbatim, `@ts-nocheck`) |
+The reference groups (`core`, `forms`, `display`, `data`, `navigation`, `feedback`, `overlays`,
+`layout`) were ported from `docs/reference/optimus-design/components/*.jsx` + `*.d.ts`, and the
+tokens from its `tokens/`. That mirror, `tokens/_reference-compat.scss` and the generated
+`src/stories/catalog.generated.tsx` (from the reference's `components/index.html`) are still in the
+repo until the one-look plan's infrastructure phase removes them. Don't sync from Claude Design and
+don't treat the Catalog story as a parity target.
 
-`docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Everything
-in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes through Stylelint.
+`npm run gen` writes `src/index.ts` (the export barrel) and `src/styles/tokens.generated.{ts,json}`
+(`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`). Everything in `src/` is
+TypeScript (strict), formatted and linted by Biome; only SCSS goes through Stylelint.
 
-## Updating from Claude Design
+## Component APIs
 
-1. Change the design in Claude Design, not here.
-2. Re-mirror changed files into `docs/reference/optimus-design/` with DesignSync `get_file`
-   (main session only — subagents can't use DesignSync, forks can). Write content exactly;
-   keep `\uXXXX` escapes as escapes. Verify against the project before trusting the copy.
-3. `git diff` the mirror to see what changed and port it by hand into the `.tsx` (same paths),
-   keeping the a11y + motion layer and the types, then run `npm run gen`.
-4. Compare the Catalog story with the reference `components/index.html` side by side — at rest
-   they must look identical.
+Apps migrating from Proto (`../proto-design-system`, retiring) are the main consumers, so give
+components the escape hatches apps reach for:
+
+- **`ref` and rest props.** A component takes a React 19 `ref` prop (no `forwardRef`) and spreads
+  rest HTML attributes (`id`, `aria-*`, `data-testid`, handlers) onto its root or, for form widgets,
+  onto the focusable control. `className`/`style` merge. Core and forms do; bring other groups in
+  line when you touch them.
+- **Form widgets** take `name`, `form`, `required`, `onBlur`/`onFocus` (fired when focus leaves the
+  whole widget, popup included) and a ref to a focusable element, so they work with a native
+  `<form>` and with react-hook-form's `Controller`. `onChange` passes the value, not the event, except
+  on native text controls.
+- **Controlled and uncontrolled.** State an app may own has a `value`/`defaultValue`-style pair
+  (`open`/`defaultOpen`/`onOpenChange`, `files`/`defaultFiles`…).
+- **Responsive by container, not viewport.** `Grid` measures its own width (breakpoints 720/960);
+  `Col` (`spanSm`/`spanMd`) and `Stack` (`directionSm`/`directionMd`) follow it, so layouts reflow
+  correctly inside panes.
+- Compound parts (`CardHeader`, `TableRow`…) are added when a screen needs them, next to the
+  data-driven API, not instead of it.
 
 ## One look
 
@@ -41,8 +51,7 @@ rules, Geist with sentence-case sans labels, dense pill controls, panes over dra
 - Accent steps: `--q-accent-fg` (text, links), `--q-accent-bg`/`-bg-hover` + `--q-fg-on-accent`
   (fills), `--q-accent-subtle`/`-subtle-hover` (tints), `--q-accent-border`.
 - `scripts/check-one-look.mjs` (in `npm run lint`) fails on any return of the old two-look plumbing.
-- The phases still to come (component sweep, retirements, reference removal) are in the plan; until
-  they land, parity notes elsewhere in this file are stale.
+- The phases still to come (component sweep, retirements, reference removal) are in the plan.
 
 ## The a11y + motion layer
 
@@ -50,12 +59,9 @@ rules, Geist with sentence-case sans labels, dense pill controls, panes over dra
   roving arrow keys, presence for exit animations) — use it, don't re-implement per component.
 - Motion classes live in `src/styles/utilities/_motion.scss` (`q-anim-*` with `data-state`, `q-collapse`);
   keyboard focus ring and `q-sr-only` in `src/styles/utilities/_a11y.scss`.
-- Motion follows the reference rules: slow and soft, `--q-ease-soft`/`--q-ease-forge`, never a bounce,
-  no press shrink, one moving thing per surface, reduced motion respected.
-- Keep edits minimal and in the reference's style (`React.useState`, classes from the component's
-  `.scss`); never change what renders at rest. Colour contrast is a deliberate exception (exact colours kept).
-- Ink is a second deliberate exception: the light foundry theme sets `--q-fg`/`--q-fg-body` to softer
-  `gray-700`/`gray-600` than the reference (`themes/_foundry.scss`), so catalog text is lighter than the reference.
+- Motion is slow and soft: `--q-ease-soft`/`--q-ease-forge`, never a bounce, no press shrink, one
+  moving thing per surface, reduced motion respected.
+- Code style: `React.useState` and friends, classes from the component's own `.scss`.
 
 ## Styling conventions (BEM + tokens)
 
@@ -109,7 +115,7 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 - Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
   values in component rules). `npm run lint` runs Biome + Stylelint.
 - Biome's `src/components/**` override turns off the a11y lint rules that fight quiet's deliberate
-  ARIA-on-div DOM (it must match the reference), plus
+  ARIA-on-div DOM (inherited from the reference), plus
   `noArrayIndexKey` and `noNonNullAssertion`. `useExhaustiveDependencies` and `noExplicitAny` are
   errors: a callback an effect must not restart on goes through `useEffectEvent`; a deliberate extra
   dependency gets a `biome-ignore` saying what it triggers. Rest props are typed as the HTML
@@ -117,10 +123,9 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 
 ## Future components (quiet's own)
 
-`src/components/future/` holds components that are **not** in the reference: concepts from the
+`src/components/future/` holds components that were never in the reference: concepts from the
 Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
-on quiet tokens + BEM with full keyboard/ARIA. Parity doesn't apply to them; `npm run gen`
-exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…). Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
+on quiet tokens + BEM with full keyboard/ARIA. `npm run gen` exports them after the reference groups. Stories: `src/stories/future/*.stories.tsx` (Future/…). Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
 
 Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts molten is the primary data
 colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `src/components/chat/`
@@ -133,15 +138,16 @@ icon set, `icons.ts`), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `
 `Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
 
 Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
-`scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
-section, since the catalog is generated from the reference and must stay pixel-identical to it.
+`scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`), since the catalog
+is generated from the reference. New stories for reference-group components go in
+`src/stories/extensions/`.
 
 ## Harness (Claude Code)
 
 - **Skills** (`.claude/skills/`):
   - `new-component`: add a component end to end.
   - `port-future-concept`: judge fit and read a Claude Design concept through Chrome.
-  - `sync-from-claude-design`: update the reference copy, hash-verified, with parity.
+  - `sync-from-claude-design`: retired with the reference; don't use it.
   - `sync-design-artifact`: push quiet to its Claude Design system artifact (only changed files; `scripts/design-artifact.mjs`), or pull refinements made there back.
   - `review-component`: the pre-PR checklist.
   - App-facing (the `quiet` plugin in `claude/`, placed by `quiet sync`, see "Vendoring"):

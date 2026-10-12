@@ -1,12 +1,26 @@
 import React from "react";
-import { motionToken } from "../../a11y/hooks";
+import { motionToken, useMergedRef } from "../../a11y/hooks";
 import "./Stepper.scss";
 
 /**
  * Numeric stepper − value +. Pill-shaped hairline box.
  * @startingPoint section="Forms" subtitle="Number stepper" viewport="500x140"
  */
-export interface StepperProps {
+export interface StepperProps
+	extends Omit<
+		React.InputHTMLAttributes<HTMLInputElement>,
+		| "onChange"
+		| "value"
+		| "defaultValue"
+		| "size"
+		| "min"
+		| "max"
+		| "step"
+		| "type"
+		| "role"
+		| "onBlur"
+		| "onFocus"
+	> {
 	value?: number;
 	defaultValue?: number;
 	min?: number;
@@ -15,13 +29,24 @@ export interface StepperProps {
 	onChange?: (value: number) => void;
 	size?: "sm" | "md" | "lg";
 	disabled?: boolean;
-	/** Accessible name */
+	/** Accessible name; a caller's `aria-label` wins on the field */
 	label?: string;
 	/** Id for the value field (spinbutton); FormField sets it so its Label points here */
 	id?: string;
 	"aria-describedby"?: string;
 	"aria-invalid"?: boolean;
 	"aria-required"?: boolean;
+	/** Submits the value through the field, so a native <form> and FormData see it */
+	name?: string;
+	/** id of a <form> elsewhere in the document, as on native controls */
+	form?: string;
+	required?: boolean;
+	/** Fires when focus leaves the stepper (field and buttons), not on moves inside it */
+	onBlur?: React.FocusEventHandler<HTMLElement>;
+	/** Fires when focus enters the stepper from outside */
+	onFocus?: React.FocusEventHandler<HTMLElement>;
+	/** Reaches the spinbutton field; other HTML attributes (data-*, aria-*…) land there too */
+	ref?: React.Ref<HTMLInputElement>;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -69,13 +94,21 @@ export function Stepper({
 	id,
 	"aria-describedby": describedBy,
 	"aria-invalid": invalid,
-	"aria-required": required,
+	"aria-required": ariaRequired,
+	"aria-label": ariaLabel,
+	required,
+	onKeyDown,
+	onBlur,
+	onFocus,
+	ref,
 	className,
 	style,
+	...rest
 }: StepperProps) {
 	const [inner, setInner] = React.useState(defaultValue ?? (Number.isFinite(min) ? min : 0));
 	const [said, setSaid] = React.useState("");
 	const field = React.useRef<HTMLInputElement>(null);
+	const fieldRef = useMergedRef(field, ref);
 	const cur = value ?? inner;
 	const set = (v: number) => {
 		const n = Math.min(max, Math.max(min, v));
@@ -94,6 +127,7 @@ export function Stepper({
 			});
 	};
 	const key = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		onKeyDown?.(e);
 		const to = (
 			{
 				ArrowUp: cur + step,
@@ -117,7 +151,14 @@ export function Stepper({
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<div role="group" aria-label={label} className={cls} style={style}>
+		<div
+			role="group"
+			aria-label={label}
+			onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onBlur?.(e)}
+			onFocus={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onFocus?.(e)}
+			className={cls}
+			style={style}
+		>
 			<StepBtn
 				label={label ? `Decrease ${label}` : "Decrease"}
 				disabled={disabled}
@@ -128,12 +169,13 @@ export function Stepper({
 			</StepBtn>
 			{/* --_chars sizes the field to its value (min 40px) */}
 			<input
-				ref={field}
+				{...rest}
+				ref={fieldRef}
 				id={id}
 				type="text"
 				inputMode="numeric"
 				role="spinbutton"
-				aria-label={label}
+				aria-label={ariaLabel ?? label}
 				value={cur}
 				disabled={disabled}
 				aria-valuenow={cur}
@@ -141,7 +183,8 @@ export function Stepper({
 				aria-valuemax={Number.isFinite(max) ? max : undefined}
 				aria-describedby={describedBy}
 				aria-invalid={invalid}
-				aria-required={required}
+				required={required}
+				aria-required={ariaRequired}
 				onKeyDown={key}
 				onChange={(e) => {
 					const n = parseFloat(e.target.value);

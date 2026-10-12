@@ -7,7 +7,11 @@ import "./Checkbox.scss";
  * Soft-cornered checkbox (--radius-xs), ink fill with ✓. Indeterminate, description, error, sizes.
  * @startingPoint section="Forms" subtitle="Soft checks" viewport="600x220"
  */
-export interface CheckboxProps {
+export interface CheckboxProps
+	extends Omit<
+		React.HTMLAttributes<HTMLSpanElement>,
+		"onChange" | "defaultChecked" | "defaultValue" | "color" | "role"
+	> {
 	label?: React.ReactNode;
 	description?: React.ReactNode;
 	checked?: boolean;
@@ -29,7 +33,7 @@ export interface CheckboxProps {
 	required?: boolean;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the role="checkbox" element, so it can be focused */
+	/** Reaches the role="checkbox" element, so it can be focused; other HTML attributes (id, aria-*, data-*, onBlur…) land there too */
 	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -53,8 +57,15 @@ export function Checkbox({
 	form,
 	ref,
 	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	"aria-describedby": ariaDescribedby,
+	"aria-invalid": ariaInvalid,
+	"aria-required": ariaRequired,
+	onClick,
+	onKeyDown,
 	className,
 	style,
+	...rest
 }: CheckboxProps) {
 	const box = React.useRef<HTMLSpanElement>(null);
 	const boxRef = useMergedRef(box, ref);
@@ -67,8 +78,9 @@ export function Checkbox({
 		onChange?.(!on);
 	};
 	const described =
-		[description && `${uid}d`, typeof error === "string" && `${uid}e`].filter(Boolean).join(" ") ||
-		undefined;
+		[ariaDescribedby, description && `${uid}d`, typeof error === "string" && `${uid}e`]
+			.filter(Boolean)
+			.join(" ") || undefined;
 	const cls = [
 		"q-checkbox",
 		`q-checkbox--${SIZES.includes(size) ? size : "md"}`,
@@ -81,18 +93,28 @@ export function Checkbox({
 	return (
 		<label className={cls} style={style}>
 			<span
+				{...rest}
 				ref={boxRef}
 				role="checkbox"
 				aria-checked={indeterminate ? "mixed" : on}
-				aria-required={required || undefined}
-				aria-invalid={!!error || undefined}
-				aria-labelledby={label ? `${uid}l` : undefined}
+				aria-required={required || ariaRequired || undefined}
+				aria-invalid={error ? true : ariaInvalid}
+				aria-labelledby={label ? `${uid}l` : ariaLabelledby}
 				aria-label={label ? undefined : ariaLabel}
 				aria-describedby={described}
 				aria-disabled={disabled || undefined}
 				tabIndex={disabled ? -1 : 0}
-				onClick={toggle}
-				onKeyDown={(e) => e.key === " " && (e.preventDefault(), toggle())}
+				onClick={(e) => {
+					onClick?.(e);
+					toggle();
+				}}
+				onKeyDown={(e) => {
+					onKeyDown?.(e);
+					if (e.key === " ") {
+						e.preventDefault();
+						toggle();
+					}
+				}}
 				className="q-checkbox__box"
 			>
 				<span aria-hidden="true" className="q-checkbox__mark">
@@ -126,3 +148,5 @@ export function Checkbox({
 		</label>
 	);
 }
+/** FormField wires id / aria-* onto the role="checkbox" box (its Label can't name a span; use `label` or `aria-label`) */
+Checkbox.fieldControl = true;
