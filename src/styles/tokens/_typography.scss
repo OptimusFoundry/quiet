@@ -2,8 +2,8 @@
 // sizes its components actually use). Components never use a size outside these scales; a size
 // unique to one component lives in tokens/_components.scss.
 :root {
-  --q-font-sans: "Inter Tight", "Helvetica Neue", helvetica, arial, sans-serif;
-  --q-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", menlo, monospace;
+  --q-font-sans: "Geist", -apple-system, "Helvetica Neue", arial, sans-serif;
+  --q-font-mono: "Geist Mono", ui-monospace, "SF Mono", menlo, monospace;
 
   --q-weight-regular: 400;
   --q-weight-medium: 500;
@@ -41,51 +41,8 @@
   --q-tracking-display: -0.045em;
 }
 
-// Type roles. The defaults are the reference's editorial scale; data-density="app" and "compact"
-// retune them for product screens: smaller headings, no molten period, sans sentence-case labels and hints.
-:root,
-[data-density="marketing"] {
-  // The size scale's body range, re-declared so a marketing frame inside an app gets it back.
-  --q-text-2xs: 11px;
-  --q-text-xs: 12px;
-  --q-text-sm: 13px;
-  --q-text-md: 15px;
-  --q-text-lg: 17px;
-  --q-text-xl: 19px;
-  --q-text-2xl: 24px;
-  --q-text-3xl: 30px;
-  --q-weight-regular: 400;
-  --q-weight-medium: 500;
-  --q-weight-semibold: 600;
-  --q-font-sans: "Inter Tight", "Helvetica Neue", helvetica, arial, sans-serif;
-  --q-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", menlo, monospace;
-
-  --q-text-heading-1: var(--q-text-5xl);
-  --q-text-heading-2: var(--q-text-4xl);
-  --q-text-heading-3: var(--q-text-3xl);
-  --q-text-heading-4: var(--q-text-2xl);
-  --q-text-metric: var(--q-text-4xl);
-  --q-text-intro: var(--q-text-lg);
-  --q-weight-heading: var(--q-weight-bold);
-  --q-tracking-h4: -0.02em;
-  --q-tracking-h3: -0.025em;
-  --q-tracking-h2: -0.04em;
-  --q-period-display: inline;
-
-  --q-font-label: var(--q-font-mono);
-  --q-text-label: var(--q-text-2xs);
-  --q-weight-label: var(--q-weight-regular);
-  --q-tracking-label: var(--q-tracking-mono);
-  --q-case-label: uppercase;
-
-  --q-font-hint: var(--q-font-mono);
-  --q-text-hint: var(--q-text-2xs);
-  --q-tracking-hint: var(--q-tracking-wide);
-  --q-hint-leading: 1.5; // the reference's hint line; not a --q-leading-* step
-}
-
-[data-density="app"],
-[data-density="compact"] {
+// Type roles: one scale for product screens (Geist, sentence-case sans labels and hints).
+:root {
   // Product screens are text-heavy: the whole body range steps down a notch (body 15 → 14,
   // small 13 → 12, labels 11 → 10.5), so every component that sizes from the scale follows.
   --q-text-2xs: 10.5px;
