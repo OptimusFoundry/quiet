@@ -10,7 +10,7 @@ import "./DescriptionList.scss";
 
 const meta = {
 	title: "App/DescriptionList",
-	parameters: { density: "app", layout: "fullscreen" },
+	parameters: { layout: "fullscreen" },
 } satisfies Meta;
 export default meta;
 

@@ -1,17 +1,15 @@
 # quiet — agent guide
 
 quiet is its own design system: React + TypeScript components on 3-tier `--q-*` tokens, with
-keyboard operation, ARIA and soft motion built in. It began as a TypeScript port of the Optimus
-Foundry "Soft" design system in Claude Design. **That reference is now history:** quiet no longer
-keeps pixel parity with it, and components and their APIs change here, in this repo. Read
-[DESIGN.md](DESIGN.md) first.
+keyboard operation, ARIA and soft motion built in. Components and their APIs change here, in this
+repo. Read [DESIGN.md](DESIGN.md) first, then `docs/guidelines/` for how screens are built.
 
 ## Where it came from
 
-The reference groups (`core`, `forms`, `display`, `data`, `navigation`, `feedback`, `overlays`,
-`layout`) were ported from `docs/reference/optimus-design/components/*.jsx` + `*.d.ts`, and the
-tokens from its `tokens/`. That mirror and `tokens/_reference-compat.scss` are still in the repo
-until the one-look plan's infrastructure phase removes them. Don't sync from Claude Design.
+quiet began as a TypeScript port of the Optimus Foundry "Soft" design system in Claude Design: the
+groups `core`, `forms`, `display`, `data`, `navigation`, `feedback`, `overlays` and `layout` came
+from it. The mirror and its compatibility token names were removed in 1.0 (git tag
+`reference-archive` keeps them). Don't sync from Claude Design.
 
 `npm run gen` writes `src/index.ts` (the export barrel: every PascalCase `.tsx` in each group folder) and `src/styles/tokens.generated.{ts,json}`
 (`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`). Everything in `src/` is
@@ -41,12 +39,12 @@ quiet has a single look (docs/plans/2026-10-12-one-look.md): soft ink, the lava 
 `--q-accent-bg`, text `--q-accent-fg`, raw `--q-accent` for marks only, 3.87:1), grounds instead of
 rules, Geist with sentence-case sans labels, dense pill controls, panes over drawers.
 
-- `data-density` is spacing only: `comfortable` (default) or `compact`. `app`/`marketing` are
-  deprecated aliases of `comfortable`.
+- `data-density` is spacing only: `comfortable` (default) or `compact`.
 - Accent steps: `--q-accent-fg` (text, links), `--q-accent-bg`/`-bg-hover` + `--q-fg-on-accent`
   (fills), `--q-accent-subtle`/`-subtle-hover` (tints), `--q-accent-border`.
 - `scripts/check-one-look.mjs` (in `npm run lint`) fails on any return of the old two-look plumbing.
-- The phases still to come (component sweep, retirements, reference removal) are in the plan.
+- Shared grounds: `--q-bg-subtle` (warm, Panels), `--q-bg-hover` (a hover wash on any ground),
+  `--q-bg-subtle-hover`, `--q-bg-well` (a resting track or chip). Don't hand-mix new ones.
 
 ## The a11y + motion layer
 
@@ -99,10 +97,8 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 - **Stories style with classes,** like components: `<File>.scss` next to the story, BEM under
   `q-sb-*`, plain CSS (tokens, nesting; no SCSS features, no `@layer`). Pattern screens are what
   products copy, so keep them clean. Inline `style` only for dynamic `--_` values.
-- The reference names (`--ink`, `--paper`, `--molten` …) exist only in
-  `tokens/_reference-compat.scss`, for pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by
-  `applyTheme`): element selectors, `::selection`, the reference-compat names. Nothing outside a
+  `applyTheme`): element selectors and `::selection`. Nothing outside a
   quiet root changes when quiet.css loads (README "Where quiet's
   styles apply").
 - Links: a component that renders `<a>` from `href` picks its element with `useLinkElement` from
@@ -110,7 +106,7 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 - Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
   values in component rules). `npm run lint` runs Biome + Stylelint.
 - Biome's `src/components/**` override turns off the a11y lint rules that fight quiet's deliberate
-  ARIA-on-div DOM (inherited from the reference), plus
+  ARIA-on-div DOM (inherited from the original port), plus
   `noArrayIndexKey` and `noNonNullAssertion`. `useExhaustiveDependencies` and `noExplicitAny` are
   errors: a callback an effect must not restart on goes through `useEffectEvent`; a deliberate extra
   dependency gets a `biome-ignore` saying what it triggers. Rest props are typed as the HTML
@@ -118,11 +114,11 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 
 ## Future components (quiet's own)
 
-`src/components/future/` holds components that were never in the reference: concepts from the
+`src/components/future/` holds agent and trust components: concepts from the
 Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
-on quiet tokens + BEM with full keyboard/ARIA. `npm run gen` exports them after the reference groups. Stories: `src/stories/future/*.stories.tsx` (Future/…). Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
+on quiet tokens + BEM with full keyboard/ARIA. Stories: `src/stories/future/*.stories.tsx` (Future/…). Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = the accent).
 
-Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts molten is the primary data
+Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts the accent is the primary data
 colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `src/components/chat/`
 (AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
 inside; the product wires it to Claude). Stories: Charts, Chat.
@@ -132,9 +128,8 @@ panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppI
 `<svg>` from quiet's stroke icon set, `core/icons.ts`, which `Icon` draws too), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
 `Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
 
-Single own components in a reference group (today `feedback/Toaster`) get their own stories
-(`src/stories/<Name>.stories.tsx`); `npm run gen` exports them like any other. New stories for reference-group components go in
-`src/stories/extensions/`.
+Stories for the original groups go in `src/stories/extensions/` (a few, like Toaster, sit at
+`src/stories/<Name>.stories.tsx`).
 
 ## Harness (Claude Code)
 

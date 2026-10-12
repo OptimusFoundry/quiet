@@ -9,7 +9,7 @@ import "./FileCard.scss";
 
 const meta = {
 	title: "App/FileCard",
-	parameters: { density: "app", layout: "fullscreen" },
+	parameters: { layout: "fullscreen" },
 } satisfies Meta;
 export default meta;
 

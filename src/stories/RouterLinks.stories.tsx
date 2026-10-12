@@ -31,7 +31,7 @@ const RouterLink: LinkComponent = ({ href, onClick, ...props }) => (
 
 function RouterLinks() {
 	return (
-		<QuietRoot linkComponent={RouterLink} density="app" className="q-sb-router-links">
+		<QuietRoot linkComponent={RouterLink} className="q-sb-router-links">
 			<Breadcrumb items={[{ label: "Home", href: "/home" }, { label: "Settings" }]} />
 			<Sidebar items={[{ label: "Projects", href: "/projects" }]} />
 			<p>

@@ -1,7 +1,7 @@
 {
 	"name": "@optimusfoundry/quiet",
 	"version": "0.9.1",
-	"description": "A design system built from 1,384 saved UI references. Quiet, precise, neutral.",
+	"description": "A React design system with one look: an inset three-pane app shell, soft ink, a lava accent and dense pill controls.",
 	"type": "module",
 	"license": "UNLICENSED",
 	"private": true,

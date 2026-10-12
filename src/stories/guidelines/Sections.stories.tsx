@@ -39,7 +39,7 @@ function SectionsPage() {
 			doc="sections.md"
 			intro="A page is a stack of sections; a section is a heading plus content in the lightest container that works. App density, gaps measured."
 		>
-			<div data-density="app" className="q-sb-sections">
+			<div className="q-sb-sections">
 				<Part title="Four containers" rule="Lightest first. Each step up adds an edge.">
 					<div className="q-sb-sections__containers">
 						<Container name="Bare" rule="Default. Part of the page's flow.">

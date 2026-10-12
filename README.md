@@ -1,8 +1,8 @@
 # quiet
 
 A React design system with one look: soft ink, a lava accent, dense pill controls. It began as a
-port of the Optimus Foundry "Soft" design system from Claude Design and has since become its own;
-the reference is kept only as history. Components ship with keyboard operation, ARIA and soft
+port of the Optimus Foundry "Soft" design system from Claude Design and has since become its own
+(the git tag `reference-archive` keeps the original). Components ship with keyboard operation, ARIA and soft
 motion, `ref` and rest props throughout, form widgets that work with native forms and form
 libraries, 3-tier `--q-*` tokens with themes (`foundry`, `foundry-dark`, one per product) and BEM
 styles. Besides the core groups (core, forms, display, data, navigation, feedback, overlays,
@@ -63,7 +63,7 @@ import "@optimusfoundry/quiet/fonts.css";
 | Import | What it loads |
 |---|---|
 | `@optimusfoundry/quiet/style.css` | Tokens, themes, base and component styles. No fonts |
-| `@optimusfoundry/quiet/fonts.css` | The brand fonts, Inter Tight and JetBrains Mono, from Google Fonts |
+| `@optimusfoundry/quiet/fonts.css` | Geist and Geist Mono, from Google Fonts |
 
 Import `fonts.css` when you use the `foundry` themes. A product whose theme sets other fonts
 (`--q-font-sans`, `--q-font-mono`) skips it and loads its own.
@@ -91,10 +91,10 @@ const RouterLink: LinkComponent = ({ href, ...p }) => <Link to={href} {...p} />;
 
 quiet's element defaults apply only inside `[data-quiet]`: a modern reset (`src/styles/base/_reset.scss`:
 no default margins, unstyled lists, block media, balanced headings, border-box for the app's own
-classed elements while quiet's components keep the reference's box), body type, `a` colour, `::selection`, the themed background, the keyboard focus ring, and the reference-compat names (`--space-*`, `--radius-*`, …). `ThemeProvider` / `applyTheme` set `data-quiet` on `<html>`, and `QuietRoot` sets it on its wrapper. Use one of them; a page with neither gets no base styles.
+classed elements while quiet's components keep `content-box`), body type, `a` colour, `::selection`, the themed background, the keyboard focus ring, and the reference-compat names (`--space-*`, `--radius-*`, …). `ThemeProvider` / `applyTheme` set `data-quiet` on `<html>`, and `QuietRoot` sets it on its wrapper. Use one of them; a page with neither gets no base styles.
 
 Box sizing: your own classed elements are `border-box`, while quiet's components keep the
-reference's `content-box`, even when you pass them a `className`. So a class that sizes a quiet
+`content-box`, even when you pass them a `className`. So a class that sizes a quiet
 component (`width`, `height`, `max-width`, `100%` …) and gives it padding or a border, or sits on one
 that has them (Card, TextField, Alert …), sets `box-sizing: border-box` too. Otherwise the padding adds to
 the size: `height: 100%` on a Card overflows its column by the Card's padding.

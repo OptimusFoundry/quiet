@@ -243,7 +243,7 @@ function Overview() {
 
 const meta: Meta = {
 	title: "Patterns/Dashboard",
-	parameters: { layout: "fullscreen", density: "app" },
+	parameters: { layout: "fullscreen" },
 };
 export default meta;
 export const Default: StoryObj = {

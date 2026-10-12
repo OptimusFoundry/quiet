@@ -56,7 +56,7 @@ function Bar({ token, label }: { token: TokenName; label: string }) {
 }
 
 function SpacingPage() {
-	const [density, setDensity] = useState<Density>("app");
+	const [density, setDensity] = useState<Density>("comfortable");
 	return (
 		<GuidePage
 			title="Spacing"
@@ -77,7 +77,7 @@ function SpacingPage() {
 			<div data-density={density} className="q-sb-spacing">
 				<Part
 					title="Job tokens"
-					rule="Pick by what the gap separates. App is the product default."
+					rule="Pick by what the gap separates. Comfortable is the default; compact is for dense tools."
 					aside={<DensitySwitch value={density} onChange={setDensity} />}
 				>
 					<div className="q-sb-spacing__list">

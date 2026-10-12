@@ -11,7 +11,6 @@
   @include meta.load-css("tokens/motion");
   @include meta.load-css("tokens/elevation");
   @include meta.load-css("tokens/color");
-  @include meta.load-css("tokens/reference-compat");
 }
 
 @layer q.themes {

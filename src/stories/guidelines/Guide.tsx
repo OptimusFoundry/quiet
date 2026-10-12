@@ -13,7 +13,7 @@ import "./Guide.scss";
 // Story-only helpers for the Guidelines specimens (docs/guidelines/*). Measurements are read from
 // the live tokens with getComputedStyle, so they follow density and theme. Molten marks redlines only.
 
-export type Density = "app" | "compact" | "marketing";
+export type Density = "comfortable" | "compact";
 
 /** Panel and well containers for specimens: add to a `className`. */
 export const panel = "q-sb-guide__panel";
@@ -130,9 +130,8 @@ export function DensitySwitch({
 			value={value}
 			onChange={(v) => onChange(v as Density)}
 			tabs={[
-				{ value: "app", label: "App" },
+				{ value: "comfortable", label: "Comfortable" },
 				{ value: "compact", label: "Compact" },
-				{ value: "marketing", label: "Marketing" },
 			]}
 		/>
 	);

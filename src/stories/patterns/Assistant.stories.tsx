@@ -277,7 +277,7 @@ function AssistantPage() {
 
 const meta: Meta = {
 	title: "Patterns/Assistant",
-	parameters: { layout: "fullscreen", density: "app" },
+	parameters: { layout: "fullscreen" },
 };
 export default meta;
 export const Default: StoryObj = {

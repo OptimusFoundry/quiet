@@ -85,6 +85,6 @@ function AppShellParts() {
 	);
 }
 
-const meta: Meta = { title: "App/AppShell", parameters: { layout: "fullscreen", density: "app" } };
+const meta: Meta = { title: "App/AppShell", parameters: { layout: "fullscreen" } };
 export default meta;
 export const Parts: StoryObj = { render: () => <AppShellParts /> };

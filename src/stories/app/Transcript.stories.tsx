@@ -151,7 +151,7 @@ function TranscriptPage() {
 
 const meta: Meta = {
 	title: "App/Transcript",
-	parameters: { layout: "fullscreen", density: "app" },
+	parameters: { layout: "fullscreen" },
 };
 export default meta;
 export const All: StoryObj = { render: () => <TranscriptPage /> };
