@@ -1,7 +1,7 @@
 # Accessibility
 
-quiet ships an accessibility and motion layer on every component, tested with axe in light and dark
-plus keyboard and ARIA specs (`tests/`). The app still owns the page.
+quiet ships an accessibility and motion layer on every component, built to WAI-ARIA patterns with
+keyboard support. The app still owns the page.
 
 ## What quiet guarantees
 
@@ -41,7 +41,7 @@ plus keyboard and ARIA specs (`tests/`). The app still owns the page.
 
 ## Contrast exceptions
 
-Two colour choices are kept exactly as designed and accepted in the axe tests:
+Two colour choices are kept exactly as designed and accepted:
 
 | Token | Contrast | Rule |
 |---|---|---|

@@ -28,7 +28,7 @@ reference itself, mirrored byte-for-byte in [`docs/reference/optimus-design/`](d
 
 - **Accessibility + motion layer** — keyboard operation and focus management per WAI-ARIA patterns,
   visible keyboard focus, accessible names and states, and eased open/close/state motion in the
-  reference's own motion language. It never changes the at-rest look (pixel parity is tested).
+  reference's own motion language. It never changes the at-rest look.
 
 Everything else — tokens, styling, the catalog page — is the reference, unchanged at marketing density. Colour contrast
 is a deliberate exception: `--muted-2` (2.98:1) and small molten text are kept exactly as designed.
@@ -114,7 +114,7 @@ component and utility rules, the same as the built-in themes:
 Unlayered, a theme would outrank all of quiet's layers instead of sitting where the built-in
 themes do. Loaded before `@optimusfoundry/quiet/style.css` without the order statement, it would
 create `q.themes` first and end up below `q.tokens`, so the defaults would win.
-`src/stories/external-theme/` holds a working example, which `tests/theming.spec.ts` checks.
+`src/stories/external-theme/` holds a working example.
 
 **What a theme sets:**
 

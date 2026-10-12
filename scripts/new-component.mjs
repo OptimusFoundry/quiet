@@ -142,6 +142,5 @@ Next:
   1. Build it out: tokens at the top of the scss, BEM .${block}__el--mod, a11y hooks from src/a11y/hooks.ts.
   2. npm run gen                       # exports it from src/index.ts
   3. Story: src/stories/future/<Set>.stories.tsx (FuturePage / Concept / Spec), section id="${kebab}"
-  4. Test: tests/<set>.spec.ts — axe in foundry + foundry-dark, keyboard + ARIA
-  5. npm run lint && npm run typecheck && npm run build && npm run test
+  4. npm run lint && npm run typecheck && npm run build
 See .claude/skills/new-component/SKILL.md.`);

@@ -42,7 +42,7 @@ const boot =
 	/let DS;\nloadDS\('\.\.\/'\)\.then\(d => \{ DS = d; ReactDOM\.createRoot\(document\.getElementById\('root'\)\)\.render\(<App \/>\); \}\);\n$/;
 if (!boot.test(script)) throw new Error("index.html boot line changed — update gen.mjs");
 // The App is the reference's untyped Babel script, kept verbatim so the catalog stays
-// pixel-identical to it; it is checked by tests/parity.spec.ts, not by tsc.
+// pixel-identical to it; it is compared by eye with the reference, not checked by tsc.
 writeFileSync(
 	"src/stories/catalog.generated.tsx",
 	`${HEADER}// @ts-nocheck\nimport React from "react";\nimport * as DS from "../index";\n\n${script.replace(boot, "")}\nexport default App;\n`,

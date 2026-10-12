@@ -28,5 +28,3 @@ export function auditUrl(
 	url: string,
 	opts?: { width?: number; theme?: string; requireH1?: boolean },
 ): Promise<AuditResult>;
-export function updatingBaseline(): boolean;
-export function writeBaseline(path: string, data: unknown): Promise<void>;

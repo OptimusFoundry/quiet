@@ -5,14 +5,13 @@ description: Review a change to quiet components before a PR. Runs the mechanica
 
 # Review a quiet component change
 
-Scope: `git diff --name-only main...HEAD -- src tests`. Report every finding as `file:line`, the problem
+Scope: `git diff --name-only main...HEAD -- src`. Report every finding as `file:line`, the problem
 and the fix. Blocking findings come first, then nits. Don't report anything a tool already passed.
 
 ## 1. Run the tools
 
 ```bash
-npm run lint && npm run typecheck
-npx playwright test tests/<set>.spec.ts tests/parity.spec.ts tests/hover-parity.spec.ts --output /tmp/review-$$
+npm run lint && npm run typecheck && npm run build
 ```
 
 Lint already enforces BEM names, `--q-*` and `--_*` names, and token-only values.

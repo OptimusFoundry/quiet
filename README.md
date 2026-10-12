@@ -96,7 +96,7 @@ component (`width`, `height`, `max-width`, `100%` …) and gives it padding or a
 that has them (Card, Input, Alert …), sets `box-sizing: border-box` too. Otherwise the padding adds to
 the size: `height: 100%` on a Card overflows its column by the Card's padding.
 
-quiet's own `--q-*` tokens are declared at `:root`. Its rules live in the cascade layers `q.tokens, q.themes, q.base, q.components, q.utilities`, so any unlayered CSS in your app overrides them. `tests/coexistence.spec.ts` checks that nothing outside `[data-quiet]` changes.
+quiet's own `--q-*` tokens are declared at `:root`. Its rules live in the cascade layers `q.tokens, q.themes, q.base, q.components, q.utilities`, so any unlayered CSS in your app overrides them.
 
 ## Your product's theme
 
@@ -221,7 +221,6 @@ npm run lint       # Biome + Stylelint (copied files are excluded)
 npm run typecheck
 npm run build
 npm run check:package  # what a git-tag install ships: exports, layer order, fonts, .d.ts
-npm run test       # pixel and hover parity with the reference, axe in both themes, keyboard specs
 ```
 
 ## Release
@@ -243,5 +242,5 @@ version, the ref and the exact commit. (Apps that install the package instead ch
 `#vX.Y.Z` in their dependency.) Nothing is published; the tag is the release. Never move a pushed
 tag; cut a new patch version instead.
 
-Contributor rules (what's copied vs quiet's own, BEM and tokens, the a11y layer, tests) are in
+Contributor rules (what's copied vs quiet's own, BEM and tokens, the a11y layer) are in
 [AGENTS.md](AGENTS.md). Claude Code skills and agents for building components live in `.claude/`.

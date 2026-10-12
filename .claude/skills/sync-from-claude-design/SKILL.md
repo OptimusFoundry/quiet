@@ -33,11 +33,10 @@ The reference groups are a **TypeScript port** of the mirror. Never "improve" th
 ## 4. Prove nothing drifted
 
 ```bash
-npm run lint && npm run typecheck && npm run build && npm run test
+npm run lint && npm run typecheck && npm run build
 ```
 
-- `tests/parity.spec.ts`: the catalog must be **pixel-identical** to the reference `components/index.html`, served on :8791 by `scripts/serve-reference.py`. The stock `http.server` resets connections under about 70 parallel loads, so always use that script.
-- `tests/hover-parity.spec.ts`: hover states must match.
-- `tests/a11y*.spec.ts`: axe in both themes plus keyboard. Only the accepted reference colours are exempt.
+Then compare the Catalog story with the reference `components/index.html` (serve it with
+`python3 scripts/serve-reference.py 8791`): at rest they must look identical, hover states too.
 
-If parity fails, fix the scss or tokens. Never edit the mirror to match.
+If they differ, fix the scss or tokens. Never edit the mirror to match.

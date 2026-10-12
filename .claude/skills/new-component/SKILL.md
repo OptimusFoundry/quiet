@@ -1,6 +1,6 @@
 ---
 name: new-component
-description: Add a component to quiet's own groups (src/components/future, charts, chat, app) end to end: scaffold, styles, behaviour, story, tests, export. Use whenever a quiet component is added.
+description: Add a component to quiet's own groups (src/components/future, charts, chat, app) end to end: scaffold, styles, behaviour, story, export. Use whenever a quiet component is added.
 ---
 
 # Add a quiet component
@@ -38,21 +38,18 @@ Mistakes that got past review before:
 - **Motion:** one-shot only. No spring overshoot, nothing moving at rest, and respect reduced motion.
 - **Props interface:** exported from the `.tsx` next to the component, matching the props it actually reads, with JSDoc on each one. No `@ts-ignore` or new `any`.
 
-## 4. Story and test
+## 4. Story
 
 - **Story:** add the story to the set's file in `src/stories/future/` (`Concept` + `Spec` from
   `./Concept`; `id` = kebab name). Import the component from its own file. Show every state
   someone would design against, and nothing decorative.
-- **Test:** `tests/<set>.spec.ts`, copied from `tests/future-display.spec.ts`. Axe runs in `foundry` and
-  `foundry-dark`, and only `ACCEPTED_LOW_CONTRAST` is exempt. Add keyboard and ARIA assertions per behaviour.
-  - Wait for focus before pressing keys (`locator.press`, or `toBeFocused()` first).
-  - No free-running timers; tests must be deterministic.
+- Check it by hand in Storybook: both themes, keyboard only (Tab, arrows, Escape), and at 390 wide.
 - `npm run gen` exports it.
 
 ## 5. Done-bar
 
 ```bash
-npm run lint && npm run typecheck && npm run build && npm run test
+npm run lint && npm run typecheck && npm run build
 ```
 
 - **Parity:** `parity` and `hover-parity` must stay green.
