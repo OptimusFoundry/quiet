@@ -299,47 +299,4 @@
 	&__shell-main {
 		height: 70px;
 	}
-
-	// Marketing.
-	&__site {
-		display: grid;
-		gap: var(--q-space-1);
-		align-content: start;
-		border: var(--q-hairline) solid var(--q-border-strong);
-		border-radius: var(--q-radius-xs);
-		background: var(--q-bg);
-		min-width: 0;
-		min-height: var(--q-space-1);
-		height: 128px;
-		padding: 8px;
-		box-sizing: border-box;
-		overflow: hidden;
-	}
-
-	&__site-nav {
-		border-bottom: var(--q-hairline) solid var(--q-border);
-		height: 10px;
-	}
-
-	&__site-hero {
-		height: 18px;
-		width: 60%;
-	}
-
-	&__site-section {
-		border-top: var(--q-hairline) solid var(--q-fg);
-		display: grid;
-		grid-template-columns: 5fr 1fr 6fr;
-		gap: var(--q-space-0-5);
-		padding-top: 6px;
-	}
-
-	&__site-heading {
-		width: 70%;
-		height: 8px;
-	}
-
-	&__site-art {
-		height: 24px;
-	}
 }

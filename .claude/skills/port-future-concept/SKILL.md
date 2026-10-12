@@ -5,12 +5,15 @@ description: Bring a concept from a Claude Design project (e.g. "Protoapp Design
 
 # Port a Claude Design concept into quiet
 
+Standalone Claude Design closes on 2026-12-14; after that this skill only applies to concepts
+already exported.
+
 ## 1. Judge fit before writing anything
 
 A concept fits quiet only if it is all of the following:
 - **reusable:** any product could use it; it's not a one-off demo;
 - **keyboard-operable:** it has a real keyboard equivalent, not a pointer-only gesture;
-- **calm:** it works in ink and greys with molten as punctuation, with no ambient or looping motion;
+- **calm:** it works in soft ink and grounds with the accent as punctuation, with no ambient or looping motion;
 - **hardware-free:** no gaze, posture, voice, haptics or sensors.
 
 Rejected before, for these reasons:
@@ -53,8 +56,9 @@ Each concept has its `name`, `from`/`replaces` and `why` on its `<Concept …>` 
 
 | Proto | quiet |
 |---|---|
-| green success, red danger, amber warning | `--q-status-*` tokens (foundry maps success to ink and warning/error to molten); no status fills |
-| accent fills, bevelled keys, glass, well shadows | hairline borders, `--q-bg-subtle`, quiet's Button/Badge |
+| green success, red danger, amber warning | `--q-status-*` tokens (foundry maps success to ink and warning/error to the accent, on tinted grounds) |
+| accent fills, bevelled keys, glass, well shadows, borders | `--q-bg-subtle` grounds (no edge), quiet's Button/Badge, `--q-shadow-float` for anything floating |
+| unicode glyphs, mono caps labels, italics | `AppIcon`, sentence-case sans labels, `<strong>` |
 | `--ease-spring`, overshoot, looping pulses, drifting backgrounds | `--q-ease-soft`, one-shot transitions, nothing that moves at rest |
 | inline styles and `useState` hover | BEM SCSS with tokens; `:is(:hover, :focus-visible)` |
 | pointer-only drags | a `role="slider"` (or similar) with arrow keys, Home/End and PageUp/PageDown, plus the pointer |

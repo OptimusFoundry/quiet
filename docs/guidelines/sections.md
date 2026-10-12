@@ -1,7 +1,7 @@
 # Sections
 
 How to break a page into parts. A page is **a stack of sections**, each section is **a heading plus
-content**, and each section sits in one container. In an app, **surfaces and spacing group;
+content**, and each section sits in one container. **Grounds and spacing group;
 lines don't.** Specimen: Storybook `guidelines-sections--default`; the components are under **App**
 (`Panel`, `DescriptionList`).
 
@@ -10,9 +10,9 @@ lines don't.** Specimen: Storybook `guidelines-sections--default`; the component
 | Container | Looks like | Use when | Build |
 |---|---|---|---|
 | **Plain** | title + content, no ground | the page's lead block, in the page's flow | `Panel variant="plain"` |
-| **Surface** (default) | `--q-bg-subtle` ground, radius `--q-radius-lg`, no edge | any titled section of a detail, settings or dashboard page | `Panel` (`title`, `actions`, `count`, `empty`) |
+| **Surface** (default) | the warm `--q-bg-subtle` ground, radius `--q-radius-lg`, no edge | any titled section of a detail, settings or dashboard page | `Panel` (`title`, `actions`, `count`, `empty`) |
 | **Outlined** | `--q-bg` with a 1px `--q-border` edge | a self-contained module beside peers in a grid (a chart cell, a plan summary) | `Panel variant="outlined"` |
-| **Rows** | 1px `--q-border` hairlines between rows | repeated rows of one kind, **inside** a container | `Table`, `List divided`, `DescriptionList` (no lines at all) |
+| **Rows** | faint `--q-border` dividers between rows | repeated rows of one kind, **inside** a container | `Table`, `List divided`, `DescriptionList` (no lines at all) |
 
 Two more surfaces are components, not containers:
 
@@ -23,8 +23,8 @@ Two more surfaces are components, not containers:
 **Decision rule:** a titled section is a surface `Panel`. Use `plain` for the one block that leads
 the page, `outlined` only for a module in a grid. Use a line only to separate rows of a table or list.
 
-- **Tables:** a table lies on the page ground, never on a grey surface or in a frame: its head row
-  and row hairlines are structure enough. A list page puts it straight under its filters; a table
+- **Tables:** a table lies on the panel's white, never on a grey surface or in a frame: its head row
+  and faint row dividers are structure enough. A list page puts it straight under its filters; a table
   that is one section of a page takes `Panel variant="plain" padding="none"` for its title, count
   and footer (pagination).
 - **Properties:** label/value pairs are a `DescriptionList` (`layout="inline"`; `"stacked"` in a 400
@@ -66,9 +66,9 @@ row hairlines, never another box.
 
 | Type | Build | Spacing |
 |---|---|---|
-| Page header | `PageHeader` (back link or eyebrow, title, status, meta, description, actions, tabs) | then `--q-space-block` |
-| Page status | one `Alert` or `Banner` directly under the header | `--q-space-block` |
-| Toolbar / filter bar | a row: `Tabs variant="enclosed"`, search `TextField size="sm"`, `Select size="sm"` filters, then actions on the right | `--q-space-inline` within, `--q-space-stack` to the table |
+| Page header | `PageHeader` (back link or eyebrow, title, status, meta, description, actions, tabs), under the TopBar's breadcrumb | then `--q-space-block` |
+| Page status | one `Alert` or `Banner` directly under the header, inside the panel (never above the TopBar or outside the frame) | `--q-space-block` |
+| Toolbar / filter bar | a row: segmented `Tabs variant="enclosed" size="sm"`, search `TextField size="sm"`, `Select size="sm"` filters, then ghost actions on the right | `--q-space-inline` within, `--q-space-stack` to the table |
 | Content block | a surface `Panel` | `--q-space-block` between blocks |
 | Card group | `Grid columns={12}` of `Card`s or outlined `Panel`s, equal spans | gutter |
 | Properties | `DescriptionList` in a `Panel`, or alone in the right rail | built in |
@@ -105,9 +105,10 @@ point, so give one block the lead.
 | Slop | Fix |
 |---|---|
 | Sections separated by ink or hairline rules | surface `Panel`s and `--q-space-block` |
+| A border round a surface `Panel`, or a ground under a table | the warm ground alone; the table on white |
 | Seven sections with the same small heading and no ground | one lead (`plain`), the rest surface `Panel`s, empty ones collapsed |
 | Label at the far left, value at the far right | `DescriptionList` |
-| Card in a card, a table on a surface or in a frame | one container level; a table on the page ground (`Panel variant="plain"`) |
+| Card in a card, a table on a surface or in a frame | one container level; a table on the panel's white (`Panel variant="plain"`) |
 | Two `Alert`s stacked | one status, the highest severity |
 | Section actions in the page header (or the reverse) | actions sit with what they act on |
 | Equal-weight blocks in a 4 + 4 + 4 with no lead | 8 + 4, or put the lead first |

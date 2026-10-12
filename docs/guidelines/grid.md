@@ -11,12 +11,13 @@ Specimen: Storybook `guidelines-grid--default`.
 | App nav | `Sidebar` in the shell | `--q-w-sidebar` 240 (rail 64) |
 | Settings section nav | a sticky nav column | `--q-w-settings-nav` 200 |
 | A selectable list beside its detail | list pane | `--q-w-list-pane` 360 |
-| An inspector / properties / agent side panel | detail panel | `--q-w-detail-panel` 400 |
+| An inspector / properties / agent side panel | AppShell's third pane (it pushes the screen) | `--q-app-shell-aside-width` 360 |
+| A detail panel beside content inside the screen | detail panel | `--q-w-detail-panel` 400 |
 | A form, prose, or a chat column | single column, capped | `--q-w-form` 640 |
 | Stats, charts, tables and feeds side by side | `Grid columns={12}` + `Col span` | fluid, ≤ `--q-w-max` 1280 |
 
 Panes are `grid-template-columns: var(--q-w-…) minmax(0, 1fr)`. The pane is fixed and the content
-flexes. Never size a pane in % or invent a width. If none of the six fits, the layout is wrong
+flexes. Never size a pane in % or invent a width. If none of these fits, the layout is wrong
 (see [layouts.md](layouts.md)).
 
 ## The 12-column grid
@@ -69,8 +70,10 @@ So a 3 × 4 KPI row becomes 2 × 2, then 1 × 4. An 8 + 4 stays side by side unt
 stacks with the 8 first. `start` is ignored below 960. Put the most important column first in
 source order, because that's the stacking order.
 
-Panes don't respond on their own. Under 720, drop the pane: the sidebar becomes
-`Sidebar mobile="drawer"`, the list pane becomes its own route, and the detail panel opens in a `Drawer`.
+AppShell's third pane pushes the screen narrower, and `Grid` follows the new width, so a screen
+laid out on `Grid` reflows when the pane opens without any work. Panes you place yourself don't
+respond on their own. Under 720, AppShell turns the Sidebar into a drawer and the third pane into a
+full-screen sheet; drop your own panes too (the list pane becomes its own route).
 
 ## Alignment
 

@@ -141,15 +141,18 @@ Single own components in a reference group (today `feedback/Toaster`) get their 
 - **Skills** (`.claude/skills/`):
   - `new-component`: add a component end to end.
   - `port-future-concept`: judge fit and read a Claude Design concept through Chrome.
-  - `sync-from-claude-design`: retired with the reference; don't use it.
   - `sync-design-artifact`: push quiet to its Claude Design system artifact (only changed files; `scripts/design-artifact.mjs`), or pull refinements made there back.
-  - `review-component`: the pre-PR checklist.
+  - `review-component`: the pre-PR checklist, the one look included.
   - App-facing (the `quiet` plugin in `claude/`, placed by `quiet sync`, see "Vendoring"):
     `skills/quiet-app`, `agents/quiet-screen-reviewer.md`, `hooks/` (`quiet-guard.mjs`).
+  - The app-facing guidance is `docs/guidelines/` (shipped to apps); the skills route to it by
+    task ("Load when") rather than restating it. What quiet has no rule for yet goes in
+    `docs/guidelines/coverage-gaps.md`. When a component's API or the look changes, update the
+    guideline that names it in the same PR.
 - **Agents** (`.claude/agents/`):
   - `component-builder`: builds one component, write-scoped to its files.
   - `visual-reviewer`: screenshots stories in both themes against `docs/guidelines/checklist.md`.
-- **Scaffold:** `npm run new -- <future|charts|chat|app> <Name>` writes `<Name>.{tsx,scss}` from convention templates. It refuses reference groups.
+- **Scaffold:** `npm run new -- <group> <Name>` writes `<Name>.{tsx,scss}` from convention templates, in any group `gen` exports.
 - **Hook:** `.claude/settings.json` runs `.claude/hooks/lint-changed.sh` after every Edit or Write.
   - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}` and `scripts/*.mjs`.
   - It only reports back; it never blocks.

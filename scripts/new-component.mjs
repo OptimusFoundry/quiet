@@ -1,11 +1,23 @@
 // Scaffolds a quiet component: <Name>.tsx and <Name>.scss, following AGENTS.md
 // (BEM block from the kebab name, component tokens at the top, @layer q.components).
 //   node scripts/new-component.mjs <group> <Name>      (or: npm run new -- <group> <Name>)
-// Only quiet's own groups are allowed: the reference groups mirror Claude Design and change only
-// through the sync workflow.
+// Any of the groups gen.mjs exports. Prefer extending an existing component to adding a near-twin.
 import { existsSync, writeFileSync } from "node:fs";
 
-const OWN = ["future", "charts", "chat", "app"];
+const GROUPS = [
+	"core",
+	"forms",
+	"display",
+	"data",
+	"layout",
+	"navigation",
+	"feedback",
+	"overlays",
+	"future",
+	"charts",
+	"chat",
+	"app",
+];
 const [group, name] = process.argv.slice(2);
 
 function fail(msg) {
@@ -14,11 +26,7 @@ function fail(msg) {
 }
 
 if (!group || !name) fail("usage: node scripts/new-component.mjs <group> <Name>");
-if (!OWN.includes(group)) {
-	fail(
-		`"${group}" is not one of quiet's own groups (${OWN.join(", ")}). Reference groups mirror Claude Design — change them there and re-sync.`,
-	);
-}
+if (!GROUPS.includes(group)) fail(`"${group}" is not a group (${GROUPS.join(", ")}).`);
 if (!/^[A-Z][A-Za-z0-9]*$/.test(name)) fail(`"${name}" must be PascalCase, e.g. TrustMeter`);
 
 const dir = `src/components/${group}`;
@@ -141,6 +149,6 @@ console.log(`Created ${files.join(", ")}
 Next:
   1. Build it out: tokens at the top of the scss, BEM .${block}__el--mod, a11y hooks from src/a11y/hooks.ts.
   2. npm run gen                       # exports it from src/index.ts
-  3. Story: src/stories/future/<Set>.stories.tsx (FuturePage / Concept / Spec), section id="${kebab}"
+  3. Story: ${group === "future" ? `src/stories/future/<Set>.stories.tsx (FuturePage / Concept / Spec), section id="${kebab}"` : group === "app" ? `src/stories/app/${name}.stories.tsx` : `src/stories/extensions/${name}.stories.tsx`}
   4. npm run lint && npm run typecheck && npm run build
 See .claude/skills/new-component/SKILL.md.`);

@@ -38,7 +38,7 @@ Status is a tier-2 role, like `--q-fg` or `--q-border`: three tokens per status,
 `fg` colours glyphs, icons, fills and status text; `bg` is a status surface; `border` is its edge.
 In the app look the `bg`/`border` tint: info and success `--q-bg-subtle`, warning `--q-accent-subtle`,
 error `--q-accent-subtle` / `--q-accent-border`. A product theme's own status hues (in `q.themes`) win.
-The brand has no status hues, so the defaults are greys and molten: info and success stay
+The brand has no status hues, so the defaults are greys and the accent: info and success stay
 neutral, warning and error are hot. A product theme sets real hues here.
 
 Components read status through their own tier-3 tokens, which default to these:

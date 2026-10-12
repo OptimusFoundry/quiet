@@ -44,7 +44,7 @@
 		"prepare": "npm run build",
 		"check:package": "node scripts/check-package.mjs",
 		"build-storybook": "storybook build",
-		"lint": "biome check . && stylelint \"src/**/*.scss\" && node scripts/check-tokens.mjs && node scripts/check-layers.mjs && node scripts/check-one-look.mjs",
+		"lint": "biome check . && stylelint \"src/**/*.scss\" && node scripts/check-tokens.mjs && node scripts/check-layers.mjs && node scripts/check-one-look.mjs && node scripts/check-docs.mjs",
 		"typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.app-compat.json"
 	},
 	"peerDependencies": {
