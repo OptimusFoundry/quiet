@@ -1,0 +1,83 @@
+// ShellNotice — one line of text on AppShell's canvas, above the panel. No ground or edge: the
+// canvas is its ground. BEM: .q-shell-notice, __mark, __text, __action, __dismiss; --urgent, --info.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-shell-notice-height: var(--q-control-sm);
+    --q-shell-notice-gap: var(--q-space-1);
+    --q-shell-notice-fg: var(--q-fg);
+    --q-shell-notice-font-size: var(--q-text-sm);
+    --q-shell-notice-weight: var(--q-weight-medium);
+    --q-shell-notice-mark-size: var(--q-space-0-75);
+    --q-shell-notice-urgent-mark: var(--q-accent);
+    --q-shell-notice-info-mark: var(--q-fg-muted);
+    --q-shell-notice-dismiss-fg: var(--q-fg-muted);
+    --q-shell-notice-dismiss-bg-hover: color-mix(in srgb, var(--q-fg) 6%, transparent);
+    --q-shell-notice-dismiss-radius: var(--q-radius-pill);
+  }
+}
+
+@layer q.components {
+  .q-shell-notice {
+    --_mark: var(--q-shell-notice-urgent-mark);
+
+    display: flex;
+    align-items: center;
+    gap: var(--q-shell-notice-gap);
+    box-sizing: border-box;
+    min-height: var(--q-shell-notice-height);
+    color: var(--q-shell-notice-fg);
+    font-family: var(--q-font-sans);
+    font-size: var(--q-shell-notice-font-size);
+    font-weight: var(--q-shell-notice-weight);
+
+    &--info {
+      --_mark: var(--q-shell-notice-info-mark);
+    }
+  }
+
+  // Inline in the text, so a wrapped notice keeps its mark on the first line.
+  .q-shell-notice__mark {
+    display: inline-block;
+    margin-inline-end: var(--q-shell-notice-gap);
+    vertical-align: middle;
+    width: var(--q-shell-notice-mark-size);
+    height: var(--q-shell-notice-mark-size);
+    border-radius: var(--q-radius-pill);
+    background: var(--_mark);
+  }
+
+  .q-shell-notice__text {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    line-height: var(--q-leading-ui);
+  }
+
+  .q-shell-notice__action {
+    margin-inline-start: var(--q-shell-notice-gap);
+    white-space: nowrap;
+  }
+
+  .q-shell-notice__dismiss {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--q-shell-notice-height);
+    height: var(--q-shell-notice-height);
+    padding: 0;
+    border: 0;
+    border-radius: var(--q-shell-notice-dismiss-radius);
+    background: transparent;
+    color: var(--q-shell-notice-dismiss-fg);
+    cursor: pointer;
+    transition: background var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background: var(--q-shell-notice-dismiss-bg-hover);
+    }
+  }
+}

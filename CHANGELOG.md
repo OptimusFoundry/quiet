@@ -4,6 +4,14 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 ## Unreleased
 
+### Added
+
+- **Notices in the shell**, placed by urgency: `ShellNotice` (an urgent workspace-wide condition,
+  one line on the canvas above the panel, through the new `AppShell notice` prop), `SidebarNotice`
+  (a slow account nudge at the Sidebar's foot, an icon with a mark in the rail) and `NoticeChip` (a
+  condition on this page, a pill in the TopBar that opens the third pane). Stories: App/Notices,
+  Patterns/App shell "With notices".
+
 ### Changed
 
 - **`Icon` draws quiet's stroke set** (the one `AppIcon` used) instead of unicode glyphs, sized in
