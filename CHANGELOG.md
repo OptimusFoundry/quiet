@@ -2,7 +2,25 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
-## Unreleased
+## 0.9.0
+
+### Added
+
+- **Refs and rest props** on every core and forms component: a React 19 `ref` prop, and `id`,
+  `aria-*`, `data-testid` and handlers on the root (form widgets: on the focusable control).
+- **Form libraries.** Checkbox, Switch, Radio, Slider, Stepper, Dropdown, DatePicker and MultiSelect
+  take `onBlur`/`onFocus` (fired when focus leaves the whole widget) and a focusable ref, so they
+  work with react-hook-form's `Controller`. Stepper gains `name`, `form` and `required`.
+- `FormField` names every quiet control (`aria-labelledby` for ARIA widgets), and TextField, TextArea
+  and Select merge a passed `aria-describedby`.
+- `FileUpload`: controlled `files`, plus `name`, `form` and `required` for native form submit.
+  Row ids are now strings for rows it creates.
+- `DropdownMenu`: `open`, `defaultOpen` and `onOpenChange`.
+- `Stack`: `directionSm`/`directionMd`, following the Grid's breakpoint or measuring its parent.
+
+### Fixed
+
+- A selectable, removable `Tag` no longer nests a button in a button.
 
 ### Removed (breaking)
 
