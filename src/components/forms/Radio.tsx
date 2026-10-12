@@ -12,7 +12,7 @@ export interface RadioProps
 		React.HTMLAttributes<HTMLDivElement>,
 		"onChange" | "defaultValue" | "color" | "role" | "onBlur" | "onFocus"
 	> {
-	/** Mono caps group label */
+	/** Group label (the label role) */
 	label?: React.ReactNode;
 	options: Array<
 		| string

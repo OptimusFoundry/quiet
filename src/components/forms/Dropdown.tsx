@@ -1,6 +1,7 @@
 import React from "react";
 import { FormValue } from "../../a11y/form";
 import { useMergedRef, usePresence } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./Dropdown.scss";
 
 /**
@@ -252,9 +253,7 @@ export function Dropdown({
 			>
 				{sel?.icon && <span className="q-dropdown__icon">{sel.icon}</span>}
 				<span className="q-dropdown__value">{sel ? sel.label : placeholder}</span>
-				<span aria-hidden="true" className="q-dropdown__chevron">
-					{"\u2193"}
-				</span>
+				<Icon name="chevron-down" className="q-dropdown__chevron" />
 			</button>
 			{(open || presence.mounted) && (
 				<div
@@ -288,7 +287,7 @@ export function Dropdown({
 									)}
 								</span>
 								<span aria-hidden="true" className="q-dropdown__check">
-									{o.value === cur ? "\u2713" : ""}
+									{o.value === cur && <Icon name="check" />}
 								</span>
 							</div>
 						),

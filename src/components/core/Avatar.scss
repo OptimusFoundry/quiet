@@ -1,4 +1,4 @@
-// Avatar — image, mono initials or fallback in a circle or soft square.
+// Avatar — image, sans initials or a user icon in a circle or soft square.
 // BEM: .q-avatar, __img([data-loaded]), __empty; --{size} (--_size), --square.
 @use "../../styles/layers";
 
@@ -17,7 +17,10 @@
     --q-avatar-border: var(--q-border);
     --q-avatar-fg: var(--q-fg);
     --q-avatar-empty-fg: var(--q-fg-subtle);
-    --q-avatar-tracking: var(--q-tracking-wide);
+    --q-avatar-font-family: var(--q-font-label);
+    --q-avatar-weight: var(--q-weight-label);
+    --q-avatar-tracking: var(--q-tracking-label);
+    --q-avatar-empty-scale: 0.55; // the user icon, against the avatar
     // Initials scale with the avatar: round(size × 0.34), never below 9px.
     --q-avatar-font-scale: 0.34;
     --q-avatar-font-size-min: 9px;
@@ -39,8 +42,9 @@
     border-radius: var(--q-avatar-radius);
     background: var(--q-avatar-bg);
     color: var(--q-avatar-fg);
-    font-family: var(--q-font-mono);
+    font-family: var(--q-avatar-font-family);
     font-size: calc(max(var(--q-avatar-font-size-min), round(var(--_size) * var(--q-avatar-font-scale), var(--q-space-px))));
+    font-weight: var(--q-avatar-weight);
     letter-spacing: var(--q-avatar-tracking);
     line-height: var(--q-leading-none);
 
@@ -68,7 +72,8 @@
     }
   }
 
-  .q-avatar__empty {
+  .q-avatar .q-avatar__empty {
     color: var(--q-avatar-empty-fg);
+    font-size: calc(var(--_size) * var(--q-avatar-empty-scale));
   }
 }

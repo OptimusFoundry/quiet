@@ -1,4 +1,4 @@
-// Radio — ink ring with a dot. BEM: .q-radio, __label, __options(--row), __option(--disabled),
+// Radio — ring with an accent dot; the ring takes the accent when checked. BEM: .q-radio, __label, __options(--row), __option(--disabled),
 // __control, __dot, __text, __description, __error; --{size}. Checked/invalid read from ARIA.
 @use "../../styles/layers";
 
@@ -6,9 +6,10 @@
   :root,
   [data-theme] {
     --q-radio-gap: var(--q-space-1-5);
-    --q-radio-label-font-family: var(--q-font-mono);
-    --q-radio-label-font-size: var(--q-text-2xs);
-    --q-radio-label-tracking: var(--q-tracking-mono);
+    --q-radio-label-font-family: var(--q-font-label);
+    --q-radio-label-font-size: var(--q-text-label);
+    --q-radio-label-weight: var(--q-weight-label);
+    --q-radio-label-tracking: var(--q-tracking-label);
     --q-radio-label-fg: var(--q-fg-muted);
     --q-radio-options-gap: var(--q-space-1-5);
     --q-radio-options-row-gap: var(--q-space-3);
@@ -24,15 +25,16 @@
     --q-radio-lg-font-size: var(--q-text-lg);
     --q-radio-control-offset: var(--q-space-0-25);
     --q-radio-control-border: var(--q-border-strong);
-    --q-radio-control-border-invalid: var(--q-accent);
+    --q-radio-control-border-invalid: var(--q-status-error-fg);
+    --q-radio-control-border-checked: var(--q-accent-bg);
     --q-radio-dot-bg: var(--q-accent-bg);
     --q-radio-dot-scale-off: 0.4;
     --q-radio-text-gap: var(--q-space-0-25);
     --q-radio-description-font-size: var(--q-text-sm);
     --q-radio-description-fg: var(--q-fg-muted);
-    --q-radio-error-font-family: var(--q-font-mono);
-    --q-radio-error-font-size: var(--q-text-2xs);
-    --q-radio-error-fg: var(--q-accent);
+    --q-radio-error-font-family: var(--q-font-hint);
+    --q-radio-error-font-size: var(--q-text-hint);
+    --q-radio-error-fg: var(--q-status-error-fg);
   }
 
 }
@@ -60,8 +62,9 @@
   .q-radio__label {
     font-family: var(--q-radio-label-font-family);
     font-size: var(--q-radio-label-font-size);
+    font-weight: var(--q-radio-label-weight);
     letter-spacing: var(--q-radio-label-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
     color: var(--q-radio-label-fg);
   }
 
@@ -101,6 +104,11 @@
     margin-top: var(--q-radio-control-offset);
     border: var(--q-hairline) solid var(--q-radio-control-border);
     border-radius: var(--q-radius-pill);
+    transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+
+    &[aria-checked="true"] {
+      border-color: var(--q-radio-control-border-checked);
+    }
 
     .q-radio[aria-invalid="true"] & {
       border-color: var(--q-radio-control-border-invalid);

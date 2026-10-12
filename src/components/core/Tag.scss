@@ -1,33 +1,38 @@
-// Tag — mono caps pill; removable and selectable. BEM: .q-tag, __select, __icon, __remove;
-// --sm, --ink, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
-// selected = [aria-pressed="true"]. A selectable tag with a × is a <span> holding two sibling
+// Tag — small sans pill on a soft ground; removable and selectable (selected = accent tint).
+// BEM: .q-tag, __select, __icon, __remove (a close Icon); --sm, --ink, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
+// selected = [aria-pressed="true"]. A selectable tag with a remove button is a <span> holding two sibling
 // buttons (__select, __remove), so its states read through :has(> .q-tag__select …).
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
-    --q-tag-gap: var(--q-space-0-75);
+    --q-tag-gap: var(--q-space-0-5);
     --q-tag-focus-ring: var(--q-focus-ring-color);
     --q-tag-focus-ring-width: 2px;
     --q-tag-radius: var(--q-radius-pill);
-    --q-tag-tracking: var(--q-tracking-mono);
-    --q-tag-font-size: var(--q-text-2xs);
-    --q-tag-py: var(--q-space-0-75);
-    --q-tag-px: var(--q-space-1-5);
-    --q-tag-sm-font-size: var(--q-text-3xs);
-    --q-tag-sm-py: var(--q-space-0-5);
-    --q-tag-sm-px: var(--q-space-1-25);
-    // The reference renders no left padding (its inline paddingLeft: undefined cleared the
-    // shorthand's left side); parity keeps that. An avatar sits 4px in.
+    --q-tag-font-family: var(--q-font-label);
+    --q-tag-weight: var(--q-weight-label);
+    --q-tag-tracking: var(--q-tracking-label);
+    --q-tag-height: var(--q-space-3);
+    --q-tag-font-size: var(--q-text-sm);
+    --q-tag-px: var(--q-space-1);
+    --q-tag-sm-height: var(--q-space-2-5);
+    --q-tag-sm-font-size: var(--q-text-label);
+    --q-tag-sm-px: var(--q-space-0-75);
     --q-tag-pl: var(--q-tag-px);
     --q-tag-sm-pl: var(--q-tag-sm-px);
-    --q-tag-avatar-pl: var(--q-space-0-5);
-    --q-tag-fg: var(--q-fg-muted);
-    --q-tag-border: var(--q-border);
+    --q-tag-avatar-pl: var(--q-space-0-25);
+    // A soft grey ground, no edge: visible on white and on the warm ground alike.
+    --q-tag-fg: var(--q-fg-body);
+    --q-tag-bg: color-mix(in srgb, var(--q-fg) 5%, transparent);
     --q-tag-ink-fg: var(--q-fg);
-    --q-tag-ink-border: var(--q-fg);
-    --q-tag-selected-bg: var(--q-fg);
+    --q-tag-ink-bg: color-mix(in srgb, var(--q-fg) 9%, transparent);
+    --q-tag-bg-hover: var(--q-tag-ink-bg);
+    --q-tag-fg-hover: var(--q-tag-ink-fg);
+    --q-tag-selected-bg: var(--q-accent-subtle);
+    --q-tag-selected-bg-hover: var(--q-accent-subtle-hover);
+    --q-tag-selected-fg: var(--q-accent-fg);
     --q-tag-info-fg: var(--q-status-info-fg);
     --q-tag-info-bg: var(--q-status-info-bg);
     --q-tag-info-border: var(--q-status-info-border);
@@ -40,9 +45,10 @@
     --q-tag-error-fg: var(--q-status-error-fg);
     --q-tag-error-bg: var(--q-status-error-bg);
     --q-tag-error-border: var(--q-status-error-border);
-    --q-tag-selected-fg: var(--q-bg);
     --q-tag-disabled-opacity: 0.4;
-    --q-tag-remove-font-size: var(--q-text-sm);
+    --q-tag-remove-size: var(--q-space-2);
+    --q-tag-remove-icon-size: var(--q-icon-sm);
+    --q-tag-remove-fg: var(--q-fg-muted);
     --q-tag-remove-nudge: calc(var(--q-space-0-25) * -1);
   }
 
@@ -53,17 +59,20 @@
     display: inline-flex;
     align-items: center;
     gap: var(--q-tag-gap);
-    padding: var(--q-tag-py) var(--q-tag-px);
+    box-sizing: border-box;
+    height: var(--q-tag-height);
+    padding: 0 var(--q-tag-px);
     padding-left: var(--q-tag-pl);
-    border: var(--q-hairline) solid var(--q-tag-border);
+    border: var(--q-hairline) solid transparent;
     border-radius: var(--q-tag-radius);
-    background: transparent;
+    background: var(--q-tag-bg);
     color: var(--q-tag-fg);
-    font-family: var(--q-font-mono);
+    font-family: var(--q-tag-font-family);
     font-size: var(--q-tag-font-size);
+    font-weight: var(--q-tag-weight);
     letter-spacing: var(--q-tag-tracking);
     line-height: var(--q-leading-none);
-    text-transform: uppercase;
+    white-space: nowrap;
     cursor: default;
     transition:
       background var(--q-dur-hover) var(--q-ease-soft),
@@ -71,7 +80,8 @@
       border-color var(--q-dur-hover) var(--q-ease-soft);
 
     &--sm {
-      padding: var(--q-tag-sm-py) var(--q-tag-sm-px);
+      height: var(--q-tag-sm-height);
+      padding: 0 var(--q-tag-sm-px);
       padding-left: var(--q-tag-sm-pl);
       font-size: var(--q-tag-sm-font-size);
     }
@@ -80,12 +90,8 @@
       padding-left: var(--q-tag-avatar-pl);
     }
 
-    &--ink,
-    &--selectable:is(:hover, :focus-visible):not(:disabled, [aria-pressed="true"]),
-    &--selectable:is(:hover, :has(> .q-tag__select:focus-visible)):has(
-        > .q-tag__select:not(:disabled, [aria-pressed="true"])
-      ) {
-      border-color: var(--q-tag-ink-border);
+    &--ink {
+      background: var(--q-tag-ink-bg);
       color: var(--q-tag-ink-fg);
     }
 
@@ -101,11 +107,26 @@
     &--selectable {
       cursor: pointer;
 
+      &:is(:hover, :focus-visible):not(:disabled, [aria-pressed="true"]),
+      &:is(:hover, :has(> .q-tag__select:focus-visible)):has(
+          > .q-tag__select:not(:disabled, [aria-pressed="true"])
+        ) {
+        background: var(--q-tag-bg-hover);
+        color: var(--q-tag-fg-hover);
+      }
+
       &[aria-pressed="true"],
       &:has(> .q-tag__select[aria-pressed="true"]) {
-        border-color: var(--q-tag-ink-border);
+        border-color: transparent;
         background: var(--q-tag-selected-bg);
         color: var(--q-tag-selected-fg);
+      }
+
+      &:is([aria-pressed="true"], :has(> .q-tag__select[aria-pressed="true"])):is(
+          :hover,
+          :focus-visible
+        ):not(:disabled, .q-tag--disabled) {
+        background: var(--q-tag-selected-bg-hover);
       }
     }
 
@@ -128,7 +149,6 @@
     color: inherit;
     font: inherit;
     letter-spacing: inherit;
-    text-transform: inherit;
     cursor: inherit;
 
     // The keyboard ring belongs to the pill, not the label button inside it. !important in
@@ -148,13 +168,34 @@
   }
 
   .q-tag__remove {
+    display: inline-grid;
+    place-items: center;
+    width: var(--q-tag-remove-size);
+    height: var(--q-tag-remove-size);
     margin-right: var(--q-tag-remove-nudge);
     padding: 0;
     border: 0;
+    border-radius: var(--q-radius-pill);
     background: none;
-    color: inherit;
-    font-size: var(--q-tag-remove-font-size);
+    color: var(--q-tag-remove-fg);
+    font-size: var(--q-tag-remove-icon-size);
     line-height: var(--q-leading-none);
     cursor: pointer;
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      color var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible):not(:disabled) {
+      background: var(--q-tag-bg);
+      color: var(--q-tag-ink-fg);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    .q-tag & .q-icon {
+      font-size: inherit;
+    }
   }
 }

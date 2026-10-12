@@ -1,9 +1,10 @@
 import React from "react";
 import { motionToken, useMergedRef } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./Stepper.scss";
 
 /**
- * Numeric stepper − value +. Pill-shaped hairline box.
+ * Numeric stepper: minus, value, plus in one pill field.
  * @startingPoint section="Forms" subtitle="Number stepper" viewport="500x140"
  */
 export interface StepperProps
@@ -165,7 +166,7 @@ export function Stepper({
 				off={disabled || cur - step < min}
 				onClick={() => nudge(cur - step, true)}
 			>
-				{"\u2212"}
+				<Icon name="minus" />
 			</StepBtn>
 			{/* --_chars sizes the field to its value (min 40px) */}
 			<input
@@ -199,7 +200,7 @@ export function Stepper({
 				off={disabled || cur + step > max}
 				onClick={() => nudge(cur + step, true)}
 			>
-				+
+				<Icon name="plus" />
 			</StepBtn>
 			<span className="q-sr-only" aria-live="polite">
 				{said}

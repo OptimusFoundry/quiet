@@ -8,12 +8,12 @@
     --q-button-group-sm-gap: var(--q-space-1);
     --q-button-group-md-gap: var(--q-space-2);
     --q-button-group-lg-gap: var(--q-space-3);
-    --q-button-group-attached-border: var(--q-fg);
+    --q-button-group-attached-border: var(--q-border-strong);
     --q-button-group-attached-radius: var(--q-radius-pill);
     --q-button-group-attached-vertical-radius: var(--q-radius-lg);
-    // Divider between attached buttons: light on the ink primary, ink on everything else.
+    // Divider between attached buttons: light on the accent primary, a soft grey on everything else.
     --q-button-group-divider: var(--q-border-on-inverse);
-    --q-button-group-divider-ink: var(--q-fg);
+    --q-button-group-divider-ink: var(--q-border-strong);
   }
 }
 

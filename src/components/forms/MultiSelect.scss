@@ -1,4 +1,4 @@
-// MultiSelect — pill field with a filterable multi-select listbox. BEM: .q-multi-select, __label,
+// MultiSelect — pill field of value pills with a filterable multi-select listbox. BEM: .q-multi-select, __label,
 // __field, __combo, __values, __pill, __pill-remove, __more, __chevron, __panel, __search, __list,
 // __divider, __option, __box, __option-text, __option-description, __empty, __footer, __clear,
 // __hint(--error); --{size}, --filled, --full, --invalid, --disabled.
@@ -11,43 +11,49 @@
     --q-multi-select-gap: var(--q-space-1);
     --q-multi-select-min-width: 260px;
     --q-multi-select-disabled-opacity: 0.4;
-    --q-multi-select-mono-font-family: var(--q-font-mono);
-    --q-multi-select-mono-font-size: var(--q-text-2xs);
-    --q-multi-select-mono-tracking: var(--q-tracking-mono);
     --q-multi-select-label-fg: var(--q-fg-muted);
+    --q-multi-select-meta-font-size: var(--q-text-sm);
     --q-multi-select-sm-height: var(--q-field-sm);
     --q-multi-select-sm-px: var(--q-space-1-5);
     --q-multi-select-sm-font-size: var(--q-text-md);
     --q-multi-select-md-height: var(--q-field-md);
     --q-multi-select-md-px: var(--q-space-2);
-    --q-multi-select-md-font-size: var(--q-text-lg);
+    --q-multi-select-md-font-size: var(--q-text-md);
     --q-multi-select-lg-height: var(--q-field-lg);
     --q-multi-select-lg-px: var(--q-space-2-5);
-    --q-multi-select-lg-font-size: var(--q-text-xl);
+    --q-multi-select-lg-font-size: var(--q-text-lg);
     --q-multi-select-field-gap: var(--q-space-1);
-    --q-multi-select-field-py: var(--q-space-0-75);
+    --q-multi-select-field-py: var(--q-space-0-5);
     --q-multi-select-field-fg: var(--q-fg-subtle);
     --q-multi-select-field-bg: var(--q-bg);
-    --q-multi-select-field-radius: var(--q-radius-md);
+    --q-multi-select-field-radius: var(--q-radius-pill);
+    --q-multi-select-field-pl: var(--q-space-0-5); // value pills sit close to the pill's round end
     --q-multi-select-field-border: var(--q-border);
-    --q-multi-select-field-border-open: var(--q-fg);
-    --q-multi-select-field-border-invalid: var(--q-accent);
+    --q-multi-select-field-border-open: var(--q-accent);
+    --q-multi-select-field-border-invalid: var(--q-status-error-fg);
     --q-multi-select-field-ring-open: var(--q-ring-soft);
     --q-multi-select-filled-bg: var(--q-bg-subtle);
     --q-multi-select-values-gap: var(--q-space-0-75);
-    --q-multi-select-pill-gap: var(--q-space-0-75);
-    --q-multi-select-pill-font-size: var(--q-text-3xs);
-    --q-multi-select-pill-py: var(--q-space-0-5);
-    --q-multi-select-pill-px: var(--q-space-1);
+    --q-multi-select-pill-gap: var(--q-space-0-25);
+    --q-multi-select-pill-height: var(--q-space-3);
+    --q-multi-select-pill-font-size: var(--q-text-sm);
+    --q-multi-select-pill-weight: var(--q-weight-label);
+    --q-multi-select-pill-pl: var(--q-space-1);
+    --q-multi-select-pill-pr: var(--q-space-0-5);
     --q-multi-select-pill-fg: var(--q-fg);
-    --q-multi-select-pill-border: var(--q-fg);
-    --q-multi-select-pill-remove-font-size: var(--q-text-xs);
+    --q-multi-select-pill-bg: color-mix(in srgb, var(--q-fg) 6%, transparent);
+    --q-multi-select-pill-remove-size: var(--q-space-2);
+    --q-multi-select-pill-remove-icon-size: var(--q-icon-sm);
+    --q-multi-select-pill-remove-fg: var(--q-fg-muted);
+    --q-multi-select-pill-remove-bg-hover: color-mix(in srgb, var(--q-fg) 8%, transparent);
+    --q-multi-select-chevron-size: var(--q-icon-md);
     --q-multi-select-muted-fg: var(--q-fg-muted);
     --q-multi-select-panel-offset: var(--q-space-0-5);
     --q-multi-select-panel-bg: var(--q-bg);
-    --q-multi-select-panel-border: var(--q-border);
+    --q-multi-select-panel-divider: var(--q-border);
     --q-multi-select-panel-radius: var(--q-radius-lg);
-    --q-multi-select-panel-shadow: var(--q-shadow-2);
+    --q-multi-select-panel-shadow: var(--q-shadow-float);
+    --q-multi-select-footer-bg: var(--q-bg-subtle);
     --q-multi-select-panel-z: var(--q-z-dropdown);
     --q-multi-select-search-py: var(--q-space-1-5);
     --q-multi-select-search-px: var(--q-space-2);
@@ -70,13 +76,16 @@
     --q-multi-select-box-size: var(--q-space-2);
     --q-multi-select-box-offset: var(--q-space-0-25);
     --q-multi-select-box-radius: var(--q-radius-xs);
-    --q-multi-select-box-border: var(--q-fg);
+    --q-multi-select-box-border: var(--q-border-strong);
     --q-multi-select-box-bg: var(--q-bg);
-    --q-multi-select-box-bg-checked: var(--q-fg);
-    --q-multi-select-box-fg: var(--q-bg);
-    --q-multi-select-box-font-size: var(--q-text-2xs);
-    --q-multi-select-hint-tracking: var(--q-tracking-wide);
-    --q-multi-select-hint-error-fg: var(--q-accent);
+    --q-multi-select-box-bg-checked: var(--q-accent-bg);
+    --q-multi-select-box-fg: var(--q-fg-on-accent);
+    --q-multi-select-box-icon-size: var(--q-icon-xs);
+    --q-multi-select-box-stroke: 2.4; // heavier than the icon set: the mark is small
+    --q-multi-select-hint-font-family: var(--q-font-hint);
+    --q-multi-select-hint-font-size: var(--q-text-hint);
+    --q-multi-select-hint-tracking: var(--q-tracking-hint);
+    --q-multi-select-hint-error-fg: var(--q-status-error-fg);
   }
 }
 
@@ -116,11 +125,12 @@
   .q-multi-select__label,
   .q-multi-select__empty,
   .q-multi-select__footer {
-    font-family: var(--q-multi-select-mono-font-family);
-    font-size: var(--q-multi-select-mono-font-size);
-    letter-spacing: var(--q-multi-select-mono-tracking);
-    text-transform: uppercase;
     color: var(--q-multi-select-label-fg);
+  }
+
+  .q-multi-select__empty,
+  .q-multi-select__footer {
+    font-size: var(--q-multi-select-meta-font-size);
   }
 
   .q-multi-select__field {
@@ -139,7 +149,14 @@
     font-size: var(--_font-size);
     color: var(--q-multi-select-field-fg);
     cursor: pointer;
-    transition: border-color var(--q-dur-hover) var(--q-ease-soft);
+    transition:
+      border-color var(--q-dur-hover) var(--q-ease-soft),
+      box-shadow var(--q-dur-hover) var(--q-ease-soft);
+
+    // With pills in it, the field's left padding tucks in to follow the round end.
+    &:has(.q-multi-select__pill) {
+      padding-left: var(--q-multi-select-field-pl);
+    }
 
     .q-multi-select--disabled > & {
       cursor: not-allowed;
@@ -181,32 +198,55 @@
     display: inline-flex;
     align-items: center;
     gap: var(--q-multi-select-pill-gap);
-    padding: var(--q-multi-select-pill-py) var(--q-multi-select-pill-px);
-    border: var(--q-hairline) solid var(--q-multi-select-pill-border);
+    box-sizing: border-box;
+    height: var(--q-multi-select-pill-height);
+    padding: 0 var(--q-multi-select-pill-pr) 0 var(--q-multi-select-pill-pl);
     border-radius: var(--q-radius-pill);
-    font-family: var(--q-multi-select-mono-font-family);
+    background: var(--q-multi-select-pill-bg);
     font-size: var(--q-multi-select-pill-font-size);
-    line-height: 1;
-    letter-spacing: var(--q-multi-select-mono-tracking);
-    text-transform: uppercase;
+    font-weight: var(--q-multi-select-pill-weight);
+    line-height: var(--q-leading-none);
     white-space: nowrap;
     color: var(--q-multi-select-pill-fg);
   }
 
   .q-multi-select__pill-remove {
     position: relative;
-    font-size: var(--q-multi-select-pill-remove-font-size);
+    display: inline-grid;
+    place-items: center;
+    width: var(--q-multi-select-pill-remove-size);
+    height: var(--q-multi-select-pill-remove-size);
+    border-radius: var(--q-radius-pill);
+    color: var(--q-multi-select-pill-remove-fg);
+    font-size: var(--q-multi-select-pill-remove-icon-size);
     cursor: pointer;
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      color var(--q-dur-hover) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible):not([aria-disabled="true"]) {
+      background: var(--q-multi-select-pill-remove-bg-hover);
+      color: var(--q-multi-select-pill-fg);
+    }
+
+    .q-icon {
+      font-size: inherit;
+    }
   }
 
   .q-multi-select__more {
     align-self: center;
-    font-family: var(--q-multi-select-mono-font-family);
-    font-size: var(--q-multi-select-mono-font-size);
+    font-size: var(--q-multi-select-meta-font-size);
+    font-variant-numeric: tabular-nums;
     color: var(--q-multi-select-muted-fg);
   }
 
+  .q-multi-select .q-multi-select__chevron.q-icon {
+    font-size: var(--q-multi-select-chevron-size);
+  }
+
   .q-multi-select__chevron {
+    flex: none;
     color: var(--q-multi-select-muted-fg);
     transition: transform var(--q-dur-hover) var(--q-ease-soft);
 
@@ -224,7 +264,6 @@
     min-width: 100%;
     margin-top: var(--q-multi-select-panel-offset);
     overflow: hidden;
-    border: var(--q-hairline) solid var(--q-multi-select-panel-border);
     border-radius: var(--q-multi-select-panel-radius);
     background: var(--q-multi-select-panel-bg);
     box-shadow: var(--q-multi-select-panel-shadow);
@@ -239,8 +278,9 @@
     width: 100%;
     padding: var(--q-multi-select-search-py) var(--q-multi-select-search-px);
     border: 0;
-    border-bottom: var(--q-hairline) solid var(--q-multi-select-panel-border);
+    border-bottom: var(--q-hairline) solid var(--q-multi-select-panel-divider);
     outline: none;
+    background: transparent;
     font-family: var(--q-multi-select-search-font-family);
     font-size: var(--q-multi-select-search-font-size);
     color: var(--q-multi-select-option-fg);
@@ -254,7 +294,7 @@
 
   .q-multi-select__divider {
     margin: var(--q-multi-select-divider-gap) 0;
-    border-top: var(--q-hairline) solid var(--q-multi-select-panel-border);
+    border-top: var(--q-hairline) solid var(--q-multi-select-panel-divider);
   }
 
   .q-multi-select__empty {
@@ -265,7 +305,7 @@
     display: flex;
     justify-content: space-between;
     padding: var(--q-multi-select-footer-py) var(--q-multi-select-footer-px);
-    border-top: var(--q-hairline) solid var(--q-multi-select-panel-border);
+    background: var(--q-multi-select-footer-bg);
   }
 
   .q-multi-select__clear {
@@ -273,8 +313,6 @@
     border: 0;
     background: none;
     font: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
     color: var(--q-multi-select-option-fg);
     cursor: pointer;
   }
@@ -311,12 +349,23 @@
     border: var(--q-hairline) solid var(--q-multi-select-box-border);
     border-radius: var(--q-multi-select-box-radius);
     background: var(--q-multi-select-box-bg);
-    font-size: var(--q-multi-select-box-font-size);
-    line-height: 1;
+    font-size: var(--q-multi-select-box-icon-size);
     color: var(--q-multi-select-box-fg);
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      border-color var(--q-dur-hover) var(--q-ease-soft);
 
     .q-multi-select__option[aria-selected="true"] > & {
+      border-color: var(--q-multi-select-box-bg-checked);
       background: var(--q-multi-select-box-bg-checked);
+    }
+
+    .q-icon {
+      font-size: inherit;
+    }
+
+    .q-icon__svg {
+      stroke-width: var(--q-multi-select-box-stroke);
     }
   }
 
@@ -332,8 +381,8 @@
   }
 
   .q-multi-select__hint {
-    font-family: var(--q-multi-select-mono-font-family);
-    font-size: var(--q-multi-select-mono-font-size);
+    font-family: var(--q-multi-select-hint-font-family);
+    font-size: var(--q-multi-select-hint-font-size);
     letter-spacing: var(--q-multi-select-hint-tracking);
     color: var(--q-multi-select-muted-fg);
 

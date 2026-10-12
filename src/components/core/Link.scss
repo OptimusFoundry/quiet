@@ -1,4 +1,4 @@
-// Link — inline text link. BEM: .q-link; --primary, --muted; --sm, --md, --lg; --underline-hover, --underline-always.
+// Link — inline text link. BEM: .q-link, __icon; --primary, --muted; --sm, --md, --lg; --underline-hover, --underline-always.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -16,6 +16,7 @@
     --q-link-sm-font-size: var(--q-text-sm);
     --q-link-md-font-size: var(--q-text-md);
     --q-link-lg-font-size: var(--q-text-lg);
+    --q-link-icon-size: 0.9em;
   }
 
 }
@@ -77,6 +78,15 @@
 
   .q-link:is(:hover, :focus-visible) {
     border-bottom-color: currentcolor;
+  }
+
+  .q-link__icon {
+    display: inline-flex;
+    align-self: center;
+  }
+
+  .q-link .q-link__icon.q-icon {
+    font-size: var(--q-link-icon-size);
   }
 
   // underline="none" opts out of the resting and hover underline.

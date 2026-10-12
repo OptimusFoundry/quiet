@@ -2,8 +2,9 @@ import type React from "react";
 import "./Headline.scss";
 
 /**
- * Headline in Inter Tight: plain lead, one italic phrase, molten full stop.
- * @startingPoint section="Typography" subtitle="Headline with italic accent and molten period" viewport="700x320"
+ * Headline in Geist at the display and heading steps, with an optional accent full stop (off in
+ * the default themes, `--q-period-display`).
+ * @startingPoint section="Typography" subtitle="Display and heading steps" viewport="700x320"
  */
 export interface HeadlineProps extends Omit<React.HTMLAttributes<HTMLHeadingElement>, "children"> {
 	/** The rendered heading (or the `as` element). */
@@ -11,16 +12,12 @@ export interface HeadlineProps extends Omit<React.HTMLAttributes<HTMLHeadingElem
 	size?: "display" | "h2" | "h3" | "h4";
 	/** Override the rendered tag */
 	as?: keyof React.JSX.IntrinsicElements;
-	/** Upright text before the accent */
+	/** The headline text */
 	lead?: React.ReactNode;
-	/** The single italic phrase */
-	accent?: React.ReactNode;
-	/** Upright text after the accent */
+	/** More text after `lead`, joined with a space */
 	after?: React.ReactNode;
-	/** Append the molten full stop. Default true. */
+	/** Append the accent full stop where the theme shows it. Default true. */
 	period?: boolean;
-	/** Color the italic phrase molten (then drop other molten on the surface) */
-	moltenAccent?: boolean;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -36,10 +33,8 @@ export function Headline({
 	size = "h2",
 	as,
 	lead,
-	accent,
 	after,
 	period = true,
-	moltenAccent = false,
 	className,
 	style,
 	...rest
@@ -51,24 +46,8 @@ export function Headline({
 	return (
 		<Tag {...rest} className={cls} style={style}>
 			{lead}
-			{lead && accent ? " " : ""}
-			{accent && (
-				<em
-					className={["q-headline__accent", moltenAccent && "q-headline__accent--molten"]
-						.filter(Boolean)
-						.join(" ")}
-				>
-					{accent}
-				</em>
-			)}
-			{after ? (
-				<>
-					{accent ? " " : ""}
-					{after}
-				</>
-			) : (
-				""
-			)}
+			{lead && after ? " " : ""}
+			{after}
 			{period && <span className="q-headline__period">.</span>}
 		</Tag>
 	);

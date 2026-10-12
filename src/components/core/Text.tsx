@@ -1,8 +1,9 @@
-import type React from "react";
+import React from "react";
+import { isDev } from "../../lib/env";
 import "./Text.scss";
 
 /**
- * Typography primitive — body sizes, weights, colors, mono labels, headings, truncation.
+ * Typography primitive — body sizes, weights, colors, mono for code and IDs, headings, truncation.
  * @startingPoint section="Type" subtitle="Sizes, weights, colors, clamps" viewport="700x320"
  */
 export interface TextProps
@@ -10,7 +11,7 @@ export interface TextProps
 	/** The rendered element (`p`, `h1`–`h4`, or the `as` element). */
 	ref?: React.Ref<HTMLElement>;
 	as?: keyof React.JSX.IntrinsicElements;
-	/** 1–4 shortcuts to the heading scale (for headlines with an italic accent + period, use Headline) */
+	/** 1–4 shortcuts to the heading scale */
 	heading?: 1 | 2 | 3 | 4;
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | number;
 	weight?: "normal" | "medium" | "semibold" | "bold";
@@ -24,8 +25,9 @@ export interface TextProps
 		| "warning"
 		| "error"
 		| "inherit";
-	/** JetBrains Mono 11px caps +0.08em */
+	/** Geist Mono at 12px, as written: for code and IDs, never labels */
 	mono?: boolean;
+	/** @deprecated quiet has no italics; this does nothing. Use weight or ink for emphasis */
 	italic?: boolean;
 	underline?: boolean;
 	strike?: boolean;
@@ -68,6 +70,15 @@ const HEADINGS: Record<number, { size: string; weight: string }> = {
 	4: { size: "2xl", weight: "semibold" },
 };
 
+let warnedItalic = false;
+function warnItalic() {
+	if (warnedItalic || !isDev()) return;
+	warnedItalic = true;
+	console.warn(
+		"Text: `italic` is deprecated and does nothing (quiet has no italics). Use weight or ink for emphasis.",
+	);
+}
+
 export function Text({
 	as,
 	heading,
@@ -75,7 +86,7 @@ export function Text({
 	weight,
 	color,
 	mono = false,
-	italic = false,
+	italic,
 	underline = false,
 	strike = false,
 	transform,
@@ -87,6 +98,9 @@ export function Text({
 	style,
 	...rest
 }: TextProps) {
+	React.useEffect(() => {
+		if (italic !== undefined) warnItalic();
+	}, [italic]);
 	const hd = heading ? HEADINGS[heading] : null;
 	const Tag = (as || (hd ? `h${heading}` : "p")) as React.ElementType;
 	const sz = size || (hd ? hd.size : mono ? "xs" : "md");
@@ -115,7 +129,6 @@ export function Text({
 		hd ? `q-text--h${heading}` : px! >= 24 && "q-text--large",
 		mono && "q-text--mono",
 		!mono && transform && `q-text--${transform}`,
-		italic && "q-text--italic",
 		underline && "q-text--underline",
 		strike && "q-text--strike",
 		align && `q-text--align-${align}`,

@@ -22,9 +22,38 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
   `ICONS`, `IconName`, `ICON_ALIASES`, `Icon.names`.
 - `AppIcon` stays (a bare `<svg>` sized in px); `APP_ICONS` and `AppIconName` are deprecated aliases
   of `ICONS` and `IconName`.
+- **Core and forms in the one look.** Unicode marks are stroke `Icon`s: the `Button arrow`, the
+  `Tag` remove button, `Link external`, `Avatar`'s empty state (user), `Select`, `Dropdown` and
+  `MultiSelect` chevrons, `Checkbox` and `MultiSelect` check/minus marks, `Dropdown`'s selected
+  check, `DatePicker` month arrows and a calendar icon (replacing the day badge), `Stepper`
+  minus/plus, `FileUpload` upload/check/close and `FormHint`'s info/warning/check.
+- **No mono caps:** `Tag`, `Spinner` and `StatusDot` labels, `Avatar` initials, `Radio` and `Slider`
+  labels, `DatePicker` weekdays and footer, `MultiSelect` pills and footer, `FileUpload` labels and
+  meta, `TextArea`'s counter and every inline error read the label or hint role (sans, sentence case).
+  `StatusDot` defaults its label to "Live", "Prototype", "Archived". `Text mono` is Geist Mono as
+  written (12px, no caps or tracking), for code and IDs.
+- **`Button variant="ghost"`** is padded like the other variants and hovers to a soft grey wash
+  (no accent text on hover).
+- **`Tag`** is a 24px sans pill (20 for `sm`) on a soft grey ground, no edge; selected is the accent
+  tint with accent text (was an ink fill). `ButtonGroup attached` uses a soft grey edge, not ink.
+- **Fields are dense pills:** `TextField`, `Select`, `Dropdown`, `MultiSelect`, `DatePicker` and
+  `Stepper` take `--q-radius-pill` and the field heights (36 md; `Stepper` md was 32), with 14px
+  text (was 15). `TextArea` stays a rounded rect (`--q-radius-md`).
+- **Accent, not ink:** open and focus edges (`Dropdown`, `MultiSelect`, `DatePicker`, `TextArea`,
+  `Stepper`), checked edges (`Checkbox`, `Radio`, `Switch`), `MultiSelect`'s checkboxes, the selected
+  `DatePicker` day, `Slider`'s fill and focus ring, `FileUpload`'s progress. Invalid edges and errors
+  read `--q-status-error-fg`. `Text color="primary"` is `--q-accent-fg`; warning/error read status.
+- `Dropdown`, `MultiSelect` and `DatePicker` popups float on `--q-shadow-float` with no border;
+  `MultiSelect`'s footer and `DatePicker`'s footer drop their rules.
+- `Skeleton` is a soft grey wash that shows on white and on a `Panel`.
+
+### Removed
+
+- `Headline accent` and `moltenAccent` (nothing used them). `lead` and `after` remain.
 
 ### Deprecated
 
+- `Text italic` does nothing (quiet has no italics) and warns once in development.
 - `Icon glyph`: a text fallback for one release. `Icon.glyphs` is removed.
 
 ## 0.9.1

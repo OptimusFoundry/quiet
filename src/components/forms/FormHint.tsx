@@ -1,13 +1,15 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import "./FormHint.scss";
 
 /**
- * Helper / error / success line under a field. Mono 11px.
+ * Helper / error / success line under a field: the hint role (sans 11, sentence case), with a
+ * status icon for errors and successes.
  * @startingPoint section="Forms" subtitle="Helper, error, success" viewport="600x160"
  */
 export interface FormHintProps {
 	variant?: "default" | "error" | "success";
-	/** true = default glyph (i ! ✓); node = custom; false = none */
+	/** true = the variant's icon (info, warning, check); node = custom; false = none */
 	icon?: boolean | React.ReactNode;
 	hidden?: boolean;
 	id?: string;
@@ -15,6 +17,8 @@ export interface FormHintProps {
 	className?: string;
 	style?: React.CSSProperties;
 }
+
+const ICONS: Record<string, string> = { error: "warning", success: "check", default: "info" };
 
 export function FormHint({
 	variant = "default",
@@ -29,9 +33,11 @@ export function FormHint({
 	const first = React.useRef(hidden || !children ? "" : variant).current;
 	if (hidden || !children) return null;
 	const glyph =
-		icon === true || (icon === undefined && variant !== "default")
-			? ({ error: "!", success: "\u2713", default: "i" } as Record<string, string>)[variant]
-			: icon || null;
+		icon === true || (icon === undefined && variant !== "default") ? (
+			<Icon name={ICONS[variant] ?? "info"} />
+		) : (
+			icon || null
+		);
 	const cls = [
 		"q-form-hint",
 		`q-form-hint--${variant}`,

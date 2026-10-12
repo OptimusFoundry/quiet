@@ -6,7 +6,8 @@
 @layer q.tokens {
   :root,
   [data-theme] {
-    --q-skeleton-bg: var(--q-bg-subtle);
+    // A soft grey wash: --q-bg-subtle alone vanishes on white and on a Panel.
+    --q-skeleton-bg: color-mix(in srgb, var(--q-fg) 8%, transparent);
     --q-skeleton-ease: ease-in-out; // a symmetric breathe; no motion token matches it
     --q-skeleton-text-height: var(--q-space-1-5);
     --q-skeleton-text-radius: var(--q-radius-xs);

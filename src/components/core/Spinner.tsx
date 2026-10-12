@@ -11,7 +11,7 @@ export interface SpinnerProps
 	ref?: React.Ref<HTMLSpanElement>;
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | number;
 	tone?: "default" | "muted" | "paper" | "molten";
-	/** Mono caps label beside the ring (null hides it) */
+	/** Sentence-case label beside the ring (null hides it) */
 	label?: string | null;
 	className?: string;
 	style?: React.CSSProperties;

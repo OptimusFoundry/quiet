@@ -1,9 +1,10 @@
 import type React from "react";
 import { useLinkElement } from "../../lib/link";
+import { Icon } from "./Icon";
 import "./Link.scss";
 
 /**
- * Inline text link. Ink → molten on hover. For a standalone CTA link use ArrowLink.
+ * Inline text link in the accent text colour, with a soft underline that firms up on hover.
  * @startingPoint section="Actions" subtitle="Inline text links" viewport="600x160"
  */
 export interface LinkProps
@@ -16,7 +17,7 @@ export interface LinkProps
 	variant?: "default" | "primary" | "muted";
 	size?: "inherit" | "sm" | "md" | "lg";
 	underline?: "hover" | "always" | "none";
-	/** Opens in new tab, appends ↗ */
+	/** Opens in a new tab and appends an arrow-up-right icon */
 	external?: boolean;
 	rightIcon?: React.ReactNode;
 	children?: React.ReactNode;
@@ -58,7 +59,13 @@ export function Link({
 			style={style}
 		>
 			{children}
-			{(rightIcon || external) && <span aria-hidden="true">{rightIcon || "↗"}</span>}
+			{rightIcon ? (
+				<span aria-hidden="true" className="q-link__icon">
+					{rightIcon}
+				</span>
+			) : (
+				external && <Icon name="arrow-up-right" className="q-link__icon" />
+			)}
 			{external && <span className="q-sr-only"> (opens in new tab)</span>}
 		</A>
 	);

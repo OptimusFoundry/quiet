@@ -1,6 +1,7 @@
 import React from "react";
 import { FormValues } from "../../a11y/form";
 import { useMergedRef, usePresence } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./MultiSelect.scss";
 
 /**
@@ -242,7 +243,7 @@ export function MultiSelect({
 				}}
 				className="q-multi-select__pill-remove"
 			>
-				{"\u00d7"}
+				<Icon name="close" />
 			</span>
 		</span>
 	);
@@ -318,9 +319,7 @@ export function MultiSelect({
 						<span className="q-multi-select__more">+{chosen.length - maxDisplay}</span>
 					)}
 				</span>
-				<span aria-hidden="true" className="q-multi-select__chevron">
-					{"\u2193"}
-				</span>
+				<Icon name="chevron-down" className="q-multi-select__chevron" />
 			</div>
 			{(open || presence.mounted) && (
 				<div
@@ -430,7 +429,7 @@ function MSOption({
 			className="q-multi-select__option"
 		>
 			<span aria-hidden="true" className="q-multi-select__box">
-				{on ? "\u2713" : ""}
+				{on && <Icon name="check" />}
 			</span>
 			<span className="q-multi-select__option-text">
 				<span>{o.label}</span>

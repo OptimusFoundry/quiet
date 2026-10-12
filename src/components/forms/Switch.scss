@@ -1,4 +1,4 @@
-// Switch — ink-outlined pill with a sliding thumb. BEM: .q-switch, __track, __thumb, __text,
+// Switch — hairline pill with a sliding thumb; accent-filled when on. BEM: .q-switch, __track, __thumb, __text,
 // __description; --{size}, --described, --label-left, --disabled. On state reads aria-checked.
 @use "../../styles/layers";
 
@@ -82,9 +82,12 @@
     border: var(--q-hairline) solid var(--q-switch-track-border);
     border-radius: var(--q-radius-pill);
     background: var(--q-switch-track-bg);
-    transition: background var(--q-dur-hover) var(--q-ease-soft);
+    transition:
+      background var(--q-dur-hover) var(--q-ease-soft),
+      border-color var(--q-dur-hover) var(--q-ease-soft);
 
     &[aria-checked="true"] {
+      border-color: var(--q-switch-track-bg-on);
       background: var(--q-switch-track-bg-on);
     }
   }

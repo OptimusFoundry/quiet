@@ -5,10 +5,13 @@ import {
 	Checkbox,
 	DatePicker,
 	Dropdown,
+	FileUpload,
+	FormHint,
 	MultiSelect,
 	Radio,
 	Select,
 	Slider,
+	Stepper,
 	Switch,
 	TextArea,
 	TextField,
@@ -135,6 +138,68 @@ export const SelectChrome: StoryObj = {
 				<Select label="Large" size="lg" options={REGIONS} />
 			</div>
 			<TextArea label="Notes" hideLabel placeholder="Notes (label hidden)" rows={2} />
+		</div>
+	),
+};
+
+const TEAMS = [
+	{ value: "design", label: "Design" },
+	{ value: "eng", label: "Engineering" },
+	{ value: "ops", label: "Operations", description: "Billing and vendors" },
+	{ value: "research", label: "Research" },
+];
+
+// Every form control at the dense field height: pill fields, accent fills, icons from the set.
+export const Overview: StoryObj = {
+	render: () => (
+		<div className="q-sb-forms">
+			<TextField label="Name" placeholder="Ada Lovelace" helperText="As it appears on invoices." />
+			<TextField label="Email" defaultValue="ada@" error="Enter a full email address." />
+			<div className="q-sb-forms__row">
+				<Select label="Region" options={REGIONS} defaultValue="eu" />
+				<Dropdown label="Team" options={TEAMS} defaultValue="design" />
+			</div>
+			<div className="q-sb-forms__row">
+				<MultiSelect label="Teams" options={TEAMS} defaultValue={["design", "eng"]} />
+				<DatePicker label="Due date" />
+			</div>
+			<TextArea label="Notes" placeholder="Anything else?" maxLength={200} rows={3} />
+			<div className="q-sb-forms__row">
+				<Checkbox label="Email me" defaultChecked />
+				<Checkbox label="Some teams" indeterminate />
+				<Checkbox label="Unchecked" />
+				<Switch label="Auto-renew" defaultChecked />
+				<Switch label="Off" />
+			</div>
+			<Radio
+				label="Plan"
+				direction="row"
+				defaultValue="pro"
+				options={[
+					{ value: "free", label: "Free" },
+					{ value: "pro", label: "Pro" },
+					{ value: "team", label: "Team" },
+				]}
+			/>
+			<div className="q-sb-forms__row">
+				<Slider label="Volume" defaultValue={40} showValue />
+				<Stepper label="Seats" defaultValue={3} min={1} />
+			</div>
+			<div className="q-sb-forms__row">
+				<FormHint>Helper text.</FormHint>
+				<FormHint variant="error">Something went wrong.</FormHint>
+				<FormHint variant="success">Saved.</FormHint>
+			</div>
+			<FileUpload
+				label="Attachments"
+				multiple
+				hint="PDF or PNG, up to 10 MB"
+				defaultFiles={[
+					{ id: 1, name: "contract.pdf", size: 240000 },
+					{ id: 2, name: "scan.png", size: 1200000, error: "Too large" },
+				]}
+			/>
+			<FileUpload label="Logo" variant="button" hint="PNG, square" />
 		</div>
 	),
 };

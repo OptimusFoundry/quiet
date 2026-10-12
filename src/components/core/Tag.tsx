@@ -1,9 +1,10 @@
 import React from "react";
+import { Icon } from "./Icon";
 import "./Tag.scss";
 
 /**
- * Mono caps pill for stacks, categories and filters. Removable and selectable.
- * @startingPoint section="Primitives" subtitle="Mono pills — removable, selectable" viewport="700x180"
+ * Small sans pill for stacks, categories and filters. Removable and selectable (selected = accent tint).
+ * @startingPoint section="Primitives" subtitle="Pills — removable, selectable" viewport="700x180"
  */
 export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, "children" | "onSelect"> {
 	/**
@@ -19,9 +20,9 @@ export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, "child
 	icon?: React.ReactNode;
 	/** Small Avatar (size 'xs') rendered flush left */
 	avatar?: React.ReactNode;
-	/** Shows a × that calls this */
+	/** Shows a close icon that calls this */
 	onRemove?: () => void;
-	/** Toggle chip; selected = ink fill */
+	/** Toggle chip; selected = accent tint */
 	selectable?: boolean;
 	selected?: boolean;
 	defaultSelected?: boolean;
@@ -138,7 +139,7 @@ export function Tag({
 					onClick={remove}
 					className="q-tag__remove"
 				>
-					{"×"}
+					<Icon name="close" />
 				</button>
 			)}
 		</El>

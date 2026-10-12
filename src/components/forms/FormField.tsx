@@ -13,7 +13,7 @@ export interface FormFieldProps {
 	required?: boolean;
 	subText?: React.ReactNode;
 	helperText?: React.ReactNode;
-	/** Replaces helperText, molten */
+	/** Replaces helperText, in the error colour */
 	error?: React.ReactNode;
 	size?: "sm" | "md" | "lg";
 	/** The control */
