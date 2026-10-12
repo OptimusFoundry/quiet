@@ -2,7 +2,8 @@ import type React from "react";
 import "./AspectRatio.scss";
 
 /**
- * Fixed-ratio frame. Covers img/video children; empty = dashed placeholder with a mono label.
+ * Fixed-ratio frame. Covers img/video children; empty, it is a placeholder on a soft ground with a
+ * sentence-case label (default: the preset and ratio, "Video · 1.78").
  * @startingPoint section="Layout" subtitle="Ratio frames + placeholders" viewport="800x300"
  */
 export interface AspectRatioProps {
@@ -21,6 +22,12 @@ const PRESETS: Record<string, number> = {
 	portrait: 3 / 4,
 	wide: 21 / 9,
 	photo: 4 / 3,
+};
+
+// "Video · 1.78" for a preset, "1.5" for a raw ratio: sentence case, no leading separator.
+const defaultLabel = (ratio: AspectRatioProps["ratio"], r: number) => {
+	const n = String(Math.round(r * 100) / 100);
+	return typeof ratio === "string" ? `${ratio[0]!.toUpperCase()}${ratio.slice(1)} · ${n}` : n;
 };
 
 export function AspectRatio({
@@ -45,9 +52,7 @@ export function AspectRatio({
 			{children ? (
 				<div className="q-aspect-ratio__media">{children}</div>
 			) : (
-				<span className="q-aspect-ratio__label">
-					{label || `${typeof ratio === "string" ? ratio : ""} · ${Math.round(r * 100) / 100}`}
-				</span>
+				<span className="q-aspect-ratio__label">{label || defaultLabel(ratio, r)}</span>
 			)}
 		</div>
 	);

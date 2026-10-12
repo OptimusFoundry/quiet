@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import { Pagination } from "../navigation/Pagination";
 import { EmptyState } from "./EmptyState";
 import { Table, type TableProps } from "./Table";
@@ -115,18 +116,22 @@ export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = 
 				<div className="q-data-grid__toolbar">
 					{title && <div className="q-data-grid__title">{title}</div>}
 					{searchable && (
-						<input
-							value={q}
-							onChange={(e) => {
-								setQ(e.target.value);
-								setPage(1);
-							}}
-							placeholder={searchPlaceholder}
-							aria-label={
-								typeof title === "string" ? `${searchPlaceholder} in ${title}` : searchPlaceholder
-							}
-							className="q-data-grid__search"
-						/>
+						<span className="q-data-grid__search">
+							<Icon name="search" className="q-data-grid__search-icon" />
+							<input
+								type="search"
+								value={q}
+								onChange={(e) => {
+									setQ(e.target.value);
+									setPage(1);
+								}}
+								placeholder={searchPlaceholder}
+								aria-label={
+									typeof title === "string" ? `${searchPlaceholder} in ${title}` : searchPlaceholder
+								}
+								className="q-data-grid__search-input"
+							/>
+						</span>
 					)}
 					{actions}
 				</div>
@@ -138,15 +143,13 @@ export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = 
 				<div className="q-data-grid__label q-data-grid__label--strong">{sel.length} selected</div>
 			)}
 			{empty ? (
-				<div className="q-data-grid__empty">
-					<EmptyState
-						size="sm"
-						icon={q ? "?" : "/"}
-						title={q ? "Nothing matches" : emptyTitle}
-						description={q ? `No row contains \u201c${q}\u201d.` : emptyDescription}
-						actions={q ? null : emptyActions}
-					/>
-				</div>
+				<EmptyState
+					size="sm"
+					icon={q ? "search" : "list"}
+					title={q ? "Nothing matches" : emptyTitle}
+					description={q ? `No row contains \u201c${q}\u201d.` : emptyDescription}
+					actions={q ? null : emptyActions}
+				/>
 			) : (
 				<Table
 					label={typeof title === "string" ? title : undefined}
@@ -166,7 +169,7 @@ export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = 
 					{...tableProps}
 				/>
 			)}
-			{!empty && !loading && pageSize && (
+			{!empty && !loading && pageSize > 0 && (
 				<div className="q-data-grid__footer">
 					<span className="q-data-grid__label">
 						{(cur - 1) * pageSize + 1}

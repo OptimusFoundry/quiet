@@ -380,7 +380,7 @@ function Records() {
 				) : (
 					<EmptyState
 						size="sm"
-						icon="?"
+						icon="search"
 						title="Nothing matches"
 						description="Try another name, or clear the filter."
 					/>

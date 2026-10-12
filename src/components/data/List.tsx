@@ -1,10 +1,11 @@
 import React from "react";
 import { useLinkElement } from "../../lib/link";
+import { Icon } from "../core/Icon";
 import "./List.scss";
 
 /**
- * Hairline-separated rows: leading, primary/secondary text, trailing meta. Interactive rows nudge an arrow.
- * @startingPoint section="Data" subtitle="Hairline lists" viewport="700x400"
+ * Rows: leading, primary/secondary text, trailing meta. Interactive rows take a soft ground on hover and nudge an arrow.
+ * @startingPoint section="Data" subtitle="Lists" viewport="700x400"
  */
 export interface ListProps {
 	items?: Array<{
@@ -21,7 +22,7 @@ export interface ListProps {
 	groups?: Array<{ label?: React.ReactNode; items: NonNullable<ListProps["items"]> }>;
 	size?: "sm" | "md" | "lg";
 	divided?: boolean;
-	/** Boxed with a soft hairline */
+	/** Set on a soft ground (`--q-bg-subtle`), with rounded corners */
 	bordered?: boolean;
 	/** Rows rise in on mount, 60ms apart */
 	animated?: boolean;
@@ -83,7 +84,7 @@ function LI({
 				)}
 				{interactive && it.trailing == null && (
 					<span aria-hidden="true" className="q-list__arrow">
-						{"→"}
+						<Icon name="arrow-right" />
 					</span>
 				)}
 			</El>

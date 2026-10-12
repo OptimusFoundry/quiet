@@ -1,9 +1,10 @@
 import React from "react";
 import { motionToken, usePresence } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./Table.scss";
 
 /**
- * Data table. Mono caps header on an ink rule, soft row hairlines. Sorting, selection, expandable rows, striped, bordered, loading.
+ * Data table. Sentence-case label headers, faint row dividers, no vertical rules. Sorting, selection, expandable rows, striped, bordered (an outer frame), loading.
  * @startingPoint section="Data" subtitle="Sortable, selectable table" viewport="900x420"
  */
 export interface TableProps<Row = Record<string, unknown>, Key extends React.Key = React.Key> {
@@ -28,6 +29,7 @@ export interface TableProps<Row = Record<string, unknown>, Key extends React.Key
 	rowKey?: string | ((row: Row) => Key);
 	size?: "sm" | "md" | "lg";
 	striped?: boolean;
+	/** An outer hairline frame with rounded corners; cells never get vertical rules */
 	bordered?: boolean;
 	caption?: React.ReactNode;
 	selectable?: boolean;
@@ -115,7 +117,7 @@ function Box({
 			onKeyDown={(e) => e.key === " " && (e.preventDefault(), onClick())}
 			className="q-table__check"
 		>
-			{mixed ? "\u2212" : on ? "\u2713" : ""}
+			{mixed ? <Icon name="minus" /> : on ? <Icon name="check" /> : null}
 		</span>
 	);
 }
@@ -196,7 +198,7 @@ function TR<Row>({
 							}}
 							className="q-table__expand"
 						>
-							+
+							<Icon name="chevron-right" />
 						</button>
 					</td>
 				)}
@@ -384,8 +386,16 @@ export function Table<Row = Record<string, unknown>, Key extends React.Key = Rea
 									{c.sortable ? (
 										<button type="button" onClick={() => clickSort(c)} className="q-table__sort">
 											{c.header}
-											<span aria-hidden="true">
-												{on ? (srt!.dir === "asc" ? "\u2191" : "\u2193") : "\u2195"}
+											<span aria-hidden="true" className="q-table__sort-icon">
+												<Icon
+													name={
+														on
+															? srt!.dir === "asc"
+																? "arrow-up"
+																: "arrow-down"
+															: "chevrons-up-down"
+													}
+												/>
 											</span>
 										</button>
 									) : (

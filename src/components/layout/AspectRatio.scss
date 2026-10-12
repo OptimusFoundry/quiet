@@ -1,4 +1,4 @@
-// AspectRatio — fixed-ratio frame; an empty one is a labelled placeholder. BEM: .q-aspect-ratio,
+// AspectRatio — fixed-ratio frame; an empty one is a labelled placeholder on a ground. BEM: .q-aspect-ratio,
 // __media (img/video children cover it), __label; --{square|video|portrait|wide|photo}, --empty.
 // A raw ratio arrives as --_ratio.
 @use "../../styles/layers";
@@ -8,10 +8,9 @@
   [data-theme] {
     --q-aspect-ratio-radius: var(--q-radius-lg);
     --q-aspect-ratio-empty-bg: var(--q-bg-subtle);
-    --q-aspect-ratio-empty-border: var(--q-fg-subtle);
     --q-aspect-ratio-label-fg: var(--q-fg-muted);
-    --q-aspect-ratio-label-font-size: var(--q-text-2xs);
-    --q-aspect-ratio-label-tracking: var(--q-tracking-mono);
+    --q-aspect-ratio-label-font-size: var(--q-text-label);
+    --q-aspect-ratio-label-tracking: var(--q-tracking-label);
   }
 }
 
@@ -35,7 +34,6 @@
     &--photo { --_ratio: 4 / 3; }
 
     &--empty {
-      border: var(--q-hairline) dashed var(--q-aspect-ratio-empty-border);
       background: var(--q-aspect-ratio-empty-bg);
     }
   }
@@ -59,9 +57,10 @@
     inset: 0;
     place-items: center;
     color: var(--q-aspect-ratio-label-fg);
-    font-family: var(--q-font-mono);
+    font-family: var(--q-font-label);
     font-size: var(--q-aspect-ratio-label-font-size);
+    font-weight: var(--q-weight-label);
     letter-spacing: var(--q-aspect-ratio-label-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
   }
 }

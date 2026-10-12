@@ -73,6 +73,22 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 ### Removed
 
 - `Headline accent` and `moltenAccent` (nothing used them). `lead` and `after` remain.
+- **Display, data and layout in the one look.** `Accordion`: a chevron icon, a 14px title, rows set
+  apart by space and faint dividers (no ink top rule), a soft hover ground. `Card`: a
+  `--q-bg-subtle` ground instead of a border, no footer rule, the ground deepens on hover.
+  `StatCard`: `filled` (on a ground) is the default; deltas are neutral, direction by an arrow icon
+  and words in the ink, never green/red or accent; sans meta. `Table`: sort, check, minus and
+  expand marks are stroke icons; the expand chevron turns; `bordered` is an outer frame only, with
+  no vertical rules. `EmptyState`: `icon` takes an icon name (`icon="search"`) or a node, on a round
+  ground; no default icon; `bordered` sets it on a ground instead of a dashed frame. `List`: the
+  arrow is an icon, trailing text is a sans label, `bordered` is a ground. `DataGrid`: a field-height
+  search with a search icon and a focus ring, a 14px title. `AspectRatio`: a sentence-case label
+  ("Video · 1.78") on a ground, no dashed border.
+
+### Removed
+
+- `Card accent` and `EmptyState accent` (the italic phrase after the title): no app used them.
+- `EmptyState`'s default `/` glyph: pass `icon` for one.
 
 ### Deprecated
 

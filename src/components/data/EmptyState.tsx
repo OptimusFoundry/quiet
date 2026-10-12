@@ -1,20 +1,20 @@
 import type React from "react";
+import { Icon, type IconName } from "../core/Icon";
 import "./EmptyState.scss";
 
 /**
- * Nothing-here state: ringed mono glyph, headline with period, one honest sentence, actions.
+ * Nothing-here state: an icon on a round ground, a title, one honest sentence, actions.
  * @startingPoint section="Data" subtitle="Empty and no-result states" viewport="700x360"
  */
 export interface EmptyStateProps {
-	/** Mono glyph in a ring; null hides it */
-	icon?: React.ReactNode;
+	/** An icon name from the set (`Icon` `name`, e.g. "search", "file") or your own node, set on a round ground. Omit for none */
+	icon?: IconName | React.ReactNode;
 	eyebrow?: React.ReactNode;
 	title?: React.ReactNode;
-	accent?: React.ReactNode;
 	description?: React.ReactNode;
 	actions?: React.ReactNode;
 	size?: "sm" | "md" | "lg";
-	/** Dashed placeholder frame */
+	/** Sets the state on a soft ground (a placeholder area) */
 	bordered?: boolean;
 	align?: "center" | "start";
 	/** Heading level for the title; default 3 */
@@ -26,10 +26,9 @@ export interface EmptyStateProps {
 const SIZES: string[] = ["sm", "md", "lg"];
 
 export function EmptyState({
-	icon = "/",
+	icon,
 	eyebrow,
 	title,
-	accent,
 	description,
 	actions,
 	size = "md",
@@ -53,19 +52,13 @@ export function EmptyState({
 		<div className={cls} style={style}>
 			{icon && (
 				<span aria-hidden="true" className="q-empty-state__icon">
-					{icon}
+					{typeof icon === "string" ? <Icon name={icon} /> : icon}
 				</span>
 			)}
 			{eyebrow && <span className="q-empty-state__eyebrow">{eyebrow}</span>}
 			{title && (
 				<H className="q-empty-state__title">
 					{title}
-					{accent && (
-						<>
-							{" "}
-							<em>{accent}</em>
-						</>
-					)}
 					<span aria-hidden="true" className="q-empty-state__dot">
 						.
 					</span>

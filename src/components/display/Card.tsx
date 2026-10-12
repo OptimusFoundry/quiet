@@ -3,18 +3,17 @@ import { useLinkElement } from "../../lib/link";
 import "./Card.scss";
 
 /**
- * Rounded hairline container (--radius-lg). When interactive, hover lifts to --shadow-2 and the border goes --rule-strong.
- * @startingPoint section="Display" subtitle="Hairline work card" viewport="700x320"
+ * Content on a soft ground (`--q-bg-subtle`, `--q-radius-lg`), no border. When it is a link or a
+ * button, the ground deepens on hover and keyboard focus.
+ * @startingPoint section="Display" subtitle="Work card on a ground" viewport="700x320"
  */
 export interface CardProps {
 	eyebrow?: React.ReactNode;
 	title?: React.ReactNode;
-	/** Italic phrase after the title, e.g. "iOS" in "Anvil iOS" */
-	accent?: React.ReactNode;
 	children?: React.ReactNode;
-	/** Mono metadata in the footer row */
+	/** Metadata in the footer row, set as a label */
 	meta?: React.ReactNode;
-	/** Right side of footer row (e.g. an arrow) */
+	/** Right side of the footer row (e.g. an `Icon`) */
 	footer?: React.ReactNode;
 	href?: string;
 	/** Also called on Enter/Space when the card acts as a button */
@@ -26,7 +25,6 @@ export interface CardProps {
 export function Card({
 	eyebrow,
 	title,
-	accent,
 	children,
 	meta,
 	footer,
@@ -60,17 +58,7 @@ export function Card({
 			style={style}
 		>
 			{eyebrow && <div className="q-card__eyebrow">{eyebrow}</div>}
-			{title && (
-				<div className="q-card__title">
-					{title}
-					{accent && (
-						<>
-							{" "}
-							<em className="q-card__accent">{accent}</em>
-						</>
-					)}
-				</div>
-			)}
+			{title && <div className="q-card__title">{title}</div>}
 			{children && <div className="q-card__body">{children}</div>}
 			{(meta || footer) && (
 				<div className="q-card__footer">
