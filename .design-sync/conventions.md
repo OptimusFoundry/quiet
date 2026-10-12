@@ -19,31 +19,24 @@ rather than divider lines. Dark mode: `theme="foundry-dark"`. Never mix densitie
 
 - Shell: `SidebarProvider` › `Sidebar` (groups, the current item) + main. No desktop top bar.
 - Every screen opens with `PageHeader` (title, `back`, `eyebrow`, `status`, `meta`, `actions`, `tabs`).
-- Sections: `Panel` (surface by default; `variant="plain"` for the lead block; `empty="…"` collapses
-  an empty section to one line). Never put a table inside a grey surface: a table sits on the page
-  ground (`Panel variant="plain" padding="none"` when it needs a title).
-- Properties: `DescriptionList` (labels next to values). References to records: `EntityLink`. Files:
-  `FileCard` (`variant="row"` in lists). Agent runs: `Transcript`, `AgentRun`, `ToolCall`, `ChatThread`.
-- One `Button variant="primary"` per view (it is molten); others `secondary`/`ghost`. Status:
-  `Badge variant="success|warning|error|primary"`. Icons: `<Icon name="arrow-right" />`
-  (glyph names in `components/core/Icon`).
+- Sections: `Panel` (surface by default; `variant="plain"` for the lead block; `empty="…"` collapses an empty section to one line). Never put a table inside a grey surface: a table sits on the page ground (`Panel variant="plain" padding="none"` when it needs a title).
+- Properties: `DescriptionList` (labels next to values). References to records: `EntityLink`. Files: `FileCard` (`variant="row"` in lists). Agent runs: `Transcript`, `AgentRun`, `ToolCall`, `ChatThread`.
+- One `Button variant="primary"` per view (it is molten); others `secondary`/`ghost`. Status: `Badge variant="success|warning|error|primary"`. Icons: `<Icon name="arrow-right" />` (glyph names in `components/core/Icon`).
 
 ## 3. Styling: tokens, not classes
 
 Components take props, not classes — don't restyle them. For your own layout glue use inline styles
 with quiet's `--q-*` tokens, never raw px or hex:
 
-- space: `--q-space-inline` (8), `--q-space-stack` (16), `--q-space-field` (24), `--q-space-block`
-  (32), `--q-space-section` (48), `--q-space-card-pad`
-- colour: `--q-bg`, `--q-bg-subtle`, `--q-fg`, `--q-fg-body`, `--q-fg-muted`, `--q-border`,
-  `--q-accent`, `--q-accent-fg` (accent text), `--q-accent-subtle` (tint)
+- space: `--q-space-inline` (8), `--q-space-stack` (16), `--q-space-field` (24), `--q-space-block` (32), `--q-space-section` (48), `--q-space-card-pad`
+- colour: `--q-bg`, `--q-bg-subtle`, `--q-fg`, `--q-fg-body`, `--q-fg-muted`, `--q-border`, `--q-accent`, `--q-accent-fg` (accent text), `--q-accent-subtle` (tint)
 - type: use `Text` (`size`, `weight`, `color`, `mono`), not raw font sizes
 - shape: `--q-radius-md`, `--q-radius-lg`; widths `--q-w-sidebar`, `--q-w-detail-panel`
 
 ## 4. Where the truth lives
 
 `styles.css` (and the `_ds_bundle.css` it imports) holds every token and component style. Each
-component's `.d.ts` is its API and `.prompt.md` its usage; `guidelines/` has the design rules
+component's `.d.ts` is its API and `.prompt.md` (`README.md` in the artifact) its usage; `guidelines/` has the design rules
 (`docs/guidelines/layouts.md` for page anatomy, `checklist.md` before you ship a screen).
 
 ## 5. A detail page, idiomatically
