@@ -1,5 +1,6 @@
 // WorkspaceSwitcher — sidebar head: mark + name (+ detail) opening a switch menu.
-// BEM: .q-workspace-switcher (the menu anchor), __button, __mark, __text, __name, __detail, __chevron.
+// BEM: .q-workspace-switcher (the menu anchor), __button, __mark, __text, __name, __detail, __chevron;
+// --collapsed (in a Sidebar rail: the mark alone, the menu at its own width beside the rail).
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -40,9 +41,23 @@
       min-width: 0;
     }
 
+    // In the rail the mark sits in the middle of the row.
+    &--collapsed > .q-dropdown-menu__trigger {
+      justify-content: center;
+    }
+
     // As wide as the sidebar, which clips sideways.
     > .q-dropdown-menu__menu {
       width: 100%;
+    }
+
+    // In the rail it opens beside it, level with the mark, at its own width.
+    &--collapsed > .q-dropdown-menu__menu {
+      width: var(--_width, var(--q-dropdown-menu-width));
+      top: 0;
+      left: 100%;
+      margin-top: 0;
+      margin-left: var(--q-dropdown-menu-offset);
     }
   }
 
@@ -63,6 +78,13 @@
     text-align: left;
     cursor: pointer;
     transition: background var(--q-workspace-switcher-dur) var(--q-ease-soft);
+
+    .q-workspace-switcher--collapsed & {
+      flex: none;
+      justify-content: center;
+      width: var(--q-workspace-switcher-height);
+      padding: 0;
+    }
 
     &:is(:hover, :focus-visible, [aria-expanded="true"]) {
       background: var(--q-workspace-switcher-bg-hover);

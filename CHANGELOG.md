@@ -2,6 +2,21 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Added
+
+- **Collapsible app sidebar.** In an `AppShell`, the `TopBar` leads with a sidebar toggle on desktop
+  that collapses the Sidebar to its icon rail (and back); on a phone the same spot still opens the
+  drawer. `SidebarTrigger rail` opts any trigger into the desktop toggle.
+- `Sidebar` `header`/`footer` accept a function `(collapsed) => node`, which stays in the collapsed
+  rail; a plain node is still hidden there. `WorkspaceSwitcher` and `AccountMenu` take `collapsed`:
+  the mark or avatar alone, their menu opening beside the rail.
+
+### Changed
+
+- A collapsed Sidebar's items are squares around the icon.
+
 ## 0.8.0
 
 quiet starts becoming its own design system: one look everywhere (the former app look), no

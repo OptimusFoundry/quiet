@@ -21,6 +21,8 @@ export interface WorkspaceSwitcherProps {
 	onSelect?: DropdownMenuProps["onSelect"];
 	/** Accessible name of the menu. Default "Switch workspace" */
 	label?: string;
+	/** In a collapsed Sidebar rail: only the mark, named for screen readers, and the menu opens beside the rail. Pass the Sidebar's `header`/`footer` function argument */
+	collapsed?: boolean;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -31,6 +33,7 @@ export function WorkspaceSwitcher({
 	detail,
 	items,
 	onSelect,
+	collapsed = false,
 	label = "Switch workspace",
 	className,
 	style,
@@ -42,18 +45,29 @@ export function WorkspaceSwitcher({
 			label={label}
 			items={items}
 			onSelect={onSelect}
-			className={["q-workspace-switcher", className].filter(Boolean).join(" ")}
+			className={["q-workspace-switcher", collapsed && "q-workspace-switcher--collapsed", className]
+				.filter(Boolean)
+				.join(" ")}
 			style={style}
 			trigger={
-				<button type="button" className="q-workspace-switcher__button">
+				<button
+					type="button"
+					aria-label={collapsed ? name : undefined}
+					title={collapsed ? name : undefined}
+					className="q-workspace-switcher__button"
+				>
 					<span aria-hidden="true" className="q-workspace-switcher__mark">
 						{mark ?? name.trim().charAt(0).toUpperCase()}
 					</span>
-					<span className="q-workspace-switcher__text">
-						<span className="q-workspace-switcher__name">{name}</span>
-						{detail && <span className="q-workspace-switcher__detail">{detail}</span>}
-					</span>
-					<AppIcon name="chevrons-up-down" size="sm" className="q-workspace-switcher__chevron" />
+					{!collapsed && (
+						<span className="q-workspace-switcher__text">
+							<span className="q-workspace-switcher__name">{name}</span>
+							{detail && <span className="q-workspace-switcher__detail">{detail}</span>}
+						</span>
+					)}
+					{!collapsed && (
+						<AppIcon name="chevrons-up-down" size="sm" className="q-workspace-switcher__chevron" />
+					)}
 				</button>
 			}
 		/>

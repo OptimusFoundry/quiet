@@ -29,8 +29,10 @@ export interface SidebarProps {
 	value?: string;
 	defaultValue?: string;
 	onChange?: (value: string) => void;
-	header?: React.ReactNode;
-	footer?: React.ReactNode;
+	/** Top of the sidebar. A node is hidden in the collapsed rail; a function stays and is told whether the rail is collapsed (e.g. a `WorkspaceSwitcher` shrinking to its mark) */
+	header?: React.ReactNode | ((collapsed: boolean) => React.ReactNode);
+	/** Foot of the sidebar; hidden or kept in the rail like `header` */
+	footer?: React.ReactNode | ((collapsed: boolean) => React.ReactNode);
 	collapsed?: boolean;
 	defaultCollapsed?: boolean;
 	onCollapsedChange?: (collapsed: boolean) => void;
@@ -62,12 +64,14 @@ export interface SidebarProviderProps {
 	children?: React.ReactNode;
 }
 
-/** Opens the mobile drawer. Renders only while the Sidebar is in drawer mode (below the breakpoint). */
+/** Opens the mobile drawer. Renders only while the Sidebar is in drawer mode (below the breakpoint), unless `rail` also shows it on desktop. */
 export interface SidebarTriggerProps {
-	/** Accessible name. Default "Open navigation" */
+	/** Accessible name of the drawer opener. Default "Open navigation" */
 	"aria-label"?: string;
-	/** Replaces the default ≡ glyph */
-	children?: React.ReactNode;
+	/** Also render above the breakpoint, collapsing and expanding the Sidebar's rail ("Collapse sidebar" / "Expand sidebar"). Leave off when the Sidebar shows its own `collapsible` toggle */
+	rail?: boolean;
+	/** Replaces the default ≡ glyph; a function gets the mode, to draw each its own icon */
+	children?: React.ReactNode | ((mode: "drawer" | "rail") => React.ReactNode);
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -101,6 +105,8 @@ type SidebarRail = {
 };
 interface SidebarContextValue extends SidebarState {
 	drawer: boolean;
+	/** A Sidebar outside drawer mode is mounted, so its rail can be toggled */
+	rail: boolean;
 	panelId: string | undefined;
 	register: React.Dispatch<React.SetStateAction<SidebarRail>>;
 	scoped: boolean;
@@ -159,6 +165,7 @@ export function SidebarProvider({
 			collapsed: !drawer && rail.collapsed,
 			toggle: () => (drawer ? setOpen(!isOpen) : rail.toggle?.()),
 			drawer,
+			rail: !drawer && rail.toggle !== null,
 			panelId: rail.panelId,
 			register,
 			scoped: _scoped,
@@ -177,23 +184,28 @@ export function useSidebar(): SidebarState {
 
 export function SidebarTrigger({
 	"aria-label": ariaLabel = "Open navigation",
+	rail = false,
 	children,
 	className,
 	style,
 }: SidebarTriggerProps) {
 	const ctx = React.useContext(SidebarContext);
-	if (!ctx?.drawer) return null;
+	const mode = ctx?.drawer ? "drawer" : rail && ctx?.rail ? "rail" : null;
+	if (!ctx || !mode) return null;
+	const content = typeof children === "function" ? children(mode) : children;
 	return (
 		<button
 			type="button"
-			aria-label={ariaLabel}
-			aria-expanded={ctx.open}
-			aria-controls={ctx.open ? ctx.panelId : undefined}
+			aria-label={
+				mode === "drawer" ? ariaLabel : ctx.collapsed ? "Expand sidebar" : "Collapse sidebar"
+			}
+			aria-expanded={mode === "drawer" ? ctx.open : undefined}
+			aria-controls={mode === "drawer" && ctx.open ? ctx.panelId : undefined}
 			onClick={ctx.toggle}
 			className={["q-sidebar-trigger", className].filter(Boolean).join(" ")}
 			style={style}
 		>
-			{children ?? <span aria-hidden="true">{"≡"}</span>}
+			{content ?? <span aria-hidden="true">{"≡"}</span>}
 		</button>
 	);
 }
@@ -336,6 +348,11 @@ function SidebarView({
 	const gl = gs.map((g) => g.label).filter((l) => typeof l === "string");
 	const name = ariaLabel ?? label ?? (gl.length ? `Sidebar: ${gl.join(", ")}` : "Sidebar");
 	if (drawer && !mounted) return null;
+	// A function header/footer stays in the rail and draws its own collapsed form.
+	const end = (slot: SidebarProps["header"]) =>
+		typeof slot === "function" ? slot(isCol) : isCol ? null : slot;
+	const head = end(header);
+	const foot = end(footer);
 	const nav = (
 		<nav
 			aria-label={name}
@@ -355,9 +372,9 @@ function SidebarView({
 				...style,
 			}}
 		>
-			{(header || collapsible || drawer) && (
+			{(head || collapsible || drawer) && (
 				<div className="q-sidebar__header">
-					{!isCol && header}
+					{head}
 					{drawer ? (
 						<button
 							type="button"
@@ -437,7 +454,7 @@ function SidebarView({
 					</div>
 				))}
 			</div>
-			{footer && !isCol && <div className="q-sidebar__footer">{footer}</div>}
+			{foot && <div className="q-sidebar__footer">{foot}</div>}
 		</nav>
 	);
 	if (!drawer) return nav;

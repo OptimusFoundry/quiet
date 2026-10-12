@@ -20,6 +20,7 @@
     --q-app-shell-nav-icon-fg-current: var(--q-accent-fg);
     --q-app-shell-nav-shadow-current: var(--q-shadow-1);
     --q-app-shell-nav-close-offset: var(--q-space-0-5); // (switcher row 40 − button 32) / 2
+    --q-app-shell-sidebar-z: var(--q-z-raised); // above the panel: a collapsed rail's menus open over it
 
     --q-app-shell-top-bar-border-scrolled: var(--q-border);
 
@@ -113,6 +114,7 @@
 
     position: sticky;
     top: 0;
+    z-index: var(--q-app-shell-sidebar-z);
     display: grid;
     height: 100dvh;
     min-height: 0;

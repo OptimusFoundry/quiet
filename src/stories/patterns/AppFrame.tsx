@@ -201,9 +201,11 @@ export function AppFrame({
 	const shown = useRef(open);
 	if (open) shown.current = open;
 	const showPane = shown.current === "pane" && pane;
-	const header = (
+	// Functions, so the switcher, search and account menu stay in the collapsed rail as icons.
+	const header = (collapsed: boolean) => (
 		<div className="q-sb-app-frame__head">
 			<WorkspaceSwitcher
+				collapsed={collapsed}
 				name={workspace.name}
 				detail={workspace.detail}
 				items={[
@@ -216,15 +218,26 @@ export function AppFrame({
 				]}
 			/>
 			{/* Search first after the switcher: it is where the drawer puts focus when it opens. */}
-			<button type="button" className="q-sb-app-frame__search" onClick={() => setPalette(true)}>
+			<button
+				type="button"
+				aria-label={collapsed ? "Search" : undefined}
+				title={collapsed ? "Search (⌘K)" : undefined}
+				className={
+					collapsed
+						? "q-sb-app-frame__search q-sb-app-frame__search--icon"
+						: "q-sb-app-frame__search"
+				}
+				onClick={() => setPalette(true)}
+			>
 				<AppIcon name="search" size="sm" />
-				<span className="q-sb-app-frame__search-label">Search</span>
-				<kbd className="q-sb-app-frame__kbd">⌘K</kbd>
+				{!collapsed && <span className="q-sb-app-frame__search-label">Search</span>}
+				{!collapsed && <kbd className="q-sb-app-frame__kbd">⌘K</kbd>}
 			</button>
 		</div>
 	);
-	const footer = (
+	const footer = (collapsed: boolean) => (
 		<AccountMenu
+			collapsed={collapsed}
 			name={user.name}
 			detail={user.detail}
 			items={[

@@ -7,7 +7,8 @@ import "./TopBar.scss";
 /**
  * The slim bar at the top of an app screen: where you are (a breadcrumb, or a title) on the left,
  * the screen's global actions on the right. Inside an `AppShell` it pins to the panel's top and its
- * rule shows only once the content scrolls under it; on a phone it leads with the drawer trigger.
+ * rule shows only once the content scrolls under it. It leads with the Sidebar's toggle: on desktop it
+ * collapses the Sidebar to its icon rail, on a phone it opens the drawer.
  * @startingPoint section="App" subtitle="Breadcrumb and actions above a screen" viewport="900x120"
  */
 export interface TopBarProps
@@ -35,8 +36,8 @@ export function TopBar({
 }: TopBarProps) {
 	return (
 		<header {...rest} className={["q-top-bar", className].filter(Boolean).join(" ")} style={style}>
-			<SidebarTrigger className="q-top-bar__trigger">
-				<AppIcon name="menu" />
+			<SidebarTrigger rail className="q-top-bar__trigger">
+				{(mode) => <AppIcon name={mode === "rail" ? "sidebar" : "menu"} />}
 			</SidebarTrigger>
 			<div className="q-top-bar__lead">
 				{crumbs?.length ? (

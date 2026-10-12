@@ -22,6 +22,8 @@ export interface AccountMenuProps {
 	onSelect?: DropdownMenuProps["onSelect"];
 	/** Accessible name of the menu. Default "Account" */
 	label?: string;
+	/** In a collapsed Sidebar rail: only the avatar, named for screen readers, and the menu opens beside the rail. Pass the Sidebar's `header`/`footer` function argument */
+	collapsed?: boolean;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -32,6 +34,7 @@ export function AccountMenu({
 	src,
 	items,
 	onSelect,
+	collapsed = false,
 	label = "Account",
 	className,
 	style,
@@ -43,16 +46,25 @@ export function AccountMenu({
 			label={label}
 			items={items}
 			onSelect={onSelect}
-			className={["q-account-menu", className].filter(Boolean).join(" ")}
+			className={["q-account-menu", collapsed && "q-account-menu--collapsed", className]
+				.filter(Boolean)
+				.join(" ")}
 			style={style}
 			trigger={
-				<button type="button" className="q-account-menu__button">
+				<button
+					type="button"
+					aria-label={collapsed ? name : undefined}
+					title={collapsed ? name : undefined}
+					className="q-account-menu__button"
+				>
 					<Avatar name={name} src={src} size="sm" />
-					<span className="q-account-menu__text">
-						<span className="q-account-menu__name">{name}</span>
-						{detail && <span className="q-account-menu__detail">{detail}</span>}
-					</span>
-					<AppIcon name="more" className="q-account-menu__more" />
+					{!collapsed && (
+						<span className="q-account-menu__text">
+							<span className="q-account-menu__name">{name}</span>
+							{detail && <span className="q-account-menu__detail">{detail}</span>}
+						</span>
+					)}
+					{!collapsed && <AppIcon name="more" className="q-account-menu__more" />}
 				</button>
 			}
 		/>

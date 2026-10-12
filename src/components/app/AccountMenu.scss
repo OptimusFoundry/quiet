@@ -1,5 +1,6 @@
 // AccountMenu — sidebar foot: avatar + name (+ detail) opening the account menu upward.
-// BEM: .q-account-menu (the menu anchor), __button, __text, __name, __detail, __more.
+// BEM: .q-account-menu (the menu anchor), __button, __text, __name, __detail, __more;
+// --collapsed (in a Sidebar rail: the avatar alone, the menu beside the rail at its own width).
 // Opens above its trigger: it sits at the bottom of the viewport.
 @use "../../styles/layers";
 
@@ -34,6 +35,11 @@
       min-width: 0;
     }
 
+    // In the rail the mark sits in the middle of the row.
+    &--collapsed > .q-dropdown-menu__trigger {
+      justify-content: center;
+    }
+
     // The menu opens upward from the foot of the sidebar, as wide as it (the sidebar clips sideways).
     > .q-dropdown-menu__menu {
       width: 100%;
@@ -41,6 +47,15 @@
       bottom: 100%;
       margin-top: 0;
       margin-bottom: var(--q-dropdown-menu-offset);
+    }
+
+    // In the rail it opens beside it, level with the avatar, at its own width.
+    &--collapsed > .q-dropdown-menu__menu {
+      width: var(--_width, var(--q-dropdown-menu-width));
+      bottom: 0;
+      left: 100%;
+      margin-bottom: 0;
+      margin-left: var(--q-dropdown-menu-offset);
     }
   }
 
@@ -61,6 +76,13 @@
     text-align: left;
     cursor: pointer;
     transition: background var(--q-account-menu-dur) var(--q-ease-soft);
+
+    .q-account-menu--collapsed & {
+      flex: none;
+      justify-content: center;
+      width: var(--q-account-menu-height);
+      padding: 0;
+    }
 
     &:is(:hover, :focus-visible, [aria-expanded="true"]) {
       background: var(--q-account-menu-bg-hover);

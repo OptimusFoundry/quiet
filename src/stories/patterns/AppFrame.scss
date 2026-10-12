@@ -33,6 +33,13 @@
 	}
 }
 
+:where(.q-sb-app-frame__search--icon) {
+	justify-content: center;
+	align-self: center;
+	width: var(--q-control-sm);
+	padding: 0;
+}
+
 :where(.q-sb-app-frame__search-label) {
 	flex: 1;
 	text-align: left;

@@ -18,6 +18,8 @@
     --q-top-bar-title-fg: var(--q-fg);
     --q-top-bar-title-font-size: var(--q-text-sm);
     --q-top-bar-title-weight: var(--q-weight-semibold);
+    --q-top-bar-trigger-fg: var(--q-fg-muted);
+    --q-top-bar-trigger-bg-hover: var(--q-bg-subtle);
   }
 }
 
@@ -37,6 +39,16 @@
     background: var(--q-top-bar-bg);
     font-family: var(--q-font-sans);
     transition: border-color var(--q-top-bar-dur) var(--q-ease-soft);
+  }
+
+  // The Sidebar toggle reads as a ghost icon button, like the bar's other actions.
+  .q-top-bar__trigger {
+    --q-sidebar-trigger-border: transparent;
+    --q-sidebar-trigger-bg: transparent;
+    --q-sidebar-trigger-bg-hover: var(--q-top-bar-trigger-bg-hover);
+    --q-sidebar-trigger-fg: var(--q-top-bar-trigger-fg);
+
+    margin-inline-start: calc(var(--q-space-1) * -1);
   }
 
   .q-top-bar__lead {
