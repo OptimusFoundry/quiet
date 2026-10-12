@@ -7,6 +7,7 @@ import "./ButtonGroup.scss";
  */
 export interface ButtonGroupProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className" | "style"> {
+	ref?: React.Ref<HTMLDivElement>;
 	children?: React.ReactNode;
 	/** Join into one segmented pill with hairline separators */
 	attached?: boolean;

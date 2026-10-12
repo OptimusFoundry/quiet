@@ -53,6 +53,8 @@ export function TextArea({
 	id,
 	className,
 	style,
+	"aria-describedby": describedBy,
+	"aria-invalid": ariaInvalid,
 	...rest
 }: TextAreaProps) {
 	const [len, setLen] = React.useState((rest.value ?? rest.defaultValue ?? "").length);
@@ -83,9 +85,9 @@ export function TextArea({
 				disabled={disabled}
 				required={required}
 				maxLength={maxLength}
-				aria-invalid={!!error || undefined}
+				aria-invalid={ariaInvalid ?? (!!error || undefined)}
 				aria-describedby={
-					[(error || helperText) && `${fid}-hint`, maxLength && `${fid}-count`]
+					[describedBy, (error || helperText) && `${fid}-hint`, maxLength && `${fid}-count`]
 						.filter(Boolean)
 						.join(" ") || undefined
 				}
@@ -114,3 +116,6 @@ export function TextArea({
 		</div>
 	);
 }
+
+/** FormField wires its id and aria-* into this, and they land on the native <textarea>. */
+TextArea.fieldControl = "native" as const;

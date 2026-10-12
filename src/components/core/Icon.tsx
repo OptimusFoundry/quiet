@@ -5,7 +5,9 @@ import "./Icon.scss";
  * Unicode glyph icon. The brand has no icon set — glyphs carry meaning (→ ↘ ↗ × ✓ · …).
  * @startingPoint section="Primitives" subtitle="Named unicode glyphs" viewport="600x160"
  */
-export interface IconProps {
+export interface IconProps
+	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
+	ref?: React.Ref<HTMLSpanElement>;
 	/** Named glyph: arrow-right, arrow-left, arrow-up, arrow-down, expand, external, close, check, plus, minus, dot, more, slash, command, enter, info, warning, help, first, last, sort, prev, next */
 	name?: string;
 	/** Any literal glyph; overrides name */
@@ -72,6 +74,7 @@ export function Icon({
 	label,
 	className,
 	style,
+	...rest
 }: IconProps) {
 	const numeric = typeof size === "number";
 	const knownColor = COLORS.includes(color);
@@ -88,6 +91,7 @@ export function Icon({
 		.join(" ");
 	return (
 		<span
+			{...rest}
 			role={label ? "img" : undefined}
 			aria-label={label}
 			aria-hidden={label ? undefined : true}

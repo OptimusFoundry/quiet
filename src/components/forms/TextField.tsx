@@ -56,6 +56,8 @@ export function TextField({
 	className,
 	style,
 	inputStyle,
+	"aria-describedby": describedBy,
+	"aria-invalid": ariaInvalid,
 	...rest
 }: TextFieldProps) {
 	const [auto] = React.useState(() => `of-tf-${++ofTfId}`);
@@ -91,8 +93,11 @@ export function TextField({
 					id={fid}
 					disabled={disabled}
 					required={required}
-					aria-invalid={!!error || undefined}
-					aria-describedby={error || helperText ? `${fid}-hint` : undefined}
+					aria-invalid={ariaInvalid ?? (!!error || undefined)}
+					aria-describedby={
+						[describedBy, (error || helperText) && `${fid}-hint`].filter(Boolean).join(" ") ||
+						undefined
+					}
 					{...rest}
 					className={["q-text-field__input", className].filter(Boolean).join(" ")}
 					style={inputStyle}
@@ -105,3 +110,6 @@ export function TextField({
 		</div>
 	);
 }
+
+/** FormField wires its id and aria-* into this, and they land on the native <input>. */
+TextField.fieldControl = "native" as const;

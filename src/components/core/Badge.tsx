@@ -5,7 +5,8 @@ import "./Badge.scss";
  * Sans pill for counts and statuses. Status reads through the dot, not a color fill.
  * @startingPoint section="Primitives" subtitle="Counts and status pills" viewport="700x180"
  */
-export interface BadgeProps {
+export interface BadgeProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
+	ref?: React.Ref<HTMLSpanElement>;
 	variant?: "default" | "primary" | "secondary" | "outline" | "success" | "warning" | "error";
 	size?: "sm" | "md" | "lg";
 	/** Leading status dot (on by default for success/warning/error) */
@@ -43,6 +44,7 @@ export function Badge({
 	children,
 	className,
 	style,
+	...rest
 }: BadgeProps) {
 	const v = VARIANTS.includes(variant) ? variant : "default";
 	const showDot = dot ?? (!!DOTS[v] && !leftIcon);
@@ -66,7 +68,7 @@ export function Badge({
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<span className={cls} style={style}>
+		<span {...rest} className={cls} style={style}>
 			{showDot && <span aria-hidden="true" className={`q-badge__dot q-badge__dot--${dotKind}`} />}
 			{leftIcon}
 			{tick ? (

@@ -1,0 +1,46 @@
+// Layout for the Extensions/Stack stories.
+.q-sb-stack {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px;
+	padding: 32px;
+
+	&__note {
+		margin: 0;
+		max-width: 640px;
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+	}
+
+	// Fields share the row and shrink with the pane, so the buttons never spill out.
+	&__filters > .q-text-field {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+
+	&__panes {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: start;
+		gap: 24px;
+	}
+
+	&__pane {
+		box-sizing: border-box;
+		padding: 16px;
+		border-radius: var(--q-radius-lg);
+		background: var(--q-bg-subtle);
+		min-width: 0;
+
+		&--wide { flex: 2 1 320px; }
+		&--narrow { flex: 1 1 240px; }
+
+		&--resizable {
+			resize: horizontal;
+			overflow: auto;
+			width: 900px;
+			min-width: 240px;
+			max-width: 100%;
+		}
+	}
+}

@@ -7,7 +7,11 @@ import "./Dropdown.scss";
  * Custom select with a rounded, softly shadowed listbox. Icons, descriptions, dividers, disabled items, keyboard.
  * @startingPoint section="Forms" subtitle="Custom select menu" viewport="600x420"
  */
-export interface DropdownProps {
+export interface DropdownProps
+	extends Omit<
+		React.ButtonHTMLAttributes<HTMLButtonElement>,
+		"onChange" | "value" | "defaultValue" | "type" | "role" | "color" | "onBlur" | "onFocus"
+	> {
 	label?: React.ReactNode;
 	options: Array<
 		| string
@@ -38,7 +42,11 @@ export interface DropdownProps {
 	required?: boolean;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the combobox trigger, so it can be focused */
+	/** Fires when focus leaves the dropdown, listbox included */
+	onBlur?: React.FocusEventHandler<HTMLElement>;
+	/** Fires when focus enters the dropdown from outside */
+	onFocus?: React.FocusEventHandler<HTMLElement>;
+	/** Reaches the combobox trigger, so it can be focused; other HTML attributes (id, aria-*, data-*…) land there too */
 	ref?: React.Ref<HTMLButtonElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -89,8 +97,18 @@ export function Dropdown({
 	required,
 	form,
 	ref: forwardedRef,
+	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	"aria-describedby": ariaDescribedby,
+	"aria-invalid": ariaInvalid,
+	"aria-required": ariaRequired,
+	onClick,
+	onKeyDown,
+	onBlur,
+	onFocus,
 	className,
 	style,
+	...rest
 }: DropdownProps) {
 	const [open, setOpen] = React.useState(false);
 	const [inner, setInner] = React.useState(defaultValue);
@@ -151,6 +169,7 @@ export function Dropdown({
 		else show(hit);
 	};
 	const key = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+		onKeyDown?.(e);
 		const sel = en(),
 			k = e.key;
 		if (!open) {
@@ -194,27 +213,40 @@ export function Dropdown({
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<div ref={ref} className={cls} style={style}>
+		<div
+			ref={ref}
+			onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onBlur?.(e)}
+			onFocus={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onFocus?.(e)}
+			className={cls}
+			style={style}
+		>
 			{label && (
 				<span id={labelId} className="q-dropdown__label">
 					{label}
 				</span>
 			)}
 			<button
+				{...rest}
 				ref={triggerRef}
 				type="button"
 				disabled={disabled}
 				role="combobox"
-				aria-required={required || undefined}
+				aria-required={required || ariaRequired || undefined}
 				aria-haspopup="listbox"
 				aria-expanded={open}
 				aria-controls={presence.mounted || open ? listId : undefined}
 				aria-activedescendant={open && active >= 0 ? optId(active) : undefined}
-				aria-labelledby={label ? labelId : undefined}
-				aria-label={label ? undefined : placeholder}
-				aria-describedby={error || helperText ? hintId : undefined}
-				aria-invalid={error ? true : undefined}
-				onClick={() => (open ? setOpen(false) : show())}
+				aria-labelledby={label ? labelId : ariaLabelledby}
+				aria-label={label ? undefined : (ariaLabel ?? placeholder)}
+				aria-describedby={
+					[ariaDescribedby, (error || helperText) && hintId].filter(Boolean).join(" ") || undefined
+				}
+				aria-invalid={error ? true : ariaInvalid}
+				onClick={(e) => {
+					onClick?.(e);
+					if (open) setOpen(false);
+					else show();
+				}}
 				onKeyDown={key}
 				className={`q-dropdown__trigger${sel ? "" : " q-dropdown__trigger--placeholder"}`}
 			>
@@ -279,3 +311,5 @@ export function Dropdown({
 		</div>
 	);
 }
+/** FormField wires id / aria-* onto the combobox trigger */
+Dropdown.fieldControl = true;

@@ -2254,6 +2254,8 @@ export type TokenName =
 	| "--q-tag-error-border"
 	| "--q-tag-error-fg"
 	| "--q-tag-fg"
+	| "--q-tag-focus-ring"
+	| "--q-tag-focus-ring-width"
 	| "--q-tag-font-size"
 	| "--q-tag-gap"
 	| "--q-tag-info-bg"

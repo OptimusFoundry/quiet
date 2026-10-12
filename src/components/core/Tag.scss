@@ -1,12 +1,15 @@
-// Tag — mono caps pill; removable and selectable. BEM: .q-tag, __icon, __remove;
+// Tag — mono caps pill; removable and selectable. BEM: .q-tag, __select, __icon, __remove;
 // --sm, --ink, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
-// selected = [aria-pressed="true"].
+// selected = [aria-pressed="true"]. A selectable tag with a × is a <span> holding two sibling
+// buttons (__select, __remove), so its states read through :has(> .q-tag__select …).
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
     --q-tag-gap: var(--q-space-0-75);
+    --q-tag-focus-ring: var(--q-focus-ring-color);
+    --q-tag-focus-ring-width: 2px;
     --q-tag-radius: var(--q-radius-pill);
     --q-tag-tracking: var(--q-tracking-mono);
     --q-tag-font-size: var(--q-text-2xs);
@@ -78,7 +81,10 @@
     }
 
     &--ink,
-    &--selectable:is(:hover, :focus-visible):not(:disabled, [aria-pressed="true"]) {
+    &--selectable:is(:hover, :focus-visible):not(:disabled, [aria-pressed="true"]),
+    &--selectable:is(:hover, :has(> .q-tag__select:focus-visible)):has(
+        > .q-tag__select:not(:disabled, [aria-pressed="true"])
+      ) {
       border-color: var(--q-tag-ink-border);
       color: var(--q-tag-ink-fg);
     }
@@ -95,7 +101,8 @@
     &--selectable {
       cursor: pointer;
 
-      &[aria-pressed="true"] {
+      &[aria-pressed="true"],
+      &:has(> .q-tag__select[aria-pressed="true"]) {
         border-color: var(--q-tag-ink-border);
         background: var(--q-tag-selected-bg);
         color: var(--q-tag-selected-fg);
@@ -109,6 +116,31 @@
         cursor: not-allowed;
       }
     }
+  }
+
+  .q-tag__select {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--q-tag-gap);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: inherit;
+
+    // The keyboard ring belongs to the pill, not the label button inside it. !important in
+    // q.components outranks the global ring's !important in q.utilities.
+    &:focus-visible {
+      outline: none !important;
+    }
+  }
+
+  .q-tag:has(> .q-tag__select:focus-visible) {
+    outline: var(--q-tag-focus-ring-width) solid var(--q-tag-focus-ring);
+    outline-offset: var(--q-tag-focus-ring-width);
   }
 
   .q-tag__icon {

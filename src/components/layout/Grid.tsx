@@ -23,7 +23,8 @@ export interface GridProps {
 }
 
 const GAPS: (string | number)[] = ["none", "xs", "sm", "md", "lg", "xl", "2xl"];
-const GridCtx = React.createContext<"sm" | "md" | "lg">("lg");
+// The Grid's width band; null outside a Grid.
+const GridCtx = React.createContext<"sm" | "md" | "lg" | null>(null);
 const px = (v: string | number | undefined) => (typeof v === "number" ? `${v}px` : v);
 
 export function Grid({

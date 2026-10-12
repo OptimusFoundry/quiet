@@ -1,9 +1,12 @@
 # quiet
 
-The Optimus Foundry "Soft" design system from Claude Design, as a React package. The base is a **1:1
-copy**: 68 components, the tokens and the master catalog page, byte-for-byte from the Claude Design project.
-quiet adds an accessibility and motion layer, 3-tier `--q-*` tokens with themes (`foundry`,
-`foundry-dark`, one per product) and BEM styles, plus its own component groups:
+A React design system with one look: soft ink, a lava accent, dense pill controls. It began as a
+port of the Optimus Foundry "Soft" design system from Claude Design and has since become its own;
+the reference is kept only as history. Components ship with keyboard operation, ARIA and soft
+motion, `ref` and rest props throughout, form widgets that work with native forms and form
+libraries, 3-tier `--q-*` tokens with themes (`foundry`, `foundry-dark`, one per product) and BEM
+styles. Besides the core groups (core, forms, display, data, navigation, feedback, overlays,
+layout, app) it has:
 
 - **future**: agent, trust, data and evolved-input components (AgentRun, Approval, HoldButton,
   DraftDiff, IntentBar, ScopeGrant, Checkpoints, Receipt, StreamingTable, …)
@@ -215,8 +218,8 @@ Installed as a package instead? Copy `node_modules/@optimusfoundry/quiet/claude`
 ## Develop
 
 ```bash
-npm run dev        # Storybook on :6020: Catalog, Future, Charts, Chat, Patterns
-npm run gen        # regenerate src/index.ts + the catalog from docs/reference/optimus-design
+npm run dev        # Storybook on :6020: Future, Charts, Chat, App, Patterns
+npm run gen        # regenerate src/index.ts and the token list
 npm run lint       # Biome + Stylelint (copied files are excluded)
 npm run typecheck
 npm run build

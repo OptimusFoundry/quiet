@@ -1,37 +1,27 @@
 # quiet — DESIGN.md
 
-quiet is a **1:1 copy of the Optimus Foundry "Soft" design system** from Claude Design
-(project `daa56afb-593e-422a-ab8a-5ecfa9309fb9`, "Rounder softer design system"). The spec is the
-reference itself, mirrored byte-for-byte in [`docs/reference/optimus-design/`](docs/reference/optimus-design/):
+quiet is its own design system. It began as a copy of the Optimus Foundry "Soft" design system from
+Claude Design (project "Rounder softer design system"); that reference is now history. quiet no
+longer keeps pixel parity with it, and it has one look, specified in
+[docs/plans/2026-10-12-one-look.md](docs/plans/2026-10-12-one-look.md): soft ink, the lava accent,
+grounds instead of rules, Geist with sentence-case labels, dense pill controls, panes over drawers.
 
-- [`readme.md`](docs/reference/optimus-design/readme.md) — the rules: colour, type, density,
-  spacing by job, radii, motion, voice, banned words.
-- `components/<group>/<Name>.prompt.md` — how to use each component, with examples.
-- `components/<group>/<Name>.d.ts` — each component's props (quiet's are in `src/components/<group>/<Name>.tsx`).
-- `guidelines/*.card.html` — foundation specimens; `ui_kits/` — app and website templates.
+The reference mirror in [`docs/reference/optimus-design/`](docs/reference/optimus-design/) stays
+until the one-look plan removes it. Read it for history (its `readme.md` rules and per-component
+`.prompt.md` usage notes), not as the spec: where it and quiet differ, quiet wins.
 
-## What quiet adds (and nothing else)
+## What quiet is made of
 
-- **Dark mode** — the `foundry-dark` theme (`src/styles/themes/_foundry-dark.scss`), the brand's own
-  dark mode as on optimusfoundry.com: paper `#0e0f11`, paper-2 `#16171a`, ink `#f4f4f5`, molten
-  `#ff7a3d`. The Claude Design reference is light-only, so this palette comes from the site.
-- **Swappable accent** — `<QuietRoot accent="…">` replaces molten for another product; the derived
-  `--q-accent-fg`/`-bg`/`-subtle`/`-border` follow it.
-- **Density** — `<QuietRoot density="app">` sets the reference's own `data-density` modes.
-- **The app look** — under `density="app"`/`"compact"` quiet retunes the reference for product
-  screens: molten becomes the brand colour (links, the primary action, current nav, selected and
-  checked states, focus, progress, attention status), links read as links at rest, sections group
-  with surfaces instead of ink rules, and status badges get tinted surfaces. `marketing` (the
-  default, and the catalog) stays pixel-identical to the reference. Rules:
-  [docs/guidelines/foundations.md](docs/guidelines/foundations.md#molten-two-looks);
-  spec: [docs/plans/2026-10-11-app-look.md](docs/plans/2026-10-11-app-look.md).
-
-- **Accessibility + motion layer** — keyboard operation and focus management per WAI-ARIA patterns,
-  visible keyboard focus, accessible names and states, and eased open/close/state motion in the
-  reference's own motion language. It never changes the at-rest look.
-
-Everything else — tokens, styling, the catalog page — is the reference, unchanged at marketing density. Colour contrast
-is a deliberate exception: `--muted-2` (2.98:1) and small molten text are kept exactly as designed.
+- **Themes** — `foundry` and `foundry-dark` (`src/styles/themes/`), plus product themes registered
+  with `defineThemes()` (see "Product themes").
+- **Swappable accent** — `<QuietRoot accent="…">` replaces the brand accent for another product; the
+  derived `--q-accent-fg`/`-bg`/`-subtle`/`-border` follow it.
+- **Density** — `data-density` is spacing only: `comfortable` (default) or `compact`.
+- **Accessibility + motion** — keyboard operation and focus management per WAI-ARIA patterns,
+  visible keyboard focus, accessible names and states, and slow, soft open/close/state motion.
+- **APIs apps can build on** — `ref` and rest props (core and forms today), form widgets that work with
+  native forms and form libraries, controlled and uncontrolled state, container-responsive layout
+  (AGENTS.md, "Component APIs").
 
 ## Status colour
 

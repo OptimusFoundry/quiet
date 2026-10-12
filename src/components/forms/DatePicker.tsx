@@ -7,7 +7,11 @@ import "./DatePicker.scss";
  * Date field with a rounded month calendar. Today = molten dot, selected = ink circle.
  * @startingPoint section="Forms" subtitle="Calendar date picker" viewport="600x500"
  */
-export interface DatePickerProps {
+export interface DatePickerProps
+	extends Omit<
+		React.ButtonHTMLAttributes<HTMLButtonElement>,
+		"onChange" | "value" | "defaultValue" | "type" | "color" | "onBlur" | "onFocus"
+	> {
 	label?: React.ReactNode;
 	value?: Date | null;
 	defaultValue?: Date | null;
@@ -28,7 +32,11 @@ export interface DatePickerProps {
 	required?: boolean;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the trigger button, so it can be focused */
+	/** Fires when focus leaves the picker, calendar included */
+	onBlur?: React.FocusEventHandler<HTMLElement>;
+	/** Fires when focus enters the picker from outside */
+	onFocus?: React.FocusEventHandler<HTMLElement>;
+	/** Reaches the trigger button, so it can be focused; other HTML attributes (id, aria-*, data-*…) land there too */
 	ref?: React.Ref<HTMLButtonElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -122,8 +130,17 @@ export function DatePicker({
 	required,
 	form,
 	ref: forwardedRef,
+	id,
+	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	"aria-describedby": ariaDescribedby,
+	"aria-invalid": ariaInvalid,
+	onClick,
+	onBlur,
+	onFocus,
 	className,
 	style,
+	...rest
 }: DatePickerProps) {
 	const [inner, setInner] = React.useState<Date | null>(defaultValue || null);
 	const cur = value !== undefined ? value : inner;
@@ -145,6 +162,9 @@ export function DatePicker({
 		valueId = `${uid}value`,
 		hintId = `${uid}hint`,
 		headId = `${uid}head`;
+	// An aria-label names the trigger through a self-reference, ahead of the value
+	const triggerId = id ?? (ariaLabel && !label && !ariaLabelledby ? `${uid}trigger` : undefined);
+	const nameId = label ? labelId : ariaLabelledby || (ariaLabel ? triggerId : undefined);
 	const presence = usePresence(open);
 	const today = strip(new Date())!;
 	const lo = strip(min),
@@ -245,23 +265,37 @@ export function DatePicker({
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<div ref={ref} className={cls} style={style}>
+		<div
+			ref={ref}
+			onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onBlur?.(e)}
+			onFocus={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onFocus?.(e)}
+			className={cls}
+			style={style}
+		>
 			{label && (
 				<span id={labelId} className="q-date-picker__label">
 					{label}
 				</span>
 			)}
 			<button
+				{...rest}
 				ref={triggerRef}
+				id={triggerId}
 				type="button"
 				disabled={disabled}
 				aria-haspopup="dialog"
 				aria-expanded={open}
 				aria-controls={open || presence.mounted ? dialogId : undefined}
-				aria-labelledby={(label ? `${labelId} ` : "") + valueId}
-				aria-describedby={error || helperText ? hintId : undefined}
-				aria-invalid={error ? true : undefined}
-				onClick={toggleOpen}
+				aria-label={ariaLabel}
+				aria-labelledby={(nameId ? `${nameId} ` : "") + valueId}
+				aria-describedby={
+					[ariaDescribedby, (error || helperText) && hintId].filter(Boolean).join(" ") || undefined
+				}
+				aria-invalid={error ? true : ariaInvalid}
+				onClick={(e) => {
+					onClick?.(e);
+					toggleOpen();
+				}}
 				className={
 					"q-date-picker__trigger" +
 					(cur ? "" : " q-date-picker__trigger--placeholder") +
@@ -397,3 +431,5 @@ export function DatePicker({
 		</div>
 	);
 }
+/** FormField wires id / aria-* onto the trigger button */
+DatePicker.fieldControl = true;

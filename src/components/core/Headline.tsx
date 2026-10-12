@@ -5,7 +5,9 @@ import "./Headline.scss";
  * Headline in Inter Tight: plain lead, one italic phrase, molten full stop.
  * @startingPoint section="Typography" subtitle="Headline with italic accent and molten period" viewport="700x320"
  */
-export interface HeadlineProps {
+export interface HeadlineProps extends Omit<React.HTMLAttributes<HTMLHeadingElement>, "children"> {
+	/** The rendered heading (or the `as` element). */
+	ref?: React.Ref<HTMLElement>;
 	size?: "display" | "h2" | "h3" | "h4";
 	/** Override the rendered tag */
 	as?: keyof React.JSX.IntrinsicElements;
@@ -40,13 +42,14 @@ export function Headline({
 	moltenAccent = false,
 	className,
 	style,
+	...rest
 }: HeadlineProps) {
 	const Tag = (as || TAGS[size])! as React.ElementType;
 	const cls = ["q-headline", TAGS[size] && `q-headline--${size}`, className]
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<Tag className={cls} style={style}>
+		<Tag {...rest} className={cls} style={style}>
 			{lead}
 			{lead && accent ? " " : ""}
 			{accent && (

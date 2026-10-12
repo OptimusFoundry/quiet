@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type FormEvent, useRef, useState } from "react";
+import { type SubmitEvent, useRef, useState } from "react";
 import {
 	Button,
 	Checkbox,
@@ -25,7 +25,7 @@ const entries = (form: HTMLFormElement) =>
 
 function NativeFormDemo() {
 	const [sent, setSent] = useState<ReadonlyArray<readonly [string, string]> | null>(null);
-	const submit = (e: FormEvent<HTMLFormElement>) => {
+	const submit = (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setSent(entries(e.currentTarget));
 	};

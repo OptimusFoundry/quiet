@@ -33,7 +33,7 @@ export function Col({
 	className,
 	style,
 }: ColProps) {
-	const bp = React.useContext(Grid.Ctx || React.createContext("lg"));
+	const bp = React.useContext(Grid.Ctx) ?? "lg";
 	const eff = bp === "sm" ? (spanSm ?? 12) : bp === "md" ? (spanMd ?? (span < 4 ? 6 : span)) : span;
 	const st = bp === "lg" ? start : undefined;
 	const rs = rowSpan && bp !== "sm" ? rowSpan : undefined;
