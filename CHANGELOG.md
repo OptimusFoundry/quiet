@@ -2,7 +2,7 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
-## Unreleased
+## 1.1.1
 
 ### Changed
 
