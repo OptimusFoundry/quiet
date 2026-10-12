@@ -21,7 +21,7 @@ rather than divider lines. Dark mode: `theme="foundry-dark"`. Never mix densitie
 - Every screen opens with `PageHeader` (title, `back`, `eyebrow`, `status`, `meta`, `actions`, `tabs`).
 - Sections: `Panel` (surface by default; `variant="plain"` for the lead block; `empty="…"` collapses an empty section to one line). Never put a table inside a grey surface: a table sits on the page ground (`Panel variant="plain" padding="none"` when it needs a title).
 - Properties: `DescriptionList` (labels next to values). References to records: `EntityLink`. Files: `FileCard` (`variant="row"` in lists). Agent runs: `Transcript`, `AgentRun`, `ToolCall`, `ChatThread`.
-- One `Button variant="primary"` per view (it is molten); others `secondary`/`ghost`. Status: `Badge variant="success|warning|error|primary"`. Icons: `<Icon name="arrow-right" />` (glyph names in `components/core/Icon`).
+- One `Button variant="primary"` per view (it is molten); others `secondary`/`ghost`. Status: `Badge variant="success|warning|error|primary"`. Icons: `<Icon name="arrow-right" />` (glyph names in `components/Icon/README.md`).
 
 ## 3. Styling: tokens, not classes
 
@@ -35,9 +35,9 @@ with quiet's `--q-*` tokens, never raw px or hex:
 
 ## 4. Where the truth lives
 
-`styles.css` (and the `_ds_bundle.css` it imports) holds every token and component style. Each
-component's `.d.ts` is its API and `.prompt.md` (`README.md` in the artifact) its usage; `guidelines/` has the design rules
-(`docs/guidelines/layouts.md` for page anatomy, `checklist.md` before you ship a screen).
+`styles.css` (and `components/bundle.css`, which it imports) holds every token and component style. Each
+component's `<Name>.d.ts` is its API and `components/<Name>/README.md` its usage; `guidelines/` has the
+design rules (`guidelines/docs/guidelines/layouts.md` for page anatomy, `checklist.md` before you ship a screen).
 
 ## 5. A detail page, idiomatically
 

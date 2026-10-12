@@ -8,6 +8,9 @@
   `project/components/<Name>/{preview.html, preview.js, README.md, <Name>.d.ts}`, with no group dirs.
   Also `components/bundle.{js,css}` (from `_ds_bundle.*`), `components/index.d.ts`, `fonts/`,
   `guidelines/`, `README.md` and `design-system.json` (the index).
+- **How to sync:** the `sync-design-artifact` skill (`.claude/skills/`) with `scripts/design-artifact.mjs`.
+  It uploads only the files that changed and refuses to push over edits made in Claude Design. The steps
+  below are what `pack` does.
 - Mapping from `ds-bundle/`:
   - `<Name>.prompt.md` becomes `README.md`.
   - `<Name>.html` becomes `preview.html` + `preview.js`: the card script moves to `./preview.js`,
@@ -17,8 +20,8 @@
 - Upload with the Artifact tool, `url` = the artifact, `root` = the local `dsart/` dir, ≤256 files per
   publish. `.d.ts` needs `contentType: "text/plain"`. Write `project/design-system.json` last:
   keep every key and change only `lastChange`.
-- The artifact's markdown renderer splits list items whose text wraps onto an indented next line;
-  keep each bullet on one line in `conventions.md`.
+- The artifact's markdown renderer splits a list item that wraps onto an indented next line;
+  `pack` joins wrapped bullets in the project README.
 - Leftovers from the migration (`project/archived/`, `project/components/<group>/<Name>/*.jsx`) were
   left as they were.
 
