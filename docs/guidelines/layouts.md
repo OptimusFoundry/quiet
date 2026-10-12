@@ -45,7 +45,7 @@ canvas (grey) ──────────────────────
 | Part | Use | Rule |
 |---|---|---|
 | Root | `ThemeProvider` (`linkComponent`) › `QuietRoot` › `AppShell` | one `AppShell` for every signed-in route, around the router's outlet; it brings its own `SidebarProvider` (`breakpoint` 720) and owns the one `<main>` and the skip link |
-| Canvas | AppShell's ground (`--q-app-shell-canvas`, a breath darker than white) | the Sidebar sits on it with no ground or edge of its own |
+| Canvas | AppShell's ground (`--q-bg-canvas`, a breath darker than white) | the Sidebar sits on it with no ground or edge of its own |
 | Sidebar | `Sidebar compact` with `header` and `footer` as functions of `collapsed` | 240, collapses to the 64 icon rail from the TopBar toggle. Nav items carry an `AppIcon`; the current item is a raised white pill with an accent icon. Groups are labelled in sentence case. Counts that need action go in the item's `badge` |
 | Sidebar header | `WorkspaceSwitcher` (mark, name, plan; menu to switch or manage), then a full-width **Search ⌘K** button | Search comes right after the switcher: the drawer focuses it on open. In the rail both become icons |
 | Sidebar footer | `AccountMenu` (avatar, name, email; profile, shortcuts, sign out) | the only place the account lives |
@@ -247,22 +247,22 @@ StepIndicator ──●──○──○
 ## Sign-in
 
 ```
-┌──────────────── page (--q-bg-subtle) ────────────────┐
-│              ┌──── card 400 ────┐                     │
-│              │ mark              │                     │
-│              │ title · one line  │                     │
-│              │ [Continue with G] │                     │
-│              │ ── or ──          │                     │
-│              │ Email             │                     │
-│              │ [Email me a link] │                     │
-│              └───────────────────┘                     │
-│                 terms · privacy (small, muted)         │
-└───────────────────────────────────────────────────────┘
+┌──────── canvas (--q-bg-canvas) ────────┬┌──── inset panel (white) ─────┐
+│ ◼ Product                               ││                               │
+│                                         ││   Welcome back                 │
+│   ┌ glimpse of the product ┐            ││   Sign in to Product           │
+│   │ (the shell, drawn)     │            ││   [ Sign in with Google  ]     │
+│   └────────────────────────┘            ││   or                           │
+│                                         ││   Email [            ]         │
+│ Pitch title                             ││   [ Email me a magic link ]    │
+│ one line                                ││     form ≤ 400                 │
+└─────────────────────────────────────────┘└───────────────────────────────┘
 ```
-- **Choose for** sign-in, sign-up, magic-link sent, password reset. No app shell.
-- **Dimensions:** one centred card `--q-w-detail-panel` (400) wide on `--q-bg-subtle`, padding `--q-space-block`; fields `--q-space-field` apart.
-- **Collapses:** < 440 the card goes full width with page-x 16 and loses its ground.
+- **Choose for** sign-in, sign-up, magic-link sent, password reset. No app shell, but the same frame: the canvas and an inset panel, so the first screen looks like every screen after it.
+- **Dimensions:** two equal halves. The left is `--q-bg-canvas` with the product's lockup at the top, a decorative glimpse of the product (`aria-hidden`), and the pitch at the foot. The right is an inset white panel (`--q-space-1` inset, `--q-radius-md`, `--q-shadow-1`) holding the form, capped at `--q-w-detail-panel` (400), centred, fields `--q-space-field` apart.
+- **Collapses:** < 768 the left shrinks to the lockup row; the panel goes flush and the form starts at the top.
 - **Rules:**
-  - Never a form stretched across half the screen (agentworks' 640-wide fields) or an empty brand panel. A split layout is allowed only when the other half carries real product content (a screenshot, a quote).
-  - The product's own name and mark (the `WorkspaceSwitcher` mark); one primary action (the accent), the provider button secondary.
-  - After "Email me a link", the same card says where the link went and offers Resend.
+  - Never a form stretched across half the screen, or an empty brand panel: the left half carries the product (its name, a glimpse, the pitch).
+  - One primary action (the accent); the provider button is secondary. The page has one `h1` (the form's title).
+  - After "Email me a link", the same panel says where the link went and offers Resend.
+  - Style it with tier-2 tokens only (`--q-bg-canvas`, `--q-bg`, `--q-shadow-1`): it doesn't render `AppShell`, so AppShell's own tokens aren't there in production.

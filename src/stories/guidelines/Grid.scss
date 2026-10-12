@@ -1,4 +1,4 @@
-// Guidelines/Grid specimens (Grid.stories.tsx).
+/* Guidelines/Grid specimens (Grid.stories.tsx). They sit on the section's warm ground. */
 
 .q-sb-grid {
 	&__cell {
@@ -6,7 +6,7 @@
 		display: flex;
 		align-items: center;
 		padding-left: var(--q-space-1);
-		border: var(--q-hairline) solid var(--q-fg);
+		border: var(--q-hairline) solid var(--q-border-strong);
 		border-radius: var(--q-radius-sm);
 		background: var(--q-bg);
 		box-sizing: border-box;
@@ -15,10 +15,12 @@
 	}
 
 	&__cell-label {
+		font-size: var(--q-text-sm);
 		color: var(--q-fg);
+		white-space: nowrap;
 	}
 
-	// The 12 columns behind a grid, using the same gap so the cells line up with them.
+	/* The 12 columns behind a grid, using the same gap so the cells line up with them. */
 	&__columns {
 		position: absolute;
 		inset: 0;
@@ -28,7 +30,7 @@
 	}
 
 	&__column {
-		background: var(--q-bg-subtle);
+		background: var(--q-bg-subtle-hover);
 		border-radius: var(--q-radius-xs);
 	}
 
@@ -42,7 +44,7 @@
 		position: relative;
 	}
 
-	// --_w is the frame's nominal width in px.
+	/* --_w is the frame's nominal width in px. */
 	&__frame {
 		display: grid;
 		gap: var(--q-space-1);
@@ -51,17 +53,17 @@
 
 	&__splits {
 		display: grid;
-		gap: var(--q-space-3);
+		gap: var(--q-space-stack);
 	}
 
 	&__frames {
 		display: grid;
-		gap: var(--q-space-4);
+		gap: var(--q-space-stack);
 	}
 
 	&__panes {
 		display: grid;
-		gap: var(--q-space-1);
-		overflow: hidden;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--q-space-stack);
 	}
 }

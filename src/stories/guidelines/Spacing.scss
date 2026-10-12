@@ -1,5 +1,4 @@
-// Guidelines/Spacing specimens (Spacing.stories.tsx). Loaded after Guide.scss, so the
-// modifiers here win over the shared panel.
+/* Guidelines/Spacing specimens (Spacing.stories.tsx). */
 
 .q-sb-spacing {
 	display: contents;
@@ -7,43 +6,61 @@
 	&__list {
 		display: grid;
 		gap: var(--q-space-1);
+		container-type: inline-size;
 	}
 
+	/* Token (and its job) · px · the gap drawn at size. */
 	&__bar {
 		display: grid;
-		grid-template-columns: minmax(0, 200px) 40px minmax(0, 1fr);
+		grid-template-columns: minmax(0, 18rem) var(--q-space-5) minmax(0, 1fr);
 		align-items: center;
 		gap: var(--q-space-2);
+
+		@container (width < 480px) {
+			grid-template-columns: minmax(0, 1fr) var(--q-space-5);
+			row-gap: var(--q-space-0-5);
+		}
 	}
 
 	&__bar-label {
-		overflow: hidden;
-		text-overflow: ellipsis;
+		display: grid;
+		min-width: 0;
 	}
 
 	&__bar-value {
-		font-variant-numeric: tabular-nums;
 		text-align: right;
+		font-size: var(--q-text-sm);
 	}
 
-	// --_w is the token the bar measures.
+	/* --_w is the token the bar measures. */
 	&__bar-fill {
 		width: var(--_w);
 		max-width: 100%;
 		height: var(--q-space-1);
 		background: var(--q-fg);
 		border-radius: var(--q-radius-pill);
+
+		@container (width < 480px) {
+			grid-column: 1 / -1;
+		}
 	}
 
 	&__redlines {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-		gap: var(--q-space-4);
+		grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+		gap: var(--q-space-block) var(--q-grid-gutter);
 		align-items: start;
 	}
 
+	&__specimen {
+		display: grid;
+		gap: var(--q-space-stack);
+		min-width: 0;
+	}
+
+	/* The padding is drawn by the first redline, so the box has none on top. */
 	&__panel {
 		gap: 0;
+		padding-top: 0;
 	}
 
 	&__actions {

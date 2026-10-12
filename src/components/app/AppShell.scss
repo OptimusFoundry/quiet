@@ -8,8 +8,7 @@
 @layer q.tokens {
   :root,
   [data-theme] {
-    // A breath darker than the page ground; foundry-dark sets its own (darker, not lighter).
-    --q-app-shell-canvas: color-mix(in srgb, rgb(var(--q-shadow-rgb)) 5%, var(--q-bg));
+    --q-app-shell-canvas: var(--q-bg-canvas);
     --q-app-shell-inset: var(--q-space-1);
     --q-app-shell-panel-bg: var(--q-bg);
     --q-app-shell-panel-border: var(--q-border);

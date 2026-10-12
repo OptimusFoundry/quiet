@@ -2,16 +2,31 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type CSSProperties, useRef, useState } from "react";
 import { Button, Panel, StatCard, Text, TextField } from "../../index";
 import { cssVar, type TokenName } from "../../styles/tokens.generated";
-import { type Density, DensitySwitch, Gap, GuidePage, Mono, Part, panel, useVar } from "./Guide";
+import {
+	type Density,
+	DensitySwitch,
+	Gap,
+	GuidePage,
+	Mono,
+	Num,
+	Part,
+	stage,
+	surface,
+	useVar,
+} from "./Guide";
 import "./Spacing.scss";
 
 // docs/guidelines/spacing.md as measured specimens: the scale, the job tokens per density, and
 // redlines between real components.
 
 const SCALE = [
+	"--q-space-0-25",
 	"--q-space-0-5",
+	"--q-space-0-75",
 	"--q-space-1",
+	"--q-space-1-25",
 	"--q-space-1-5",
+	"--q-space-1-75",
 	"--q-space-2",
 	"--q-space-2-5",
 	"--q-space-3",
@@ -23,28 +38,36 @@ const SCALE = [
 	"--q-space-10",
 	"--q-space-12",
 	"--q-space-16",
+	"--q-space-20",
 ] as const satisfies readonly TokenName[];
 const JOBS = [
-	["--q-space-inline", "icon ↔ label, button ↔ button"],
-	["--q-space-stack", "lines inside a panel"],
+	["--q-space-inline", "icon ↔ label, chip ↔ chip, button ↔ button"],
+	["--q-space-stack", "lines inside a panel; label ↔ value"],
 	["--q-space-field", "field ↔ field"],
-	["--q-space-card-pad", "panel padding"],
+	["--q-space-card-pad", "card and panel padding"],
 	["--q-space-card-gap", "card ↔ card"],
-	["--q-space-block", "block ↔ block, header ↔ content"],
-	["--q-space-section", "page top/bottom, settings sections"],
+	["--q-space-block", "block ↔ block; section header ↔ its content"],
+	["--q-space-section", "page bottom, settings section ↔ section"],
 	["--q-space-page-x", "page sides"],
 	["--q-grid-gutter", "grid column gap"],
 ] as const satisfies ReadonlyArray<readonly [TokenName, string]>;
 
-function Bar({ token, label }: { token: TokenName; label: string }) {
+function Bar({ token, job }: { token: TokenName; job?: string }) {
 	const ref = useRef<HTMLSpanElement>(null);
 	const px = Number.parseFloat(useVar(ref, token)) || 0;
 	return (
 		<div className="q-sb-spacing__bar">
-			<Mono className="q-sb-spacing__bar-label">{label}</Mono>
-			<Text size="sm" color="heading" className="q-sb-spacing__bar-value">
-				{px}
-			</Text>
+			<div className="q-sb-spacing__bar-label">
+				<Mono>{token}</Mono>
+				{job && (
+					<Text size="sm" color="muted">
+						{job}
+					</Text>
+				)}
+			</div>
+			<span className="q-sb-spacing__bar-value">
+				<Num>{px}</Num>
+			</span>
 			<span
 				ref={ref}
 				aria-hidden="true"
@@ -65,11 +88,11 @@ function SpacingPage() {
 		>
 			<Part
 				title="The scale"
-				rule="--q-space-*. Steps under 8 and 20 are for inside components only, never between blocks."
+				rule="--q-space-*, in px. The steps under 8 (2–14) and 20 are for inside components only, never between blocks."
 			>
 				<div className="q-sb-spacing__list">
 					{SCALE.map((t) => (
-						<Bar key={t} token={t} label={t} />
+						<Bar key={t} token={t} />
 					))}
 				</div>
 			</Part>
@@ -82,7 +105,7 @@ function SpacingPage() {
 				>
 					<div className="q-sb-spacing__list">
 						{JOBS.map(([t, job]) => (
-							<Bar key={t} token={t} label={`${t.replace("--q-", "")} · ${job}`} />
+							<Bar key={t} token={t} job={job} />
 						))}
 					</div>
 				</Part>
@@ -91,18 +114,24 @@ function SpacingPage() {
 					title="Redlines between real components"
 					rule="Inside a component, its own spacing. Between components, the parent's gap, never a margin."
 				>
-					<div className="q-sb-spacing__redlines">
-						<div>
-							<Mono>Section</Mono>
-							<Panel variant="plain" as="h3" title="Signups" description="Last 30 days." />
-							<Gap token="--q-space-block" note="header ↔ content" />
-							<StatCard label="Verified" value="4,812" delta="+12%" trend="up" />
+					<div className={`${stage} q-sb-spacing__redlines`}>
+						<div className="q-sb-spacing__specimen">
+							<Text size="sm" color="muted">
+								Section
+							</Text>
+							<div>
+								<Panel variant="plain" as="h3" title="Signups" description="Last 30 days." />
+								<Gap token="--q-space-block" note="header ↔ content" />
+								<StatCard label="Verified" value="4,812" delta="+12%" trend="up" />
+							</div>
 						</div>
-						<div>
-							<Mono>Panel</Mono>
-							<div className={`${panel} q-sb-spacing__panel`}>
-								<Gap token="--q-space-card-pad" note="pad" />
-								<Text as="h3" size="lg" weight="semibold" color="heading">
+						<div className="q-sb-spacing__specimen">
+							<Text size="sm" color="muted">
+								Panel
+							</Text>
+							<div className={`${surface} q-sb-spacing__panel`}>
+								<Gap token="--q-space-card-pad" note="padding" />
+								<Text as="h3" size="md" weight="semibold" color="heading">
 									Usage this month
 								</Text>
 								<Gap token="--q-space-stack" />
@@ -111,17 +140,21 @@ function SpacingPage() {
 								</Text>
 							</div>
 						</div>
-						<div>
-							<Mono>Form</Mono>
-							<TextField size="sm" label="Workspace name" defaultValue="Sjocamp" />
-							<Gap token="--q-space-field" />
-							<TextField size="sm" label="Billing email" defaultValue="ops@sjocamp.co" />
-							<Gap token="--q-space-block" note="fields ↔ actions" />
-							<div className="q-sb-spacing__actions">
-								<Button size="sm" variant="secondary">
-									Cancel
-								</Button>
-								<Button size="sm">Save</Button>
+						<div className="q-sb-spacing__specimen">
+							<Text size="sm" color="muted">
+								Form
+							</Text>
+							<div>
+								<TextField size="sm" label="Workspace name" defaultValue="Sjocamp" />
+								<Gap token="--q-space-field" />
+								<TextField size="sm" label="Billing email" defaultValue="ops@sjocamp.co" />
+								<Gap token="--q-space-block" note="fields ↔ actions" />
+								<div className="q-sb-spacing__actions">
+									<Button size="sm" variant="secondary">
+										Cancel
+									</Button>
+									<Button size="sm">Save</Button>
+								</div>
 							</div>
 						</div>
 					</div>

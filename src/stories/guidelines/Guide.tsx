@@ -6,7 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Tabs, Text } from "../../index";
+import { PageHeader, Panel, Tabs } from "../../index";
 import { cssVar, type TokenName } from "../../styles/tokens.generated";
 import "./Guide.scss";
 
@@ -15,16 +15,23 @@ import "./Guide.scss";
 
 export type Density = "comfortable" | "compact";
 
-/** Panel and well containers for specimens: add to a `className`. */
-export const panel = "q-sb-guide__panel";
-export const well = "q-sb-guide__well";
+/** The panel's white inside a section: what a specimen of a screen sits on. Add to a `className`. */
+export const stage = "q-sb-guide__stage";
+/** A hand-built surface panel (the warm ground) for redlines that reach inside its padding. */
+export const surface = "q-sb-guide__surface";
 
+/** Code, IDs and token names: plain mono in their real case. */
 export function Mono({ children, className }: { children: ReactNode; className?: string }) {
 	return (
-		<span className={className ? `q-sb-guide__mono ${className}` : "q-sb-guide__mono"}>
+		<code className={className ? `q-sb-guide__mono ${className}` : "q-sb-guide__mono"}>
 			{children}
-		</span>
+		</code>
 	);
+}
+
+/** A measured number: tabular, so columns of them line up. */
+export function Num({ children }: { children: ReactNode }) {
+	return <span className="q-sb-guide__num">{children}</span>;
 }
 
 /** Live px size of an element (follows density and theme via ResizeObserver). */
@@ -66,22 +73,19 @@ export function GuidePage({
 }) {
 	return (
 		<main aria-label={title} className="q-sb-guide">
-			<header className="q-sb-guide__header">
-				<Mono>Guidelines · docs/guidelines/{doc}</Mono>
-				<Text as="h1" heading={2}>
-					{title}
-					<span className="q-sb-guide__accent">.</span>
-				</Text>
-				<Text size="lg" color="muted" className="q-sb-guide__intro">
-					{intro}
-				</Text>
-			</header>
+			<PageHeader
+				as="h1"
+				eyebrow="Guidelines"
+				title={title}
+				description={intro}
+				meta={[<Mono key="doc">docs/guidelines/{doc}</Mono>]}
+			/>
 			{children}
 		</main>
 	);
 }
 
-/** One specimen block: an h2 with the rule it shows. */
+/** One specimen section: a titled surface Panel with the rule it shows. */
 export function Part({
 	title,
 	rule,
@@ -94,22 +98,9 @@ export function Part({
 	aside?: ReactNode;
 }) {
 	return (
-		<section className="q-sb-guide__part">
-			<div className="q-sb-guide__part-head">
-				<div className="q-sb-guide__part-title">
-					<Text as="h2" heading={4}>
-						{title}
-					</Text>
-					{rule && (
-						<Text size="sm" color="muted">
-							{rule}
-						</Text>
-					)}
-				</div>
-				{aside}
-			</div>
+		<Panel title={title} description={rule} actions={aside}>
 			{children}
-		</section>
+		</Panel>
 	);
 }
 
@@ -143,29 +134,34 @@ export function Gap({ token, note }: { token: TokenName; note?: string }) {
 	const px = useSize(ref, "height");
 	return (
 		<div ref={ref} className="q-sb-guide__gap" style={{ "--_h": cssVar(token) } as CSSProperties}>
-			<Mono className="q-sb-guide__gap-label">
-				{token} · {px}
-				{note ? ` · ${note}` : ""}
-			</Mono>
+			<span className="q-sb-guide__label q-sb-guide__gap-label">
+				<Mono>{token}</Mono>
+				<Num>{px}</Num>
+				{note && <span>{note}</span>}
+			</span>
 		</div>
 	);
 }
 
-/** A horizontal redline used beside or inside a box: shows a padding/width token. */
+/** A horizontal redline: a width token drawn at its live px (clipped to the column), with what it is for. */
 export function Span({ token, label }: { token: TokenName; label?: string }) {
 	const ref = useRef<HTMLSpanElement>(null);
-	const px = useSize(ref, "width");
+	const drawn = useSize(ref, "width");
+	const value = useVar(ref, token);
+	const px = value.endsWith("px") ? Math.round(Number.parseFloat(value)) : drawn;
 	return (
 		<span className="q-sb-guide__span">
+			<span className="q-sb-guide__label">
+				<Mono>{token}</Mono>
+				<Num>{px}</Num>
+				{label && <span>{label}</span>}
+			</span>
 			<span
 				ref={ref}
 				aria-hidden="true"
 				className="q-sb-guide__span-bar"
 				style={{ "--_w": cssVar(token) } as CSSProperties}
 			/>
-			<Mono>
-				{label ?? token} · {px}
-			</Mono>
 		</span>
 	);
 }

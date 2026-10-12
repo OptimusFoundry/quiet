@@ -538,22 +538,48 @@ export const Artifact: StoryObj = {
 	),
 };
 
+// Sign-in on the app's frame: the canvas carries the product (lockup, a glimpse, the pitch); the
+// form sits on an inset white panel, as every screen after it does (layouts.md, "Sign-in").
 export const SignIn: StoryObj = {
 	render: () => (
-		<main className="q-sb-signin" aria-label="Sign in">
-			<div className="q-sb-signin__card">
-				<div className="q-sb-signin__head">
-					<Text size="md" weight="semibold" color="heading">
-						agentworks
-					</Text>
-					<Text as="h1" size="xl" weight="semibold" color="heading">
-						Sign in
-					</Text>
-					<Text size="sm" color="muted">
-						Run agents on your team's triggers, with approvals where it matters.
-					</Text>
+		<div className="q-sb-signin">
+			<aside className="q-sb-signin__brand" aria-hidden="true">
+				<span className="q-sb-signin__lockup">
+					<span className="q-sb-signin__mark">a</span>
+					agentworks
+				</span>
+				<div className="q-sb-signin__glimpse">
+					<div className="q-sb-signin__glimpse-nav">
+						<span className="q-sb-signin__bar q-sb-signin__bar--current" />
+						<span className="q-sb-signin__bar" />
+						<span className="q-sb-signin__bar" />
+					</div>
+					<div className="q-sb-signin__glimpse-main">
+						<span className="q-sb-signin__bar q-sb-signin__bar--title" />
+						<div className="q-sb-signin__tiles">
+							<span />
+							<span />
+							<span />
+						</div>
+						<span className="q-sb-signin__bar" />
+						<span className="q-sb-signin__bar q-sb-signin__bar--short" />
+					</div>
 				</div>
+				<div className="q-sb-signin__pitch">
+					<Text as="p" heading={2}>
+						Agents on your team's triggers.
+					</Text>
+					<Text color="muted">Approvals where it matters, a receipt for everything else.</Text>
+				</div>
+			</aside>
+			<main className="q-sb-signin__panel" aria-label="Sign in">
 				<div className="q-sb-signin__form">
+					<div className="q-sb-signin__head">
+						<Text as="h1" heading={1}>
+							Welcome back
+						</Text>
+						<Text color="muted">Sign in to agentworks</Text>
+					</div>
 					<Button variant="secondary" fullWidth>
 						Continue with Google
 					</Button>
@@ -562,13 +588,13 @@ export const SignIn: StoryObj = {
 					<Button variant="primary" fullWidth>
 						Email me a sign-in link
 					</Button>
+					<span className="q-sb-signin__legal">
+						By continuing you agree to the <a href="#terms">Terms</a> and{" "}
+						<a href="#privacy">Privacy policy</a>.
+					</span>
 				</div>
-				<span className="q-sb-signin__legal">
-					By continuing you agree to the <a href="#terms">Terms</a> and{" "}
-					<a href="#privacy">Privacy policy</a>.
-				</span>
-			</div>
-		</main>
+			</main>
+		</div>
 	),
 };
 
