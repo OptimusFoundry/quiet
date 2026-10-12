@@ -5,7 +5,8 @@ import "./Avatar.scss";
  * Person or org avatar — image, mono initials, or fallback. Circle or soft rounded square.
  * @startingPoint section="Primitives" subtitle="Image, initials, fallback" viewport="600x160"
  */
-export interface AvatarProps {
+export interface AvatarProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
+	ref?: React.Ref<HTMLSpanElement>;
 	src?: string;
 	/** Used for initials and title */
 	name?: string;
@@ -29,6 +30,7 @@ export function Avatar({
 	fallback,
 	className,
 	style,
+	...rest
 }: AvatarProps) {
 	const [err, setErr] = React.useState(false);
 	// Image fades in once decoded (already-cached images skip straight to visible).
@@ -59,6 +61,7 @@ export function Avatar({
 	return (
 		<span
 			title={name}
+			{...rest}
 			role={!showImg && (alt || name) ? "img" : undefined}
 			aria-label={!showImg ? alt || name || undefined : undefined}
 			className={cls}

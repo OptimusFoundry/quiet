@@ -7,7 +7,11 @@ import "./MultiSelect.scss";
  * Multi-value select. Chosen values show as removable mono pills; menu has checkboxes, filter, and clear.
  * @startingPoint section="Forms" subtitle="Multi-value select" viewport="600x460"
  */
-export interface MultiSelectProps {
+export interface MultiSelectProps
+	extends Omit<
+		React.HTMLAttributes<HTMLSpanElement>,
+		"onChange" | "defaultValue" | "color" | "role" | "onBlur" | "onFocus"
+	> {
 	label?: React.ReactNode;
 	options: Array<
 		| string
@@ -34,7 +38,11 @@ export interface MultiSelectProps {
 	required?: boolean;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the role="combobox" element, so it can be focused */
+	/** Fires when focus leaves the select, menu included */
+	onBlur?: React.FocusEventHandler<HTMLElement>;
+	/** Fires when focus enters the select from outside */
+	onFocus?: React.FocusEventHandler<HTMLElement>;
+	/** Reaches the role="combobox" element, so it can be focused; other HTML attributes (id, aria-*, data-*…) land there too */
 	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -86,8 +94,17 @@ export function MultiSelect({
 	required,
 	form,
 	ref: forwardedRef,
+	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	"aria-describedby": ariaDescribedby,
+	"aria-invalid": ariaInvalid,
+	"aria-required": ariaRequired,
+	onKeyDown,
+	onBlur,
+	onFocus,
 	className,
 	style,
+	...rest
 }: MultiSelectProps) {
 	const [open, setOpen] = React.useState(false);
 	const [inner, setInner] = React.useState(defaultValue);
@@ -250,12 +267,12 @@ export function MultiSelect({
 					combo.current?.focus();
 				}
 			}}
-			onBlur={(e) =>
-				open &&
-				ref.current &&
-				!ref.current.contains(e.relatedTarget as Node | null) &&
-				setOpen(false)
-			}
+			onBlur={(e) => {
+				if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
+				if (open) setOpen(false);
+				onBlur?.(e);
+			}}
+			onFocus={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onFocus?.(e)}
 			className={cls}
 			style={style}
 		>
@@ -270,20 +287,26 @@ export function MultiSelect({
 			>
 				{/* quiet: the focusable combobox is a transparent layer over the field, so the pills' remove buttons are not nested inside it */}
 				<span
+					{...rest}
 					ref={comboRef}
 					role="combobox"
-					aria-required={required || undefined}
+					aria-required={required || ariaRequired || undefined}
 					tabIndex={disabled ? -1 : 0}
 					aria-haspopup="listbox"
 					aria-expanded={open}
 					aria-controls={open || presence.mounted ? listId : undefined}
 					aria-activedescendant={open && !canSearch && active >= 0 ? optId(active) : undefined}
-					aria-labelledby={label ? labelId : undefined}
-					aria-label={label ? undefined : placeholder}
-					aria-describedby={sumId + (error || helperText ? ` ${hintId}` : "")}
-					aria-invalid={error ? true : undefined}
+					aria-labelledby={label ? labelId : ariaLabelledby}
+					aria-label={label ? undefined : (ariaLabel ?? placeholder)}
+					aria-describedby={[ariaDescribedby, sumId, (error || helperText) && hintId]
+						.filter(Boolean)
+						.join(" ")}
+					aria-invalid={error ? true : ariaInvalid}
 					aria-disabled={disabled || undefined}
-					onKeyDown={key}
+					onKeyDown={(e) => {
+						onKeyDown?.(e);
+						key(e);
+					}}
 					className="q-multi-select__combo"
 				/>
 				<span id={sumId} className="q-sr-only">
@@ -377,6 +400,8 @@ export function MultiSelect({
 		</div>
 	);
 }
+/** FormField wires id / aria-* onto the role="combobox" element (its Label can't name a span; use `label` or `aria-label`) */
+MultiSelect.fieldControl = true;
 
 function MSOption({
 	id,

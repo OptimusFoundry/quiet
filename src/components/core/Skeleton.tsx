@@ -5,7 +5,9 @@ import "./Skeleton.scss";
  * Paper-2 loading placeholder with a slow 2s pulse.
  * @startingPoint section="Feedback" subtitle="Loading placeholders" viewport="600x240"
  */
-export interface SkeletonProps {
+export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
+	/** The placeholder span (nothing is attached once `loading` is false and children render). */
+	ref?: React.Ref<HTMLSpanElement>;
 	variant?: "text" | "circular" | "rectangular" | "rounded";
 	width?: number | string;
 	height?: number | string;
@@ -38,6 +40,7 @@ export function Skeleton({
 	children,
 	className,
 	style,
+	...rest
 }: SkeletonProps) {
 	// Content that replaces a visible skeleton fades in; content that was never loading just renders.
 	const wasLoading = React.useRef(loading);
@@ -69,6 +72,7 @@ export function Skeleton({
 		if (width != null) groupVars["--_width"] = len(width);
 		return (
 			<span
+				{...rest}
 				{...a11y}
 				className={["q-skeleton-group", className].filter(Boolean).join(" ")}
 				style={{ ...groupVars, ...style }}
@@ -94,5 +98,5 @@ export function Skeleton({
 	]
 		.filter(Boolean)
 		.join(" ");
-	return <span {...a11y} className={cls} style={{ ...vars, ...style }} />;
+	return <span {...rest} {...a11y} className={cls} style={{ ...vars, ...style }} />;
 }

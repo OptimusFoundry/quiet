@@ -7,6 +7,8 @@ import "./Text.scss";
  */
 export interface TextProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "color" | "children" | "className" | "style"> {
+	/** The rendered element (`p`, `h1`–`h4`, or the `as` element). */
+	ref?: React.Ref<HTMLElement>;
 	as?: keyof React.JSX.IntrinsicElements;
 	/** 1–4 shortcuts to the heading scale (for headlines with an italic accent + period, use Headline) */
 	heading?: 1 | 2 | 3 | 4;

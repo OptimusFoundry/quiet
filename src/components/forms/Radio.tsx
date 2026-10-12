@@ -7,7 +7,11 @@ import "./Radio.scss";
  * Radio group. Options may carry description and disabled.
  * @startingPoint section="Forms" subtitle="Radio groups" viewport="600x220"
  */
-export interface RadioProps {
+export interface RadioProps
+	extends Omit<
+		React.HTMLAttributes<HTMLDivElement>,
+		"onChange" | "defaultValue" | "color" | "role" | "onBlur" | "onFocus"
+	> {
 	/** Mono caps group label */
 	label?: React.ReactNode;
 	options: Array<
@@ -29,7 +33,11 @@ export interface RadioProps {
 	required?: boolean;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the radio that holds the tab stop, so it can be focused */
+	/** Fires when focus leaves the group, not on arrow moves inside it */
+	onBlur?: React.FocusEventHandler<HTMLElement>;
+	/** Fires when focus enters the group from outside */
+	onFocus?: React.FocusEventHandler<HTMLElement>;
+	/** Reaches the radio that holds the tab stop, so it can be focused; other HTML attributes (id, aria-*, data-*…) land on the radiogroup */
 	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -53,8 +61,15 @@ export function Radio({
 	required,
 	form,
 	ref,
+	"aria-labelledby": ariaLabelledby,
+	"aria-describedby": ariaDescribedby,
+	"aria-invalid": ariaInvalid,
+	"aria-required": ariaRequired,
+	onBlur,
+	onFocus,
 	className,
 	style,
+	...rest
 }: RadioProps) {
 	const tabStop = React.useRef<HTMLSpanElement>(null);
 	const stopRef = useMergedRef(tabStop, ref);
@@ -81,13 +96,19 @@ export function Radio({
 		.join(" ");
 	return (
 		<div
+			{...rest}
 			role="radiogroup"
 			aria-label={label ? undefined : ariaLabel}
-			aria-labelledby={label ? `${uid}g` : undefined}
+			aria-labelledby={label ? `${uid}g` : ariaLabelledby}
 			aria-disabled={disabled || undefined}
-			aria-required={required || undefined}
-			aria-invalid={!!error || undefined}
-			aria-describedby={typeof error === "string" ? `${uid}e` : undefined}
+			aria-required={required || ariaRequired || undefined}
+			aria-invalid={error ? true : ariaInvalid}
+			aria-describedby={
+				[ariaDescribedby, typeof error === "string" && `${uid}e`].filter(Boolean).join(" ") ||
+				undefined
+			}
+			onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onBlur?.(e)}
+			onFocus={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && onFocus?.(e)}
 			className={cls}
 			style={style}
 		>
@@ -162,3 +183,5 @@ export function Radio({
 		</div>
 	);
 }
+/** FormField wires id / aria-* onto the radiogroup (its Label can't name a div; use `label` or `aria-label`) */
+Radio.fieldControl = true;

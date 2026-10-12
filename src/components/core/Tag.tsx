@@ -5,7 +5,12 @@ import "./Tag.scss";
  * Mono caps pill for stacks, categories and filters. Removable and selectable.
  * @startingPoint section="Primitives" subtitle="Mono pills — removable, selectable" viewport="700x180"
  */
-export interface TagProps {
+export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, "children" | "onSelect"> {
+	/**
+	 * The root: a <span>, or the toggle <button> when `selectable`. A selectable tag that is also
+	 * removable renders a <span> holding the toggle and the × as sibling buttons.
+	 */
+	ref?: React.Ref<HTMLElement>;
 	children?: React.ReactNode;
 	tone?: "default" | "ink";
 	/** quiet addition: semantic status colour, from the theme's --q-status-* tokens */
@@ -43,12 +48,17 @@ export function Tag({
 	disabled = false,
 	className,
 	style,
+	onClick,
+	ref,
+	...rest
 }: TagProps) {
 	const [inner, setInner] = React.useState(defaultSelected);
 	const [leaving, setLeaving] = React.useState(false);
 	const on = selected ?? inner;
-	const El = selectable ? "button" : "span";
-	const click = () => {
+	// Buttons can't nest: with a ×, the toggle becomes its own button beside it.
+	const split = selectable && !!onRemove;
+	const El = selectable && !split ? "button" : "span";
+	const toggle = () => {
 		if (!selectable || disabled) return;
 		setInner(!on);
 		onSelect?.(!on);
@@ -81,16 +91,8 @@ export function Tag({
 	]
 		.filter(Boolean)
 		.join(" ");
-	return (
-		<El
-			onClick={click}
-			disabled={selectable ? disabled : undefined}
-			aria-pressed={selectable ? on : undefined}
-			type={selectable ? "button" : undefined}
-			className={cls}
-			data-state={leaving ? "closing" : undefined}
-			style={style}
-		>
+	const content = (
+		<>
 			{avatar}
 			{icon && (
 				<span aria-hidden="true" className="q-tag__icon">
@@ -98,6 +100,36 @@ export function Tag({
 				</span>
 			)}
 			{children}
+		</>
+	);
+	return (
+		<El
+			ref={ref as React.Ref<HTMLButtonElement>}
+			{...rest}
+			onClick={(e: React.MouseEvent<HTMLElement>) => {
+				onClick?.(e);
+				if (!split) toggle();
+			}}
+			disabled={El === "button" ? disabled : undefined}
+			aria-pressed={El === "button" ? on : undefined}
+			type={El === "button" ? "button" : undefined}
+			className={cls}
+			data-state={leaving ? "closing" : undefined}
+			style={style}
+		>
+			{split ? (
+				<button
+					type="button"
+					aria-pressed={on}
+					disabled={disabled}
+					onClick={toggle}
+					className="q-tag__select"
+				>
+					{content}
+				</button>
+			) : (
+				content
+			)}
 			{onRemove && (
 				<button
 					type="button"

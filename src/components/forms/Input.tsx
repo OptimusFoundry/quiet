@@ -5,7 +5,7 @@ import "./Input.scss";
  * Rounded text field with mono label.
  * @startingPoint section="Forms" subtitle="Text inputs, select, checks, switch" viewport="700x360"
  */
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
 	label?: React.ReactNode;
 	hint?: React.ReactNode;
 	/** Error text — border and message turn molten */
@@ -23,6 +23,8 @@ export function Input({
 	multiline = false,
 	className,
 	style,
+	"aria-describedby": describedBy,
+	"aria-invalid": ariaInvalid,
 	...rest
 }: InputProps) {
 	const El = multiline ? "textarea" : "input";
@@ -33,8 +35,10 @@ export function Input({
 		<label className="q-input" style={style}>
 			{label && <span className="q-input__label">{label}</span>}
 			<El
-				aria-invalid={!!error || undefined}
-				aria-describedby={error || hint ? `${uid}h` : undefined}
+				aria-invalid={ariaInvalid ?? (!!error || undefined)}
+				aria-describedby={
+					[describedBy, (error || hint) && `${uid}h`].filter(Boolean).join(" ") || undefined
+				}
 				{...(rest as React.InputHTMLAttributes<HTMLInputElement> &
 					React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
 				className={[

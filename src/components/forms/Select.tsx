@@ -27,6 +27,8 @@ export function Select({
 	size = "md",
 	className,
 	style,
+	"aria-describedby": describedBy,
+	"aria-invalid": ariaInvalid,
 	...rest
 }: SelectProps) {
 	const uid = React.useId();
@@ -54,8 +56,10 @@ export function Select({
 				{/* The hint sits inside the wrapping <label>; aria-labelledby keeps it out of the accessible name. */}
 				<select
 					aria-labelledby={label && message ? `${uid}l` : undefined}
-					aria-invalid={error ? true : undefined}
-					aria-describedby={message ? `${uid}h` : undefined}
+					aria-invalid={ariaInvalid ?? (error ? true : undefined)}
+					aria-describedby={
+						[describedBy, message && `${uid}h`].filter(Boolean).join(" ") || undefined
+					}
 					{...start}
 					{...rest}
 					className={["q-select__input", className].filter(Boolean).join(" ")}
@@ -87,3 +91,6 @@ export function Select({
 		</label>
 	);
 }
+
+/** FormField wires its id and aria-* into this, and they land on the native <select>. */
+Select.fieldControl = "native" as const;

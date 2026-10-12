@@ -20,6 +20,8 @@ type ButtonHostAttributes = Omit<
 	>;
 
 export interface ButtonProps extends ButtonHostAttributes {
+	/** The rendered <button>, or the <a> when `href` is set. */
+	ref?: React.Ref<ButtonHost>;
 	variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
 	size?: "sm" | "md" | "lg";
 	/** Trailing → that nudges 4px on hover */
@@ -55,6 +57,7 @@ export function Button({
 	children,
 	className,
 	style,
+	ref,
 	...rest
 }: ButtonProps) {
 	const off = disabled || loading;
@@ -117,11 +120,12 @@ export function Button({
 		},
 	};
 	return href && !off ? (
-		<A href={href} {...common}>
+		<A href={href} ref={ref as React.Ref<HTMLAnchorElement>} {...common}>
 			{inner}
 		</A>
 	) : (
 		<button
+			ref={ref as React.Ref<HTMLButtonElement>}
 			type="button"
 			disabled={disabled}
 			aria-disabled={(loading && !disabled) || undefined}

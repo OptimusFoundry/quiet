@@ -8,6 +8,8 @@ import "./Label.scss";
 export interface LabelProps {
 	children: React.ReactNode;
 	htmlFor?: string;
+	/** On the <label> text, so a non-native control can point aria-labelledby at it */
+	id?: string;
 	/** Molten asterisk */
 	required?: boolean;
 	subText?: React.ReactNode;
@@ -25,6 +27,7 @@ const SIZES = ["sm", "md", "lg"];
 export function Label({
 	children,
 	htmlFor,
+	id,
 	required = false,
 	subText,
 	badge,
@@ -40,7 +43,7 @@ export function Label({
 	return (
 		<div aria-disabled={disabled || undefined} className={cls} style={style}>
 			<div className="q-label__row">
-				<label htmlFor={htmlFor} className="q-label__text">
+				<label id={id} htmlFor={htmlFor} className="q-label__text">
 					<span>
 						{children}
 						{required && (

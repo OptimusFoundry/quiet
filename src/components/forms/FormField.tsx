@@ -4,7 +4,7 @@ import { Label } from "./Label";
 import "./FormField.scss";
 
 /**
- * Label + any control + hint/error. Wires native controls and Stepper automatically (id, aria-invalid, aria-describedby, aria-required).
+ * Label + any control + hint/error. Wires native controls and fieldControl components (TextField, TextArea, Select and the ARIA widgets) automatically (id, aria-invalid, aria-describedby, aria-required, and aria-labelledby for widgets).
  * @startingPoint section="Forms" subtitle="Label · control · hint" viewport="600x240"
  */
 export interface FormFieldProps {
@@ -22,7 +22,18 @@ export interface FormFieldProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * What FormField clones into its child. It does so only for a native element (`<input>`,
+ * `<select>` …) or a component that sets the static `fieldControl` (`true` or `"native"`) — a promise that it puts
+ * `id` and these aria-* on its native control and merges (not replaces) `aria-describedby` with
+ * its own hint. `true` also gets `aria-labelledby` pointing at FormField's label, since a
+ * `<label htmlFor>` can't name a span/div/button widget. `"native"` means the control is a
+ * native labelable element (TextField, TextArea, Select), so `htmlFor` alone names it.
+ */
+export type FieldControl = true | "native";
+
 type FieldControlProps = {
+	"aria-labelledby"?: string;
 	id?: string;
 	"aria-invalid"?: boolean;
 	"aria-describedby"?: string;
@@ -45,6 +56,7 @@ export function FormField({
 	const [auto] = React.useState(() => `of-field-${++ofFieldId}`);
 	const fid = id || auto;
 	const hintId = `${fid}-hint`;
+	const labelId = `${fid}-label`;
 	const described =
 		[
 			children && (children as React.ReactElement<FieldControlProps>).props?.["aria-describedby"],
@@ -52,21 +64,35 @@ export function FormField({
 		]
 			.filter(Boolean)
 			.join(" ") || undefined;
-	const child =
-		React.isValidElement<FieldControlProps>(children) &&
-		(typeof children.type === "string" ||
-			(children.type as { fieldControl?: boolean }).fieldControl)
-			? React.cloneElement(children, {
-					id: fid,
-					"aria-invalid": !!error || undefined,
-					"aria-describedby": described,
-					"aria-required": required || undefined,
-				})
-			: children;
+	const kind: FieldControl | "element" | undefined = React.isValidElement<FieldControlProps>(
+		children,
+	)
+		? typeof children.type === "string"
+			? "element"
+			: (children.type as { fieldControl?: FieldControl }).fieldControl
+		: undefined;
+	const child = kind
+		? React.cloneElement(children as React.ReactElement<FieldControlProps>, {
+				id: fid,
+				"aria-invalid": !!error || undefined,
+				"aria-describedby": described,
+				"aria-required": required || undefined,
+				// A widget that isn't a native labelable element is named through aria-labelledby.
+				...(kind === true &&
+					label && {
+						"aria-labelledby": [
+							(children as React.ReactElement<FieldControlProps>).props["aria-labelledby"],
+							labelId,
+						]
+							.filter(Boolean)
+							.join(" "),
+					}),
+			})
+		: children;
 	return (
 		<div className={["q-form-field", className].filter(Boolean).join(" ")} style={style}>
 			{label && (
-				<Label htmlFor={fid} required={required} subText={subText} size={size}>
+				<Label id={labelId} htmlFor={fid} required={required} subText={subText} size={size}>
 					{label}
 				</Label>
 			)}

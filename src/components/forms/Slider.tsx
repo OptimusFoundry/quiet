@@ -7,7 +7,11 @@ import "./Slider.scss";
  * Hairline range slider with ink thumb. Pointer + keyboard.
  * @startingPoint section="Forms" subtitle="Range slider" viewport="600x160"
  */
-export interface SliderProps {
+export interface SliderProps
+	extends Omit<
+		React.HTMLAttributes<HTMLSpanElement>,
+		"onChange" | "defaultValue" | "color" | "role"
+	> {
 	label?: React.ReactNode;
 	value?: number;
 	defaultValue?: number;
@@ -25,7 +29,7 @@ export interface SliderProps {
 	name?: string;
 	/** id of a <form> elsewhere in the document, as on native controls */
 	form?: string;
-	/** Reaches the role="slider" thumb, so it can be focused */
+	/** Reaches the role="slider" thumb, so it can be focused; other HTML attributes (id, aria-*, data-*, onBlur…) land there too */
 	ref?: React.Ref<HTMLSpanElement>;
 	className?: string;
 	style?: React.CSSProperties;
@@ -49,8 +53,11 @@ export function Slider({
 	form,
 	ref,
 	"aria-label": ariaLabel,
+	"aria-labelledby": ariaLabelledby,
+	onKeyDown,
 	className,
 	style,
+	...rest
 }: SliderProps) {
 	const [inner, setInner] = React.useState(defaultValue ?? min);
 	const [glide, setGlide] = React.useState(false);
@@ -83,6 +90,7 @@ export function Slider({
 		fromX(e.clientX);
 	};
 	const key = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+		onKeyDown?.(e);
 		const d = (
 			{
 				ArrowRight: step,
@@ -132,6 +140,7 @@ export function Slider({
 				<span className="q-slider__rail" />
 				<span className="q-slider__fill" />
 				<span
+					{...rest}
 					ref={thumbRef}
 					role="slider"
 					tabIndex={disabled ? -1 : 0}
@@ -143,7 +152,7 @@ export function Slider({
 					}
 					aria-orientation="horizontal"
 					aria-disabled={disabled || undefined}
-					aria-labelledby={label ? `${uid}l` : undefined}
+					aria-labelledby={label ? `${uid}l` : ariaLabelledby}
 					aria-label={label ? undefined : ariaLabel}
 					onKeyDown={key}
 					className="q-slider__thumb"
@@ -159,3 +168,5 @@ export function Slider({
 		</div>
 	);
 }
+/** FormField wires id / aria-* onto the role="slider" thumb (its Label can't name a span; use `label` or `aria-label`) */
+Slider.fieldControl = true;

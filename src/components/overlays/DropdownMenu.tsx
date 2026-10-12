@@ -37,6 +37,14 @@ export interface DropdownMenuProps<Item extends DropdownMenuAction<Item> = Dropd
 	onSelect?: (item: Item) => void;
 	/** Accessible name for the menu; defaults to the trigger's text ("Context menu" in context-menu mode) */
 	label?: string;
+	/**
+	 * Controlled open state. Opening it from outside (a shortcut, another button) moves focus to the
+	 * first item, and closing it returns focus to where it was before.
+	 */
+	open?: boolean;
+	defaultOpen?: boolean;
+	/** Every open and close the menu asks for: trigger, Escape, Tab out, outside click, item select */
+	onOpenChange?: (open: boolean) => void;
 	className?: string;
 	style?: React.CSSProperties;
 }
@@ -119,16 +127,24 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 	children,
 	onSelect,
 	label,
+	open: openProp,
+	defaultOpen = false,
+	onOpenChange,
 	className,
 	style,
 }: DropdownMenuProps<Item>) {
-	const [open, setOpen] = React.useState(false);
+	const [inner, setInner] = React.useState(defaultOpen);
+	const open = openProp ?? inner;
 	const [pt, setPt] = React.useState<{ x: number; y: number } | null>(null);
 	const ref = React.useRef<HTMLDivElement>(null);
 	const trig = React.useRef<HTMLSpanElement>(null);
 	const list = React.useRef<HTMLDivElement>(null);
 	const from = React.useRef<HTMLElement | null>(null);
-	const firstFocus = React.useRef<string>("first");
+	// Set by show(); null while open means the menu was opened from outside (controlled `open`).
+	const firstFocus = React.useRef<string | null>(null);
+	const external = React.useRef(false);
+	// Whether the next close returns focus; null = a close from outside, which refocuses only if focus was in the menu.
+	const refocus = React.useRef<boolean | null>(null);
 	const refs = React.useMemo(() => [ref], []);
 	const id = React.useId();
 	const { mounted, state } = usePresence(open, 160);
@@ -148,15 +164,24 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 		if (open && mounted) btn.setAttribute("aria-controls", id);
 		else btn.removeAttribute("aria-controls");
 	});
-	const close = (refocus = true) => {
+	const setOpen = (v: boolean) => {
+		if (openProp === undefined) setInner(v);
+		onOpenChange?.(v);
+	};
+	const close = (back = true) => {
+		refocus.current = back;
 		setOpen(false);
-		const t = contextMenu ? from.current : btn || trig.current;
-		if (refocus && t?.isConnected) t.focus();
 	};
 	useEscape(open, () => close());
-	useOutside(refs, open, () => setOpen(false));
-	React.useEffect(() => {
-		if (!open || !mounted || !list.current) return;
+	useOutside(refs, open, () => close(false));
+	// Focus moves in on every open, including one from outside, and returns on close once the menu really closes.
+	const focusIn = React.useEffectEvent(() => {
+		if (!list.current) return;
+		if (firstFocus.current === null) {
+			from.current = document.activeElement as HTMLElement | null;
+			external.current = true;
+		}
+		refocus.current = null;
 		const all = [...list.current.querySelectorAll<HTMLElement>(ITEM)].filter(
 			(el) => el.getAttribute("aria-disabled") !== "true",
 		);
@@ -167,9 +192,33 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 					? all[all.length - 1]
 					: all[0];
 		el?.focus({ preventScroll: true });
+	});
+	const focusBack = React.useEffectEvent(() => {
+		const inside = !!list.current?.contains(document.activeElement);
+		const back = refocus.current ?? inside;
+		const own = btn || trig.current;
+		const prev = from.current !== document.body ? from.current : null;
+		const t = contextMenu || external.current ? prev : own;
+		firstFocus.current = null;
+		external.current = false;
+		refocus.current = null;
+		if (!back) return;
+		if (t?.isConnected) t.focus();
+		else if (!contextMenu && own?.isConnected) own.focus();
+	});
+	const wasOpen = React.useRef(false);
+	React.useEffect(() => {
+		if (open && mounted && !wasOpen.current) {
+			wasOpen.current = true;
+			focusIn();
+		} else if (!open && wasOpen.current) {
+			wasOpen.current = false;
+			focusBack();
+		}
 	}, [open, mounted]);
 	const show = (where: string) => {
 		firstFocus.current = where;
+		external.current = false;
 		from.current = document.activeElement as HTMLElement | null;
 		setOpen(true);
 	};
@@ -180,7 +229,7 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 	};
 	const onMenuKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === "Tab") {
-			setOpen(false);
+			close(false);
 			return;
 		}
 		if (e.key.length === 1 && e.key !== " " && !e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -306,7 +355,7 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 				ref={trig}
 				onClick={(e) => {
 					setPt(null);
-					if (open) setOpen(false);
+					if (open) close(false);
 					else show(e.detail === 0 ? "first" : "menu");
 				}}
 				{...own}
@@ -318,7 +367,7 @@ export function DropdownMenu<Item extends DropdownMenuAction<Item> = DropdownMen
 					} else if (!btn && (e.key === "Enter" || e.key === " ")) {
 						e.preventDefault();
 						setPt(null);
-						if (open) setOpen(false);
+						if (open) close(false);
 						else show("first");
 					}
 				}}
