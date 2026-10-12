@@ -42,7 +42,7 @@ Weights: 400 / 500 / 600 / 700. Tracking: mono +0.08em, h4 −0.02, h3 −0.025,
 App screens (`density="app"` and `"compact"`) are text-heavy, so the body range steps down a notch:
 2xs 10.5 · xs 11 · sm 12 · md 14 · lg 15 · xl 17 · 2xl 20 (`tokens/_typography.scss`). Components size from
 the scale, so they all follow. App screens use **11, 12, 14, 17 and 20**; 30 and up are marketing steps.
-The app look also sets regular text at **450** (Inter Tight loads as a variable font, `fonts.css`) on a
+The app look also sets regular text at **450** (Geist loads as a variable font, `fonts.css`) on a
 softer ink (`--q-fg`, `--q-fg-body` mixed a quarter toward the next grey), so dense text holds without
 reading black on white.
 
