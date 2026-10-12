@@ -286,5 +286,6 @@
     "Stack": "direction?: \"row\" | \"column\" | \"row-reverse\" | \"column-reverse\"; gap?: number | \"lg\" | \"md\" | \"sm\" | \"xs\" | \"xl\" | \"2xl\" | \"none\"; align?: string & {} | \"center\" | \"start\" | \"end\" | \"-moz-initial\" | \"inherit\" | \"initial\" | \"revert\" | \"revert-layer\" | \"unset\" | \"flex-end\" | \"flex-start\" | \"self-end\" | \"self-start\" | \"anchor-center\" | \"baseline\" | \"normal\" | \"stretch\"; justify?: \"flex-start\" | \"center\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\" | \"stretch\"; wrap?: boolean; animated?: boolean; as?: \"symbol\" | \"object\" | \"video\" | \"circle\" | \"style\" | \"form\" | \"slot\" | \"title\" | \"line\" | \"progress\" | \"a\" | \"abbr\" | \"address\" | \"area\" | \"article\" | \"aside\" | (string & {}) /* +162 more */; children?: React.ReactNode; className?: string; style?: React.CSSProperties;",
     "RunScrubber": "steps: RunScrubberStep[]; value?: number; defaultValue?: number; onChange?: (index: number) => void; label?: string; agent?: React.ReactNode; caption?: (index: number, step: RunScrubberStep) => React.ReactNode; actions?: React.ReactNode | ((index: number, step: RunScrubberStep | undefined) => React.ReactNode); className?: string; style?: React.CSSProperties;"
   },
-  "readmeHeader": ".design-sync/conventions.md"
+  "readmeHeader": ".design-sync/conventions.md",
+  "artifactUrl": "https://claude.ai/artifact/LrmcBHre7a1pe4qhs3FCvT"
 }

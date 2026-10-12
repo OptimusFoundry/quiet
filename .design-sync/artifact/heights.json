@@ -1,0 +1,612 @@
+{
+	"Accordion": {
+		"key": "7c91c1383de7faf95534ba60a772a2a1bef740c6f901aa2cad10b6eae7d33ed9",
+		"h": 1197,
+		"width": 900
+	},
+	"AgentRun": {
+		"key": "8e4e95035b0e7864224eb7f65b832a0499757623a879b8683187cb875c4a362c",
+		"h": 1251,
+		"width": 900
+	},
+	"Alert": {
+		"key": "164a7bac1f6e91385d3cc184b0f65201aaafd515648940605714f224419b89d0",
+		"h": 1035,
+		"width": 900
+	},
+	"AnomalyRibbon": {
+		"key": "558cc46dde0fb2511cf641d8d3cd3cdad64ee78af699db0afd9a24d38aabd2c3",
+		"h": 650,
+		"width": 900
+	},
+	"Approval": {
+		"key": "be6ea1848033a8b3cc6133f8a1c859de10c98e5ae543ac91601c77d42e5514e0",
+		"h": 1008,
+		"width": 900
+	},
+	"ArrowLink": {
+		"key": "e37f524cccdd03d86ea56008e92cf2b7d03f151b39bd672a8691c9fb5925a408",
+		"h": 299,
+		"width": null
+	},
+	"AspectRatio": {
+		"key": "e738a1612e5fbdd687b03becaf679f6465980078e9b3afc93d0f77f1d393be78",
+		"h": 1035,
+		"width": 900
+	},
+	"Attachment": {
+		"key": "5eeccf0a88f3ec009f4af84b486933c33ff0a6c6c62148cd5ae6fd164546b0c8",
+		"h": 752,
+		"width": 900
+	},
+	"Avatar": {
+		"key": "0ebfccb65dc4777e9de2d2c75bf8a1eac04f3923987d9b04a02d40a2ad40e1c6",
+		"h": 634,
+		"width": 900
+	},
+	"Badge": {
+		"key": "9a4c86d109bd9c7fb657bcfdce5f6523a849ea58b199535f48b18160d2dc6204",
+		"h": 250,
+		"width": null
+	},
+	"Banner": {
+		"key": "9c8f1755c3e7df53fcd4738828c81441657c3b083196dec04acdc3975e15f627",
+		"h": 915,
+		"width": 900
+	},
+	"BarChart": {
+		"key": "d56e84565d609cee5ffb8b36b081bba759b066247adaa53b84ad18c34bd221c1",
+		"h": 1352,
+		"width": 900
+	},
+	"BorderProgress": {
+		"key": "726b1174648f14c7c4140bbd3c57a2f64f6ce9a94d9e8bda1014c277d35acd39",
+		"h": 896,
+		"width": null
+	},
+	"Breadcrumb": {
+		"key": "42cff1d9c668653bfba762720cc533bdea7f74c6dea61c4df0454f5bf75b1a44",
+		"h": 266,
+		"width": null
+	},
+	"BudgetLeash": {
+		"key": "f1609e401b3e5fe1395498df775f12bdd6d494db30cf8ff30d7827676a37cdf0",
+		"h": 845,
+		"width": 900
+	},
+	"Button": {
+		"key": "a4079d0ce70f794df152a5f8d491d83adc1cd3b3309861faa0e319a73bf79118",
+		"h": 476,
+		"width": 900
+	},
+	"ButtonGroup": {
+		"key": "1be320ad44cb1940efdc3fc2d17ae8d2c064b0161f57e019f6ed8245f1711768",
+		"h": 619,
+		"width": 900
+	},
+	"Card": {
+		"key": "d4947ca427b4ba78e214f5c6ecb18e0cb786a3e53e0a49fb4e7d8bbf2cea61d5",
+		"h": 1169,
+		"width": 900
+	},
+	"ChartLegend": {
+		"key": "f995d255c6815b352b76b5dcaa9f93027a70c08925a150caec6c24df0eb75187",
+		"h": 683,
+		"width": 900
+	},
+	"ChartTable": {
+		"key": "7be812552fb94cb340988b1c0adb3f79c1add49d917f98db8b49a0d5446e3bca",
+		"h": 225,
+		"width": null
+	},
+	"ChartTooltip": {
+		"key": "9134e11e72e42d891a58665d552ee9f4e0d015c867c01d6a706759634a932061",
+		"h": 406,
+		"width": null
+	},
+	"ChatComposer": {
+		"key": "dbf3911a4352778c87f163f9ffd21922ab59f0b6211c875811750aba02bb4c40",
+		"h": 839,
+		"width": 900
+	},
+	"ChatDivider": {
+		"key": "cfe53befd866e873289a370b1794430e447456e2df4a0fbba420d037e8d38025",
+		"h": 735,
+		"width": 900
+	},
+	"ChatMessage": {
+		"key": "58891a4c7cb4020093321d8005bd598dd3b2ac7bfe910f7f53778e535e4be102",
+		"h": 1262,
+		"width": 900
+	},
+	"ChatThread": {
+		"key": "b3192de327e214d68e06eaaafb88297ca344bf4ea17647be03440558abf12cfa",
+		"h": 1475,
+		"width": 900
+	},
+	"Checkbox": {
+		"key": "13e842fa8b91dbababc0c2267753c8ede3c5a7aa71a4f669d34e364c61e01ec7",
+		"h": 545,
+		"width": null
+	},
+	"Checkpoints": {
+		"key": "1dd32e686aeaf7a91a36a0357a74ed134772f072256406adda0935530de65362",
+		"h": 666,
+		"width": 900
+	},
+	"ClaudeMark": {
+		"key": "8d07edd78129437f38ae7c9253c9149f6d23084ea5660bb8ff1e9f2243f858ca",
+		"h": 305,
+		"width": 900
+	},
+	"CodeBlock": {
+		"key": "cb887a294a1a37ff39d4cbfec93bea7d8f163e003e6cf91d6e0ee10eb76dc536",
+		"h": 696,
+		"width": 900
+	},
+	"Col": {
+		"key": "e3f6f79bd9abf3fad6f1d3a8c0bddba2d79671c570052d2f50e0e981417ec163",
+		"h": 1042,
+		"width": 900
+	},
+	"CommandPalette": {
+		"key": "41012cc1567c83e5ddb387b054f3c93374683fce28b35ef9cadd2fd3564b2541",
+		"h": 680,
+		"width": 760
+	},
+	"ConsensusSlider": {
+		"key": "34cb4faf211a0d23a06853824bc70a1dd87717931fc606429cb1a4ffdb16b67b",
+		"h": 849,
+		"width": 900
+	},
+	"Container": {
+		"key": "c8ef189b75470dd7b4af38bbb0b05d554eb7c19b3453e7b780b16471832e7621",
+		"h": 658,
+		"width": 900
+	},
+	"CostMeter": {
+		"key": "d24cb4e8294b4c15ab8b8cb45396f24efefae3d10e74bda7ec10897206a5369d",
+		"h": 697,
+		"width": 900
+	},
+	"DataGrid": {
+		"key": "7f7d1f201f64d5ad6d0235c6178dac7ebc178a528750c58d61435e8e417e845b",
+		"h": 1419,
+		"width": 900
+	},
+	"DatePicker": {
+		"key": "1a5b1c737597c0d7f9a941f9b335403b762037c18471fcc08890aeecf182a70e",
+		"h": 1133,
+		"width": null
+	},
+	"DecayingBadge": {
+		"key": "d5e0913d8d02d0de28445d3a6f70653b734cc5de7c61b552bdd73524ef450b56",
+		"h": 374,
+		"width": null
+	},
+	"DescriptionList": {
+		"key": "68a6f3ed394d1883491baed44ac1c54ca404e41b6a24b050f478f35587863605",
+		"h": 1315,
+		"width": 900
+	},
+	"Dialog": {
+		"key": "464230eae50bb345b22c79b1dc68f93f634e09d622ee0685cc3113d8ea85fa09",
+		"h": 560,
+		"width": 760
+	},
+	"DonutChart": {
+		"key": "345b24015d0f03b2dc8355c179623679a82bd2fea76fc96c384452844d031764",
+		"h": 796,
+		"width": 900
+	},
+	"DoubtMarker": {
+		"key": "79138dc0bd386d4171bd4db30c91c200a18cc327b3bf0ab81d84c7cb4c5cbf41",
+		"h": 442,
+		"width": null
+	},
+	"DraftDiff": {
+		"key": "b57a460c207fa62a6da77ba612ae1d3bcf0b058a879e4adac537d4de30490297",
+		"h": 736,
+		"width": 900
+	},
+	"Drawer": {
+		"key": "e736f6c66a18d8a598752a0e570e88eb3cecf997354310525987046411467ac7",
+		"h": 560,
+		"width": 900
+	},
+	"Dropdown": {
+		"key": "1d813ae4b3a1a396027aad4b19f306c7625e0c9b121c4ca91d3a3c6ab0398a1d",
+		"h": 1004,
+		"width": null
+	},
+	"DropdownMenu": {
+		"key": "8ed1d7f6cf096766507dd46c257e5a1902b24749d7798012e8559ca3bdcaa4df",
+		"h": 886,
+		"width": null
+	},
+	"ElasticSlider": {
+		"key": "c40acc2372b844431058c20974683d42df4bb7c9163e3172f819e673eaab1edd",
+		"h": 422,
+		"width": null
+	},
+	"EmptyState": {
+		"key": "be8aa7f01f1808bc64a09a0082a3c93d31e7180b2f6c3ef95336c8016710d068",
+		"h": 1414,
+		"width": 900
+	},
+	"EntityLink": {
+		"key": "77490a1b288c97386becde432a75b1c6c14ffe913c3d3ebc3f97c76a9540446c",
+		"h": 776,
+		"width": 900
+	},
+	"Eyebrow": {
+		"key": "ab3ece860d5de6edf5643208abd0b210b767ae29a83a49ba696416a5d68b214b",
+		"h": 266,
+		"width": null
+	},
+	"FileCard": {
+		"key": "07e89deddc4b867a4a096d7d4480e8d54300b1fec220b16bf7d8f580af5f73bb",
+		"h": 1345,
+		"width": 900
+	},
+	"FileUpload": {
+		"key": "1f4543708424977801efce382b6e8c9fe9780df565765ef03bd22731cfc0a02a",
+		"h": 830,
+		"width": null
+	},
+	"FilterTabs": {
+		"key": "18b398d79248ae31201a137808f2b1955e08ae973f95a943894e530f44a093d5",
+		"h": 274,
+		"width": null
+	},
+	"FormField": {
+		"key": "33f3dbc6853ffc76eb94e42c6dfa7801621ae1eaad1b51e392e9836f3082f09d",
+		"h": 582,
+		"width": null
+	},
+	"FormHint": {
+		"key": "4557e1a80ddde6d77b8f6e7e73fba5891539f6261f98560089b6673e83a75bf5",
+		"h": 368,
+		"width": null
+	},
+	"GhostFuture": {
+		"key": "1cd02308ff10ffd6b653895982cc63072428678af47937443c7ccb930ab7dc48",
+		"h": 969,
+		"width": 900
+	},
+	"Grid": {
+		"key": "3235687b68901ce3c3eeb19ea8a48027c580db5c3220644e2c6235468dcdd10b",
+		"h": 1354,
+		"width": 900
+	},
+	"GridOverlay": {
+		"key": "2530e6869efa41bbca14f5022bcd284f2083a7192ce33795420cb5367b1a7733",
+		"h": 480,
+		"width": 900
+	},
+	"Headline": {
+		"key": "af595d4fd7049885138300c89b1d70a78c3b039b34dc1cdd5df8a6fe46d20b25",
+		"h": 377,
+		"width": null
+	},
+	"HoldButton": {
+		"key": "ce6e963422e5e1a6cbacf5950968d6c16f40f37561030161096f4b8b410d62da",
+		"h": 476,
+		"width": 900
+	},
+	"HonestButton": {
+		"key": "c69a9d827efd28c84d01a6b6ea5afb541cc72f85f739d5a3c1f7cdb0fb17d218",
+		"h": 478,
+		"width": 900
+	},
+	"Icon": {
+		"key": "9a46347a23321f96bdfe1854978b31c1403ea39f712c234f127700675a2fbd42",
+		"h": 316,
+		"width": null
+	},
+	"Input": {
+		"key": "11455b18f9fb6347b60282b50a6450bdbfa4806f85638a35d5cedb78bdf6df02",
+		"h": 457,
+		"width": null
+	},
+	"IntentBar": {
+		"key": "774c02b4c67bc956a40b48efc17d7c968b70781efb3ff56613e9ff74847a712a",
+		"h": 646,
+		"width": 900
+	},
+	"Label": {
+		"key": "ce92289d7046d54fc616ddf124f535356483f65245fe21f97d8e858151029ab4",
+		"h": 401,
+		"width": null
+	},
+	"LineageChip": {
+		"key": "94ba01b26a66749bc4ae0d5ca2bdf16035ad2b50c5f8ababd5dac95caafb004b",
+		"h": 646,
+		"width": null
+	},
+	"LineChart": {
+		"key": "c1dbe56f5c8ce236b96e95cec8d0be97fd3b5257f08f019afbf14eef2ddb8a31",
+		"h": 1254,
+		"width": 900
+	},
+	"Link": {
+		"key": "223dd7d21ee55e2fe14c920143661c0f6237277a2f88a1e7ac4b298dd56e9971",
+		"h": 360,
+		"width": null
+	},
+	"List": {
+		"key": "96b5266be3de06056f01733020a3df384093df8d212c183b032596707a393659",
+		"h": 1119,
+		"width": 900
+	},
+	"MultiSelect": {
+		"key": "a7e637b7b8b4dc17b51fc85666acee7dd71b351c637aa14b301df381ec467fb7",
+		"h": 899,
+		"width": null
+	},
+	"NarratedChart": {
+		"key": "e5b527b48732527f348312bb3ddb1d90c695e2026b42edea51cd8be23a999b0e",
+		"h": 947,
+		"width": 900
+	},
+	"NavBar": {
+		"key": "f4b3ec4a90daa45940f23fa0d673fc8e04a6cfaa87bd12fc3f2af4347b586c90",
+		"h": 296,
+		"width": 900
+	},
+	"PageHeader": {
+		"key": "d4b017745999debe05a5b26ac108864e2706f462c22c14e0d00c362cadf89375",
+		"h": 886,
+		"width": 900
+	},
+	"PageHero": {
+		"key": "ac09ce830b6c8cd7c2f12d57508228d17f91edc20b5a1fe9cc2a5b201aaaeee9",
+		"h": 957,
+		"width": 900
+	},
+	"PageShell": {
+		"key": "f1905f55367e31cd44cbf932410ddd5daa7cd74d25001517b44fe2bb3711b96f",
+		"h": 2039,
+		"width": 900
+	},
+	"PageTransition": {
+		"key": "4aba9ff4ecb9377210756d4be285431b8439cbb973ae65b8d50c96d68f257847",
+		"h": 593,
+		"width": 900
+	},
+	"Pagination": {
+		"key": "3e9737eec1aedc0e8de9538f9425cb31420e669e90f47eddd1c707aff1a8eefa",
+		"h": 784,
+		"width": 900
+	},
+	"Panel": {
+		"key": "6a71ebf13a0557df06a18d9b231a7a8587327e7fe0a9cad2356fd0530b8ee42e",
+		"h": 1278,
+		"width": 900
+	},
+	"Popover": {
+		"key": "378a02aff6fd8011c0128ed5fc1d9def9a230b9b979f34dec308201260f05f25",
+		"h": 1075,
+		"width": 900
+	},
+	"ProbabilityToggle": {
+		"key": "c88cc08ca57ad755c74040bbc1181864b8d25e8733f986ecaa8d0aeee9ce003a",
+		"h": 603,
+		"width": 900
+	},
+	"ProcessStep": {
+		"key": "428281f08e717757c5b317ef54f63ef25ab657273cc86b76391f5b9bbffb1b22",
+		"h": 635,
+		"width": 900
+	},
+	"Progress": {
+		"key": "f381a3fed36240416a3b23bd3b12f2658027e8f6304b80eddda38c01e18d619e",
+		"h": 549,
+		"width": 900
+	},
+	"PromptSuggestions": {
+		"key": "32b8287d1c257cacd0101bc5ff440719a3f5316233ee2f2663967a95cccfc782",
+		"h": 366,
+		"width": 900
+	},
+	"QuietRoot": {
+		"key": "cd40534bb9f469265ecf39b27a32b395237bfaf48fa090db114cc009ed4c6c7f",
+		"h": 1211,
+		"width": 900
+	},
+	"Radio": {
+		"key": "1faa51d1a651e653feb81292b92b4a24e0f2fac1bb6292b60422f13fbafce864",
+		"h": 653,
+		"width": null
+	},
+	"Receipt": {
+		"key": "26d06158c4bfc4d4c67f1bbcf6b9a1f66085481aab15e451e575000379705e0f",
+		"h": 766,
+		"width": 900
+	},
+	"Rule": {
+		"key": "8a6f64acf7ff31661d85aaf12efab3092ac10ed10c8a4b433dda9dce1340876a",
+		"h": 381,
+		"width": null
+	},
+	"RunScrubber": {
+		"key": "4dcbd87190ce9104eab508f84c533368f3c5d8b7b5b28695b41f359c50d743ad",
+		"h": 715,
+		"width": 900
+	},
+	"ScopeGrant": {
+		"key": "369f5b5ce21383ab1a024df12debd68c664972d8e89121505ace9ad8d8a6525e",
+		"h": 1291,
+		"width": 900
+	},
+	"SectionHeader": {
+		"key": "16706bb114ef138f2e8d28b3affd14609f5a3d6f504f45dd0df73a9fffd7df35",
+		"h": 528,
+		"width": 900
+	},
+	"Select": {
+		"key": "06a0fbd1169c56489b08b90f8cd13dcbc8be65ebf7ad503157f523b11b12d20e",
+		"h": 502,
+		"width": null
+	},
+	"Sidebar": {
+		"key": "d1dd67bcbde2e0cf63162de68a53933a7d715e58f13b9ee4254f73e1dd4abfdd",
+		"h": 1086,
+		"width": null
+	},
+	"SidebarProvider": {
+		"key": "455adddd2ffa1a7f36a7c02724faa0fd9e3b48c36af6ebdbc3bb379dc3e0544c",
+		"h": 560,
+		"width": 760
+	},
+	"SidebarTrigger": {
+		"key": "91cd2a1d4cbd636151d941b51316fce80c2ebe2d6ab0c5f7ea509b1d4437f21c",
+		"h": 264,
+		"width": 900
+	},
+	"Skeleton": {
+		"key": "3462c6cf9f0fa3a2d2c67090d46a7db49596378d27ea2e210695190409d3cfe8",
+		"h": 797,
+		"width": 900
+	},
+	"Slider": {
+		"key": "fb4532fc8a70e0379107749683ba07e1c5fb10fee8f3e5dd88d61aded0133f5a",
+		"h": 407,
+		"width": null
+	},
+	"Sparkline": {
+		"key": "7ee6db771e094ddaa63969707a1b3d77c3b6431f52297d1d1ec66683e852094e",
+		"h": 363,
+		"width": null
+	},
+	"Spinner": {
+		"key": "cf19f16be511384256036cfedaa7dccf75afac378ee8c593cba8c1cc4c61dadc",
+		"h": 302,
+		"width": null
+	},
+	"Stack": {
+		"key": "e994f6c673b0275b49e132dac4051d5475bd60440ba0d4e95bfc0cd630686a74",
+		"h": 497,
+		"width": null
+	},
+	"Stat": {
+		"key": "f3d62d6d4f949f5a3a91702f2b498c6cbed2c230e10de4a07ed2c4a00494f873",
+		"h": 323,
+		"width": null
+	},
+	"StatCard": {
+		"key": "69647ab79dbe85fa7f70446d449abb1c9c9f3de0d13f2fa23904f8f4d4c42133",
+		"h": 1088,
+		"width": 900
+	},
+	"StatusDot": {
+		"key": "20f24da9d8a5bd27c941ef554f2bd389be3d892028fda37dc7ef55836f234dce",
+		"h": 194,
+		"width": null
+	},
+	"StepIndicator": {
+		"key": "e4c13bbfb91d56a7d6d46c95f080b745525a0645588173ac248944ed402e707b",
+		"h": 946,
+		"width": 900
+	},
+	"Stepper": {
+		"key": "c01364715cf21c8c0bab6f89165224784dc3f64c366e20646dc2be0e3a202ffe",
+		"h": 492,
+		"width": null
+	},
+	"StreamingTable": {
+		"key": "a3e4a37acf978d58953d0fbf0046509fb16282c486cc8c64d47aa17a0fbb4eb5",
+		"h": 1020,
+		"width": 900
+	},
+	"Switch": {
+		"key": "546d1b278b4922dd58a81931381bb20e7724d2f4e5800fa06e564a388b5a1efb",
+		"h": 457,
+		"width": null
+	},
+	"Table": {
+		"key": "abdbf5304c8ddee967260e1c46411005586b531ff9b8505b78e7ca32e4829efd",
+		"h": 1043,
+		"width": 900
+	},
+	"TabPanel": {
+		"key": "f5f2e8c653f99d5ad97cdd7c0ffedbc03d5174cd0d2d5873af9f4f3fcd0a4200",
+		"h": 365,
+		"width": 900
+	},
+	"Tabs": {
+		"key": "1f466251f2610b49ff63c55d20e03a3ae57353205c3455793541820dca0817ff",
+		"h": 675,
+		"width": 900
+	},
+	"Tag": {
+		"key": "e7e72fd6af19bde4c5211351b381bedeeeae2b8f8ae91d95ef320a45d117a234",
+		"h": 494,
+		"width": null
+	},
+	"Text": {
+		"key": "585ce09489dc44da4c45858048d4e0defe201a7ddfd684d48f2fab1c1d710ccf",
+		"h": 816,
+		"width": null
+	},
+	"TextArea": {
+		"key": "50ac3495b09cb0a499303efa76b4dd3c69b104d4fa0d75615adb781dfee02d67",
+		"h": 481,
+		"width": null
+	},
+	"TextField": {
+		"key": "bb9ca8a99c0e81c70c2a7631da0e8244d843c08fa10ce43ff9e2ff9f11225521",
+		"h": 742,
+		"width": null
+	},
+	"ThemeProvider": {
+		"key": "ff0e5ffe1b89aa6ea137dcd815683da0563f10c50124aaa4191dbf2f5b276753",
+		"h": 658,
+		"width": 900
+	},
+	"ThresholdHandles": {
+		"key": "32486b79aefb3ff194668d688e8f373bb7019db7c922b1b587311327f5d8e9c7",
+		"h": 780,
+		"width": 900
+	},
+	"Toast": {
+		"key": "fd5958d26ef69c12181e768dc5ae9b89a4359b052fab9ae5580f2326652142e2",
+		"h": 832,
+		"width": 900
+	},
+	"Toaster": {
+		"key": "5f6659e2d7ff9ea80b864c22d3b80d01c330b0661288b5d37e23fe0be7784bb5",
+		"h": 560,
+		"width": 760
+	},
+	"ToolCall": {
+		"key": "7055bde67ebeac6d885a8cf3266593fb4ba53003873e6036b405529d5745ee9a",
+		"h": 1095,
+		"width": 900
+	},
+	"Tooltip": {
+		"key": "7f5acb4ff395ba2cf274f2f9771a57d6d84ce2fe3a1df244a98a435743e2284c",
+		"h": 406,
+		"width": null
+	},
+	"Transcript": {
+		"key": "13121b26b7a03e9e65f8f4925b2dc9b72d2d512366bdbe678ba2abf72a07167f",
+		"h": 1649,
+		"width": 900
+	},
+	"UncertaintyCell": {
+		"key": "7fe7d65ad0c9b335ed48f7ea7d74bd7ac370b19a2ea0a2d57cbac19681282945",
+		"h": 950,
+		"width": 900
+	},
+	"UndoRiver": {
+		"key": "87c5675ab0454dcd32f46f55d4c8ca103845297a373f00affb35c9549b9ca05c",
+		"h": 747,
+		"width": 900
+	},
+	"Wordmark": {
+		"key": "72fa0ed4a7f0581cc08126d181c6ac2a62931fd8f3e1a586e725c4a8af9d55a9",
+		"h": 381,
+		"width": 900
+	}
+}

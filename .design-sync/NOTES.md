@@ -1,5 +1,30 @@
 # design-sync notes — quiet → Claude Design ("Optimus Foundry quiet")
 
+## Where it lives now (2026-10-11)
+- [GENERAL] The design system moved from the Claude Design project (`projectId` in config.json,
+  `cabd6750-…`) to a **Design System artifact**: https://claude.ai/artifact/LrmcBHre7a1pe4qhs3FCvT
+  (namespace `Quiet`). The project is the old target; sync to the artifact.
+- Artifact layout (not the converter's): everything under `project/`. One flat folder per component,
+  `project/components/<Name>/{preview.html, preview.js, README.md, <Name>.d.ts}`, with no group dirs.
+  Also `components/bundle.{js,css}` (from `_ds_bundle.*`), `components/index.d.ts`, `fonts/`,
+  `guidelines/`, `README.md` and `design-system.json` (the index).
+- **How to sync:** the `sync-design-artifact` skill (`.claude/skills/`) with `scripts/design-artifact.mjs`.
+  It uploads only the files that changed and refuses to push over edits made in Claude Design. The steps
+  below are what `pack` does.
+- Mapping from `ds-bundle/`:
+  - `<Name>.prompt.md` becomes `README.md`.
+  - `<Name>.html` becomes `preview.html` + `preview.js`: the card script moves to `./preview.js`,
+    fonts link `../../fonts/fonts.css`, and the first line is the marker
+    `<!-- @dsCard group="…" height=N [width=W] -->`, with N the measured height.
+  - Project `README.md` = `conventions.md` + `---` + the bundle README.
+- Upload with the Artifact tool, `url` = the artifact, `root` = the local `dsart/` dir, ≤256 files per
+  publish. `.d.ts` needs `contentType: "text/plain"`. Write `project/design-system.json` last:
+  keep every key and change only `lastChange`.
+- The artifact's markdown renderer splits a list item that wraps onto an indented next line;
+  `pack` joins wrapped bullets in the project README.
+- Leftovers from the migration (`project/archived/`, `project/components/<group>/<Name>/*.jsx`) were
+  left as they were.
+
 ## Setup
 - [GENERAL] **Shape is `package`, not `storybook`**, though `.storybook/` exists: quiet's stories are not
   per-component (reference components live in one generated Catalog story; future/chat/charts are
