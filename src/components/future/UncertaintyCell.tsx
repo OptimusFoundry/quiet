@@ -50,7 +50,8 @@ export function UncertaintyCell({
 	const at = (v: number) =>
 		dMax === dMin ? 0 : Math.min(1, Math.max(0, (v - dMin) / (dMax - dMin)));
 	// "±620" when the error is symmetric, otherwise the bounds.
-	const range = error != null ? `±${fmt(error)}` : `${fmt(lo!)}–${fmt(hi!)}`;
+	// Built only for an uncertain value: a measured one has no low/high to format.
+	const range = !uncertain ? "" : error != null ? `±${fmt(error)}` : `${fmt(lo!)}–${fmt(hi!)}`;
 	const spoken = uncertain
 		? describe
 			? describe(value, lo, hi)

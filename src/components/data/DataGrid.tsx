@@ -55,6 +55,8 @@ export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = 
 	searchPlaceholder = "Filter rows",
 	pageSize = 10,
 	selectable = false,
+	selected,
+	defaultSelected,
 	onSelectionChange,
 	onRowClick,
 	loading = false,
@@ -68,7 +70,9 @@ export function DataGrid<Row = Record<string, unknown>, Key extends React.Key = 
 }: DataGridProps<Row, Key>) {
 	const [q, setQ] = React.useState("");
 	const [page, setPage] = React.useState(1);
-	const [sel, setSel] = React.useState<Key[]>([]);
+	// Selection is controlled by `selected`, else starts from `defaultSelected`.
+	const [innerSel, setSel] = React.useState<Key[]>(() => defaultSelected ?? []);
+	const sel = selected ?? innerSel;
 	const filtered = React.useMemo(
 		() =>
 			!q

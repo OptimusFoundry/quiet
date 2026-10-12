@@ -1,6 +1,7 @@
 // Headline — display/h2/h3/h4 with an italic accent and the molten period.
 // BEM: .q-headline, __accent(--molten), __period; --display, --h2, --h3, --h4.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -25,6 +26,17 @@
     --q-headline-h4-leading: var(--q-leading-snug);
     --q-headline-h4-tracking: var(--q-tracking-h4);
     --q-headline-h4-weight: var(--q-weight-semibold);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-headline-h2-font-size: var(--q-text-3xl);
+    --q-headline-display-font-size: var(--q-text-4xl);
+  }
+
+  @include app.reset {
+    --q-headline-h2-font-size: var(--q-text-6xl);
+    --q-headline-display-font-size: var(--q-text-display);
   }
 }
 

@@ -99,7 +99,7 @@
 
   // Product screens set in Geist and Geist Mono: wider and clearer than Inter Tight at 11–14px,
   // with a mono drawn to match. Small text on a soft ink gets a little more weight (variable fonts).
-  --q-font-sans: "Geist", "Inter", -apple-system, "Helvetica Neue", arial, sans-serif;
+  --q-font-sans: "Geist", -apple-system, "Helvetica Neue", arial, sans-serif;
   --q-font-mono: "Geist Mono", ui-monospace, "SF Mono", menlo, monospace;
   // Weight by role: body 450, names/labels/nav 550, strong 620, titles 650.
   --q-weight-regular: 450;

@@ -22,7 +22,7 @@ export interface PageHeaderProps
 	back?: { label: string; href: string };
 	/** Badges shown inline after the title, baseline-aligned. */
 	status?: React.ReactNode;
-	/** Key facts under the title, separated by a middle dot; wraps on narrow screens. Items may hold links. */
+	/** Key facts under the title, spaced apart (no separator marks); wraps on narrow screens. Items may hold links. */
 	meta?: React.ReactNode[];
 	/** Buttons for the page, right-aligned; wraps below the title on narrow screens. Put the primary last. */
 	actions?: React.ReactNode;

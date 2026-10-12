@@ -116,7 +116,9 @@
     text-wrap: balance;
   }
 
+  // The title's full stop follows the type role: shown on editorial pages, none in the app look.
   .q-empty-state__dot {
+    display: var(--q-period-display);
     color: var(--q-empty-state-dot-color);
   }
 

@@ -4,6 +4,7 @@
 // __hint(--error); --{size}, --filled, --full, --invalid, --disabled.
 // Open reads the combobox's aria-expanded; the active option reads data-active.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -339,6 +340,17 @@
 
     &--error {
       color: var(--q-multi-select-hint-error-fg);
+    }
+  }
+
+  // The app look: the field label is sans and sentence case like every other field's.
+  @include app.rules {
+    .q-multi-select__label {
+      font-family: var(--q-font-label);
+      font-size: var(--q-text-label);
+      font-weight: var(--q-weight-label);
+      letter-spacing: var(--q-tracking-label);
+      text-transform: var(--q-case-label);
     }
   }
 }

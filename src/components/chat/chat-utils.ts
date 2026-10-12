@@ -47,6 +47,8 @@ export function extension(name = "") {
 export function fileKind(name: string, type = "") {
 	const ext = extension(name);
 	if (DOC_KINDS[ext]) return DOC_KINDS[ext];
+	// An unknown kind is named by the file's own extension ("LOG"), then by the MIME subtype.
+	if (ext) return ext.slice(0, 4).toUpperCase();
 	const sub = String(type).split("/")[1];
 	return sub ? sub.replace(/^x-/, "").slice(0, 4).toUpperCase() : "FILE";
 }

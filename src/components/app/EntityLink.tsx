@@ -18,7 +18,7 @@ export interface EntityLinkProps
 	href: string;
 	/** The record's name. Optional when `id` names it. */
 	children?: React.ReactNode;
-	/** Short noun for the record ("Run", "Project"), shown muted before the name. With `icon`, the
+	/** Short noun for the record ("Run", "Project"), shown before the name in the link colour (one link, one colour). With `icon`, the
 	 * icon stands for it and the kind is read by screen readers only. */
 	kind?: string;
 	/** Leading glyph or Icon, in the link colour. Decorative. */

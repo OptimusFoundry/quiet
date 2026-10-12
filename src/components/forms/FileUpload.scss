@@ -3,6 +3,7 @@
 // __row, __row-main, __file, __name, __meta(--error), __done, __remove, __progress,
 // __progress-fill; --disabled. Dragging reads data-dragging; --_progress (inline) is upload %.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -228,5 +229,16 @@
     width: var(--_progress);
     background: var(--q-file-upload-progress-fill);
     transition: width var(--q-file-upload-progress-dur) var(--q-ease-linear);
+  }
+
+  // The app look: the field label is sans and sentence case like every other field's.
+  @include app.rules {
+    .q-file-upload__label {
+      font-family: var(--q-font-label);
+      font-size: var(--q-text-label);
+      font-weight: var(--q-weight-label);
+      letter-spacing: var(--q-tracking-label);
+      text-transform: var(--q-case-label);
+    }
   }
 }

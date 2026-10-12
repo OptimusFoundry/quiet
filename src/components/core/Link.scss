@@ -97,5 +97,10 @@
     .q-link:is(:hover, :focus-visible) {
       border-bottom-color: currentcolor;
     }
+
+    // underline="none" opts out of the resting and hover underline.
+    .q-link.q-link--underline-none {
+      border-bottom-color: transparent;
+    }
   }
 }

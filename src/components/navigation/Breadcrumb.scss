@@ -23,10 +23,12 @@
   // The app look (styles/_app.scss).
   @include app.look {
     --q-breadcrumb-crumb-fg-hover: var(--q-accent-fg);
+    --q-breadcrumb-lg-font-size: var(--q-text-sm);
   }
 
   @include app.reset {
     --q-breadcrumb-crumb-fg-hover: var(--q-accent);
+    --q-breadcrumb-lg-font-size: var(--q-text-xs);
   }
 }
 

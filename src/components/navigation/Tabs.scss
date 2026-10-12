@@ -63,6 +63,7 @@
     --q-tabs-line-indicator: var(--q-accent);
     --q-tabs-pill-fg-selected: var(--q-fg-on-accent);
     --q-tabs-pill-bg-selected: var(--q-accent-bg);
+    --q-tabs-lg-font-size: var(--q-text-sm);
   }
 
   @include app.reset {
@@ -70,6 +71,7 @@
     --q-tabs-line-indicator: var(--q-border-emphasis);
     --q-tabs-pill-fg-selected: var(--q-fg-on-inverse);
     --q-tabs-pill-bg-selected: var(--q-bg-inverse);
+    --q-tabs-lg-font-size: var(--q-text-xs);
   }
 }
 
