@@ -11,7 +11,7 @@
     --q-transcript-gap: var(--q-space-inline);
     --q-transcript-session-radius: var(--q-radius-lg);
     --q-transcript-head-bg: var(--q-bg-subtle); // a session's head is a ground; its thread sits below
-    --q-transcript-head-bg-hover: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle));
+    --q-transcript-head-bg-hover: var(--q-bg-subtle-hover);
     --q-transcript-head-px: var(--q-space-stack);
     --q-transcript-head-py: var(--q-space-1-5);
     --q-transcript-label-fg: var(--q-fg);

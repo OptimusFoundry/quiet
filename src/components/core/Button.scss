@@ -36,7 +36,7 @@
     --q-button-outline-bg-hover: var(--q-bg-subtle);
     --q-button-ghost-fg: var(--q-fg);
     // A soft grey wash, visible on white and on the warm ground alike.
-    --q-button-ghost-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-button-ghost-bg-hover: var(--q-bg-hover);
     --q-button-destructive-fg: var(--q-fg);
     --q-button-destructive-border: var(--q-border-strong);
     --q-button-destructive-hover: var(--q-accent-fg);

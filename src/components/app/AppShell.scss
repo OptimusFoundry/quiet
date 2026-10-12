@@ -16,7 +16,7 @@
     --q-app-shell-panel-radius: var(--q-radius-md);
     --q-app-shell-panel-shadow: var(--q-shadow-1);
 
-    --q-app-shell-nav-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-app-shell-nav-bg-hover: var(--q-bg-hover);
     --q-app-shell-nav-close-offset: var(--q-space-0-5); // (switcher row 40 − button 32) / 2
     --q-app-shell-sidebar-z: var(--q-z-raised); // above the panel: a collapsed rail's menus open over it
 

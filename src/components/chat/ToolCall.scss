@@ -7,7 +7,7 @@
   :root,
   [data-theme] {
     --q-tool-call-bg: var(--q-bg-subtle);
-    --q-tool-call-bg-hover: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle));
+    --q-tool-call-bg-hover: var(--q-bg-subtle-hover);
     --q-tool-call-radius: var(--q-radius-md);
     --q-tool-call-px: var(--q-space-1-5);
     --q-tool-call-height: var(--q-control-md);

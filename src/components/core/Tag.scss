@@ -25,7 +25,7 @@
     --q-tag-avatar-pl: var(--q-space-0-25);
     // A soft grey ground, no edge: visible on white and on the warm ground alike.
     --q-tag-fg: var(--q-fg-body);
-    --q-tag-bg: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-tag-bg: var(--q-bg-well);
     --q-tag-ink-fg: var(--q-fg);
     --q-tag-ink-bg: color-mix(in srgb, var(--q-fg) 9%, transparent);
     --q-tag-bg-hover: var(--q-tag-ink-bg);

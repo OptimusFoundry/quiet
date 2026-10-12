@@ -10,6 +10,10 @@
   // lighter ground of its own (themes/_foundry.scss); a fallback to a 25 step here would inherit
   // foundry's from :root into every other theme.
   --q-bg-subtle: color-mix(in srgb, var(--q-accent) 0.5%, var(--q-gray-50));
+  // Washes of the ink, so they read on white, on --q-bg-subtle and in a dark theme alike.
+  --q-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent); // hover and pressed on any ground
+  --q-bg-subtle-hover: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle)); // a warm ground, hovered
+  --q-bg-well: color-mix(in srgb, var(--q-fg) 4%, transparent); // a resting track or chip ground
   // Strong fills (tooltips, dark strips) in the soft ink, never near-black. Resolved where declared,
   // so a dark theme's inverse is its own light ink.
   --q-bg-inverse: var(--q-fg);
@@ -58,10 +62,10 @@
   --q-status-success-fg: var(--q-fg);
   --q-status-success-bg: var(--q-bg-subtle);
   --q-status-success-border: var(--q-bg-subtle);
-  --q-status-warning-fg: var(--q-accent);
+  --q-status-warning-fg: var(--q-accent-fg); // status text: AA, unlike the raw accent
   --q-status-warning-bg: color-mix(in srgb, var(--q-accent) 3%, var(--q-bg));
   --q-status-warning-border: var(--q-status-warning-bg);
-  --q-status-error-fg: var(--q-accent);
+  --q-status-error-fg: var(--q-accent-fg);
   --q-status-error-bg: color-mix(in srgb, var(--q-accent) 3%, var(--q-bg));
   --q-status-error-border: var(--q-accent-border);
 }

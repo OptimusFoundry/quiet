@@ -34,7 +34,7 @@
     --q-list-item-gap: var(--q-space-2);
     --q-list-item-divider: transparent;
     --q-list-item-bg-hover: var(--q-bg-subtle);
-    --q-list-item-bg-hover-bordered: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle));
+    --q-list-item-bg-hover-bordered: var(--q-bg-subtle-hover);
     --q-list-item-bg-selected: var(--q-accent-subtle);
     --q-list-item-radius: var(--q-radius-sm);
     --q-list-item-bleed: var(--q-space-1); // interactive rows bleed past the text edge

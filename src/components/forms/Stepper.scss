@@ -19,7 +19,7 @@
     --q-stepper-lg-field-font-size: var(--q-text-lg);
     --q-stepper-button-fg: var(--q-fg);
     --q-stepper-button-fg-off: var(--q-fg-subtle);
-    --q-stepper-button-bg-hover: color-mix(in srgb, var(--q-fg) 5%, transparent);
+    --q-stepper-button-bg-hover: var(--q-bg-hover);
     --q-stepper-border-focus: var(--q-accent);
     --q-stepper-ring-focus: var(--q-ring-soft);
     --q-stepper-field-min-width: var(--q-space-5);

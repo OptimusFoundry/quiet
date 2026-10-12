@@ -19,7 +19,7 @@
     --q-notice-chip-urgent-bg-hover: var(--q-accent-subtle);
     --q-notice-chip-urgent-mark: var(--q-accent);
     --q-notice-chip-info-bg: var(--q-bg-subtle);
-    --q-notice-chip-info-bg-hover: color-mix(in srgb, var(--q-fg) 6%, var(--q-bg));
+    --q-notice-chip-info-bg-hover: var(--q-bg-subtle-hover);
     --q-notice-chip-info-mark: var(--q-fg-muted);
   }
 }

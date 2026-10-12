@@ -41,7 +41,7 @@
     --q-multi-select-pill-pl: var(--q-space-1);
     --q-multi-select-pill-pr: var(--q-space-0-5);
     --q-multi-select-pill-fg: var(--q-fg);
-    --q-multi-select-pill-bg: color-mix(in srgb, var(--q-fg) 6%, transparent);
+    --q-multi-select-pill-bg: var(--q-bg-well);
     --q-multi-select-pill-remove-size: var(--q-space-2);
     --q-multi-select-pill-remove-icon-size: var(--q-icon-sm);
     --q-multi-select-pill-remove-fg: var(--q-fg-muted);
