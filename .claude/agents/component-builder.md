@@ -7,7 +7,7 @@ tools: Read, Write, Edit, Bash, Glob, Grep
 You build quiet components. Read `AGENTS.md` and `.claude/skills/new-component/SKILL.md` first, and follow them exactly.
 
 Scope:
-- **Write only** to the files of the component you were given: `src/components/<group>/<Name>.{tsx,scss}`, its story and story `.scss` (where the skill says), and an icon added to `src/components/app/icons.ts` if it needs one. Running `npm run gen` may rewrite `src/index.ts` and `src/styles/tokens.generated.*`; that's expected.
+- **Write only** to the files of the component you were given: `src/components/<group>/<Name>.{tsx,scss}`, its story and story `.scss` (where the skill says), and an icon added to `src/components/core/icons.ts` if it needs one. Running `npm run gen` may rewrite `src/index.ts` and `src/styles/tokens.generated.*`; that's expected.
 - **Never edit** other components, tokens or themes. If one of them needs a change, stop and say so.
 - **Never** git commit, stash, reset, checkout or push. Other agents and sessions share this working tree.
 

@@ -1,10 +1,12 @@
-// Icon — a type glyph sized in em. BEM: .q-icon; --{size}, --custom-size (--_size), --{color}, --custom-color (--_color).
+// Icon — a stroke icon sized in em. BEM: .q-icon, __svg; --{size}, --custom-size (--_size), --{color},
+// --custom-color (--_color), --glyph (the deprecated text fallback).
 @use "../../styles/layers";
 
 @layer q.tokens {
   :root,
   [data-theme] {
     --q-icon-weight: var(--q-weight-medium);
+    --q-icon-stroke: 1.6; // the set is drawn for this weight
     --q-icon-default-fg: var(--q-fg);
     --q-icon-muted-fg: var(--q-fg-muted);
     --q-icon-quiet-fg: var(--q-fg-subtle);
@@ -48,5 +50,15 @@
     &--custom-color {
       color: var(--_color);
     }
+  }
+
+  .q-icon__svg {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: var(--q-icon-stroke);
   }
 }

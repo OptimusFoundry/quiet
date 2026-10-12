@@ -129,4 +129,4 @@ lives in that product's repo, built on quiet tokens and BEM.
 - `Table` and `DataGrid` in one block
 - `Headline size="display"` in apps
 - icon sets: quiet draws its own stroke icons (`AppIcon`). An icon quiet lacks is added to quiet's
-  set (`src/components/app/icons.ts`), not drawn from a second library.
+  set (`src/components/core/icons.ts`), not drawn from a second library.

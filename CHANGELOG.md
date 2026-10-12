@@ -2,6 +2,23 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Changed
+
+- **`Icon` draws quiet's stroke set** (the one `AppIcon` used) instead of unicode glyphs, sized in
+  em as before. The set moves to `src/components/core/icons.ts` and gains arrow-right, arrow-up,
+  arrow-down, arrow-up-right, arrow-down-right, chevron-up, chevron-left, chevrons-left,
+  chevrons-right, minus, dot, info, warning, copy, undo, upload, calendar, slash, enter and command.
+  The old glyph names expand, first, last, prev and next resolve to their stroke icons. New exports:
+  `ICONS`, `IconName`, `ICON_ALIASES`, `Icon.names`.
+- `AppIcon` stays (a bare `<svg>` sized in px); `APP_ICONS` and `AppIconName` are deprecated aliases
+  of `ICONS` and `IconName`.
+
+### Deprecated
+
+- `Icon glyph`: a text fallback for one release. `Icon.glyphs` is removed.
+
 ## 0.9.1
 
 Guidance only: no component or token changes. Re-sync to get the new `quiet` plugin and guidelines.

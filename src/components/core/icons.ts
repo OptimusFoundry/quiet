@@ -1,11 +1,11 @@
-// quiet's app icon set: stroke paths on a 24 grid, drawn for a 1.6 stroke with round caps and
-// joins. App look only; marketing keeps the reference's glyphs (core/Icon). Each value is one
-// path's `d`; circles are written as two arcs.
+// quiet's icon set: stroke paths on a 24 grid, drawn for a 1.6 stroke with round caps and joins.
+// Icon and AppIcon draw from it. Each value is one path's `d`; circles are written as two arcs.
+// Add a missing icon here, in the same hand, rather than reaching for another library.
 
 const circle = (cx: number, cy: number, r: number) =>
 	`M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
 
-export const APP_ICONS = {
+export const ICONS = {
 	// Navigation
 	home: "M4 10.5 12 4l8 6.5v9a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z",
 	inbox:
@@ -51,6 +51,45 @@ export const APP_ICONS = {
 	user: `${circle(12, 8.5, 3.5)}M5 19.5c1.2-3.3 3.8-5 7-5s5.8 1.7 7 5`,
 	help: `${circle(12, 12, 8.5)}M9.75 9.5a2.25 2.25 0 1 1 3.2 2.05c-.6.3-.95.8-.95 1.45v.5M12 16.5h.01`,
 	"sign-out": "M10 4.5H6A1.5 1.5 0 0 0 4.5 6v12A1.5 1.5 0 0 0 6 19.5h4M15 8l4 4-4 4M19 12H9",
+	// Arrows and chevrons
+	"arrow-right": "M5 12h14M13 6l6 6-6 6",
+	"arrow-up": "M12 19V5M6 11l6-6 6 6",
+	"arrow-down": "M12 5v14M6 13l6 6 6-6",
+	"arrow-up-right": "M7 17 17 7M8 7h9v9",
+	"arrow-down-right": "M7 7l10 10M17 8v9H8",
+	"chevron-up": "M6 15l6-6 6 6",
+	"chevron-left": "M15 6l-6 6 6 6",
+	"chevrons-left": "M11 6l-6 6 6 6M18 6l-6 6 6 6",
+	"chevrons-right": "M13 6l6 6-6 6M6 6l6 6-6 6",
+	// Marks and actions
+	minus: "M5 12h14",
+	dot: circle(12, 12, 1.25),
+	info: `${circle(12, 12, 8.5)}M12 11v5M12 8h.01`,
+	warning:
+		"M10.3 4.6 3.2 17a2 2 0 0 0 1.7 3h14.2a2 2 0 0 0 1.7-3L13.7 4.6a2 2 0 0 0-3.4 0zM12 9.5v4M12 17h.01",
+	copy: "M9 9h9.5a1.5 1.5 0 0 1 1.5 1.5V19a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 9 19zM15 9V5.5A1.5 1.5 0 0 0 13.5 4h-8A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15H9",
+	undo: "M9 14 4.5 9.5 9 5M4.5 9.5H14a5.5 5.5 0 0 1 0 11h-3",
+	upload: "M12 15V4M7.5 8.5 12 4l4.5 4.5M4.5 15v3.5A1.5 1.5 0 0 0 6 20h12a1.5 1.5 0 0 0 1.5-1.5V15",
+	calendar:
+		"M5.5 5.5h13A1.5 1.5 0 0 1 20 7v11.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5V7a1.5 1.5 0 0 1 1.5-1.5zM4 10h16M8.5 3.5v4M15.5 3.5v4",
+	slash: "M15 4 9 20",
+	enter: "M19 5v6a3 3 0 0 1-3 3H5M9 10l-4 4 4 4",
+	command:
+		"M9 9V6.5A2.5 2.5 0 1 0 6.5 9zm0 0h6M9 9v6m6-6V6.5A2.5 2.5 0 1 1 17.5 9zm0 0v6m0 0H9m6 0v2.5a2.5 2.5 0 1 0 2.5-2.5zm-6 0v2.5A2.5 2.5 0 1 1 6.5 15z",
 } as const;
 
-export type AppIconName = keyof typeof APP_ICONS;
+export type IconName = keyof typeof ICONS;
+
+/** Older glyph names, drawn by the stroke icon they meant. */
+export const ICON_ALIASES: Record<string, IconName> = {
+	expand: "arrow-down-right",
+	first: "chevrons-left",
+	last: "chevrons-right",
+	prev: "chevron-left",
+	next: "chevron-right",
+};
+
+/** @deprecated Use ICONS. */
+export const APP_ICONS = ICONS;
+/** @deprecated Use IconName. */
+export type AppIconName = IconName;

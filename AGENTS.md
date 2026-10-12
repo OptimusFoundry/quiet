@@ -128,8 +128,8 @@ colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `
 inside; the product wires it to Claude). Stories: Charts, Chat.
 
 And `src/components/app/`: SaaS screen parts — the frame (`AppShell`: Sidebar on a canvas, inset main
-panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppIcon` (quiet's own stroke
-icon set, `icons.ts`), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
+panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppIcon` (a bare
+`<svg>` from quiet's stroke icon set, `core/icons.ts`, which `Icon` draws too), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
 `Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
 
 Single own components in a reference group (today `feedback/Toaster`) get their own stories
