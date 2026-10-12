@@ -6,9 +6,10 @@
 :root,
 [data-theme] {
   --q-bg: var(--q-gray-0);                    // page and card ground
-  // Panels and hover fills: barely off white (#fcfbfb in foundry), warmed by 0.5% of the accent.
-  // A theme without a 25 step keeps its 50.
-  --q-bg-subtle: color-mix(in srgb, var(--q-accent) 0.5%, var(--q-gray-25, var(--q-gray-50)));
+  // Panels and hover fills: the theme's 50 step, warmed by 0.5% of the accent. Foundry sets a
+  // lighter ground of its own (themes/_foundry.scss); a fallback to a 25 step here would inherit
+  // foundry's from :root into every other theme.
+  --q-bg-subtle: color-mix(in srgb, var(--q-accent) 0.5%, var(--q-gray-50));
   // Strong fills (tooltips, dark strips) in the soft ink, never near-black. Resolved where declared,
   // so a dark theme's inverse is its own light ink.
   --q-bg-inverse: var(--q-fg);

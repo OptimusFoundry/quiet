@@ -3,7 +3,7 @@
 :root,
 [data-theme="foundry"] {
   --q-gray-0: #fff;
-  --q-gray-25: #fcfcfc; // the app look's panel ground: barely off white, no edge needed beside it
+  --q-gray-25: #fcfcfc; // panel ground: barely off white, no edge needed beside it
   --q-gray-50: #f6f6f7;
   --q-gray-100: #eaeaed;
   --q-gray-200: #d3d3d9;
@@ -19,10 +19,12 @@
   color-scheme: light;
 }
 
-// Softer ink than the reference (a deliberate break from parity): headings 700, body 600.
+// Softer ink than the reference (headings 700, body 600) and a lighter panel ground.
 // Scoped to foundry and an unthemed root, never plain :root, so foundry-dark or a product theme on
 // <html> keeps its own 900/800.
 :is(:root:not([data-theme]), [data-theme="foundry"]) {
   --q-fg: var(--q-gray-700);
   --q-fg-body: var(--q-gray-600);
+  // Panels: barely off white (#fcfbfb), lighter than the 50 step other themes use.
+  --q-bg-subtle: color-mix(in srgb, var(--q-accent) 0.5%, var(--q-gray-25));
 }

@@ -66,7 +66,7 @@ function BillingPage() {
 					</Button>
 				}
 			/>
-			<Grid columns={12} gap="md">
+			<Grid columns={12} gap="md" rowGap="md">
 				<Col span={5}>
 					<div className="q-sb-app-frame__stack">
 						<Panel
