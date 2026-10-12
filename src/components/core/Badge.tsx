@@ -22,7 +22,7 @@ export interface BadgeProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 
 }
 
 const SIZES: string[] = ["sm", "md", "lg"];
-const DOTS: Record<string, string> = { success: "solid-ink", warning: "hollow", error: "molten" };
+const DOTS: Record<string, string> = { success: "solid", warning: "hollow", error: "accent" };
 const VARIANTS: string[] = [
 	"default",
 	"primary",
@@ -48,7 +48,7 @@ export function Badge({
 }: BadgeProps) {
 	const v = VARIANTS.includes(variant) ? variant : "default";
 	const showDot = dot ?? (!!DOTS[v] && !leftIcon);
-	const dotKind = DOTS[v] || (variant === "primary" ? "paper" : "solid-ink");
+	const dotKind = DOTS[v] || (variant === "primary" ? "on-accent" : "solid");
 	const isCount = count != null;
 	const label = isCount ? (count > max ? `${max}+` : count) : children;
 	// A changed count rises in softly; the first render is static.

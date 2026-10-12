@@ -89,7 +89,7 @@ export function Button({
 			{loading ? (
 				<Spinner
 					size={SPIN[size] || SPIN.md}
-					tone={variant === "primary" ? "paper" : "default"}
+					tone={variant === "primary" ? "on-accent" : "default"}
 					label={null}
 					aria-hidden="true"
 					className={fadeSpin ? "q-anim-fade" : undefined}

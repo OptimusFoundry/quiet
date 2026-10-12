@@ -5,7 +5,7 @@ import "./HoldButton.scss";
 
 /**
  * Hold-to-confirm button for irreversible or wide-reaching actions. Pointer, Space or Enter must be
- * held for `duration`; a molten hairline fills along the bottom edge as you hold. Releasing early
+ * held for `duration`; an accent hairline fills along the bottom edge as you hold. Releasing early
  * springs back. Progress is exposed as a progressbar beside the button.
  * Other Button props pass through, except the ones the hold itself drives.
  * @startingPoint section="Future" subtitle="Hold to confirm" viewport="600x140"
@@ -50,7 +50,7 @@ export interface HoldButtonProps
 }
 
 // Hold-to-confirm: the only control that asks for effort. Pointer, Space or Enter must be held for
-// `duration` ms; letting go early springs back. A molten hairline along the bottom edge fills as
+// `duration` ms; letting go early springs back. An accent hairline along the bottom edge fills as
 // you hold — the heat, never a fill of the button itself.
 export function HoldButton({
 	children,

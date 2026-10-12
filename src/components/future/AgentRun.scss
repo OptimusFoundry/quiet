@@ -135,7 +135,7 @@
       background: transparent;
     }
 
-    // The person's turn: the one molten mark on the surface.
+    // The person's turn: the one accent mark on the surface.
     .q-agent-run__step--waiting & {
       background: var(--q-agent-run-dot-human);
       transform: scale(1.4);

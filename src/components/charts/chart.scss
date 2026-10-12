@@ -1,7 +1,7 @@
 // Chart — shared frame for quiet's charts: series palette, grid, axes, legend, tooltip, draw-in.
 // BEM: .q-chart, __plot, __svg, __grid, __axis-label(--end), __baseline, __legend, __legend-item,
 // __swatch(--line), __tooltip, __tooltip-title, __tooltip-row, __tooltip-value, __empty.
-// Charts are the one place molten carries data: series 1 is the accent, comparisons are ink then
+// Charts are the one place the accent carries data: series 1 is the accent, comparisons are ink then
 // greys (series 4–5 also dash, so identity never rests on grey lightness alone). Text never wears
 // a series colour — values and labels stay ink/muted; the swatch beside them carries identity.
 @use "../../styles/layers";

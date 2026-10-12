@@ -10,7 +10,8 @@ export interface SpinnerProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> {
 	ref?: React.Ref<HTMLSpanElement>;
 	size?: "xs" | "sm" | "md" | "lg" | "xl" | number;
-	tone?: "default" | "muted" | "paper" | "molten";
+	/** default · muted · on-accent (white, on a primary button) · accent. `paper` and `molten` are deprecated aliases of on-accent and accent */
+	tone?: "default" | "muted" | "on-accent" | "accent" | "paper" | "molten";
 	/** Sentence-case label beside the ring (null hides it) */
 	label?: string | null;
 	className?: string;
@@ -18,7 +19,8 @@ export interface SpinnerProps
 }
 
 const SIZES = { xs: 12, sm: 16, md: 24, lg: 32, xl: 48 };
-const TONES: string[] = ["default", "muted", "paper", "molten"];
+const TONES: string[] = ["default", "muted", "on-accent", "accent"];
+const ALIASES: Record<string, string> = { paper: "on-accent", molten: "accent" };
 
 export function Spinner({
 	size = "md",
@@ -30,12 +32,13 @@ export function Spinner({
 }: SpinnerProps) {
 	const numeric = typeof size === "number";
 	const px = numeric ? size : SIZES[size] || 24;
-	const knownTone = TONES.includes(tone);
+	const t = ALIASES[tone] ?? tone;
+	const knownTone = TONES.includes(t);
 	const cls = [
 		"q-spinner",
 		numeric ? null : `q-spinner--${SIZES[size] ? size : "md"}`,
 		px >= 32 && "q-spinner--thick",
-		`q-spinner--${knownTone ? tone : "custom-tone"}`,
+		`q-spinner--${knownTone ? t : "custom-tone"}`,
 		className,
 	]
 		.filter(Boolean)

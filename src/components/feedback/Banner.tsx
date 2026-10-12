@@ -8,8 +8,8 @@ import { CloseButton, isStatus, StatusIcon, warnDeprecated } from "./parts";
  */
 export interface BannerProps {
 	/**
-	 * The strip sits on its status ground. `paper` is the only look.
-	 * @deprecated `outline` is gone and renders as `paper`; drop the prop.
+	 * @deprecated Banner has one look (its status ground); drop the prop. `"paper"` is accepted
+	 * silently, `"outline"` warns once in development.
 	 */
 	variant?: "paper" | "outline";
 	status?: "info" | "success" | "warning" | "error";
@@ -25,7 +25,7 @@ export interface BannerProps {
 }
 
 export function Banner({
-	variant = "paper",
+	variant,
 	status = "info",
 	title,
 	children,

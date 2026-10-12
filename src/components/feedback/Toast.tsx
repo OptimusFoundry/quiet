@@ -13,7 +13,7 @@ export interface ToastProps {
 	/** Secondary metadata line (muted, small) */
 	meta?: React.ReactNode;
 	variant?: "default" | "neutral" | "success" | "warning" | "error";
-	/** Legacy: live = molten dot, neutral = ink dot */
+	/** Legacy: live = accent dot, neutral = ink dot */
 	status?: "live" | "neutral";
 	action?: React.ReactNode;
 	/** Omit to make it not closable */

@@ -2,7 +2,7 @@
 // __header, __label, __value, __track, __rail, __fill, __line, __thumb, __footer, __hint,
 // __override, __lock; [data-over] while the value is past the line.
 // Set inline: --_t (0–1) value, --_safe (0–1) the line, --_stretch (0–1) how hard the pointer pulls.
-// Past the line is molten — a thin line and a ring, never a fill.
+// Past the line is accent — a thin line and a ring, never a fill.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -116,7 +116,7 @@
     background: var(--q-elastic-slider-rail-bg);
   }
 
-  // Ink up to the line, molten beyond it.
+  // Ink up to the line, accent beyond it.
   .q-elastic-slider__fill {
     --_fill: linear-gradient(to right, var(--q-elastic-slider-fill-bg) calc(var(--_safe) / max(var(--_t), 0.0001) * 100%), var(--q-elastic-slider-over-bg) 0);
 
@@ -197,7 +197,7 @@
     }
   }
 
-  // A hollow ring at rest; filled molten once you've taken the override.
+  // A hollow ring at rest; filled accent once you've taken the override.
   .q-elastic-slider__lock {
     box-sizing: border-box;
     width: var(--q-elastic-slider-lock-size);

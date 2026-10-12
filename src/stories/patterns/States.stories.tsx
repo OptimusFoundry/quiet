@@ -199,7 +199,7 @@ function Partial() {
 			description="Show the last known values and how old they are. Don't blank the page."
 		>
 			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
-				<Banner variant="paper" status="warning" title="You're offline." label="Connection">
+				<Banner status="warning" title="You're offline." label="Connection">
 					Showing what we had at 11:40. Changes you make now sync when you're back.
 				</Banner>
 				<Grid columns={12} gap="md">

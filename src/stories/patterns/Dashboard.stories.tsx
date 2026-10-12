@@ -96,7 +96,7 @@ function Overview() {
 						period: "vs Aug",
 						data: [9.8, 10.1, 10.4, 10.9, 11.2, 11.8, 12.4, 13.2],
 						fmt: usd,
-						tone: "ink" as const,
+						tone: "neutral" as const,
 					},
 					{
 						label: "Bounce rate",
@@ -105,7 +105,7 @@ function Overview() {
 						trend: "down" as const,
 						period: "7 days",
 						data: [4.2, 4.0, 3.9, 3.6, 3.4, 3.3, 3.1],
-						tone: "ink" as const,
+						tone: "neutral" as const,
 					},
 					{
 						label: "Posts · 7d",
@@ -113,7 +113,7 @@ function Overview() {
 						delta: 4,
 						period: "vs prior week",
 						data: [2, 4, 3, 5, 3, 2, 4],
-						tone: "ink" as const,
+						tone: "neutral" as const,
 					},
 				].map((s) => (
 					<Col key={s.label} span={3} className="q-sb-dashboard__kpi-col">

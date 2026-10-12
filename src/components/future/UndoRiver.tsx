@@ -15,7 +15,7 @@ export interface UndoRiverItem {
 	label: string;
 	/** Who did it, e.g. "Ada Park" or "Meerkat" */
 	by?: string;
-	/** you = molten dot, agent = ink square, person = hollow dot */
+	/** you = accent dot, agent = ink square, person = hollow dot */
 	kind?: "you" | "person" | "agent";
 	/** When it happened */
 	at: number | string | Date;

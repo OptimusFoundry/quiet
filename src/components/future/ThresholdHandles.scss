@@ -2,7 +2,7 @@
 // __label, __summary ([data-firing]), __chart ([data-glide]), __bars, __bar ([data-out]), __band,
 // __handle (--high, --low), __line, __tag.
 // Set inline: --_low/--_high (0–1) on the chart, --_h (0–1) per bar, --_t (0–1) per handle.
-// Bars that would have fired turn ink-muted and carry a molten cap — punctuation, never a fill.
+// Bars that would have fired turn ink-muted and carry an accent cap — punctuation, never a fill.
 @use "../../styles/layers";
 
 @layer q.tokens {

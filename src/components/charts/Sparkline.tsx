@@ -17,8 +17,8 @@ export interface SparklineProps {
 	area?: boolean;
 	/** Dot on the last point (default true) */
 	dot?: boolean;
-	/** 'accent' (default, molten) or 'ink' for a quieter, secondary trend */
-	tone?: "accent" | "ink";
+	/** 'accent' (default) or 'neutral' for a quieter, secondary trend. `ink` is a deprecated alias of neutral */
+	tone?: "accent" | "neutral" | "ink";
 	formatValue?: (value: number) => string;
 	/** What the numbers are, e.g. "Signups, last 30 days" — prefixed to the spoken summary */
 	"aria-label"?: string;
@@ -51,7 +51,11 @@ export function Sparkline({
 	const summary = vals.length
 		? `${ariaLabel ? `${ariaLabel}: ` : ""}from ${formatValue(vals[0]!)} to ${formatValue(vals[vals.length - 1]!)}, low ${formatValue(lo)}, high ${formatValue(hi)}`
 		: (ariaLabel ?? "No data");
-	const cls = ["q-sparkline", `q-sparkline--${tone === "ink" ? "ink" : "accent"}`, className]
+	const cls = [
+		"q-sparkline",
+		`q-sparkline--${tone === "neutral" || tone === "ink" ? "neutral" : "accent"}`,
+		className,
+	]
 		.filter(Boolean)
 		.join(" ");
 	return (

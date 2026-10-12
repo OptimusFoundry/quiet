@@ -1,5 +1,5 @@
 // Badge — sans pill for counts and statuses; status reads through the dot.
-// BEM: .q-badge, __dot(--solid-ink, --hollow, --molten, --paper); --{variant}, --{size}, --count.
+// BEM: .q-badge, __dot(--solid, --hollow, --accent, --on-accent); --{variant}, --{size}, --count.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -48,8 +48,8 @@
     --q-badge-error-dot: var(--q-status-error-fg);
 
     --q-badge-dot-solid-ink: var(--q-fg);
-    --q-badge-dot-paper: var(--q-bg);
-    --q-badge-dot-molten: var(--q-accent);
+    --q-badge-dot-on-accent: var(--q-bg);
+    --q-badge-dot-accent: var(--q-accent);
     --q-badge-dot-hollow-border: var(--q-accent);
   }
 
@@ -107,12 +107,12 @@
     border-radius: var(--q-radius-pill);
     background: var(--q-badge-dot-solid-ink);
 
-    &--paper {
-      background: var(--q-badge-dot-paper);
+    &--on-accent {
+      background: var(--q-badge-dot-on-accent);
     }
 
-    &--molten {
-      background: var(--q-badge-dot-molten);
+    &--accent {
+      background: var(--q-badge-dot-accent);
     }
 
     &--hollow {

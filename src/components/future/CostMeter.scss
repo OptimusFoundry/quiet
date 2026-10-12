@@ -97,7 +97,7 @@
     color: var(--q-cost-meter-value-fg);
   }
 
-  // Near the cap: the figure goes to ink and a molten dot marks it (the bar itself is molten heat).
+  // Near the cap: the figure goes to ink and an accent dot marks it (the bar itself is the accent).
   .q-cost-meter__item--warn .q-cost-meter__value {
     color: var(--q-cost-meter-warn-fg);
 

@@ -1,7 +1,7 @@
 // AnomalyRibbon — a ribbon of anomaly marks along a series. BEM: .q-anomaly-ribbon, __ribbon,
 // __mark ([aria-pressed]), __caption, __summary, __detail, __series, __bar
 // ([data-mark="anomaly"|"selected"|"near"]).
-// Set inline: --_x (0–1) per mark, --_h (0–1) per bar. Anomalies are molten — rings and thin
+// Set inline: --_x (0–1) per mark, --_h (0–1) per bar. Anomalies are accent — rings and thin
 // marks, never a fill.
 @use "../../styles/layers";
 
