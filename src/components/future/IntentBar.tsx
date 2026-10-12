@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../core/Button";
+import { Icon } from "../core/Icon";
 import { Skeleton } from "../core/Skeleton";
 import { DropdownMenu } from "../overlays/DropdownMenu";
 import "./IntentBar.scss";
@@ -151,7 +152,7 @@ export function IntentBar({
 											<button type="button" className="q-intent-bar__chip">
 												<span className="q-intent-bar__chip-key">{c.label}</span>
 												<span className="q-intent-bar__chip-value">{c.value}</span>
-												<span aria-hidden="true" className="q-intent-bar__chip-caret" />
+												<Icon name="chevron-down" size="xs" className="q-intent-bar__chip-caret" />
 											</button>
 										}
 									/>

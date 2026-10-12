@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import "./LineageChip.scss";
 
 /**
@@ -77,7 +78,7 @@ export function LineageChip({
 			>
 				<span aria-hidden="true" className="q-lineage-chip__dot" />
 				<span>{text}</span>
-				<span aria-hidden="true" className="q-lineage-chip__chevron" />
+				<Icon name="chevron-down" size="xs" className="q-lineage-chip__chevron" />
 			</button>
 			<span className="q-lineage-chip__panel q-collapse" data-open={cur} id={id} inert={!cur}>
 				<span className="q-collapse-inner">
@@ -91,11 +92,7 @@ export function LineageChip({
 								className="q-lineage-chip__step"
 								data-stale={s.stale || undefined}
 							>
-								{i > 0 && (
-									<span aria-hidden="true" className="q-lineage-chip__arrow">
-										{"→"}
-									</span>
-								)}
+								{i > 0 && <Icon name="arrow-right" size="xs" className="q-lineage-chip__arrow" />}
 								<span className="q-lineage-chip__node">
 									<span aria-hidden="true" className="q-lineage-chip__node-dot" />
 									<span className="q-lineage-chip__node-label">

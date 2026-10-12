@@ -16,9 +16,9 @@
     --q-receipt-title-size: var(--q-text-sm);
     --q-receipt-title-weight: var(--q-weight-semibold);
     --q-receipt-title-fg: var(--q-fg);
-    --q-receipt-mono-font: var(--q-font-mono);
-    --q-receipt-mono-size: var(--q-text-3xs);
-    --q-receipt-mono-fg: var(--q-fg-muted);
+    --q-receipt-meta-font: var(--q-font-label);
+    --q-receipt-meta-size: var(--q-text-label);
+    --q-receipt-meta-fg: var(--q-fg-muted);
     --q-receipt-reason-size: var(--q-text-xs);
     --q-receipt-reason-fg: var(--q-fg-body);
     --q-receipt-line-size: var(--q-text-sm);
@@ -73,11 +73,11 @@
   .q-receipt__ref,
   .q-receipt__mark,
   .q-receipt__footer {
-    font-family: var(--q-receipt-mono-font);
-    font-size: var(--q-receipt-mono-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
-    color: var(--q-receipt-mono-fg);
+    font-family: var(--q-receipt-meta-font);
+    font-size: var(--q-receipt-meta-size);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
+    color: var(--q-receipt-meta-fg);
   }
 
   .q-receipt__reason {
@@ -132,10 +132,10 @@
     border: 0;
     background: transparent;
     color: var(--q-receipt-undo-fg);
-    font-family: var(--q-receipt-mono-font);
-    font-size: var(--q-receipt-mono-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    font-family: var(--q-receipt-meta-font);
+    font-size: var(--q-receipt-meta-size);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     text-decoration: underline;
     text-decoration-color: transparent;
     text-decoration-thickness: var(--q-hairline);

@@ -77,7 +77,7 @@ export const All: StoryObj = {
 						Assistant
 					</EntityLink>{" "}
 					on the Orca runner, for the project{" "}
-					<EntityLink href="/projects/meerkat" icon={<Icon glyph="◇" />} kind="Project">
+					<EntityLink href="/projects/meerkat" icon={<Icon name="folder" />} kind="Project">
 						Meerkat onboarding and activation
 					</EntityLink>
 					, which wraps across lines without losing its underline.
@@ -137,7 +137,7 @@ export const All: StoryObj = {
 					<EntityLink href="/runs/233f76c2" id="233f76c2">
 						Nightly digest
 					</EntityLink>
-					<EntityLink href="/projects/newsroom" icon={<Icon glyph="◇" />} kind="Project">
+					<EntityLink href="/projects/newsroom" icon={<Icon name="folder" />} kind="Project">
 						Newsroom
 					</EntityLink>
 					<EntityLink href="/runs/9be01a4d" kind="Run" id="9be01a4d" mono size="sm" />

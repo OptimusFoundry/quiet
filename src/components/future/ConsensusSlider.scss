@@ -22,11 +22,11 @@
     --q-consensus-slider-agent-size: var(--q-space-3);
     --q-consensus-slider-agent-radius: var(--q-radius-xs);
     --q-consensus-slider-agent-border: var(--q-border);
-    --q-consensus-slider-agent-fg: var(--q-accent);
+    --q-consensus-slider-agent-fg: var(--q-accent-fg);
     --q-consensus-slider-agent-font-size: var(--q-text-2xs);
-    --q-consensus-slider-mono-font-family: var(--q-font-mono);
-    --q-consensus-slider-mono-font-size: var(--q-text-2xs);
-    --q-consensus-slider-mono-fg: var(--q-fg-muted);
+    --q-consensus-slider-meta-font-family: var(--q-font-label);
+    --q-consensus-slider-meta-font-size: var(--q-text-label);
+    --q-consensus-slider-meta-fg: var(--q-fg-muted);
     --q-consensus-slider-you-font-size: var(--q-text-sm);
     --q-consensus-slider-you-weight: var(--q-weight-semibold);
     --q-consensus-slider-disabled-opacity: 0.4;
@@ -57,11 +57,11 @@
 
   .q-consensus-slider__header,
   .q-consensus-slider__other-value {
-    font-family: var(--q-consensus-slider-mono-font-family);
-    font-size: var(--q-consensus-slider-mono-font-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
-    color: var(--q-consensus-slider-mono-fg);
+    font-family: var(--q-consensus-slider-meta-font-family);
+    font-size: var(--q-consensus-slider-meta-font-size);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
+    color: var(--q-consensus-slider-meta-fg);
   }
 
   .q-consensus-slider__spread {
@@ -180,6 +180,6 @@
   }
 
   .q-consensus-slider__mean {
-    color: var(--q-consensus-slider-mono-fg);
+    color: var(--q-consensus-slider-meta-fg);
   }
 }

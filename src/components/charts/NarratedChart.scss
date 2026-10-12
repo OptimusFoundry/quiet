@@ -13,7 +13,7 @@
     --q-narrated-chart-beat-font-size: var(--q-text-md);
     --q-narrated-chart-beat-weight-active: var(--q-weight-semibold);
     --q-narrated-chart-index-fg: var(--q-fg-muted);
-    --q-narrated-chart-index-fg-active: var(--q-accent);
+    --q-narrated-chart-index-fg-active: var(--q-accent-fg);
     --q-narrated-chart-rule: var(--q-border);
     --q-narrated-chart-rule-active: var(--q-fg);
   }
@@ -64,10 +64,10 @@
   .q-narrated-chart__index {
     flex: none;
     color: var(--q-narrated-chart-index-fg);
-    font-family: var(--q-font-mono);
-    font-size: var(--q-text-3xs);
+    font-family: var(--q-font-label);
+    font-size: var(--q-text-label);
     font-weight: var(--q-weight-regular);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
 
     .q-narrated-chart__beat[aria-pressed="true"] & {
       color: var(--q-narrated-chart-index-fg-active);

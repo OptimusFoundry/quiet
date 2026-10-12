@@ -11,9 +11,9 @@
     --q-agent-run-title-size: var(--q-text-md);
     --q-agent-run-title-weight: var(--q-weight-semibold);
     --q-agent-run-title-fg: var(--q-fg);
-    --q-agent-run-meta-font: var(--q-font-mono);
-    --q-agent-run-meta-size: var(--q-text-2xs);
-    --q-agent-run-meta-tracking: var(--q-tracking-mono);
+    --q-agent-run-meta-font: var(--q-font-label);
+    --q-agent-run-meta-size: var(--q-text-label);
+    --q-agent-run-meta-tracking: var(--q-tracking-label);
     --q-agent-run-meta-fg: var(--q-fg-muted);
     --q-agent-run-step-height: var(--q-row-compact);
     --q-agent-run-step-px: var(--q-space-1-25);
@@ -68,7 +68,7 @@
     font-size: var(--q-agent-run-meta-size);
     font-variant-numeric: tabular-nums;
     letter-spacing: var(--q-agent-run-meta-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
     color: var(--q-agent-run-meta-fg);
   }
 

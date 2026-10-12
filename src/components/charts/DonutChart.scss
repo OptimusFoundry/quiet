@@ -72,7 +72,7 @@
     font-family: var(--q-chart-axis-font-family);
     font-size: var(--q-chart-axis-font-size);
     letter-spacing: var(--q-chart-axis-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
   }
 
   .q-donut-chart__center-value {

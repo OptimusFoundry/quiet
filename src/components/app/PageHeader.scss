@@ -1,5 +1,5 @@
 // PageHeader — the top of an app screen: back link, eyebrow, title + status, description, meta, actions, tabs.
-// BEM: .q-page-header, __main, __heading, __above, __back, __eyebrow, __title-row, __title, __status,
+// BEM: .q-page-header, __main, __heading, __above, __back(-icon), __eyebrow, __title-row, __title, __status,
 // __description, __meta, __meta-item, __actions, __tabs.
 @use "../../styles/layers";
 
@@ -79,6 +79,11 @@
       border-bottom-color: transparent;
       color: var(--q-page-header-back-fg);
     }
+  }
+
+  .q-page-header__back-icon {
+    margin-inline-end: var(--q-space-0-5);
+    vertical-align: -0.125em;
   }
 
   .q-page-header__eyebrow {

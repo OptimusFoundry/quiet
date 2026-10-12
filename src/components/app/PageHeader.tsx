@@ -1,4 +1,5 @@
 import type React from "react";
+import { Icon } from "../core/Icon";
 import { Link } from "../core/Link";
 import "./PageHeader.scss";
 
@@ -18,7 +19,7 @@ export interface PageHeaderProps
 	description?: React.ReactNode;
 	/** A small muted line above the title: a kind ("Artifact · spreadsheet") or a breadcrumb. */
 	eyebrow?: React.ReactNode;
-	/** A link back to the parent screen, shown as "← label" above the title. Routed via `QuietRoot linkComponent`. */
+	/** A link back to the parent screen, shown with a back arrow above the title. Routed via `QuietRoot linkComponent`. */
 	back?: { label: string; href: string };
 	/** Badges shown inline after the title, baseline-aligned. */
 	status?: React.ReactNode;
@@ -57,7 +58,7 @@ export function PageHeader({
 				<div className="q-page-header__above">
 					{back && (
 						<Link href={back.href} size="sm" className="q-page-header__back">
-							<span aria-hidden="true">← </span>
+							<Icon name="arrow-left" size="sm" className="q-page-header__back-icon" />
 							{back.label}
 						</Link>
 					)}

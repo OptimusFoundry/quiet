@@ -20,12 +20,12 @@
     --q-elastic-slider-thumb-ring: 0 0 0 3px var(--q-bg), 0 0 0 4px var(--q-fg);
     --q-elastic-slider-thumb-ring-over: 0 0 0 3px var(--q-bg), 0 0 0 4px var(--q-accent);
     --q-elastic-slider-stretch: 2; // extra width per unit of pull
-    --q-elastic-slider-header-font-family: var(--q-font-mono);
-    --q-elastic-slider-header-font-size: var(--q-text-2xs);
-    --q-elastic-slider-header-tracking: var(--q-tracking-mono);
+    --q-elastic-slider-header-font-family: var(--q-font-label);
+    --q-elastic-slider-header-font-size: var(--q-text-label);
+    --q-elastic-slider-header-tracking: var(--q-tracking-label);
     --q-elastic-slider-header-fg: var(--q-fg-muted);
     --q-elastic-slider-value-fg: var(--q-fg);
-    --q-elastic-slider-value-fg-over: var(--q-accent);
+    --q-elastic-slider-value-fg-over: var(--q-accent-fg);
     --q-elastic-slider-hint-font-size: var(--q-text-sm);
     --q-elastic-slider-hint-fg: var(--q-fg-muted);
     --q-elastic-slider-override-gap: var(--q-space-0-75);
@@ -35,8 +35,8 @@
     --q-elastic-slider-override-border-on: var(--q-fg);
     --q-elastic-slider-override-bg-hover: var(--q-bg-subtle);
     --q-elastic-slider-override-fg: var(--q-fg);
-    --q-elastic-slider-override-font-family: var(--q-font-mono);
-    --q-elastic-slider-override-font-size: var(--q-text-2xs);
+    --q-elastic-slider-override-font-family: var(--q-font-label);
+    --q-elastic-slider-override-font-size: var(--q-text-label);
     --q-elastic-slider-lock-size: var(--q-space-0-75);
     --q-elastic-slider-lock-on: var(--q-accent);
     --q-elastic-slider-disabled-opacity: 0.4;
@@ -69,7 +69,7 @@
     font-family: var(--q-elastic-slider-header-font-family);
     font-size: var(--q-elastic-slider-header-font-size);
     letter-spacing: var(--q-elastic-slider-header-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
     color: var(--q-elastic-slider-header-fg);
   }
 
@@ -177,8 +177,8 @@
     color: var(--q-elastic-slider-override-fg);
     font-family: var(--q-elastic-slider-override-font-family);
     font-size: var(--q-elastic-slider-override-font-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     cursor: pointer;
     transition:
       background var(--q-dur-hover) var(--q-ease-soft),

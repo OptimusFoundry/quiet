@@ -17,8 +17,8 @@
     --q-run-scrubber-tick-bg-past: var(--q-fg);
     --q-run-scrubber-thumb-bg: var(--q-fg);
     --q-run-scrubber-thumb-ring: var(--q-slider-thumb-ring);
-    --q-run-scrubber-step-font: var(--q-font-mono);
-    --q-run-scrubber-step-size: var(--q-text-3xs);
+    --q-run-scrubber-step-font: var(--q-font-label);
+    --q-run-scrubber-step-size: var(--q-text-label);
     --q-run-scrubber-step-fg: var(--q-fg-muted);
     --q-run-scrubber-step-fg-current: var(--q-fg);
     --q-run-scrubber-panel-bg: var(--q-bg-subtle);
@@ -122,9 +122,9 @@
     overflow: hidden;
     font-family: var(--q-run-scrubber-step-font);
     font-size: var(--q-run-scrubber-step-size);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
     text-overflow: ellipsis;
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
     white-space: nowrap;
     color: var(--q-run-scrubber-step-fg);
     cursor: pointer;
@@ -159,8 +159,8 @@
   .q-run-scrubber__caption {
     font-family: var(--q-run-scrubber-step-font);
     font-size: var(--q-run-scrubber-step-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-run-scrubber-caption-fg);
   }
 

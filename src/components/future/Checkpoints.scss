@@ -17,8 +17,8 @@
     --q-checkpoints-mark-ring: var(--q-fg);
     --q-checkpoints-rail: var(--q-border);
     --q-checkpoints-fill: var(--q-fg);
-    --q-checkpoints-time-font: var(--q-font-mono);
-    --q-checkpoints-time-size: var(--q-text-3xs);
+    --q-checkpoints-time-font: var(--q-font-label);
+    --q-checkpoints-time-size: var(--q-text-label);
     --q-checkpoints-time-fg: var(--q-fg-muted);
     --q-checkpoints-time-fg-selected: var(--q-fg);
     --q-checkpoints-detail-bg: var(--q-bg-subtle);
@@ -122,7 +122,7 @@
     font-family: var(--q-checkpoints-time-font);
     font-size: var(--q-checkpoints-time-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
     color: var(--q-checkpoints-time-fg);
 
     .q-checkpoints__point[aria-selected="true"] > & {
@@ -163,8 +163,8 @@
     gap: var(--q-space-0-75);
     font-family: var(--q-checkpoints-time-font);
     font-size: var(--q-checkpoints-time-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-fg);
   }
 

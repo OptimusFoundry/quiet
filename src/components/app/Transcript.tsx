@@ -4,6 +4,7 @@ import { ChatMessage, ClaudeMark } from "../chat/ChatMessage";
 import { CodeBlock } from "../chat/CodeBlock";
 import { ToolCall } from "../chat/ToolCall";
 import { Badge } from "../core/Badge";
+import { Icon } from "../core/Icon";
 import "./Transcript.scss";
 
 /** A message said in a session. String content renders paragraphs, `- ` lists, `inline code`, **bold** and fenced code. */
@@ -398,9 +399,7 @@ function Session({
 					onClick={onToggle}
 					className="q-transcript__head q-transcript__toggle"
 				>
-					<span aria-hidden="true" className="q-transcript__chevron">
-						{"›"}
-					</span>
+					<Icon name="chevron-right" size="sm" className="q-transcript__chevron" />
 					{head}
 				</button>
 			</H>

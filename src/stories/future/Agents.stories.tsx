@@ -137,8 +137,8 @@ function Agents() {
 							{ label: "Beta · EU", before: "Live", after: "Paused", meta: "379 people" },
 						]}
 						consequences={[
-							{ glyph: "↺", label: "Reversible for 24h" },
-							{ glyph: "→", label: "3 notices" },
+							{ icon: "undo", label: "Reversible for 24h" },
+							{ icon: "arrow-right", label: "3 notices" },
 						]}
 						confirmLabel="Pause 3 campaigns"
 						confirmedLabel="Paused · undo for 24h"

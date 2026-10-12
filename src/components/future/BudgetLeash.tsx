@@ -95,7 +95,7 @@ export function BudgetLeash({
 							{label}
 						</span>
 						<span aria-hidden="true" className="q-budget-leash__speed">
-							{speed}
+							{speed.charAt(0).toUpperCase() + speed.slice(1)}
 							{level === 3 && atCap ? ` · ${atCap}` : ""}
 						</span>
 					</div>

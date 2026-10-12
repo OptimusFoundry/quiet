@@ -1,5 +1,6 @@
 import React from "react";
 import { Badge } from "../core/Badge";
+import { Icon, type IconName } from "../core/Icon";
 import { HoldButton } from "./HoldButton";
 import "./Approval.scss";
 
@@ -20,8 +21,8 @@ export interface ApprovalChange {
 	meta?: React.ReactNode;
 }
 export interface ApprovalConsequence {
-	/** Optional leading glyph, e.g. "↺" */
-	glyph?: string;
+	/** Optional leading icon from the stroke set, e.g. "undo" */
+	icon?: IconName;
 	label: React.ReactNode;
 }
 export interface ApprovalProps {
@@ -97,9 +98,7 @@ export function Approval({
 							<span className="q-approval__change-label">{c.label}</span>
 							<span className="q-approval__transition">
 								{chip(c.before, "secondary")}
-								<span aria-hidden="true" className="q-approval__arrow">
-									{"→"}
-								</span>
+								<Icon name="arrow-right" size="sm" className="q-approval__arrow" />
 								<span className="q-sr-only">to</span>
 								{chip(c.after, "outline")}
 							</span>
@@ -113,10 +112,12 @@ export function Approval({
 					<ul className="q-approval__consequences" aria-label="Consequences">
 						{consequences.map((c, i) => (
 							<li key={i} className="q-approval__consequence">
-								{(c as ApprovalConsequence).glyph && (
-									<span aria-hidden="true" className="q-approval__glyph">
-										{(c as ApprovalConsequence).glyph}
-									</span>
+								{(c as ApprovalConsequence).icon && (
+									<Icon
+										name={(c as ApprovalConsequence).icon}
+										size="sm"
+										className="q-approval__icon"
+									/>
 								)}
 								{((c as ApprovalConsequence).label ?? c) as React.ReactNode}
 							</li>

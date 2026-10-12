@@ -6,7 +6,6 @@
   :root,
   [data-theme] {
     --q-code-block-bg: var(--q-bg-subtle);
-    --q-code-block-border: var(--q-border);
     --q-code-block-radius: var(--q-radius-md);
     --q-code-block-fg: var(--q-fg);
     --q-code-block-font: var(--q-font-mono);
@@ -16,7 +15,7 @@
     --q-code-block-py: var(--q-space-1-5);
     --q-code-block-header-px: var(--q-space-1-5);
     --q-code-block-label-fg: var(--q-fg-muted);
-    --q-code-block-label-size: var(--q-text-2xs);
+    --q-code-block-label-size: var(--q-text-label);
     --q-code-block-focus-ring: inset var(--q-ring-soft);
   }
 }
@@ -26,7 +25,6 @@
     min-width: 0;
     margin: 0;
     overflow: hidden;
-    border: var(--q-hairline) solid var(--q-code-block-border);
     border-radius: var(--q-code-block-radius);
     background: var(--q-code-block-bg);
   }
@@ -41,10 +39,11 @@
 
   .q-code-block__language {
     color: var(--q-code-block-label-fg);
-    font-family: var(--q-code-block-font);
+    font-family: var(--q-font-label);
     font-size: var(--q-code-block-label-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    font-weight: var(--q-weight-label);
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
 
   .q-code-block__pre {

@@ -21,16 +21,16 @@
     --q-chat-composer-placeholder-fg: var(--q-fg-muted);
     --q-chat-composer-files-gap: var(--q-space-1-25);
     --q-chat-composer-hint-fg: var(--q-fg-muted);
-    --q-chat-composer-hint-font: var(--q-font-mono);
-    --q-chat-composer-hint-size: var(--q-text-2xs);
+    --q-chat-composer-hint-font: var(--q-font-label);
+    --q-chat-composer-hint-size: var(--q-text-label);
     --q-chat-composer-plus-size: var(--q-text-xl);
     --q-chat-composer-stop-size: var(--q-space-1);
     --q-chat-composer-stop-bg: var(--q-fg);
     --q-chat-composer-drop-bg: color-mix(in srgb, var(--q-bg) 92%, transparent);
     --q-chat-composer-drop-border: var(--q-fg);
     --q-chat-composer-drop-fg: var(--q-fg);
-    --q-chat-composer-drop-font: var(--q-font-mono);
-    --q-chat-composer-drop-size: var(--q-text-2xs);
+    --q-chat-composer-drop-font: var(--q-font-label);
+    --q-chat-composer-drop-size: var(--q-text-label);
   }
 }
 
@@ -134,8 +134,8 @@
     color: var(--q-chat-composer-hint-fg);
     font-family: var(--q-chat-composer-hint-font);
     font-size: var(--q-chat-composer-hint-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
 
   .q-chat-composer__stop {
@@ -157,8 +157,8 @@
     color: var(--q-chat-composer-drop-fg);
     font-family: var(--q-chat-composer-drop-font);
     font-size: var(--q-chat-composer-drop-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     pointer-events: none;
   }
 }

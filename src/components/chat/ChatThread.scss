@@ -12,8 +12,8 @@
     --q-chat-thread-jump-offset: var(--q-space-2);
     --q-chat-thread-divider-line: var(--q-border);
     --q-chat-thread-divider-fg: var(--q-fg-muted);
-    --q-chat-thread-divider-font: var(--q-font-mono);
-    --q-chat-thread-divider-size: var(--q-text-2xs);
+    --q-chat-thread-divider-font: var(--q-font-label);
+    --q-chat-thread-divider-size: var(--q-text-label);
     --q-chat-thread-focus-ring: inset var(--q-ring-soft);
   }
 }
@@ -86,7 +86,7 @@
     color: var(--q-chat-thread-divider-fg);
     font-family: var(--q-chat-thread-divider-font);
     font-size: var(--q-chat-thread-divider-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
 }

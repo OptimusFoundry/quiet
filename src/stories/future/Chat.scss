@@ -1,10 +1,10 @@
 // Layout for the Chat story.
 .q-sb-chat {
-	&__mono {
-		font-family: var(--q-font-mono);
-		font-size: var(--q-text-2xs);
-		letter-spacing: var(--q-tracking-mono);
-		text-transform: uppercase;
+	&__label {
+		font-family: var(--q-font-label);
+		font-size: var(--q-text-label);
+		font-weight: var(--q-weight-label);
+		text-transform: var(--q-case-label);
 		color: var(--q-fg-muted);
 	}
 

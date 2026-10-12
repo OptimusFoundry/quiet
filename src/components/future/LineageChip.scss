@@ -34,7 +34,7 @@
     --q-lineage-chip-node-radius: var(--q-radius-pill);
     --q-lineage-chip-node-bg: var(--q-bg-subtle);
     --q-lineage-chip-node-font: var(--q-font-mono);
-    --q-lineage-chip-node-size: var(--q-text-3xs);
+    --q-lineage-chip-node-size: var(--q-text-label);
     --q-lineage-chip-node-fg: var(--q-fg);
     --q-lineage-chip-node-detail-fg: var(--q-fg-muted);
     --q-lineage-chip-node-border-stale: var(--q-accent);
@@ -101,18 +101,12 @@
     }
   }
 
-  // A small caret drawn from two borders, so it needs no icon font.
   .q-lineage-chip__chevron {
-    width: var(--q-space-0-5);
-    height: var(--q-space-0-5);
-    margin-left: var(--q-space-0-25);
-    border-right: var(--q-hairline) solid var(--q-lineage-chip-chevron-fg);
-    border-bottom: var(--q-hairline) solid var(--q-lineage-chip-chevron-fg);
-    transform: translateY(-25%) rotate(45deg);
+    color: var(--q-lineage-chip-chevron-fg);
     transition: transform var(--q-dur-expand) var(--q-ease-soft);
 
     .q-lineage-chip__trigger[aria-expanded="true"] & {
-      transform: translateY(25%) rotate(-135deg);
+      transform: rotate(180deg);
     }
   }
 
@@ -143,7 +137,6 @@
   }
 
   .q-lineage-chip__arrow {
-    font-size: var(--q-text-xs);
     color: var(--q-lineage-chip-arrow-fg);
   }
 
@@ -159,7 +152,7 @@
     background: var(--q-lineage-chip-node-bg);
     font-family: var(--q-lineage-chip-node-font);
     font-size: var(--q-lineage-chip-node-size);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
     line-height: var(--q-leading-none);
     color: var(--q-lineage-chip-node-fg);
     white-space: nowrap;

@@ -93,7 +93,7 @@ function GhostDemo() {
 		<div className="q-sb-display">
 			<div className="q-sb-display__head">
 				<strong className="q-sb-display__strong">Signups</strong>
-				<span className="q-sb-display__mono" aria-live="polite">
+				<span className="q-sb-display__label" aria-live="polite">
 					{n} so far
 				</span>
 			</div>
@@ -104,7 +104,7 @@ function GhostDemo() {
 				{REAL.slice(0, n).map((e) => (
 					<Row key={e}>
 						<span>{e}</span>
-						<span className="q-sb-display__mono">just now</span>
+						<span className="q-sb-display__label">just now</span>
 					</Row>
 				))}
 			</GhostFuture>

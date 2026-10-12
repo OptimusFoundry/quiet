@@ -1,5 +1,6 @@
 import React from "react";
 import { motionToken } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import type { TableProps } from "../data/Table";
 import { Table } from "../data/Table";
 import "./StreamingTable.scss";
@@ -207,9 +208,7 @@ export function StreamingTable<Row = Record<string, unknown>, Key extends React.
 					className="q-streaming-table__waiting q-anim-drop"
 					data-state="open"
 				>
-					<span aria-hidden="true" className="q-streaming-table__arrow">
-						{"↑"}
-					</span>
+					<Icon name="arrow-up" size="sm" className="q-streaming-table__arrow" />
 					{newLabel(waiting)}
 				</button>
 			)}

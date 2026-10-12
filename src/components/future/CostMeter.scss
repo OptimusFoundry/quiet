@@ -7,8 +7,8 @@
   :root,
   [data-theme] {
     --q-cost-meter-gap: var(--q-space-2);
-    --q-cost-meter-label-font: var(--q-font-mono);
-    --q-cost-meter-label-size: var(--q-text-2xs);
+    --q-cost-meter-label-font: var(--q-font-label);
+    --q-cost-meter-label-size: var(--q-text-label);
     --q-cost-meter-label-fg: var(--q-fg-muted);
     --q-cost-meter-total-size: var(--q-text-3xl);
     --q-cost-meter-total-weight: var(--q-weight-semibold);
@@ -48,8 +48,8 @@
     font-family: var(--q-cost-meter-label-font);
     font-size: var(--q-cost-meter-label-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-cost-meter-label-fg);
   }
 

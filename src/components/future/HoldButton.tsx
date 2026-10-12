@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, type ButtonProps } from "../core/Button";
+import { Icon } from "../core/Icon";
 import "./HoldButton.scss";
 
 /**
@@ -134,12 +135,12 @@ export function HoldButton({
 				}}
 				onBlur={stop}
 				onClick={(e: React.MouseEvent) => e.preventDefault()}
-				leftIcon={confirmed ? <span aria-hidden="true">{"✓"}</span> : undefined}
+				leftIcon={confirmed ? <Icon name="check" /> : undefined}
 			>
 				{confirmed ? confirmedLabel : children}
 				{!confirmed && (
 					<span aria-hidden="true" className="q-hold-button__hint">
-						hold
+						Hold
 					</span>
 				)}
 				{!confirmed && <span aria-hidden="true" className="q-hold-button__heat" />}

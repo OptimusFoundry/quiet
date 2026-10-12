@@ -29,8 +29,8 @@
     --q-draft-diff-accept-bg-hover: var(--q-bg-inverse-hover);
     --q-draft-diff-resolved-underline: var(--q-border-strong);
     --q-draft-diff-resolved-underline-hover: var(--q-fg);
-    --q-draft-diff-summary-font: var(--q-font-mono);
-    --q-draft-diff-summary-size: var(--q-text-2xs);
+    --q-draft-diff-summary-font: var(--q-font-label);
+    --q-draft-diff-summary-size: var(--q-text-label);
     --q-draft-diff-summary-fg: var(--q-fg-muted);
   }
 }
@@ -161,8 +161,8 @@
     font-family: var(--q-draft-diff-summary-font);
     font-size: var(--q-draft-diff-summary-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-draft-diff-summary-fg);
   }
 }

@@ -1,5 +1,6 @@
 import type React from "react";
 import { useLinkElement } from "../../lib/link";
+import { Icon } from "../core/Icon";
 import "./EntityLink.scss";
 
 /**
@@ -28,7 +29,7 @@ export interface EntityLinkProps
 	id?: string;
 	/** Set the name and ID in the mono font, for short IDs (`233f76c2`, `B2`). */
 	mono?: boolean;
-	/** Opens in a new tab: trailing ↗, target/rel set, "(opens in new tab)" for screen readers. */
+	/** Opens in a new tab: trailing arrow-up-right icon, target/rel set, "(opens in new tab)" for screen readers. */
 	external?: boolean;
 	/** `done` strikes through in muted text; `blocked` shows a hollow status dot. Both are announced. */
 	state?: "default" | "done" | "blocked";
@@ -91,11 +92,7 @@ export function EntityLink({
 			{hasName && <span className="q-entity-link__name">{children}</span>}
 			{id && hasName && " "}
 			{id && <span className={hasName ? "q-entity-link__id" : "q-entity-link__name"}>{id}</span>}
-			{external && (
-				<span aria-hidden="true" className="q-entity-link__external">
-					↗
-				</span>
-			)}
+			{external && <Icon name="arrow-up-right" size="sm" className="q-entity-link__external" />}
 			{external && <span className="q-sr-only"> (opens in new tab)</span>}
 			{st && <span className="q-sr-only">{` (${STATE_TEXT[st]})`}</span>}
 		</A>

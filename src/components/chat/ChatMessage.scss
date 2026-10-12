@@ -21,8 +21,8 @@
     --q-chat-message-name-size: var(--q-text-sm);
     --q-chat-message-name-weight: var(--q-weight-semibold);
     --q-chat-message-time-fg: var(--q-fg-muted);
-    --q-chat-message-time-font: var(--q-font-mono);
-    --q-chat-message-time-size: var(--q-text-2xs);
+    --q-chat-message-time-font: var(--q-font-label);
+    --q-chat-message-time-size: var(--q-text-label);
     --q-chat-message-mark-fg: var(--q-accent);
     --q-chat-message-mark-bg: var(--q-bg-subtle);
     --q-chat-message-mark-radius: var(--q-radius-xs);
@@ -34,8 +34,8 @@
     --q-chat-message-error-fg: var(--q-fg-body);
     --q-chat-message-error-dot: var(--q-accent);
     --q-chat-message-system-fg: var(--q-fg-muted);
-    --q-chat-message-system-font: var(--q-font-mono);
-    --q-chat-message-system-size: var(--q-text-2xs);
+    --q-chat-message-system-font: var(--q-font-label);
+    --q-chat-message-system-size: var(--q-text-label);
     --q-chat-message-action-fg: var(--q-fg-muted);
     --q-chat-message-actions-gap: var(--q-space-2);
   }
@@ -57,9 +57,9 @@
       color: var(--q-chat-message-system-fg);
       font-family: var(--q-chat-message-system-font);
       font-size: var(--q-chat-message-system-size);
-      letter-spacing: var(--q-tracking-mono);
+      letter-spacing: var(--q-tracking-label);
       text-align: center;
-      text-transform: uppercase;
+      text-transform: var(--q-case-label);
     }
   }
 
@@ -99,7 +99,7 @@
     color: var(--q-chat-message-time-fg);
     font-family: var(--q-chat-message-time-font);
     font-size: var(--q-chat-message-time-size);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
   }
 
   .q-chat-message__files {

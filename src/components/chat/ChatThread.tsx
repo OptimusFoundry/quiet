@@ -1,6 +1,7 @@
 import React from "react";
 import { usePresence } from "../../a11y/hooks";
 import { Button } from "../core/Button";
+import { Icon } from "../core/Icon";
 import "./ChatThread.scss";
 
 /**
@@ -92,7 +93,7 @@ export function ChatThread({
 					<Button
 						variant="secondary"
 						size="sm"
-						rightIcon={<span aria-hidden="true">{"↓"}</span>}
+						rightIcon={<Icon name="arrow-down" />}
 						onClick={() => {
 							atBottom.current = true;
 							setBehind(false);
