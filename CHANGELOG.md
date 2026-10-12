@@ -2,6 +2,34 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Removed (breaking)
+
+The old shell and editorial parts are gone, with no deprecation period. Replace them before you
+re-sync:
+
+| Removed | Use instead |
+|---|---|
+| `NavBar` | `TopBar` inside `AppShell` |
+| `PageShell`, `Container` | `AppShell` (its panel pads the page), with `Grid`/`Col`/`Stack` for columns |
+| `PageHero` | `PageHeader` |
+| `SectionHeader` | a titled `Panel` (`variant="plain"` for a bare section) |
+| `Eyebrow` | `PageHeader eyebrow` |
+| `Rule` | spacing, or a plain `<hr>` |
+| `Stat` | `StatCard` |
+| `ProcessStep` | `StepIndicator` |
+| `ArrowLink` | `Link` |
+| `Input` | `TextField` (in a `FormField`) |
+| `FilterTabs` | `Tabs variant="enclosed"` (takes a `count` per tab) |
+| `Wordmark` | the `WorkspaceSwitcher` mark |
+| `GridOverlay` | none |
+
+- The Catalog story (the Claude Design reference copied as-is) is gone. `npm run gen` now exports
+  every component by scanning `src/components/`, instead of reading the reference's file list.
+- `BudgetLeash` and `ScopeGrant` pick their preset with segmented `Tabs`.
+- The guidelines no longer describe a marketing look or a public-site frame.
+
 ## 0.8.1
 
 ### Added

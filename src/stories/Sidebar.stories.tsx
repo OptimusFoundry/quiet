@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Avatar } from "../components/core/Avatar";
 import { Text } from "../components/core/Text";
-import { Wordmark } from "../components/core/Wordmark";
 import {
 	Sidebar,
 	SidebarProvider,
@@ -44,7 +43,7 @@ function AppShell() {
 			<div className="q-sb-sidebar">
 				<Sidebar
 					collapsible
-					header={<Wordmark size="nav" />}
+					header={<span className="q-sb-sidebar__brand">Sjocamp</span>}
 					aria-label="Primary"
 					value={page}
 					onChange={setPage}

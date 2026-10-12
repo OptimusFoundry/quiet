@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type CSSProperties, useRef, useState } from "react";
-import { Button, SectionHeader, StatCard, Text, TextField } from "../../index";
+import { Button, Panel, StatCard, Text, TextField } from "../../index";
 import { cssVar, type TokenName } from "../../styles/tokens.generated";
 import { type Density, DensitySwitch, Gap, GuidePage, Mono, Part, panel, useVar } from "./Guide";
 import "./Spacing.scss";
@@ -94,7 +94,7 @@ function SpacingPage() {
 					<div className="q-sb-spacing__redlines">
 						<div>
 							<Mono>Section</Mono>
-							<SectionHeader size="sm" as="h3" title="Signups" description="Last 30 days." />
+							<Panel variant="plain" as="h3" title="Signups" description="Last 30 days." />
 							<Gap token="--q-space-block" note="header ↔ content" />
 							<StatCard label="Verified" value="4,812" delta="+12%" trend="up" />
 						</div>

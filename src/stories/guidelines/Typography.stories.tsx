@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type CSSProperties, type ReactNode, useLayoutEffect, useRef, useState } from "react";
-import { Eyebrow, PageHero, SectionHeader, StatCard, Text } from "../../index";
+import { PageHeader, Panel, StatCard, Text } from "../../index";
 import { cssVar, type TokenName } from "../../styles/tokens.generated";
 import { GuidePage, Mono, Part } from "./Guide";
 import "./Typography.scss";
@@ -13,23 +13,15 @@ type Role = { role: string; how: string; target: string; node: ReactNode };
 const ROLES: Role[] = [
 	{
 		role: "page-title",
-		how: 'PageHero size="md" · h1 (h3 here)',
-		target: ".q-page-hero__title",
-		node: (
-			<PageHero
-				size="md"
-				as="h3"
-				ruled={false}
-				title="Campaigns"
-				className="q-sb-typography__hero"
-			/>
-		),
+		how: "PageHeader · h1 (h2 here)",
+		target: ".q-page-header__title",
+		node: <PageHeader as="h2" title="Campaigns" className="q-sb-typography__hero" />,
 	},
 	{
 		role: "section-title",
-		how: 'SectionHeader size="sm" as="h2"',
-		target: ".q-section-header__title",
-		node: <SectionHeader size="sm" as="h4" title="Recent signups" />,
+		how: "Panel title · h2 (h3 here)",
+		target: ".q-panel__title",
+		node: <Panel variant="plain" as="h3" title="Recent signups" />,
 	},
 	{
 		role: "card-title",
@@ -49,7 +41,7 @@ const ROLES: Role[] = [
 	},
 	{
 		role: "body-lg",
-		how: 'PageHero description · Text size="lg"',
+		how: 'PageHeader description · Text size="lg"',
 		target: "[data-t]",
 		node: (
 			<Text size="lg">
@@ -79,9 +71,9 @@ const ROLES: Role[] = [
 	},
 	{
 		role: "label",
-		how: "Eyebrow · Text mono · table headers",
-		target: ".q-eyebrow",
-		node: <Eyebrow>Last deploy</Eyebrow>,
+		how: "PageHeader eyebrow · table headers",
+		target: ".q-page-header__eyebrow",
+		node: <PageHeader as="h2" eyebrow="Last deploy" title="Spring waitlist" />,
 	},
 ];
 
@@ -162,17 +154,15 @@ function TypographyPage() {
 				rule="One 40, then 24 per section, 17 per panel. Never two equal headings stacked."
 			>
 				<div data-density="app" className="q-sb-typography__hierarchy">
-					<PageHero
-						size="md"
-						as="h3"
+					<PageHeader
+						as="h2"
 						eyebrow="Workspace"
 						title="Billing"
 						description="Plan, usage and invoices."
-						ruled={false}
 						className="q-sb-typography__hero"
 					/>
 					<div className="q-sb-typography__section">
-						<SectionHeader size="sm" as="h4" title="Usage" />
+						<Panel variant="plain" as="h3" title="Usage" />
 						<div className="q-sb-typography__stack">
 							<Text as="h5" size="lg" weight="semibold" color="heading">
 								Meerkat

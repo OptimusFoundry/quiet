@@ -37,7 +37,7 @@ import { QuietRoot, ThemeProvider, Toaster } from "@optimusfoundry/quiet";
 - Box sizing: your own classed elements are `border-box`; quiet's components keep the reference's
   `content-box`, even with your `className` on them. A class that sizes a quiet component (`width`,
   `height`, `max-width`, `100%` …) and gives it padding or a border, or sits on one that has them
-  (Card, Input, Alert …), also sets `box-sizing: border-box`.
+  (Card, TextField, Alert …), also sets `box-sizing: border-box`.
 
 ## Lay out a screen
 

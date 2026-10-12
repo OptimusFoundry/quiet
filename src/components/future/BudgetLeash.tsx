@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar } from "../core/Avatar";
 import { Button } from "../core/Button";
-import { FilterTabs } from "../data/FilterTabs";
+import { Tabs } from "../navigation/Tabs";
 import "./BudgetLeash.scss";
 
 /**
@@ -136,12 +136,12 @@ export function BudgetLeash({
 							<span aria-hidden="true" className="q-budget-leash__presets-label">
 								Leash
 							</span>
-							<FilterTabs
+							<Tabs
+								variant="enclosed"
 								size="sm"
 								label="Leash length"
-								showCounts={false}
 								value={String(cap)}
-								items={presets.map((p) => ({ value: String(p), label: format(p) }))}
+								tabs={presets.map((p) => ({ value: String(p), label: format(p) }))}
 								onChange={(v: string) => onCapChange?.(Number(v))}
 							/>
 						</div>

@@ -5,7 +5,6 @@ import {
 	Checkbox,
 	DatePicker,
 	Dropdown,
-	Input,
 	MultiSelect,
 	Radio,
 	Select,
@@ -86,7 +85,7 @@ function RefsDemo() {
 			<TextField ref={refs.textField} label="Name" />
 			<TextArea ref={refs.textArea} label="Brief" rows={2} />
 			<Select ref={refs.select} label="Region" options={["EU", "US"]} />
-			<Input ref={refs.input} label="Email" />
+			<TextField ref={refs.input} label="Email" />
 			<Checkbox ref={refs.checkbox} label="Terms" />
 			<Switch ref={refs.switch} label="Digest" />
 			<Slider ref={refs.slider} label="Budget" />

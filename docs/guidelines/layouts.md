@@ -1,6 +1,6 @@
 # Layouts
 
-Twelve page layouts cover a SaaS product. Pick one per screen by **what the user does there**. Don't
+Eleven page layouts cover a SaaS product. Pick one per screen by **what the user does there**. Don't
 compose a new one. Dimensions are app density. Specimen: Storybook `guidelines-layouts--default`.
 
 Inside the shell, every layout starts with `main` padding of `--q-space-section` (48) top/bottom and
@@ -21,7 +21,6 @@ Inside the shell, every layout starts with `main` padding of `--q-space-section`
 | changes preferences across many groups | **Settings** |
 | talks to Claude / an agent | **Chat** |
 | signs in, signs up, resets a password | **Sign-in** (no app shell) |
-| is not signed in (site, docs, pricing) | **Marketing** (no app shell) |
 
 ## App shell
 
@@ -49,7 +48,7 @@ Every app screen sits in this frame. Story: `patterns-app-shell--default`.
 
 - **Collapses:** under 720 the Sidebar leaves the layout and opens from `SidebarTrigger`. Drop its
   column via `useSidebar().isMobile` and show the phone bar; page-x becomes 16.
-- **Never:** wrap a `Drawer` around a copy of the nav; put `NavBar` and `Sidebar` on one screen.
+- **Never:** wrap a `Drawer` around a copy of the nav; put a `TopBar` and a `Sidebar` that repeat each other on one screen.
 
 ## Dashboard
 
@@ -73,7 +72,7 @@ Alert? (one)
 
 ```
 PageHeader: title · description ···················· [primary]
-toolbar: FilterTabs / Select size="sm" filters · search ··· [bulk]
+toolbar: Tabs enclosed / Select size="sm" filters · search ··· [bulk]
 ┌─ Table (name cell = EntityLink · status Badge · numbers right) ─┐
 └──────────────────────────────────────────────── Pagination ─────┘
 ```
@@ -83,7 +82,7 @@ toolbar: FilterTabs / Select size="sm" filters · search ··· [bulk]
 - **Rules:**
   - The title is a `PageHeader` with a one-line description of what the records are, and the create action on the right.
   - Empty: "nothing yet" (`EmptyState` + the create action) and "nothing matches" (+ Clear filters) differ.
-  - A tab bar of `Pending / Decided / All` is `FilterTabs` with counts.
+  - A tab bar of `Pending / Decided / All` is `Tabs variant="enclosed"` with a `count` per tab.
 
 ## Detail page
 
@@ -111,7 +110,7 @@ PageHeader: ← Runs · eyebrow · Title  [Status]  ········ [secondary]
 ```
 ┌─ list 360 ─┐┌─ detail (fluid, content ≤ 1040) ───┐
 │ search     ││ PageHeader                          │
-│ FilterTabs ││ Tabs                                │
+│ Tabs       ││ Tabs                                │
 │ List       ││ blocks …                            │
 └────────────┘└────────────────────────────────────┘
 ```
@@ -141,7 +140,7 @@ PageHeader: ← Runs · eyebrow · Title  [Status]  ········ [secondary]
 
 ```
 PageHeader ──────────────────── [primary]
-FilterTabs · search ·········· [bulk actions when selected]
+Tabs enclosed · search ·········· [bulk actions when selected]
 ┌──────────────── Table / DataGrid, span 12 ────────────────┐
 └───────────────────────────────────────── Pagination ─────┘
 ```
@@ -149,7 +148,7 @@ FilterTabs · search ·········· [bulk actions when selected]
 - **Dimensions:** the table fills the content width (≤ 1280, not capped at 1040); the toolbar sits `--q-space-stack` above it.
 - **Collapses:** the table scrolls horizontally inside itself; the page never scrolls sideways. Don't turn rows into cards.
 - **Rules:**
-  - One filter mechanism per field: `FilterTabs` or a filter `Drawer`, not both.
+  - One filter mechanism per field: `Tabs variant="enclosed"` or a filter `Drawer`, not both.
   - "Nothing matches" (`EmptyState` + Clear filters) and "nothing yet" (`GhostFuture`, or `EmptyState` + Create) are different states.
   - Status goes in a `Badge`/`StatusDot` cell, never a row tint.
   - The name cell is an `EntityLink` to the record. `onRowClick` may add a larger hit area, but never
@@ -202,7 +201,7 @@ StepIndicator ──●──○──○
 ```
 - **Choose over Tabs** when there are > 4 groups or a group is longer than a screen. Use Tabs for ≤ 4 short groups.
 - **Dimensions:** the nav and the form are `--q-space-block` apart, and sections are `--q-space-section` apart (not block).
-- **Collapses:** < 720 the nav becomes a `Select` or `FilterTabs` above the form.
+- **Collapses:** < 720 the nav becomes a `Select` or `Tabs variant="enclosed"` above the form.
 - **Story:** `patterns-settings--default`.
 - **Rules:**
   - Each group is a surface `Panel` with a title and a one-line description; never groups split by rules.
@@ -233,7 +232,7 @@ StepIndicator ──●──○──○
 ```
 ┌──────────────── page (--q-bg-subtle) ────────────────┐
 │              ┌──── card 400 ────┐                     │
-│              │ Wordmark          │                     │
+│              │ mark              │                     │
 │              │ title · one line  │                     │
 │              │ [Continue with G] │                     │
 │              │ ── or ──          │                     │
@@ -243,21 +242,10 @@ StepIndicator ──●──○──○
 │                 terms · privacy (small, muted)         │
 └───────────────────────────────────────────────────────┘
 ```
-- **Choose for** sign-in, sign-up, magic-link sent, password reset. No app shell, no NavBar.
+- **Choose for** sign-in, sign-up, magic-link sent, password reset. No app shell.
 - **Dimensions:** one centred card `--q-w-detail-panel` (400) wide on `--q-bg-subtle`, padding `--q-space-block`; fields `--q-space-field` apart; `density="app"`.
 - **Collapses:** < 440 the card goes full width with page-x 16 and loses its ground.
 - **Rules:**
   - Never a form stretched across half the screen (agentworks' 640-wide fields) or an empty brand panel. A split layout is allowed only when the other half carries real product content (a screenshot, a quote).
-  - The product's own name and `Wordmark`; one primary action (molten), the provider button secondary.
+  - The product's own name and mark (the `WorkspaceSwitcher` mark); one primary action (molten), the provider button secondary.
   - After "Email me a link", the same card says where the link went and offers Resend.
-
-## Marketing
-
-```
-NavBar ──────────────────────────────
-PageHero lg (display type)
-section ↕128 · SectionHeader md · 12-col, gutter 32
-```
-- **Choose for** any page a signed-out visitor sees. Never put the app shell and NavBar on one screen.
-- **Dimensions:** `density="marketing"` (the default), `PageShell` / `Container` (1280, 32 sides), and sections `--q-space-section` (128).
-- **Collapses:** columns stack < 720.

@@ -12,43 +12,26 @@ colour, size or duration, there is a token for it.
 |---|---|---|---|
 | Ground | `--q-bg` | paper | page, cards, fields |
 | Alternate ground | `--q-bg-subtle` | paper-2 (app look: `--q-gray-25` warmed by 1% accent) | alternate sections, Panels, user chat bubbles, wells |
-| Inverse | `--q-bg-inverse` | ink | primary button on marketing pages; selected chips |
-| Heading text | `--q-fg` | ink | titles, values, emphasis; section rules on marketing pages |
+| Inverse | `--q-bg-inverse` | ink | selected chips |
+| Heading text | `--q-fg` | ink | titles, values, emphasis |
 | Body text | `--q-fg-body` | ink-2 | default paragraph text |
 | Secondary text | `--q-fg-muted` | muted | metadata, help, table secondary lines |
 | Quiet text | `--q-fg-subtle` | muted-2 | non-essential only (fails AA, by design) |
 | Divider | `--q-border` | rule-soft | card edges, list and table dividers |
 | Hover edge | `--q-border-strong` | rule-strong | card hover, emphasis edges |
-| Accent | `--q-accent` | molten | marketing: punctuation · app: the brand colour (below) |
+| Accent | `--q-accent` | molten | the brand colour (below) |
 
-### Molten: two looks
+### Molten: the brand colour
 
-Molten plays two roles, set by density. **Marketing** (`density="marketing"`, the website, and the
-catalog that parity pins) keeps the reference: molten is punctuation. **The app look**
-(`density="app"` and `"compact"`, every product screen) makes molten the brand colour: it says
-"you can act here" and "this is where you are". Components switch on their own; screens never
-pick a molten token by hand except through the roles below.
-
-#### Marketing: punctuation
-
-Ratio: **Paper 70 · Paper-2 20 · Ink 9 · Molten 1.** Molten marks one thing that matters:
-
-- the full stop after a page title (`PageHero`/`Headline` add it);
-- one italic accent phrase in a headline (`accent` prop);
-- a status dot or mark: warning, error, the human step in `AgentRun`, a stale step in `LineageChip`,
-  the doubt underline in `DoubtMarker`, a cap warning in `CostMeter`;
-- a focus or "past the line" hairline (`ElasticSlider`, `ThresholdHandles`).
-
-No molten fill, button, section or banner on a marketing page. Primary actions are ink.
-
-#### The app look: the brand colour
+Molten is the brand colour: it says "you can act here" and "this is where you are". Components do
+it for you; screens never pick a molten token by hand except through the roles below.
 
 | Role | What takes molten | Token | Built into |
 |---|---|---|---|
-| Links | link text and its resting underline (solid on hover) | `--q-accent-fg`, `--q-accent-border` | `Link`, `ArrowLink`, `EntityLink`, bare `<a>` in prose, `Breadcrumb` hover |
+| Links | link text and its resting underline (solid on hover) | `--q-accent-fg`, `--q-accent-border` | `Link`, `EntityLink`, bare `<a>` in prose, `Breadcrumb` hover |
 | Primary action | the one primary button per view | `--q-accent-bg`, `--q-accent-bg-hover`, `--q-fg-on-accent` | `Button variant="primary"` |
 | Current place | the current nav item (tint + accent text and icon), the current page, step, tab | `--q-accent-subtle`, `--q-accent-fg`, `--q-accent` | `Sidebar`, `Pagination`, `StepIndicator`, `Tabs` (line indicator, pill fill) |
-| Selected / checked | selected rows and filters, checked controls, slider fill | `--q-accent-subtle`, `--q-accent-bg` | `Table`, `List`, `FilterTabs`, `Checkbox`, `Radio`, `Switch`, `Slider` |
+| Selected / checked | selected rows and filters, checked controls, slider fill | `--q-accent-subtle`, `--q-accent-bg` | `Table`, `List`, `Tabs variant="enclosed"`, `Checkbox`, `Radio`, `Switch`, `Slider` |
 | Focus | the keyboard focus ring, focused field edges, text selection | `--q-focus-ring-color`, `--q-accent`, `--q-selection-bg` | every control |
 | Progress | the filled part of a bar | `--q-accent` | `Progress` |
 | Attention | warning and error status surfaces and marks | `--q-status-warning-*`, `--q-status-error-*` | `Badge`, `Alert`, `Banner`, `toast()` |
@@ -122,14 +105,14 @@ surface with `--q-status-*`, use the components' `variant`/`status` props, and n
   [DESIGN.md → Product themes](../../DESIGN.md#product-themes).
 - A product gets its identity from a **theme** (palette, accent, type, shape, density, per-component
   tokens), never from forking components. The rules on this page stay the same in every theme.
-- `QuietRoot accent="…"` swaps the accent for a product. The two looks above apply to whatever colour
+- `QuietRoot accent="…"` swaps the accent for a product. The roles above apply to whatever colour
   it becomes; check `--q-accent-fg` still reaches 4.5:1 on paper.
 - Check every screen in both `foundry` and `foundry-dark`. Never hard-code a light-only value.
 
 ### Contrast exceptions (kept on purpose)
 
 `--q-fg-subtle` (≈2.98:1) and small `--q-accent` text (≈3.87:1) are below AA and are kept exactly as
-designed on marketing pages. App text never uses `--q-accent`; it uses `--q-accent-fg`. Use `--q-fg-subtle` only for text that isn't needed (decorative serials, dimmed future
+designed. Text never uses `--q-accent`; it uses `--q-accent-fg`. Use `--q-fg-subtle` only for text that isn't needed (decorative serials, dimmed future
 items). Anything a user must read uses `--q-fg-muted` or darker.
 
 ## Type and spacing
@@ -145,8 +128,7 @@ between what). Grid and page layouts: [grid.md](grid.md), [layouts.md](layouts.m
   buttons, tags, switches, dots, progress. Never 0 on a container.
 - **Surfaces before rules (app):** sections group with `Panel` surfaces (`--q-bg-subtle`, radius
   `--q-radius-lg`) and spacing. 1px `--q-border` hairlines only inside dense tables and lists, and
-  as card edges. No ink rules in an app. **Marketing** keeps the reference: an ink rule (`--q-fg`)
-  on section tops, hairlines for dividers.
+  as card edges. No ink rules.
 - **Shadows only float:** `--q-shadow-1` selected segment, `--q-shadow-2` popovers, menus, toasts,
   card hover, `--q-shadow-3` dialogs, drawers, palette. Never on text. No glassmorphism. The only
   transparency is the dialog scrim (`--q-scrim`).
@@ -165,7 +147,6 @@ between what). Grid and page layouts: [grid.md](grid.md), [layouts.md](layouts.m
 
 | Mode | Where |
 |---|---|
-| `marketing` | the website only (QuietRoot's default) |
 | `app` | dashboards, lists, detail pages, settings, chat. **The product default.** Turns on the app look |
 | `compact` | dense tables, inspectors, admin consoles |
 

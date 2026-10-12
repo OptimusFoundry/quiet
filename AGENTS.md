@@ -12,9 +12,8 @@ hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESI
 | `src/components/<group>/*.tsx` | `docs/reference/optimus-design/components/*.jsx` + `*.d.ts` | ported to TypeScript (props interface from the `.d.ts`, JSDoc and `@startingPoint` kept), then the a11y + motion layer edited in |
 | `src/styles/tokens/` | `docs/reference/optimus-design/tokens/` | rebuilt as 3-tier `--q-*` tokens with the same values; the reference names live in `tokens/_reference-compat.scss` |
 | `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest |
-| `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
+| `src/index.ts` | a scan of `src/components/<group>/` | `npm run gen` |
 | `src/styles/tokens.generated.{ts,json}` | the compiled SCSS | `npm run gen` (`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`) |
-| `src/stories/catalog.generated.tsx` | `components/index.html` App script | `npm run gen` (verbatim, `@ts-nocheck`) |
 
 `docs/reference/optimus-design/` is a byte-identical mirror of the Claude Design project. Everything
 in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes through Stylelint.
@@ -27,8 +26,6 @@ in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes 
    keep `\uXXXX` escapes as escapes. Verify against the project before trusting the copy.
 3. `git diff` the mirror to see what changed and port it by hand into the `.tsx` (same paths),
    keeping the a11y + motion layer and the types, then run `npm run gen`.
-4. Compare the Catalog story with the reference `components/index.html` side by side — at rest
-   they must look identical.
 
 ## One look
 
@@ -99,7 +96,7 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
   `q-sb-*`, plain CSS (tokens, nesting; no SCSS features, no `@layer`). Pattern screens are what
   products copy, so keep them clean. Inline `style` only for dynamic `--_` values.
 - The reference names (`--ink`, `--paper`, `--molten` …) exist only in
-  `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
+  `tokens/_reference-compat.scss`, for pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by
   `applyTheme`): element selectors, `::selection`, the reference-compat names. Nothing outside a
   quiet root changes when quiet.css loads (README "Where quiet's
@@ -132,9 +129,9 @@ panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppI
 icon set, `icons.ts`), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
 `Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
 
-Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
-`scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
-section, since the catalog is generated from the reference and must stay pixel-identical to it.
+`npm run gen` exports every PascalCase `.tsx` in each group folder, so a new component needs no
+list entry. Single own components in a reference group (today `feedback/Toaster`) get their own
+stories (`src/stories/<Name>.stories.tsx`).
 
 ## Harness (Claude Code)
 

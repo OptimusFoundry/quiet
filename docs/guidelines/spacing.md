@@ -8,7 +8,7 @@ how it looks. Specimen: Storybook `guidelines-spacing--default`.
 `--q-space-*` (src/styles/tokens/_space.scss). Names are multiples of 8.
 
 | Token | 0-25 | 0-5 | 0-75 | 1 | 1-25 | 1-5 | 1-75 | 2 | 2-5 | 3 | 4 | 5 | 6 | 7 | 8 | 10 | 12 | 16 | 20 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|
 | px | 2 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 20 | 24 | 32 | 40 | 48 | 56 | 64 | 80 | 96 | 128 | 160 |
 
 The sub-8 steps (2–14) and 20 exist **only inside components** (control padding, icon nudges).
@@ -19,17 +19,17 @@ Screens and layouts never use them.
 Set density once on the root (`QuietRoot density`, or `data-density` on a container). The tokens
 follow it; raw steps don't.
 
-| Job: the gap between… | Token | marketing | **app** | compact |
-|---|---|---|---|---|
-| icon ↔ label, chip ↔ chip, button ↔ button | `--q-space-inline` | 8 | **8** | 8 |
-| lines/blocks inside a card or panel; label ↔ value | `--q-space-stack` | 16 | **16** | 8 |
-| form field ↔ field | `--q-space-field` | 24 | **24** | 16 |
-| card/panel padding | `--q-space-card-pad` | 32 | **24** | 16 |
-| card ↔ card | `--q-space-card-gap` | 32 | **24** | 16 |
-| block ↔ block; section header ↔ its content | `--q-space-block` | 64 | **32** | 24 |
-| page top/bottom padding; settings section ↔ section | `--q-space-section` | 128 | **48** | 32 |
-| page side padding | `--q-space-page-x` | 32 | **32** | 24 |
-| grid column gap | `--q-grid-gutter` | 32 | **24** | 16 |
+| Job: the gap between… | Token | **app** | compact |
+|---|---|---|---|
+| icon ↔ label, chip ↔ chip, button ↔ button | `--q-space-inline` | **8** | 8 |
+| lines/blocks inside a card or panel; label ↔ value | `--q-space-stack` | **16** | 8 |
+| form field ↔ field | `--q-space-field` | **24** | 16 |
+| card/panel padding | `--q-space-card-pad` | **24** | 16 |
+| card ↔ card | `--q-space-card-gap` | **24** | 16 |
+| block ↔ block; section header ↔ its content | `--q-space-block` | **32** | 24 |
+| page top/bottom padding; settings section ↔ section | `--q-space-section` | **48** | 32 |
+| page side padding | `--q-space-page-x` | **32** | 24 |
+| grid column gap | `--q-grid-gutter` | **24** | 16 |
 
 ## What goes between what
 
@@ -37,11 +37,11 @@ follow it; raw steps don't.
 |---|---|---|
 | Label and its control | the field component's own gap (TextField, Select, FormField) | a hand-set margin |
 | Two fields in a form | `--q-space-field` | `stack`, so the form looks cramped |
-| Field groups (Profile vs Address) | `--q-space-block` + a `SectionHeader size="sm"` | a bigger raw gap with no header |
+| Field groups (Profile vs Address) | `--q-space-block` + a titled `Panel variant="plain"` | a bigger raw gap with no header |
 | Title and body inside a panel | `--q-space-stack` | `block`, so the panel looks hollow |
 | Panel edge and its content | `--q-space-card-pad` | 16 in app density |
 | Cards in a row or grid | `--q-grid-gutter` (grid) / `--q-space-card-gap` (stack) | 12, 20 or 28 |
-| `SectionHeader` and its content | `--q-space-block` | `stack`, which glues the header to the first row |
+| A `Panel` title and its content | `--q-space-block` | `stack`, which glues the header to the first row |
 | Section and section on a page | `--q-space-block` (same parent stack) | stacked margins that add up |
 | Settings section and section | `--q-space-section` | `block`, so sections blur together |
 | Page edge and content | `--q-space-section` top/bottom, `--q-space-page-x` sides | centring a narrow column in a wide page |
@@ -79,7 +79,6 @@ Lay out with `gap` on a flex or grid parent. The first and last child never carr
 |---|---|---|
 | 12, 20 or 28 between blocks | off the job scale, so neighbours drift | `--q-space-block` |
 | Every gap the same | flattens the hierarchy, so sections read as one list | inline < stack < field < block < section |
-| Marketing gaps (64/128) in an app | half the screen is air | `density="app"` |
 | Margins on components | they double up at edges and break when reordered | `gap` on the parent |
 | Card padding 16 in app | cramped and off-token | `--q-space-card-pad` (24) |
-| A taller gap to "separate" with no heading | the reader can't tell why | a titled `Panel` (app) or a `SectionHeader` (site) |
+| A taller gap to "separate" with no heading | the reader can't tell why | a titled `Panel` |

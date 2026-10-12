@@ -1,13 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
-	ArrowLink,
 	Breadcrumb,
 	Button,
 	Card,
 	Link,
 	type LinkComponent,
 	List,
-	NavBar,
 	QuietRoot,
 	Sidebar,
 	StatCard,
@@ -34,11 +32,10 @@ const RouterLink: LinkComponent = ({ href, onClick, ...props }) => (
 function RouterLinks() {
 	return (
 		<QuietRoot linkComponent={RouterLink} density="app" className="q-sb-router-links">
-			<NavBar links={[{ label: "Pricing", href: "/pricing" }]} ctaHref="/contact" />
 			<Breadcrumb items={[{ label: "Home", href: "/home" }, { label: "Settings" }]} />
 			<Sidebar items={[{ label: "Projects", href: "/projects" }]} />
 			<p>
-				<Link href="/docs">Docs</Link> · <ArrowLink href="/changelog">Changelog</ArrowLink> ·{" "}
+				<Link href="/docs">Docs</Link> · <Link href="/changelog">Changelog</Link> ·{" "}
 				<Link href="https://example.com" external>
 					Example
 				</Link>{" "}

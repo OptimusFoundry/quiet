@@ -48,12 +48,12 @@ Prefer a normal dependency? quiet still builds as a package (`npm run build` →
 ## Use
 
 ```tsx
-import { QuietRoot, Button, PageHero } from "@optimusfoundry/quiet";
+import { QuietRoot, Button, PageHeader } from "@optimusfoundry/quiet";
 import "@optimusfoundry/quiet/style.css";
 import "@optimusfoundry/quiet/fonts.css";
 
 <QuietRoot theme="foundry">
-	<PageHero size="md" eyebrow="Workspace" title="Builds" actions={<Button size="sm">New build</Button>} />
+	<PageHeader eyebrow="Workspace" title="Builds" actions={<Button size="sm">New build</Button>} />
 </QuietRoot>;
 ```
 
@@ -67,8 +67,8 @@ Import `fonts.css` when you use the `foundry` themes. A product whose theme sets
 
 ## Router links
 
-Components that render an `<a>` from `href` (Link, ArrowLink, Button, Card, StatCard, List,
-Breadcrumb, NavBar, Sidebar) use the `linkComponent` set on `QuietRoot` (or `ThemeProvider`). It
+Components that render an `<a>` from `href` (Link, Button, Card, StatCard, List,
+Breadcrumb, TopBar, Sidebar) use the `linkComponent` set on `QuietRoot` (or `ThemeProvider`). It
 receives `href` plus the usual anchor props (`className`, `onClick`, `aria-*`, `children`, `ref`).
 Links a router can't handle stay plain `<a>`: `external` links, absolute URLs (`https:`,
 `mailto:`, `//host`) and in-page `#hash` links. With no `linkComponent`, every link is a plain `<a>`.
@@ -93,7 +93,7 @@ classed elements while quiet's components keep the reference's box), body type, 
 Box sizing: your own classed elements are `border-box`, while quiet's components keep the
 reference's `content-box`, even when you pass them a `className`. So a class that sizes a quiet
 component (`width`, `height`, `max-width`, `100%` …) and gives it padding or a border, or sits on one
-that has them (Card, Input, Alert …), sets `box-sizing: border-box` too. Otherwise the padding adds to
+that has them (Card, TextField, Alert …), sets `box-sizing: border-box` too. Otherwise the padding adds to
 the size: `height: 100%` on a Card overflows its column by the Card's padding.
 
 quiet's own `--q-*` tokens are declared at `:root`. Its rules live in the cascade layers `q.tokens, q.themes, q.base, q.components, q.utilities`, so any unlayered CSS in your app overrides them.
@@ -140,7 +140,7 @@ Reference screens are in Storybook under **Patterns**; measured specimens under 
 
 ### Styling your own pages
 
-Lay pages out with quiet's components (`PageShell`, `PageHero`, `Container`, `Stack`, `Grid`, `Card` …)
+Lay pages out with quiet's components (`AppShell`, `PageHeader`, `Stack`, `Grid`, `Card` …)
 and style anything of your own with quiet's tokens, never raw values. The tokens are CSS custom
 properties defined by `style.css`, so any styling approach works:
 
