@@ -20,7 +20,7 @@
 }
 
 // Softer ink than the reference (a deliberate break from parity): headings 700, body 600.
-// Scoped like _foundry-status.scss, never plain :root, so foundry-dark or a product theme on
+// Scoped to foundry and an unthemed root, never plain :root, so foundry-dark or a product theme on
 // <html> keeps its own 900/800.
 :is(:root:not([data-theme]), [data-theme="foundry"]) {
   --q-fg: var(--q-gray-700);
