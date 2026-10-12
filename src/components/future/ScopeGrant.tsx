@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar } from "../core/Avatar";
 import { Button } from "../core/Button";
-import { FilterTabs } from "../data/FilterTabs";
 import { Switch } from "../forms/Switch";
+import { Tabs } from "../navigation/Tabs";
 import "./ScopeGrant.scss";
 
 /**
@@ -128,11 +128,11 @@ export function ScopeGrant({
 					</div>
 				</div>
 				{durations.length > 0 && (
-					<FilterTabs
+					<Tabs
+						variant="enclosed"
 						size="sm"
 						label="How long"
-						showCounts={false}
-						items={durations.map((x) => ({ value: x.value, label: x.label }))}
+						tabs={durations.map((x) => ({ value: x.value, label: x.label }))}
 						value={dur}
 						onChange={pickDur}
 					/>

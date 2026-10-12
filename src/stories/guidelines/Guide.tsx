@@ -6,7 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { FilterTabs, Text } from "../../index";
+import { Tabs, Text } from "../../index";
 import { cssVar, type TokenName } from "../../styles/tokens.generated";
 import "./Guide.scss";
 
@@ -123,12 +123,13 @@ export function DensitySwitch({
 	label?: string;
 }) {
 	return (
-		<FilterTabs
+		<Tabs
+			variant="enclosed"
 			size="sm"
 			label={label}
 			value={value}
 			onChange={(v) => onChange(v as Density)}
-			items={[
+			tabs={[
 				{ value: "app", label: "App" },
 				{ value: "compact", label: "Compact" },
 				{ value: "marketing", label: "Marketing" },

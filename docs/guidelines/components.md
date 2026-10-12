@@ -7,14 +7,14 @@ the wrong option it prevents.
 
 | Need | Use | Not |
 |---|---|---|
-| main action | `Button variant="primary"`, one per view (molten in an app, ink on the site) | a second primary, a link styled as a button |
-| go to a URL | `Link`, `ArrowLink`, `Button href` (routed by `linkComponent`) | `onClick` + `location.href`, a router `<Link>` wrapped round a quiet component, plain text that navigates |
+| main action | `Button variant="primary"`, one per view (molten) | a second primary, a link styled as a button |
+| go to a URL | `Link`, `Button href` (routed by `linkComponent`) | `onClick` + `location.href`, a router `<Link>` wrapped round a quiet component, plain text that navigates |
 | name another record (a run, project, artifact, ticket) | `EntityLink` (`kind`, `mono` for IDs, `state` done/blocked, `external`) | bold text, a `Badge`, an ID in plain mono |
 | open a row of a table | `EntityLink` in the name cell (plus `onRowClick` for the hit area) | `onRowClick` alone: the row isn't a link |
 | a file or a version of one | `FileCard` (kind from the MIME type, size, Download, `badge` "Current") | a raw MIME type, "Download" as plain text |
 | an object's properties | `DescriptionList` (`inline`; `stacked` in a rail; `copy` on IDs) | key/value rows with the value right-aligned 900px away |
-| the top of a screen | `PageHeader` (title, `status`, `meta`, `actions`, `back`, `tabs`) | a breadcrumb top bar above it, `PageHero` in an app |
-| a titled section | `Panel` (surface; `outlined` in a grid; `plain` for the lead; `empty` collapses) | a `SectionHeader` with a rule, a hand-built bordered `<section>` |
+| the top of a screen | `PageHeader` (title, `status`, `meta`, `actions`, `back`, `tabs`) | a breadcrumb top bar above it |
+| a titled section | `Panel` (surface; `outlined` in a grid; `plain` for the lead; `empty` collapses) | a heading with a rule, a hand-built bordered `<section>` |
 | an agent run's history | `Transcript` (sessions, grouped messages, `ToolCall`s, events) | raw `[chat · @name] text` lines, empty session headings |
 | on/off that applies now | `Switch` | `Checkbox` + Save |
 | delegation between off and always | `ProbabilityToggle` | three radios |
@@ -28,7 +28,7 @@ the wrong option it prevents.
 | read-mostly rows | `Table` | `DataGrid` with every feature off |
 | search, select and page | `DataGrid` | `Table` + a hand-built toolbar |
 | an openable object in a grid | `Card` | `Card` as a generic box; use `Panel` (see [sections.md](sections.md)) |
-| a KPI in an app | `StatCard` | `Stat` (marketing) |
+| a KPI in an app | `StatCard` | a hand-built stat block |
 | a chart | `Sparkline`, `LineChart`, `BarChart`, `DonutChart` (share-of-total only), `NarratedChart` | a chart library, an image, a donut for anything else |
 | a menu of actions | `DropdownMenu` | a `Popover` full of buttons |
 | a hint | `Tooltip` | the `title` attribute |
@@ -120,7 +120,6 @@ lives in that product's repo, built on quiet tokens and BEM.
 
 - one control `size` per screen (`sm` in apps) and one density per surface
 - `Table` and `DataGrid` in one block
-- `Stat` in apps, or `StatCard` on the marketing site
 - `Headline size="display"` in apps
 - icon sets: quiet uses unicode glyphs through `Icon`. A product that needs more picks one thin
   stroke set in its theme.

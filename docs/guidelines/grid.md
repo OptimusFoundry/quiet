@@ -28,10 +28,10 @@ flexes. Never size a pane in % or invent a width. If none of the six fits, the l
 </Grid>
 ```
 
-| | marketing | app | compact |
-|---|---|---|---|
-| Gutter `--q-grid-gutter` | 32 | 24 | 16 |
-| `Grid gap` to use | `lg` | `md` | a plain grid with `gap: var(--q-grid-gutter)` |
+| | comfortable | compact |
+|---|---|---|
+| Gutter `--q-grid-gutter` | 24 | 16 |
+| `Grid gap` to use | `md` | a plain grid with `gap: var(--q-grid-gutter)` |
 
 - `Grid`'s named gaps are fixed px (`md` = 24), not density-aware. Match the table above.
 - **Always pass `rowGap`.** `Grid` adds no row gap by default, so wrapped columns touch on narrow screens.
@@ -77,15 +77,6 @@ Panes don't respond on their own. Under 720, drop the pane: the sidebar becomes
 - Every block starts on a column edge. Nothing floats in a gutter or uses `margin-left` to line up.
 - Nested grids: a `Col span={8}` may hold its own `Grid columns={12}`. Its columns won't match the page
   grid, so nest only for self-contained modules (a panel's internal layout), never to place page blocks.
-- Check with `<GridOverlay offsetLeft={240} />` (Ctrl/⌘+G) in development: 12 columns plus 8px
-  rhythm lines. Never ship it.
-
-## PageShell and Container
-
-`PageShell layout="single|half|third|sidebar|sidebar-right"` and `Container` use **fixed marketing
-values**: 32 side padding (`--q-gutter`), 1280 / 880 max, 48 / 32 gaps, 96 bottom padding. Use them for
-marketing and docs pages. In the app shell, `main` already sets `--q-space-section` /
-`--q-space-page-x` padding and `--q-w-max`, so lay blocks out with `Grid` and panes directly.
 
 ## Don't
 

@@ -8,9 +8,9 @@ import {
 	ChatThread,
 	Checkpoints,
 	CodeBlock,
+	Panel,
 	PromptSuggestions,
 	Receipt,
-	SectionHeader,
 	Text,
 	ToolCall,
 	toast,
@@ -220,22 +220,19 @@ function SidePanel() {
 	const [undone, setUndone] = useState<string[]>([]);
 	return (
 		<div className="q-sb-app-frame__stack q-sb-app-frame__stack--section">
-			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
-				<SectionHeader
-					size="sm"
-					as="h2"
-					title="Steps"
-					description="Every step you or Meerkat took in this conversation."
-				/>
+			<Panel
+				variant="plain"
+				title="Steps"
+				description="Every step you or Meerkat took in this conversation."
+			>
 				<Checkpoints
 					label="Conversation checkpoints"
 					checkpoints={CHECKPOINTS}
 					defaultValue={CHECKPOINTS.length - 1}
 					onRestore={(c) => toast({ title: "Restored.", meta: c.label })}
 				/>
-			</div>
-			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
-				<SectionHeader size="sm" as="h2" title="Last action" />
+			</Panel>
+			<Panel variant="plain" title="Last action">
 				<Receipt
 					actor="Meerkat"
 					time="09:05"
@@ -260,7 +257,7 @@ function SidePanel() {
 					]}
 					onUndo={(line) => setUndone((u) => [...u, String(line.id)])}
 				/>
-			</div>
+			</Panel>
 		</div>
 	);
 }

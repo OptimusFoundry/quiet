@@ -1,46 +1,39 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-	Alert,
-	ArrowLink,
-	Button,
-	Card,
-	Col,
-	Grid,
-	List,
-	NavBar,
-	PageHero,
-	PageShell,
-	SectionHeader,
-	Text,
-} from "../../index";
+import { Button, Col, Grid, List, PageHeader, Panel, Text } from "../../index";
 import { AppFrame } from "./AppFrame";
-import "./AppShell.scss";
 
-// App shell — the frame every signed-in screen sits in, and the public-page frame beside it.
-// Signed in: Sidebar (240) + top bar (64: breadcrumb, ⌘K search, account) + main at density "app".
-// Public (signed out, docs, status, changelog): NavBar + PageShell at density "marketing".
+// App shell — the frame every signed-in screen sits in: AppShell with the Sidebar on a canvas, the
+// screen an inset panel with a TopBar pinned inside it, and an optional third pane beside it.
 
 const REGIONS = [
 	{
 		primary: "Sidebar",
-		secondary: "--q-w-sidebar · 240. Wordmark, grouped nav, account. Sticky, full height.",
+		secondary:
+			"On the canvas, no edge. WorkspaceSwitcher, ⌘K search, grouped nav, AccountMenu at the foot. The current page is a raised pill. Collapses to an icon rail from the TopBar.",
 		trailing: "nav",
 	},
 	{
-		primary: "Top bar",
-		secondary: "--q-h-topbar · 64. Breadcrumb, Search (⌘K), account menu. Sticky.",
-		trailing: "header",
-	},
-	{
-		primary: "Main",
+		primary: "Panel",
 		secondary:
-			"--q-w-max wide, --q-space-page-x gutters, --q-space-section top. Sections stack at --q-space-block.",
+			"The screen: an inset raised panel that scrolls on its own. Pages fill it; they never bring their own header or navigation.",
 		trailing: "main",
 	},
 	{
+		primary: "Top bar",
+		secondary:
+			"Pinned to the panel's top: sidebar toggle, breadcrumb, global actions. Its rule shows only once the content scrolls.",
+		trailing: "header",
+	},
+	{
 		primary: "Page title",
-		secondary: "One PageHero size md per screen, unruled. Section heads are SectionHeader size sm.",
+		secondary: "One PageHeader per screen. Blocks below it are Panels with their own headers.",
 		trailing: "h1",
+	},
+	{
+		primary: "Third pane",
+		secondary:
+			"Notifications or a screen's own pane open beside the panel and push it narrower. One at a time.",
+		trailing: "aside",
 	},
 	{
 		primary: "Toasts",
@@ -53,92 +46,36 @@ const REGIONS = [
 function Shell() {
 	return (
 		<>
-			<PageHero
-				size="md"
-				ruled={false}
-				className="q-sb-app-frame__hero"
-				title="Your"
-				accent="workspace"
-				description="Every signed-in screen uses this frame. Pages only fill the main column; they never bring their own header or navigation."
+			<PageHeader
+				title="Your workspace"
+				description="Every signed-in screen uses this frame. Pages only fill the panel; they never bring their own header or navigation."
 				actions={
 					<Button size="sm" variant="secondary" href="?path=/story/patterns-dashboard--default">
 						See a dashboard
 					</Button>
 				}
 			/>
-			<Grid columns={12} gap="md">
+			<Grid columns={12} gap="md" rowGap="md">
 				<Col span={7}>
-					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
-						<SectionHeader size="sm" as="h2" title="Anatomy" />
+					<Panel title="Anatomy">
 						<List size="sm" items={REGIONS} />
-					</div>
+					</Panel>
 				</Col>
 				<Col span={5}>
-					<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
-						<SectionHeader size="sm" as="h2" title="On a phone" />
-						<Alert variant="info" title="Under 720px the sidebar leaves the grid.">
-							Sidebar becomes its own drawer (SidebarProvider + SidebarTrigger in the top bar), the
-							breadcrumb keeps only the current page, and Search drops its shortcut hint. Every Col
-							stacks to full width.
-						</Alert>
-						<Text size="sm" color="muted">
-							Two-pane pages (list and detail, chat and its side panel) stack the list above the
-							detail, or move the side panel into a drawer.
-						</Text>
-					</div>
+					<Panel title="On a phone">
+						<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
+							<Text size="sm">
+								Under 720px the panel goes flush, the Sidebar becomes a drawer opened from the
+								TopBar, and the third pane opens full screen with the same look.
+							</Text>
+							<Text size="sm" color="muted">
+								Two-pane pages (list and detail, chat and its side panel) stack the list above the
+								detail, or move the side panel into the third pane.
+							</Text>
+						</div>
+					</Panel>
 				</Col>
 			</Grid>
-			<div className="q-sb-app-frame__stack q-sb-app-frame__stack--stack">
-				<SectionHeader
-					size="sm"
-					as="h2"
-					title="Public pages"
-					description="Status, changelog, docs and sign-in use the site frame: NavBar on top, PageShell for columns, marketing density."
-				/>
-				<div data-density="marketing" className="q-sb-app-shell__public">
-					<NavBar
-						label="Public site"
-						homeLabel="Sjocamp home"
-						links={[
-							{ label: "Changelog", href: "#", current: true },
-							{ label: "Status", href: "#" },
-							{ label: "Docs", href: "#" },
-						]}
-						cta="Sign in"
-						ctaHref="#"
-					/>
-					<PageShell
-						layout="sidebar"
-						header={
-							<PageHero
-								size="md"
-								as="h2"
-								eyebrow="Changelog"
-								title="October"
-								accent="2026"
-								ruled={false}
-							/>
-						}
-					>
-						<List
-							size="sm"
-							items={[
-								{ primary: "Oct 8", secondary: "Weekly brief" },
-								{ primary: "Oct 1", secondary: "Agent caps" },
-								{ primary: "Sep 24", secondary: "Referral links" },
-							]}
-						/>
-						<Card
-							eyebrow="Oct 8"
-							title="The weekly brief"
-							footer={<ArrowLink href="#">Read the note</ArrowLink>}
-						>
-							Every Monday at 08:00, one email with what moved, what Meerkat did, and what it's
-							waiting on.
-						</Card>
-					</PageShell>
-				</div>
-			</div>
 		</>
 	);
 }

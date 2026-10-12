@@ -4,13 +4,13 @@ Run this on every new or changed screen, in **foundry and foundry-dark**, at 128
 visual-reviewer agent (`.claude/agents/`) uses this list. Every item should be a yes.
 
 ## Layout and sections
-- [ ] The screen is one of the twelve layouts in `layouts.md`, at its dimensions (main 48 / 32, max 1280).
+- [ ] The screen is one of the eleven layouts in `layouts.md`, at its dimensions (main 48 / 32, max 1280).
 - [ ] Panes use the fixed widths (240 / 200 / 360 / 400 / 640 / 1040), never % or invented px.
 - [ ] Blocks sit on the 12-column grid with spans 3 / 4 / 6 / 8 / 9 / 12, and the column edges line up between rows.
 - [ ] Every `Grid` has `rowGap`; at 390 no two blocks touch.
 - [ ] There's one `PageHeader` (`h1`) in main and no desktop top bar or breadcrumb bar above it; sections are titled `Panel`s (`h2`), and the heading order is unbroken.
 - [ ] Sections group with surfaces and spacing: no ink rules, and no hairlines between sections (hairlines only between table or list rows).
-- [ ] No card-in-card, no frame around a table, no `SectionHeader` inside a `Panel`; nesting is at most page → section → container.
+- [ ] No card-in-card, no frame around a table, no titled `Panel` inside a `Panel`; nesting is at most page → section → container.
 - [ ] One page status under the title; the lead block is first and widest; empty sections collapse (`Panel empty`) and come last; destructive actions come last.
 - [ ] Properties are a `DescriptionList`: no label/value pair is split across the page (no 900px gaps).
 - [ ] Actions sit with what they act on: page actions in `PageHeader`, section actions in `Panel actions`, one primary each.

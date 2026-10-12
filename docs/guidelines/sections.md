@@ -42,7 +42,7 @@ row hairlines, never another box.
 | section → `Panel` → table / list / `DescriptionList` | `Panel` → `Panel` (card-in-card) |
 | a grid of outlined `Panel`s | `Card` → anything with its own border |
 | `Panel` → text, chart, `FileCard`s, actions | an ink or hairline rule between sections |
-| a surface `Panel` in a 400 right rail | a `SectionHeader` inside a `Panel` |
+| a surface `Panel` in a 400 right rail | a titled `Panel` inside a `Panel` |
 
 ## Section headings
 
@@ -51,11 +51,9 @@ row hairlines, never another box.
 | Page | `PageHeader` (one `h1`) | `--q-space-block` |
 | Section on an app page | `Panel title` (an `h2`; `as="h3"` inside a nested section) | built in |
 | A group with no visible title (a toolbar, a status line) | none; name it with `aria-label` if it's a landmark | — |
-| Marketing section | `SectionHeader size="md"`; its ink top rule is the divider | `--q-space-block` |
 
-- In the app look `SectionHeader` has **no rule**. Use it only for a long-form section that isn't a
-  container (docs, an explanatory settings group); otherwise use `Panel`.
-- `size="md"` (40) is marketing only.
+- A long-form section that isn't a container (docs, an explanatory settings group) is a
+  `Panel variant="plain"`. It has no rule.
 
 **Actions:**
 - **Placement:**
@@ -70,7 +68,7 @@ row hairlines, never another box.
 |---|---|---|
 | Page header | `PageHeader` (back link or eyebrow, title, status, meta, description, actions, tabs) | then `--q-space-block` |
 | Page status | one `Alert` or `Banner` directly under the header | `--q-space-block` |
-| Toolbar / filter bar | a row: `FilterTabs`, search `TextField size="sm"`, `Select size="sm"` filters, then actions on the right | `--q-space-inline` within, `--q-space-stack` to the table |
+| Toolbar / filter bar | a row: `Tabs variant="enclosed"`, search `TextField size="sm"`, `Select size="sm"` filters, then actions on the right | `--q-space-inline` within, `--q-space-stack` to the table |
 | Content block | a surface `Panel` | `--q-space-block` between blocks |
 | Card group | `Grid columns={12}` of `Card`s or outlined `Panel`s, equal spans | gutter |
 | Properties | `DescriptionList` in a `Panel`, or alone in the right rail | built in |
@@ -101,12 +99,6 @@ Never put tabs inside tabs, and never put tabs and a section nav on one page.
 
 Sections aren't equal. If every block has the same size, weight and box, the page has no entry
 point, so give one block the lead.
-
-## Marketing pages
-
-The site keeps the reference: bare sections under `SectionHeader size="md"`, whose ink top rule is
-the divider; divided rows on hairlines; a panel (1px `--q-border`, `--q-radius-lg`) only for a
-self-contained module; a well (`--q-bg-subtle`) for an example or code sample.
 
 ## Don't
 

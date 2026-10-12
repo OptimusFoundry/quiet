@@ -12,6 +12,12 @@
 		font-size: var(--q-text-sm);
 	}
 
+	// Fields share the row and shrink with the pane, so the buttons never spill out.
+	&__filters > .q-text-field {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+
 	&__panes {
 		display: flex;
 		flex-wrap: wrap;

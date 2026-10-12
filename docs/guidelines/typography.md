@@ -12,17 +12,14 @@ The roles are tokens (`--q-text-heading-1…4`, `--q-text-metric`, `--q-text-int
 
 | Role | `density="app"` | Reference default | Render it with | One per… |
 |---|---|---|---|---|
-| page-title | 20 · 600, no period | 40 · 700, molten period | `PageHeader` (app screens; `h1`); `PageHero size="md"` renders it at 17 | screen, exactly one |
-| section-title | 14 · 600 | 24 · 600 | `SectionHeader size="sm" as="h2"`; unruled: `Text as="h2" heading={4}` | block |
+| page-title | 20 · 600, no period | 40 · 700, molten period | `PageHeader` (`h1`) | screen, exactly one |
+| section-title | 14 · 600 | 24 · 600 | `Panel title` (`h2`); bare: `Text as="h2" heading={4}` | block |
 | card-title | 14 · 600 | 17 · 600 | `Text as="h3" size="md" weight="semibold" color="heading"` | panel or list group |
 | metric | 20 · 600 tabular | 40 · 700 tabular | `StatCard` value | stat |
-| intro | 14 · 400 | 17 · 400 | `PageHeader description` (`PageHero description` on the site) | page intro only |
+| intro | 14 · 400 | 17 · 400 | `PageHeader description` | page intro only |
 | body | 14 · 400 | 15 · 400 | `Text` (or `size="md"`), inputs, lists, menus | default |
 | small | 12 · 400 | 13 · 400 | `Text size="sm"`; table cells; help | secondary line |
 | label | 11 · 500 sans, sentence case | 11 mono caps +0.08em | `Label`, table headers, tabs, `StatCard` label | field, column |
-
-Marketing adds `Headline size="display"` (clamp 56–128) and `h2` (68), and `PageHero size="lg"` and
-`SectionHeader size="md"` (both 40 with marketing padding). **None of these appear in a product.**
 
 Sources disagree on two points, and the code wins:
 
@@ -41,7 +38,7 @@ Weights: 400 / 500 / 600 / 700. Tracking: mono +0.08em, h4 −0.02, h3 −0.025,
 
 App screens (`density="app"` and `"compact"`) are text-heavy, so the body range steps down a notch:
 2xs 10.5 · xs 11 · sm 12 · md 14 · lg 15 · xl 17 · 2xl 20 (`tokens/_typography.scss`). Components size from
-the scale, so they all follow. App screens use **11, 12, 14, 17 and 20**; 30 and up are marketing steps.
+the scale, so they all follow. App screens use **11, 12, 14, 17 and 20**.
 The app look also sets regular text at **450** (Geist loads as a variable font, `fonts.css`) on a
 softer ink (`--q-fg`, `--q-fg-body` mixed a quarter toward the next grey), so dense text holds without
 reading black on white.
@@ -50,18 +47,17 @@ reading black on white.
 
 - Visual size and heading level are separate. **Level follows the outline; size follows the role.**
   The page title is `h1`; blocks are `h2`; a module inside a block is `h3`. Pass
-  `as` to keep the order unbroken: `SectionHeader as="h3"` for a nested section.
+  `as` to keep the order unbroken: `Panel as="h3"` for a nested section.
 - One step down per level of nesting. Never two headings of the same size stacked with nothing between.
-- Emphasis is the **italic of the same weight** (`accent` on PageHero, SectionHeader, Card,
+- Emphasis is the **italic of the same weight** (`accent` on PageHeader, Panel, Card,
   Headline). Never bold body text to make a heading, and never use molten text for emphasis.
-- `Eyebrow` is marketing. Product screens don't put a kicker above a title; status or counts go
-  in a `Badge` or the description.
+- A kicker above a title is `PageHeader eyebrow`; status or counts go in a `Badge` or the description.
 
 ## Measure, numbers, wrapping
 
 | Rule | Value / how |
 |---|---|
-| Body measure | ≤ `--q-w-form` (640): PageHero and SectionHeader descriptions already cap at 640 / 520 |
+| Body measure | ≤ `--q-w-form` (640): PageHeader and Panel descriptions already cap at 640 / 520 |
 | Reading pages | content column ≤ `--q-w-content` (1040) |
 | Headings wrap | `text-wrap: balance` (built into Headline and `Text heading`) |
 | Body wraps | `text-wrap: pretty` (built into Text) |
@@ -75,7 +71,7 @@ reading black on white.
 | Situation | Stack (top → bottom) | Gaps |
 |---|---|---|
 | Page head | every app screen, list or detail: `PageHeader` with page-title → status → meta → intro, actions on the right. There is no desktop top bar; `back` and `eyebrow` say where the page sits | built into `PageHeader` |
-| Block head | section-title (+ description at 15 on the right) | built into `SectionHeader` |
+| Block head | section-title (+ description at 15 on the right) | built into `Panel` |
 | Panel | card-title → body/small | `--q-space-stack` |
 | Stat | label → metric → small (delta/period) | built into `StatCard` |
 | List row | body (primary) → small muted (secondary) | 0–4 inside the row |
@@ -88,9 +84,9 @@ reading black on white.
 | Second `h1`, or a page header inside the page body | one `PageHeader`; blocks are `Panel`s with titles |
 | The page name only as a 13px top-bar label | a `PageHeader` title in main |
 | 19, 20 or 30 px "subheadings" | the eight roles only |
-| Bold body as a heading | `SectionHeader` or the card-title recipe |
-| ALL CAPS text, eyebrows above titles | sentence case; no eyebrows in a product |
-| Molten or coloured text for emphasis | the italic accent; molten text means "link" in an app and the period on the site |
+| Bold body as a heading | a titled `Panel` or the card-title recipe |
+| ALL CAPS text | sentence case |
+| Molten or coloured text for emphasis | the italic accent; molten text means "link" |
 | Centred paragraphs or headings in an app | left-aligned; centre only an `EmptyState` |
 | Body text wider than 640 | cap the column (`--q-w-form`) |
 | `font-size` in a screen's CSS | a `Text` prop or the component's role |

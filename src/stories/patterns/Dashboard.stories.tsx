@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import {
 	AgentRun,
 	Alert,
-	ArrowLink,
 	Avatar,
 	BarChart,
 	Button,
 	Col,
 	Grid,
 	LineChart,
+	Link,
 	List,
 	PageHeader,
 	Panel,
@@ -77,9 +77,7 @@ function Overview() {
 			<Alert
 				variant="warning"
 				title="Beta · EU has bounced above 5% for three days."
-				action={
-					<ArrowLink href="?path=/story/patterns-records--default">Review the pause</ArrowLink>
-				}
+				action={<Link href="?path=/story/patterns-records--default">Review the pause</Link>}
 			/>
 			<Grid columns={12} gap="md" rowGap="md">
 				{[

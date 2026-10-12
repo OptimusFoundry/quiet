@@ -7,7 +7,7 @@ one product. The visual rules come from the Optimus Foundry reference
 
 | Page | Read it when |
 |---|---|
-| [layouts.md](layouts.md) | starting a screen: the app shell, which of the twelve layouts, its dimensions, its rules, what collapses |
+| [layouts.md](layouts.md) | starting a screen: the app shell, which of the eleven layouts, its dimensions, its rules, what collapses |
 | [sections.md](sections.md) | breaking a page into parts: plain / surface / outlined `Panel`, rows, nesting, headings, order |
 | [grid.md](grid.md) | placing blocks: fixed panes vs 12 columns, allowed splits, responsive spans |
 | [spacing.md](spacing.md) | any gap: the job token for what it separates, per density |
@@ -39,14 +39,14 @@ the product has one. Details: the package [README](../../README.md) and the `qui
 ## quiet in ten rules
 
 1. **Density first.** Products render in `density="app"` (`compact` for dense admin). Never mix
-   densities on one surface or carry marketing sizes (64/128 gaps, 52+ type) into an app.
-2. **Pick a layout, don't compose one.** Use one of the twelve in [layouts.md](layouts.md); main pads
+   densities on one surface.
+2. **Pick a layout, don't compose one.** Use one of the eleven in [layouts.md](layouts.md); main pads
    48 / 32 and caps at 1280.
 3. **Panes are fixed, content is gridded.** 240 · 200 · 360 · 400 · 640 · 1040 for panes and columns;
    the 12-column grid with spans 3 · 4 · 6 · 8 · 9 · 12 for blocks; always `rowGap` = `gap`.
 4. **Every gap is a job.** inline 8 · stack 16 · field 24 · card-pad 24 · block 32 · section 48 (app).
    Never 12, 20 or 28 between blocks, and never margins on components.
-5. **Eight type roles.** One `h1` per screen: `PageHeader` in an app (20), `PageHero` on the site (40).
+5. **Eight type roles.** One `h1` per screen: `PageHeader` (20).
    Then section · card · metric · body · small · label ([typography.md](typography.md)). Level
    follows the outline; size follows the role.
 6. **Surfaces before rules.** In an app, sections group with `Panel` surfaces and spacing, not with
@@ -57,9 +57,8 @@ the product has one. Details: the package [README](../../README.md) and the `qui
    Equal-weight sections are a bug, and an empty section collapses (`Panel empty`).
 8. **Molten is the brand in an app.** Links, the one primary action, the current nav item, selected
    and checked states, focus, progress and attention status are molten; components do it for you.
-   Never a section background or body text. On the marketing site molten stays punctuation
-   ([foundations.md](foundations.md#molten-two-looks)). Status comes from `--q-status-*` and props.
-9. **A link looks like a link.** Anything that navigates is a `Link`, `EntityLink`, `ArrowLink` or
+   Never a section background or body text. Status comes from `--q-status-*` and props.
+9. **A link looks like a link.** Anything that navigates is a `Link`, `EntityLink` or
    `Button`; at rest it is accent text with an underline. A record named on a page (a run, a
    project, a ticket) is an `EntityLink`; a table row opens through the `EntityLink` in its name
    cell. One control size (`size="sm"`) per app; shadows only on floating surfaces.

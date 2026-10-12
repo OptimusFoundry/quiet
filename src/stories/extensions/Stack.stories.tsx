@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Col, Grid, Input, Stack } from "../../index";
+import { Button, Col, Grid, Stack, TextField } from "../../index";
 import "./Stack.scss";
 
 // Additions on top of the Claude Design catalog: container-responsive direction
@@ -10,9 +10,15 @@ export default meta;
 
 function FilterRow() {
 	return (
-		<Stack direction="row" directionSm="column" gap="xs" breakpoints={[480, 720]}>
-			<Input aria-label="Search" placeholder="Search projects" />
-			<Input aria-label="Owner" placeholder="Owner" />
+		<Stack
+			className="q-sb-stack__filters"
+			direction="row"
+			directionSm="column"
+			gap="xs"
+			breakpoints={[480, 720]}
+		>
+			<TextField aria-label="Search" placeholder="Search projects" />
+			<TextField aria-label="Owner" placeholder="Owner" />
 			<Stack direction="row" gap="xs" align="center">
 				<Button variant="secondary">Reset</Button>
 				<Button>Apply</Button>
@@ -54,7 +60,7 @@ export const InGrid: StoryObj = {
 				<Grid columns={12} rowGap="xs">
 					<Col span={8} spanMd={12}>
 						<Stack direction="row" directionMd="column" gap="xs" align="stretch">
-							<Input aria-label="Project name" placeholder="Project name" />
+							<TextField aria-label="Project name" placeholder="Project name" />
 							<Button variant="secondary">Create project</Button>
 						</Stack>
 					</Col>

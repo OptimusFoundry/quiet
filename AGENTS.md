@@ -10,12 +10,10 @@ keeps pixel parity with it, and components and their APIs change here, in this r
 
 The reference groups (`core`, `forms`, `display`, `data`, `navigation`, `feedback`, `overlays`,
 `layout`) were ported from `docs/reference/optimus-design/components/*.jsx` + `*.d.ts`, and the
-tokens from its `tokens/`. That mirror, `tokens/_reference-compat.scss` and the generated
-`src/stories/catalog.generated.tsx` (from the reference's `components/index.html`) are still in the
-repo until the one-look plan's infrastructure phase removes them. Don't sync from Claude Design and
-don't treat the Catalog story as a parity target.
+tokens from its `tokens/`. That mirror and `tokens/_reference-compat.scss` are still in the repo
+until the one-look plan's infrastructure phase removes them. Don't sync from Claude Design.
 
-`npm run gen` writes `src/index.ts` (the export barrel) and `src/styles/tokens.generated.{ts,json}`
+`npm run gen` writes `src/index.ts` (the export barrel: every PascalCase `.tsx` in each group folder) and `src/styles/tokens.generated.{ts,json}`
 (`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`). Everything in `src/` is
 TypeScript (strict), formatted and linted by Biome; only SCSS goes through Stylelint.
 
@@ -102,7 +100,7 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
   `q-sb-*`, plain CSS (tokens, nesting; no SCSS features, no `@layer`). Pattern screens are what
   products copy, so keep them clean. Inline `style` only for dynamic `--_` values.
 - The reference names (`--ink`, `--paper`, `--molten` …) exist only in
-  `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
+  `tokens/_reference-compat.scss`, for pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by
   `applyTheme`): element selectors, `::selection`, the reference-compat names. Nothing outside a
   quiet root changes when quiet.css loads (README "Where quiet's
@@ -134,9 +132,8 @@ panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppI
 icon set, `icons.ts`), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
 `Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
 
-Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
-`scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`), since the catalog
-is generated from the reference. New stories for reference-group components go in
+Single own components in a reference group (today `feedback/Toaster`) get their own stories
+(`src/stories/<Name>.stories.tsx`); `npm run gen` exports them like any other. New stories for reference-group components go in
 `src/stories/extensions/`.
 
 ## Harness (Claude Code)

@@ -8,7 +8,6 @@ import {
 	DecayingBadge,
 	DropdownMenu,
 	EmptyState,
-	FilterTabs,
 	LineageChip,
 	List,
 	PageHeader,
@@ -18,13 +17,14 @@ import {
 	StatusDot,
 	Table,
 	type TableProps,
+	Tabs,
 	TextField,
 	toast,
 } from "../../index";
 import { AppFrame, useNarrow } from "./AppFrame";
 import "./Records.scss";
 
-// Records — the reference kit's list-detail.html: a 360 list pane (search, FilterTabs, selectable
+// Records — the reference kit's list-detail.html: a 360 list pane (search, status Tabs, selectable
 // List) beside the detail. The detail shows where its numbers come from (LineageChip), how old its
 // facts are (DecayingBadge), and gates a destructive bulk action behind an Approval.
 
@@ -345,12 +345,13 @@ function Records() {
 					value={q}
 					onChange={(e) => setQ(e.target.value)}
 				/>
-				<FilterTabs
+				<Tabs
+					variant="enclosed"
 					size="sm"
 					label="Campaign status"
 					value={filter}
 					onChange={setFilter}
-					items={[
+					tabs={[
 						{ value: "all", label: "All", count: count("all") },
 						{ value: "live", label: "Live", count: count("live") },
 						{ value: "paused", label: "Paused", count: count("paused") },

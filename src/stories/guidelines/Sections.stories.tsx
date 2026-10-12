@@ -6,8 +6,8 @@ import {
 	Col,
 	Grid,
 	List,
-	PageHero,
-	SectionHeader,
+	PageHeader,
+	Panel,
 	StatCard,
 	Switch,
 	Text,
@@ -85,27 +85,21 @@ function SectionsPage() {
 					rule="Header → status → lead block (widest) → supporting → destructive last. Gaps are the job tokens."
 				>
 					<div className="q-sb-sections__anatomy">
-						<PageHero
-							size="md"
-							as="h3"
+						<PageHeader
+							as="h2"
 							eyebrow="Workspace"
 							title="Campaigns"
-							ruled={false}
 							className="q-sb-sections__hero"
 							actions={<Button size="sm">New campaign</Button>}
 						/>
 						<Gap token="--q-space-block" note="header ↔ status" />
 						<Alert variant="warning" title="3 campaigns are over 5% bounce." />
 						<Gap token="--q-space-block" note="block ↔ block" />
-						<SectionHeader
-							size="sm"
-							as="h4"
+						<Panel
+							variant="plain"
+							as="h3"
 							title="This week"
-							actions={
-								<Button size="sm" variant="ghost">
-									Export
-								</Button>
-							}
+							actions={<Button variant="ghost">Export</Button>}
 						/>
 						<Gap token="--q-space-block" note="header ↔ content" />
 						<Grid columns={12} gap="md" rowGap="md">
@@ -121,7 +115,7 @@ function SectionsPage() {
 							</Col>
 						</Grid>
 						<Gap token="--q-space-block" note="block ↔ block" />
-						<SectionHeader size="sm" as="h4" title="Danger zone" />
+						<Panel variant="plain" as="h3" title="Danger zone" />
 						<Gap token="--q-space-block" />
 						<div className={`${panel} q-sb-sections__danger`}>
 							<Text size="sm">Delete workspace. It can't be undone.</Text>
@@ -137,7 +131,7 @@ function SectionsPage() {
 					rule="page → section → container. Inside a container, divide with gap or hairline rows, never another box."
 				>
 					<div className="q-sb-sections__levels">
-						<SectionHeader size="sm" as="h3" title="Agents" description="Level 2: a section." />
+						<Panel variant="plain" as="h3" title="Agents" description="Level 2: a section." />
 						<div className={panel}>
 							<Text as="h4" size="lg" weight="semibold" color="heading">
 								Meerkat · level 3: a panel

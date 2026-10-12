@@ -6,7 +6,7 @@ keyboard support. The app still owns the page.
 ## What quiet guarantees
 
 - **Keyboard:** every interactive component works without a mouse. Roving arrows in Tabs, Radio,
-  FilterTabs, menus, Sidebar, PromptSuggestions, UndoRiver and chart marks; Escape closes overlays; Enter or Space
+  menus, Sidebar, PromptSuggestions, UndoRiver and chart marks; Escape closes overlays; Enter or Space
   activates.
 - **Focus:** a visible keyboard focus ring. Dialog, Drawer and CommandPalette trap focus and restore
   it on close. Removing a chip or undoing an item moves focus somewhere sensible.
@@ -20,8 +20,8 @@ keyboard support. The app still owns the page.
 ## What the app must do
 
 - **Page title:** set `document.title` on every route ("Builds · Anvil · Sjocamp"), and use one `h1`
-  (`PageHero as="h1"`).
-- **Landmarks:** one `<main>` (`PageShell as="main"` or your own). When a page has more than one
+  (`PageHeader as="h1"`).
+- **Landmarks:** one `<main>` (`AppShell` renders it, or your own). When a page has more than one
   `Sidebar`, `Breadcrumb` or `Pagination`, give each a distinct `label` / `aria-label`.
 - **Route changes:** move focus to the new page's `h1` (or main) after client-side navigation, and
   announce the title if your router doesn't.
@@ -29,7 +29,7 @@ keyboard support. The app still owns the page.
   (TextField) rather than omitting the label.
 - **Errors:** pass messages through the field's `error` prop so they're tied to the input. After a
   failed submit, move focus to the first invalid field.
-- **Headings:** keep the order h1 → h2 → h3. `SectionHeader` and `PageHero` take `as`, and
+- **Headings:** keep the order h1 → h2 → h3. `Panel` and `PageHeader` take `as`, and
   `ChatMessage` takes `headingLevel`, so use them to keep the outline right.
 - **Route changes:** with `linkComponent` routing, move focus to the new page's h1 (or `main`) after
   navigation and update `document.title`. quiet can't do this for you.
@@ -46,7 +46,7 @@ Two colour choices are kept exactly as designed and accepted:
 | Token | Contrast | Rule |
 |---|---|---|
 | `--q-fg-subtle` (muted-2) | ≈2.98:1 | non-essential text only: decorative serials, dimmed future items |
-| small molten text (`--q-accent`) | ≈3.87:1 | marketing punctuation only; never body copy or a sole error message. App text and links use `--q-accent-fg` (≈5.6:1), which passes |
+| small molten text (`--q-accent`) | ≈3.87:1 | marks only; never body copy or a sole error message. Text and links use `--q-accent-fg` (≈5.6:1), which passes |
 
 Everything a user must read uses `--q-fg-muted` or darker. An error message's words are in body ink, and
 only its mark is molten.
