@@ -1,0 +1,290 @@
+{
+  "projectId": "cabd6750-da6b-4805-b649-85e36d17bd1c",
+  "shape": "package",
+  "pkg": "@optimusfoundry/quiet",
+  "globalName": "Quiet",
+  "buildCmd": "npm run build",
+  "cssEntry": "dist/quiet.css",
+  "provider": {
+    "component": "QuietRoot",
+    "props": {
+      "density": "app"
+    }
+  },
+  "extraFonts": [
+    ".design-sync/fonts/fonts.css"
+  ],
+  "docsMap": {
+    "ChartLegend": ".design-sync/groups/charts.md",
+    "ChartTable": ".design-sync/groups/charts.md",
+    "ChartTooltip": ".design-sync/groups/charts.md",
+    "ChatDivider": ".design-sync/groups/chat.md",
+    "ClaudeMark": ".design-sync/groups/chat.md",
+    "SidebarProvider": ".design-sync/groups/navigation.md",
+    "SidebarTrigger": ".design-sync/groups/navigation.md",
+    "TabPanel": ".design-sync/groups/navigation.md",
+    "QuietRoot": ".design-sync/groups/setup.md",
+    "ThemeProvider": ".design-sync/groups/setup.md"
+  },
+  "guidelinesGlob": [
+    "docs/guidelines/*.md",
+    "DESIGN.md"
+  ],
+  "overrides": {
+    "Dialog": {
+      "cardMode": "single",
+      "viewport": "760x560"
+    },
+    "Table": {
+      "cardMode": "column"
+    },
+    "Avatar": {
+      "cardMode": "column"
+    },
+    "Button": {
+      "cardMode": "column"
+    },
+    "ButtonGroup": {
+      "cardMode": "column"
+    },
+    "Skeleton": {
+      "cardMode": "column"
+    },
+    "Wordmark": {
+      "cardMode": "column"
+    },
+    "DataGrid": {
+      "cardMode": "column"
+    },
+    "ProcessStep": {
+      "cardMode": "column"
+    },
+    "Card": {
+      "cardMode": "column"
+    },
+    "AspectRatio": {
+      "cardMode": "column"
+    },
+    "Col": {
+      "cardMode": "column"
+    },
+    "Container": {
+      "cardMode": "column"
+    },
+    "Grid": {
+      "cardMode": "column"
+    },
+    "PageHero": {
+      "cardMode": "column"
+    },
+    "PageShell": {
+      "cardMode": "column"
+    },
+    "SectionHeader": {
+      "cardMode": "column"
+    },
+    "Banner": {
+      "cardMode": "column"
+    },
+    "Popover": {
+      "cardMode": "column"
+    },
+    "NavBar": {
+      "cardMode": "column"
+    },
+    "Pagination": {
+      "cardMode": "column"
+    },
+    "Tabs": {
+      "cardMode": "column"
+    },
+    "StepIndicator": {
+      "cardMode": "column"
+    },
+    "GridOverlay": {
+      "cardMode": "single",
+      "viewport": "900x480",
+      "primaryStory": "Visible"
+    },
+    "Drawer": {
+      "cardMode": "single",
+      "viewport": "900x560"
+    },
+    "Toaster": {
+      "cardMode": "single",
+      "viewport": "760x560"
+    },
+    "CommandPalette": {
+      "cardMode": "single",
+      "viewport": "760x680"
+    },
+    "SidebarProvider": {
+      "cardMode": "single",
+      "viewport": "760x560"
+    },
+    "EmptyState": {
+      "cardMode": "column"
+    },
+    "List": {
+      "cardMode": "column"
+    },
+    "StatCard": {
+      "cardMode": "column"
+    },
+    "Accordion": {
+      "cardMode": "column"
+    },
+    "Alert": {
+      "cardMode": "column"
+    },
+    "Progress": {
+      "cardMode": "column"
+    },
+    "Toast": {
+      "cardMode": "column"
+    },
+    "PageTransition": {
+      "cardMode": "column"
+    },
+    "SidebarTrigger": {
+      "cardMode": "column"
+    },
+    "TabPanel": {
+      "cardMode": "column"
+    },
+    "AgentRun": {
+      "cardMode": "column"
+    },
+    "AnomalyRibbon": {
+      "cardMode": "column"
+    },
+    "Approval": {
+      "cardMode": "column"
+    },
+    "BudgetLeash": {
+      "cardMode": "column"
+    },
+    "Checkpoints": {
+      "cardMode": "column"
+    },
+    "ConsensusSlider": {
+      "cardMode": "column"
+    },
+    "CostMeter": {
+      "cardMode": "column"
+    },
+    "Attachment": {
+      "cardMode": "column"
+    },
+    "ChatComposer": {
+      "cardMode": "column"
+    },
+    "ChatMessage": {
+      "cardMode": "column"
+    },
+    "ChatThread": {
+      "cardMode": "column"
+    },
+    "ChatDivider": {
+      "cardMode": "column"
+    },
+    "ClaudeMark": {
+      "cardMode": "column"
+    },
+    "CodeBlock": {
+      "cardMode": "column"
+    },
+    "PromptSuggestions": {
+      "cardMode": "column"
+    },
+    "ToolCall": {
+      "cardMode": "column"
+    },
+    "BarChart": {
+      "cardMode": "column"
+    },
+    "LineChart": {
+      "cardMode": "column"
+    },
+    "NarratedChart": {
+      "cardMode": "column"
+    },
+    "DonutChart": {
+      "cardMode": "column"
+    },
+    "ChartLegend": {
+      "cardMode": "column"
+    },
+    "DescriptionList": {
+      "cardMode": "column"
+    },
+    "EntityLink": {
+      "cardMode": "column"
+    },
+    "FileCard": {
+      "cardMode": "column"
+    },
+    "PageHeader": {
+      "cardMode": "column"
+    },
+    "Panel": {
+      "cardMode": "column"
+    },
+    "Transcript": {
+      "cardMode": "column"
+    },
+    "QuietRoot": {
+      "cardMode": "column"
+    },
+    "ThemeProvider": {
+      "cardMode": "column"
+    },
+    "ProbabilityToggle": {
+      "cardMode": "column"
+    },
+    "Receipt": {
+      "cardMode": "column"
+    },
+    "RunScrubber": {
+      "cardMode": "column"
+    },
+    "ScopeGrant": {
+      "cardMode": "column"
+    },
+    "StreamingTable": {
+      "cardMode": "column"
+    },
+    "ThresholdHandles": {
+      "cardMode": "column"
+    },
+    "UncertaintyCell": {
+      "cardMode": "column"
+    },
+    "UndoRiver": {
+      "cardMode": "column"
+    },
+    "DraftDiff": {
+      "cardMode": "column"
+    },
+    "IntentBar": {
+      "cardMode": "column"
+    },
+    "HonestButton": {
+      "cardMode": "column"
+    },
+    "HoldButton": {
+      "cardMode": "column"
+    },
+    "GhostFuture": {
+      "cardMode": "column"
+    }
+  },
+  "dtsPropsFor": {
+    "Table": "columns: Array<{ key: string; header: React.ReactNode; align?: \"left\" | \"right\" | \"center\"; width?: number | string; sortable?: boolean; sortValue?: (row: Row) => unknown; nowrap?: boolean; render?: (row: Row, index: number) => React.ReactNode; colSpan?: (row: Row, index: number) => number | undefined; footer?: React.ReactNode | ((rows: Row[]) => React.ReactNode); footerColSpan?: number; }>; data: Row[]; rowKey?: string | ((row: Row) => Key); size?: \"lg\" | \"md\" | \"sm\"; striped?: boolean; bordered?: boolean; caption?: React.ReactNode; selectable?: boolean; selected?: Key[]; defaultSelected?: Key[]; onSelectionChange?: (keys: Key[]) => void; sort?: { key: string; dir: \"asc\" | \"desc\"; }; defaultSort?: { key: string; dir: \"asc\" | \"desc\"; }; onSortChange?: (sort: { key: string; dir: \"asc\" | \"desc\"; } | null) => void; manualSort?: boolean; renderExpanded?: (row: Row) => React.ReactNode; expanded?: Key[]; defaultExpanded?: Key[]; onExpandedChange?: (keys: Key[]) => void; footer?: React.ReactNode; loading?: boolean; loadingRows?: number; emptyText?: React.ReactNode; onRowClick?: (row: Row) => void; minWidth?: number; label?: string; rowLabel?: (row: Row) => string; className?: string; style?: React.CSSProperties;",
+    "DataGrid": "columns: Array<{ key: string; header: React.ReactNode; align?: \"left\" | \"right\" | \"center\"; width?: number | string; sortable?: boolean; sortValue?: (row: Row) => unknown; nowrap?: boolean; render?: (row: Row, index: number) => React.ReactNode; colSpan?: (row: Row, index: number) => number | undefined; footer?: React.ReactNode | ((rows: Row[]) => React.ReactNode); footerColSpan?: number; }>; data: Row[]; rowKey?: string | ((row: Row) => Key); title?: React.ReactNode; actions?: React.ReactNode; searchable?: boolean; searchPlaceholder?: string; pageSize?: number; selectable?: boolean; onSelectionChange?: (keys: Key[]) => void; onRowClick?: (row: Row) => void; loading?: boolean; size?: \"lg\" | \"md\" | \"sm\"; emptyTitle?: React.ReactNode; emptyDescription?: React.ReactNode; emptyActions?: React.ReactNode; className?: string; style?: React.CSSProperties; caption?: React.ReactNode; footer?: React.ReactNode; label?: string; striped?: boolean; bordered?: boolean; selected?: Key[]; defaultSelected?: Key[]; sort?: { key: string; dir: \"asc\" | \"desc\"; }; defaultSort?: { key: string; dir: \"asc\" | \"desc\"; }; onSortChange?: (sort: { key: string; dir: \"asc\" | \"desc\"; } | null) => void; manualSort?: boolean; renderExpanded?: (row: Row) => React.ReactNode; expanded?: Key[]; defaultExpanded?: Key[]; onExpandedChange?: (keys: Key[]) => void; loadingRows?: number; emptyText?: React.ReactNode; minWidth?: number; rowLabel?: (row: Row) => string;",
+    "StreamingTable": "rows: Row[]; columns: Array<{ key: string; header: React.ReactNode; align?: \"left\" | \"right\" | \"center\"; width?: number | string; sortable?: boolean; sortValue?: (row: Row) => unknown; nowrap?: boolean; render?: (row: Row, index: number) => React.ReactNode; colSpan?: (row: Row, index: number) => number | undefined; footer?: React.ReactNode | ((rows: Row[]) => React.ReactNode); footerColSpan?: number; }>; rowKey?: string | ((row: Row) => Key); paused?: boolean; defaultPaused?: boolean; onPausedChange?: (paused: boolean) => void; maxRows?: number; maxHeight?: string | number; caption?: React.ReactNode; label?: string; size?: \"lg\" | \"md\" | \"sm\"; liveLabel?: React.ReactNode; pausedLabel?: React.ReactNode; pauseLabel?: React.ReactNode; resumeLabel?: React.ReactNode; newLabel?: (count: number) => React.ReactNode; announceEvery?: number; className?: string; style?: React.CSSProperties;",
+    "Stack": "direction?: \"row\" | \"column\" | \"row-reverse\" | \"column-reverse\"; gap?: number | \"lg\" | \"md\" | \"sm\" | \"xs\" | \"xl\" | \"2xl\" | \"none\"; align?: string & {} | \"center\" | \"start\" | \"end\" | \"-moz-initial\" | \"inherit\" | \"initial\" | \"revert\" | \"revert-layer\" | \"unset\" | \"flex-end\" | \"flex-start\" | \"self-end\" | \"self-start\" | \"anchor-center\" | \"baseline\" | \"normal\" | \"stretch\"; justify?: \"flex-start\" | \"center\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\" | \"stretch\"; wrap?: boolean; animated?: boolean; as?: \"symbol\" | \"object\" | \"video\" | \"circle\" | \"style\" | \"form\" | \"slot\" | \"title\" | \"line\" | \"progress\" | \"a\" | \"abbr\" | \"address\" | \"area\" | \"article\" | \"aside\" | (string & {}) /* +162 more */; children?: React.ReactNode; className?: string; style?: React.CSSProperties;",
+    "RunScrubber": "steps: RunScrubberStep[]; value?: number; defaultValue?: number; onChange?: (index: number) => void; label?: string; agent?: React.ReactNode; caption?: (index: number, step: RunScrubberStep) => React.ReactNode; actions?: React.ReactNode | ((index: number, step: RunScrubberStep | undefined) => React.ReactNode); className?: string; style?: React.CSSProperties;"
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}
