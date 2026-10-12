@@ -243,7 +243,7 @@ function ChatDemo({
 				accept="image/*,.pdf,.csv,.txt,.md,.docx,.xlsx,.json"
 				maxSize={20 * 1024 * 1024}
 				toolbar={<span className="q-sb-chat__label">Claude Opus 5.5</span>}
-				hint="Enter to send · Shift Enter for a new line"
+				hint="Enter to send"
 			/>
 		</div>
 	);
