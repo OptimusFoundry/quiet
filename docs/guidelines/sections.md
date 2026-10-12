@@ -12,7 +12,7 @@ lines don't.** Specimen: Storybook `guidelines-sections--default`; the component
 | **Plain** | title + content, no ground | the page's lead block, in the page's flow | `Panel variant="plain"` |
 | **Surface** (default) | the warm `--q-bg-subtle` ground, radius `--q-radius-lg`, no edge | any titled section of a detail, settings or dashboard page | `Panel` (`title`, `actions`, `count`, `empty`) |
 | **Outlined** | `--q-bg` with a 1px `--q-border` edge | a self-contained module beside peers in a grid (a chart cell, a plan summary) | `Panel variant="outlined"` |
-| **Rows** | faint `--q-border` dividers between rows | repeated rows of one kind, **inside** a container | `Table`, `List divided`, `DescriptionList` (no lines at all) |
+| **Rows** | table rows on faint `--q-border` dividers; list rows set apart by space and a hover ground, no lines | repeated rows of one kind, **inside** a container | `Table`, `List`, `DescriptionList` (no lines at all) |
 
 Two more surfaces are components, not containers:
 

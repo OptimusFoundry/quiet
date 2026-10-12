@@ -39,6 +39,10 @@ export interface SidebarProps {
 	onCollapsedChange?: (collapsed: boolean) => void;
 	/** Shows the collapse / expand toggle */
 	collapsible?: boolean;
+	/** Remembers the collapsed rail across visits under this localStorage key (when `collapsed` isn't controlled), e.g. "acme-sidebar" */
+	collapsedKey?: string;
+	/** Something in the Sidebar needs a look while it's out of sight, e.g. a `SidebarNotice` ("Trial: 3 days left"). On a phone the drawer's trigger shows a mark and adds this to its accessible name */
+	attention?: string;
 	compact?: boolean;
 	dividers?: boolean;
 	width?: number;
@@ -99,6 +103,7 @@ type SidebarGroup = {
 	defaultOpen?: boolean;
 };
 type SidebarRail = {
+	attention?: string;
 	collapsed: boolean;
 	drawer: boolean;
 	toggle: (() => void) | null;
@@ -106,6 +111,8 @@ type SidebarRail = {
 };
 interface SidebarContextValue extends SidebarState {
 	drawer: boolean;
+	/** The drawer's Sidebar asks for a look (its `attention`) */
+	attention: string | undefined;
 	/** A Sidebar outside drawer mode is mounted, so its rail can be toggled */
 	rail: boolean;
 	panelId: string | undefined;
@@ -166,6 +173,7 @@ export function SidebarProvider({
 			collapsed: !drawer && rail.collapsed,
 			toggle: () => (drawer ? setOpen(!isOpen) : rail.toggle?.()),
 			drawer,
+			attention: drawer ? rail.attention : undefined,
 			rail: !drawer && rail.toggle !== null,
 			panelId: rail.panelId,
 			register,
@@ -194,11 +202,18 @@ export function SidebarTrigger({
 	const mode = ctx?.drawer ? "drawer" : rail && ctx?.rail ? "rail" : null;
 	if (!ctx || !mode) return null;
 	const content = typeof children === "function" ? children(mode) : children;
+	const mark = mode === "drawer" && ctx.attention && !ctx.open;
 	return (
 		<button
 			type="button"
 			aria-label={
-				mode === "drawer" ? ariaLabel : ctx.collapsed ? "Expand sidebar" : "Collapse sidebar"
+				mode === "drawer"
+					? mark
+						? `${ariaLabel}, ${ctx.attention}`
+						: ariaLabel
+					: ctx.collapsed
+						? "Expand sidebar"
+						: "Collapse sidebar"
 			}
 			aria-expanded={mode === "drawer" ? ctx.open : undefined}
 			aria-controls={mode === "drawer" && ctx.open ? ctx.panelId : undefined}
@@ -207,6 +222,7 @@ export function SidebarTrigger({
 			style={style}
 		>
 			{content ?? <Icon name="menu" />}
+			{mark && <span aria-hidden="true" className="q-sidebar-trigger__mark" />}
 		</button>
 	);
 }
@@ -291,6 +307,8 @@ function SidebarView({
 	defaultCollapsed = false,
 	onCollapsedChange,
 	collapsible = false,
+	collapsedKey,
+	attention,
 	compact = false,
 	dividers = false,
 	width,
@@ -305,7 +323,15 @@ function SidebarView({
 	const mode = mobile ?? (ctx.scoped ? "rail" : "drawer");
 	const drawer = mode === "drawer" && ctx.isMobile;
 	const [innerVal, setInnerVal] = React.useState<string | undefined>(defaultValue);
-	const [innerCol, setInnerCol] = React.useState(defaultCollapsed);
+	const [innerCol, setInnerCol] = React.useState(() => {
+		if (!collapsedKey || typeof window === "undefined") return defaultCollapsed;
+		try {
+			const saved = window.localStorage.getItem(collapsedKey);
+			return saved === null ? defaultCollapsed : saved === "1";
+		} catch {
+			return defaultCollapsed;
+		}
+	});
 	const isCol = !drawer && (collapsed ?? (innerCol || ctx.isMobile));
 	const cur = value ?? innerVal;
 	const pick = (v: string) => {
@@ -316,6 +342,12 @@ function SidebarView({
 	const toggle = () => {
 		setInnerCol(!isCol);
 		onCollapsedChange?.(!isCol);
+		if (collapsedKey)
+			try {
+				window.localStorage.setItem(collapsedKey, isCol ? "0" : "1");
+			} catch {
+				// storage blocked (private mode): the rail just isn't remembered
+			}
 	};
 	const gs: SidebarGroup[] = groups || [{ items: items || [] }];
 	const uid = React.useId();
@@ -328,12 +360,13 @@ function SidebarView({
 	const { register } = ctx;
 	React.useLayoutEffect(() => {
 		register({
+			attention,
 			collapsed: isCol,
 			drawer: mode === "drawer",
 			toggle: () => toggleRef.current(),
 			panelId: `${uid}panel`,
 		});
-	}, [register, isCol, mode, uid]);
+	}, [register, attention, isCol, mode, uid]);
 	React.useEffect(() => () => register(UNREGISTERED), [register]);
 
 	const { mounted, state } = usePresence(drawer && ctx.open, 160);

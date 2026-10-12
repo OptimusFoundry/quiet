@@ -1,4 +1,5 @@
 import React from "react";
+import { useEscape } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./LineageChip.scss";
 
@@ -63,12 +64,22 @@ export function LineageChip({
 		setInner(!cur);
 		onOpenChange?.(!cur);
 	};
+	const root = React.useRef<HTMLSpanElement>(null);
+	const trigger = React.useRef<HTMLButtonElement>(null);
+	// Escape closes the chain; focus inside it goes back to the trigger.
+	useEscape(cur, () => {
+		const inside = root.current?.contains(document.activeElement);
+		setInner(false);
+		onOpenChange?.(false);
+		if (inside) trigger.current?.focus();
+	});
 	const cls = ["q-lineage-chip", `q-lineage-chip--${SIZES.includes(size) ? size : "md"}`, className]
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<span className={cls} style={style} data-stale={stale.length > 0 || undefined}>
+		<span ref={root} className={cls} style={style} data-stale={stale.length > 0 || undefined}>
 			<button
+				ref={trigger}
 				type="button"
 				className="q-lineage-chip__trigger"
 				aria-expanded={cur}

@@ -8,6 +8,7 @@ import "./Skeleton.scss";
 export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	/** The placeholder span (nothing is attached once `loading` is false and children render). */
 	ref?: React.Ref<HTMLSpanElement>;
+	/** text: lines · circular: an avatar · rectangular: a card or block, full width · rounded: a pill the size of a button */
 	variant?: "text" | "circular" | "rectangular" | "rounded";
 	width?: number | string;
 	height?: number | string;

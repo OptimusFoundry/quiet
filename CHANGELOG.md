@@ -2,6 +2,23 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Added
+
+- `Sidebar attention`: on a phone, the drawer's trigger shows a mark and adds the text to its name
+  while something in the Sidebar needs a look (a `SidebarNotice`).
+- `Sidebar collapsedKey`: remembers the collapsed rail across visits under a localStorage key.
+
+### Fixed
+
+- `LineChart` x-axis labels: all of them when they fit; otherwise an even step that ends on the last,
+  so labels no longer drop unevenly (W3 and W6 of eight weeks went missing at 1280).
+- `LineageChip` closes on Escape and returns focus to its trigger.
+- The States pattern's stat skeletons are card-shaped (`rectangular`), not stretched pills.
+- Guidelines: only table rows get faint dividers; lists set rows apart by space, as the app look
+  has since the shell redesign. The Sections page shows a table for "Rows".
+
 ## 1.0.1
 
 ### Added

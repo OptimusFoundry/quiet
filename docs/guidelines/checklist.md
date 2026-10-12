@@ -18,7 +18,7 @@ the `quiet:quiet-screen-reviewer` agent (apps) use this list. Every item should 
 - [ ] Blocks sit on the 12-column grid with spans 3 / 4 / 6 / 8 / 9 / 12, and the column edges line up between rows.
 - [ ] Every `Grid` has `rowGap`; at 390 no two blocks touch.
 - [ ] There's one `PageHeader` (`h1`) at the top of the panel, under the TopBar; sections are titled `Panel`s (`h2`), and the heading order is unbroken.
-- [ ] Sections group with grounds and spacing: no ink rules, no hairlines between sections, no border round a surface `Panel`. Lines only between table and list rows and between two panes.
+- [ ] Sections group with grounds and spacing: no ink rules, no hairlines between sections, no border round a surface `Panel`. Lines only between table rows and between two panes.
 - [ ] No card-in-card, no frame or grey ground under a table, no titled `Panel` inside a `Panel`; nesting is at most page → section → container.
 - [ ] One page status under the title; the lead block is first and widest; empty sections collapse (`Panel empty`) and come last; destructive actions come last.
 - [ ] Properties are a `DescriptionList`: no label/value pair is split across the page.

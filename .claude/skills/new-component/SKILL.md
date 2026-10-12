@@ -31,7 +31,7 @@ npm run new -- <group> <PascalName>
 The one look, built in from the start (`docs/plans/2026-10-12-one-look.md`):
 - **Ink and accent:** text from `--q-fg`/`--q-fg-body`/`--q-fg-muted`; accent text `--q-accent-fg`,
   fills `--q-accent-bg`, raw `--q-accent` for marks only. Never a gray palette step or black.
-- **Grounds, not rules:** group with `--q-bg-subtle`, never a border or divider (table and list rows
+- **Grounds, not rules:** group with `--q-bg-subtle`, never a border or divider (table rows
   excepted). Floating layers take `--q-shadow-float` and no border.
 - **Type:** sizes from the roles and `--q-text-*`; labels sans, sentence case (`--q-font-label`,
   `--q-case-label`). No mono caps, no italics, mono only for code, IDs and kbd.

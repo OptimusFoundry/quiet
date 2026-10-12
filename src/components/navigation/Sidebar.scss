@@ -1,7 +1,8 @@
 // Sidebar — app navigation rail. BEM: .q-sidebar, __header, __toggle, __body, __group,
 // __group-label, __group-toggle, __chevron, __list, __item, __icon, __label, __badge, __footer;
 // --collapsed, --compact, --dividers, --drawer; __icon--initials. Current item: [aria-current="page"].
-// Mobile drawer: .q-sidebar-drawer, __scrim, __panel. External opener: .q-sidebar-trigger.
+// Mobile drawer: .q-sidebar-drawer, __scrim, __panel. External opener: .q-sidebar-trigger, __mark
+// (the Sidebar's `attention`, on a phone).
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -79,6 +80,8 @@
     --q-sidebar-trigger-bg-hover: var(--q-bg-hover);
     --q-sidebar-trigger-fg: var(--q-fg);
     --q-sidebar-trigger-font-size: var(--q-icon-lg);
+    --q-sidebar-trigger-mark: var(--q-accent);
+    --q-sidebar-trigger-mark-size: var(--q-space-0-75);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -331,6 +334,7 @@
   }
 
   .q-sidebar-trigger {
+    position: relative;
     display: inline-flex;
     flex: none;
     align-items: center;
@@ -350,5 +354,15 @@
     &:is(:hover, :focus-visible) {
       background: var(--q-sidebar-trigger-bg-hover);
     }
+  }
+
+  .q-sidebar-trigger__mark {
+    position: absolute;
+    top: var(--q-space-0-75);
+    right: var(--q-space-0-75);
+    width: var(--q-sidebar-trigger-mark-size);
+    height: var(--q-sidebar-trigger-mark-size);
+    border-radius: var(--q-radius-pill);
+    background: var(--q-sidebar-trigger-mark);
   }
 }

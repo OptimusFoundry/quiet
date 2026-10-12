@@ -1948,6 +1948,8 @@ export type TokenName =
 	| "--q-sidebar-trigger-border"
 	| "--q-sidebar-trigger-fg"
 	| "--q-sidebar-trigger-font-size"
+	| "--q-sidebar-trigger-mark"
+	| "--q-sidebar-trigger-mark-size"
 	| "--q-sidebar-trigger-radius"
 	| "--q-sidebar-trigger-size"
 	| "--q-sidebar-width"

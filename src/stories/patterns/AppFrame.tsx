@@ -271,6 +271,8 @@ export function AppFrame({
 					<Sidebar
 						label="Main"
 						compact
+						collapsedKey="quiet-patterns-sidebar"
+						attention={nudge?.title}
 						value={active}
 						header={header}
 						footer={footer}

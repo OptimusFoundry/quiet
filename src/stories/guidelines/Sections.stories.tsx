@@ -10,6 +10,7 @@ import {
 	PageHeader,
 	Panel,
 	StatCard,
+	Table,
 	Text,
 } from "../../index";
 import { Gap, GuidePage, Part, stage } from "./Guide";
@@ -76,14 +77,18 @@ function SectionsPage() {
 					</Container>
 					<Container
 						name="Rows"
-						rule="Faint dividers between rows of one kind, inside a container."
+						rule="Table rows on faint dividers; list rows apart by space, no lines."
 					>
-						<List
-							divided
+						<Table
 							size="sm"
-							items={[
-								{ id: "brief", primary: "Weekly brief", secondary: "Mondays" },
-								{ id: "posts", primary: "Meerkat's posts", secondary: "When drafted" },
+							rowKey="id"
+							columns={[
+								{ key: "name", header: "Report" },
+								{ key: "when", header: "Sent", align: "right" },
+							]}
+							data={[
+								{ id: "brief", name: "Weekly brief", when: "Mondays" },
+								{ id: "posts", name: "Meerkat's posts", when: "When drafted" },
 							]}
 						/>
 					</Container>
@@ -152,7 +157,7 @@ function SectionsPage() {
 
 			<Part
 				title="Three levels, no more"
-				rule="Page, section, container. Inside a container, divide with gap or faint rows, never another box."
+				rule="Page, section, container. Inside a container, divide with gap (or a table's faint rows), never another box."
 			>
 				<div className={`${stage} q-sb-sections__levels`}>
 					<Panel as="h3" title="Agents" description="Level 2: a section, on the warm ground.">
@@ -161,7 +166,6 @@ function SectionsPage() {
 								Meerkat · level 3: rows inside it
 							</Text>
 							<List
-								divided
 								size="sm"
 								items={[
 									{ id: "posts", primary: "Posts drafted", secondary: "12 this week" },

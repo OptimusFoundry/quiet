@@ -42,7 +42,7 @@ wrong, and the likely cause (token, scss rule or story markup).
      panel, the TopBar pinned with its rule only once scrolled, secondary content in the third pane;
      at 390 a flush panel, the drawer and a full-screen pane.
    - **The one look:** soft ink (no black text), grounds instead of rules (lines only between table
-     and list rows), no border on overlays, sentence case with no mono caps or italics, dense pill
+     rows), no border on overlays, sentence case with no mono caps or italics, dense pill
      controls, `AppIcon`s rather than glyphs.
    - **Accent:** punctuation (primary, links, current, selected, focus, attention), lava not rust;
      only charts use it as a series.
