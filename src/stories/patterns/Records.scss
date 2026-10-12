@@ -28,8 +28,22 @@
 		box-sizing: border-box;
 	}
 
+	// Three KPIs across, equal height; stacked under 640px so the numbers never wrap.
+	&__stats {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--q-space-stack);
+	}
+
+	@media (width < 640px) {
+		&__stats {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
 	&__pager {
 		display: flex;
+		flex: 1;
 		justify-content: flex-end;
 	}
 }

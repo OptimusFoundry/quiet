@@ -1,0 +1,167 @@
+// Panel — titled surface section for app screens; groups with a ground, never a rule.
+// BEM: .q-panel, __header, __heading, __title, __count, __description, __actions, __body, __empty, __footer;
+// --{surface|outlined|plain}, --pad-{none|sm|md}; [data-empty] when collapsed to its empty line.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-panel-radius: var(--q-radius-lg);
+    --q-panel-gap: var(--q-space-field);
+    --q-panel-gap-empty: var(--q-space-1);
+    --q-panel-pad: var(--q-space-card-pad);
+    --q-panel-pad-sm: var(--q-space-stack);
+    --q-panel-surface-bg: var(--q-bg-subtle);
+    --q-panel-outlined-bg: var(--q-bg);
+    --q-panel-outlined-border: var(--q-border);
+    --q-panel-fg: var(--q-fg-body);
+
+    --q-panel-title-fg: var(--q-fg);
+    --q-panel-title-font-size: var(--q-text-heading-4);
+    --q-panel-title-weight: var(--q-weight-semibold);
+    --q-panel-title-leading: var(--q-leading-heading);
+    --q-panel-title-tracking: var(--q-tracking-h4);
+    --q-panel-count-fg: var(--q-fg-muted);
+    --q-panel-count-weight: var(--q-weight-regular);
+    --q-panel-description-fg: var(--q-fg-muted);
+    --q-panel-description-font-size: var(--q-text-sm);
+    --q-panel-actions-font-size: var(--q-text-sm);
+    --q-panel-empty-fg: var(--q-fg-muted);
+    --q-panel-empty-font-size: var(--q-text-sm);
+    --q-panel-footer-fg: var(--q-fg-muted);
+    --q-panel-footer-font-size: var(--q-text-sm);
+  }
+}
+
+@layer q.components {
+  .q-panel {
+    --_pad: var(--q-panel-pad);
+    --_inset: var(--q-panel-pad);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--q-panel-gap);
+    min-width: 0;
+    padding: var(--_pad);
+    border-radius: var(--q-panel-radius);
+    color: var(--q-panel-fg);
+    font-family: var(--q-font-sans);
+
+    &--surface {
+      background: var(--q-panel-surface-bg);
+    }
+
+    &--outlined {
+      border: var(--q-hairline) solid var(--q-panel-outlined-border);
+      background: var(--q-panel-outlined-bg);
+    }
+
+    &--plain {
+      --_pad: 0;
+      --_inset: 0;
+    }
+
+    &--pad-sm:not(.q-panel--plain) {
+      --_pad: var(--q-panel-pad-sm);
+      --_inset: var(--q-panel-pad-sm);
+    }
+
+    // Edge to edge: the body loses its padding, the header, empty line and footer keep the inset.
+    &--pad-none {
+      --_pad: 0;
+
+      > .q-panel__header {
+        padding: var(--_inset) var(--_inset) 0;
+      }
+
+      > .q-panel__empty,
+      > .q-panel__footer {
+        padding: 0 var(--_inset) var(--_inset);
+      }
+
+      > .q-panel__header:last-child {
+        padding-bottom: var(--_inset);
+      }
+
+      > .q-panel__body:first-child {
+        border-start-start-radius: inherit;
+        border-start-end-radius: inherit;
+      }
+    }
+
+    &[data-empty] {
+      gap: var(--q-panel-gap-empty);
+    }
+  }
+
+  .q-panel__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--q-space-stack);
+  }
+
+  .q-panel__heading {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--q-space-0-5);
+    min-width: 0;
+  }
+
+  .q-panel__title {
+    display: flex;
+    align-items: baseline;
+    gap: var(--q-space-inline);
+    margin: 0;
+    color: var(--q-panel-title-fg);
+    font-size: var(--q-panel-title-font-size);
+    font-weight: var(--q-panel-title-weight);
+    letter-spacing: var(--q-panel-title-tracking);
+    line-height: var(--q-panel-title-leading);
+  }
+
+  .q-panel__count {
+    color: var(--q-panel-count-fg);
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--q-panel-count-weight);
+    letter-spacing: normal;
+  }
+
+  .q-panel__description {
+    margin: 0;
+    color: var(--q-panel-description-fg);
+    font-size: var(--q-panel-description-font-size);
+    line-height: var(--q-leading-ui);
+  }
+
+  .q-panel__actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--q-space-stack);
+    font-size: var(--q-panel-actions-font-size);
+  }
+
+  .q-panel__body {
+    min-width: 0;
+  }
+
+  .q-panel__empty {
+    margin: 0;
+    color: var(--q-panel-empty-fg);
+    font-size: var(--q-panel-empty-font-size);
+    line-height: var(--q-leading-ui);
+  }
+
+  .q-panel__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--q-space-stack);
+    color: var(--q-panel-footer-fg);
+    font-size: var(--q-panel-footer-font-size);
+    line-height: var(--q-leading-ui);
+  }
+}

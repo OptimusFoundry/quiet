@@ -41,7 +41,7 @@ export function Link({
 		"q-link",
 		variant === "primary" || variant === "muted" ? `q-link--${variant}` : null,
 		SIZES.includes(size) && `q-link--${size}`,
-		(underline === "always" || underline === "hover") && `q-link--underline-${underline}`,
+		`q-link--underline-${underline}`,
 		className,
 	]
 		.filter(Boolean)

@@ -2,6 +2,7 @@
 // --sm, --ink, --{info|success|warning|error}, --selectable, --with-avatar, --disabled;
 // selected = [aria-pressed="true"].
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -18,6 +19,7 @@
     // The reference renders no left padding (its inline paddingLeft: undefined cleared the
     // shorthand's left side); parity keeps that. An avatar sits 4px in.
     --q-tag-pl: 0;
+    --q-tag-sm-pl: var(--q-tag-pl);
     --q-tag-avatar-pl: var(--q-space-0-5);
     --q-tag-fg: var(--q-fg-muted);
     --q-tag-border: var(--q-border);
@@ -40,6 +42,17 @@
     --q-tag-disabled-opacity: 0.4;
     --q-tag-remove-font-size: var(--q-text-sm);
     --q-tag-remove-nudge: calc(var(--q-space-0-25) * -1);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-tag-pl: var(--q-tag-px);
+    --q-tag-sm-pl: var(--q-tag-sm-px);
+  }
+
+  @include app.reset {
+    --q-tag-pl: 0;
+    --q-tag-sm-pl: var(--q-tag-pl);
   }
 }
 
@@ -67,7 +80,7 @@
 
     &--sm {
       padding: var(--q-tag-sm-py) var(--q-tag-sm-px);
-      padding-left: var(--q-tag-pl);
+      padding-left: var(--q-tag-sm-pl);
       font-size: var(--q-tag-sm-font-size);
     }
 

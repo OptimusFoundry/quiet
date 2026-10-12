@@ -6,9 +6,9 @@ import {
 	ButtonGroup,
 	Checkbox,
 	HoldButton,
-	PageHero,
+	PageHeader,
+	Panel,
 	ScopeGrant,
-	SectionHeader,
 	Select,
 	Sidebar,
 	Switch,
@@ -19,9 +19,11 @@ import {
 import { AppFrame, useNarrow } from "./AppFrame";
 import "./Settings.scss";
 
-// Settings — the reference kit's settings.html: a 200 sticky section nav + a 640 form column,
-// sections separated by --q-space-section, Switch rows on hairlines, and the danger zone in a
-// molten hairline box. Agent permissions are a ScopeGrant; the destructive step is a HoldButton.
+// Settings — the reference kit's settings.html in the app look: a PageHeader, a 200 sticky section
+// nav + a 640 form column of surface Panels, --q-space-section apart; Switch rows on hairlines inside
+// their Panel, and the danger zone last in an outlined Panel with an error edge. Agent permissions
+// are a ScopeGrant (already granted, so its action is a secondary Update and Save profile stays the
+// one primary); the destructive step is a HoldButton.
 
 const SECTIONS = [
 	{ label: "Profile", value: "profile" },
@@ -29,7 +31,7 @@ const SECTIONS = [
 	{ label: "Meerkat", value: "agent" },
 	{ label: "Danger zone", value: "danger" },
 ];
-const section = "q-sb-app-frame__stack q-sb-app-frame__stack--field q-sb-settings__section";
+const section = "q-sb-settings__section";
 
 function SettingsPage() {
 	const narrow = useNarrow();
@@ -41,10 +43,7 @@ function SettingsPage() {
 	};
 	return (
 		<>
-			<PageHero
-				size="md"
-				ruled={false}
-				className="q-sb-app-frame__hero"
+			<PageHeader
 				title="Settings"
 				description="Your profile, what reaches your inbox, and what Meerkat may do alone. Each section saves on its own."
 			/>
@@ -61,107 +60,108 @@ function SettingsPage() {
 					/>
 				)}
 				<div className="q-sb-app-frame__stack q-sb-app-frame__stack--section">
-					<section id="profile" aria-labelledby="profile-h" className={section}>
-						<SectionHeader
-							size="sm"
-							as="h2"
-							title={<span id="profile-h">Profile</span>}
-							description="How you appear to your team and on invoices."
-						/>
-						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
-							<Avatar name="Ada Park" size="sm" />
-							<ButtonGroup>
-								<Button size="sm" variant="secondary">
-									Upload photo
-								</Button>
-								<Button size="sm" variant="ghost">
-									Remove
-								</Button>
-							</ButtonGroup>
-						</div>
-						<div
-							className={
-								narrow
-									? "q-sb-settings__names q-sb-settings__names--narrow"
-									: "q-sb-settings__names"
-							}
-						>
-							<TextField size="sm" label="First name" defaultValue="Ada" />
-							<TextField size="sm" label="Last name" defaultValue="Park" />
-						</div>
-						<TextField
-							size="sm"
-							label="Email"
-							type="email"
-							defaultValue="ada@sjocamp.co"
-							helperText="Campaign reports and invoices go here."
-							required
-						/>
-						<Select
-							size="sm"
-							label="Time zone"
-							defaultValue="cet"
-							options={[
-								{ value: "cet", label: "Stockholm · CET (UTC+01:00)" },
-								{ value: "est", label: "Ottawa · EST (UTC−05:00)" },
-								{ value: "utc", label: "UTC" },
-							]}
-						/>
-						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-settings__actions">
-							<Button size="sm" variant="secondary">
-								Cancel
-							</Button>
-							<Button
-								size="sm"
-								onClick={() => toast({ status: "success", title: "Profile saved." })}
+					<Panel
+						id="profile"
+						className={section}
+						title="Profile"
+						description="How you appear to your team and on invoices."
+					>
+						<div className="q-sb-app-frame__stack q-sb-app-frame__stack--field">
+							<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
+								<Avatar name="Ada Park" size="sm" />
+								<ButtonGroup>
+									<Button size="sm" variant="secondary">
+										Upload photo
+									</Button>
+									<Button size="sm" variant="ghost">
+										Remove
+									</Button>
+								</ButtonGroup>
+							</div>
+							<div
+								className={
+									narrow
+										? "q-sb-settings__names q-sb-settings__names--narrow"
+										: "q-sb-settings__names"
+								}
 							>
-								Save profile
-							</Button>
+								<TextField size="sm" label="First name" defaultValue="Ada" />
+								<TextField size="sm" label="Last name" defaultValue="Park" />
+							</div>
+							<TextField
+								size="sm"
+								label="Email"
+								type="email"
+								defaultValue="ada@sjocamp.co"
+								helperText="Campaign reports and invoices go here."
+								required
+							/>
+							<Select
+								size="sm"
+								label="Time zone"
+								defaultValue="cet"
+								options={[
+									{ value: "cet", label: "Stockholm · CET (UTC+01:00)" },
+									{ value: "est", label: "Ottawa · EST (UTC−05:00)" },
+									{ value: "utc", label: "UTC" },
+								]}
+							/>
+							<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-settings__actions">
+								<Button size="sm" variant="secondary">
+									Cancel
+								</Button>
+								<Button
+									size="sm"
+									onClick={() => toast({ status: "success", title: "Profile saved." })}
+								>
+									Save profile
+								</Button>
+							</div>
 						</div>
-					</section>
+					</Panel>
 
-					<section id="notifications" aria-labelledby="notifications-h" className={section}>
-						<SectionHeader
-							size="sm"
-							as="h2"
-							title={<span id="notifications-h">Notifications</span>}
-							description="Email only. Nothing promotional."
-						/>
-						<div className="q-sb-settings__notices">
-							{(
-								[
-									["Campaign bounces", "When a campaign passes 5% bounces.", true],
-									["Weekly brief", "One email, Mondays at 08:00.", true],
-									["Meerkat's posts", "A copy of everything Meerkat posts for you.", false],
-								] as const
-							).map(([label, description, on]) => (
-								<div key={label} className="q-sb-settings__notice">
-									<Switch
-										size="sm"
-										label={label}
-										description={description}
-										defaultChecked={on}
-										labelPosition="left"
-										className="q-sb-settings__switch"
-									/>
-								</div>
-							))}
+					<Panel
+						id="notifications"
+						className={section}
+						title="Notifications"
+						description="Email only. Nothing promotional. Switches apply at once."
+					>
+						<div className="q-sb-app-frame__stack q-sb-app-frame__stack--field">
+							<div className="q-sb-settings__notices">
+								{(
+									[
+										["Campaign bounces", "When a campaign passes 5% bounces.", true],
+										["Weekly brief", "One email, Mondays at 08:00.", true],
+										["Meerkat's posts", "A copy of everything Meerkat posts for you.", false],
+									] as const
+								).map(([label, description, on]) => (
+									<div key={label} className="q-sb-settings__notice">
+										<Switch
+											size="sm"
+											label={label}
+											description={description}
+											defaultChecked={on}
+											labelPosition="left"
+											className="q-sb-settings__switch"
+										/>
+									</div>
+								))}
+							</div>
+							<Checkbox
+								size="sm"
+								label="Include teammates' campaigns in the brief"
+								description="Leo and Mira run four of the fourteen."
+								defaultChecked
+							/>
 						</div>
-						<Checkbox
-							size="sm"
-							label="Include teammates' campaigns in the brief"
-							description="Leo and Mira run four of the fourteen."
-							defaultChecked
-						/>
-					</section>
+					</Panel>
 
-					<section id="agent" aria-labelledby="agent-h" className={section}>
-						<SectionHeader
-							size="sm"
-							as="h2"
-							title={<span id="agent-h">Meerkat</span>}
-							description="What the agent may do without asking. You can change this any time; it applies from the next run."
-						/>
+					<Panel
+						id="agent"
+						className={section}
+						title="Meerkat"
+						description="What the agent may do without asking. You can change this any time; it applies from the next run."
+					>
 						<ScopeGrant
 							agent={<Avatar name="Meerkat" size="sm" shape="square" />}
 							title="Let Meerkat act for you"
@@ -195,13 +195,18 @@ function SettingsPage() {
 								{ value: "always", label: "Until I change it" },
 							]}
 							defaultDuration="week"
+							granted
 							onGrant={() => toast({ title: "Meerkat's access updated." })}
 						/>
-					</section>
+					</Panel>
 
-					<section id="danger" aria-labelledby="danger-h" className={section}>
-						<SectionHeader size="sm" as="h2" title={<span id="danger-h">Danger zone</span>} />
-						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack q-sb-settings__danger">
+					<Panel
+						id="danger"
+						variant="outlined"
+						className={`${section} q-sb-settings__danger`}
+						title="Danger zone"
+					>
+						<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
 							<div className="q-sb-settings__danger-text">
 								<Text color="heading" weight="semibold">
 									Delete workspace
@@ -228,7 +233,7 @@ function SettingsPage() {
 								Delete workspace
 							</HoldButton>
 						</div>
-					</section>
+					</Panel>
 				</div>
 			</div>
 		</>

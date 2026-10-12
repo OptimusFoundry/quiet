@@ -1,5 +1,6 @@
 // Link — inline text link. BEM: .q-link; --primary, --muted; --sm, --md, --lg; --underline-hover, --underline-always.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -7,13 +8,32 @@
     --q-link-gap: var(--q-space-0-5);
     --q-link-fg: var(--q-fg);
     --q-link-fg-hover: var(--q-accent);
+    --q-link-border: transparent;
     --q-link-muted-fg: var(--q-fg-muted);
     --q-link-muted-fg-hover: var(--q-fg);
+    --q-link-muted-border: transparent;
     --q-link-primary-weight: var(--q-weight-semibold);
     --q-link-primary-border: var(--q-border);
     --q-link-sm-font-size: var(--q-text-sm);
     --q-link-md-font-size: var(--q-text-md);
     --q-link-lg-font-size: var(--q-text-lg);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-link-fg: var(--q-accent-fg);
+    --q-link-fg-hover: var(--q-accent-fg);
+    --q-link-border: var(--q-accent-border);
+    --q-link-muted-border: var(--q-border-strong);
+    --q-link-primary-border: var(--q-accent-border);
+  }
+
+  @include app.reset {
+    --q-link-fg: var(--q-fg);
+    --q-link-fg-hover: var(--q-accent);
+    --q-link-border: transparent;
+    --q-link-muted-border: transparent;
+    --q-link-primary-border: var(--q-border);
   }
 }
 
@@ -22,7 +42,7 @@
     display: inline-flex;
     align-items: baseline;
     gap: var(--q-link-gap);
-    border-bottom: var(--q-hairline) solid transparent;
+    border-bottom: var(--q-hairline) solid var(--q-link-border);
     color: var(--q-link-fg);
     font-size: inherit;
     font-weight: inherit;
@@ -48,6 +68,7 @@
     }
 
     &--muted {
+      border-bottom-color: var(--q-link-muted-border);
       color: var(--q-link-muted-fg);
     }
 
@@ -68,6 +89,18 @@
 
     &--primary:is(:hover, :focus-visible) {
       border-bottom-color: currentcolor;
+    }
+  }
+
+  // The app look: every link's resting underline fills in on hover and keyboard focus.
+  @include app.rules {
+    .q-link:is(:hover, :focus-visible) {
+      border-bottom-color: currentcolor;
+    }
+
+    // underline="none" opts out of the resting and hover underline.
+    .q-link.q-link--underline-none {
+      border-bottom-color: transparent;
     }
   }
 }

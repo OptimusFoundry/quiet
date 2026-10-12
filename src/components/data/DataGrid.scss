@@ -1,6 +1,7 @@
 // DataGrid — Table with a title bar, row filter, selection count, empty state and pagination.
 // BEM: .q-data-grid, __toolbar, __title, __search, __label (--strong), __empty, __footer.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -24,6 +25,15 @@
     --q-data-grid-label-strong-color: var(--q-fg);
     --q-data-grid-empty-border: var(--q-fg);
     --q-data-grid-footer-gap: var(--q-space-2);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-data-grid-empty-border: var(--q-border);
+  }
+
+  @include app.reset {
+    --q-data-grid-empty-border: var(--q-fg);
   }
 }
 

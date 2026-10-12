@@ -1,9 +1,11 @@
 // foundry and foundry-dark: the parts whose brand look doesn't follow the shared --q-status-*
 // mapping (tokens/_color.scss). Scoped to the foundry themes and an unthemed root, never plain
 // :root, so a product theme on <html> doesn't inherit them and every part follows its status hues.
-:root:not([data-theme]),
-[data-theme="foundry"],
-[data-theme="foundry-dark"] {
+// Not in the app look, whose tinted status surfaces (tokens/_color.scss) replace them.
+:is(:root:not([data-theme]), [data-theme="foundry"], [data-theme="foundry-dark"]):not(
+    [data-density="app"],
+    [data-density="compact"]
+  ) {
   --q-alert-info-ring: var(--q-fg-subtle);
   --q-banner-info-ring: var(--q-fg);
   --q-banner-info-glyph: var(--q-fg);

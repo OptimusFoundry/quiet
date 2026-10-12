@@ -1,5 +1,5 @@
-// quiet-audit core: measures a rendered page against quiet's tokens. Shared by the
-// `quiet-audit` bin and tests/audit.spec.ts. `auditInPage` runs inside the browser via
+// quiet-audit core: measures a rendered page against quiet's tokens. Used by the
+// `quiet-audit` bin. `auditInPage` runs inside the browser via
 // page.evaluate, so it must stay self-contained (no references to this module's scope).
 
 export const RULES = ["spacing", "type", "radius", "colour", "derived", "structure", "overflow"];
@@ -316,11 +316,4 @@ export async function auditUrl(page, url, { width = 1280, theme, requireH1 } = {
 	await page.evaluate(() => document.fonts.ready);
 	await page.waitForTimeout(300);
 	return page.evaluate(auditInPage, { requireH1: requireH1 ?? /patterns-/.test(url) });
-}
-
-/** Baseline helpers for tests/audit.spec.ts (kept here so the spec needs no Node typings). */
-export const updatingBaseline = () => !!process.env.UPDATE_AUDIT_BASELINE;
-export async function writeBaseline(path, data) {
-	const { writeFileSync } = await import("node:fs");
-	writeFileSync(path, `${JSON.stringify(data, null, "\t")}\n`);
 }

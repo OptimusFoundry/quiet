@@ -1,7 +1,6 @@
 import { type ReactNode, useEffect, useState } from "react";
 import {
 	Avatar,
-	Breadcrumb,
 	Button,
 	CommandPalette,
 	DropdownMenu,
@@ -100,6 +99,10 @@ type FrameProps = {
 	children: ReactNode;
 	/** false = the page lays out its own panes edge to edge (list-detail, assistant) */
 	padded?: boolean;
+	/** Another product's sidebar (default: the Sjocamp campaigns app) */
+	nav?: typeof NAV;
+	brand?: ReactNode;
+	user?: { name: string; detail: string };
 };
 
 export function AppFrame(props: FrameProps) {
@@ -110,21 +113,68 @@ export function AppFrame(props: FrameProps) {
 	);
 }
 
-function Frame({ active, crumbs, children, padded = true }: FrameProps) {
+function Frame({
+	active,
+	crumbs,
+	children,
+	padded = true,
+	nav = NAV,
+	brand = <Wordmark size="nav" />,
+	user = { name: "Ada Park", detail: "Owner · Sjocamp" },
+}: FrameProps) {
 	const { isMobile: narrow } = useSidebar();
 	const [palette, setPalette] = useState(false);
 	const account = (
 		<div className="q-sb-app-frame__row">
-			<Avatar name="Ada Park" size="sm" />
+			<Avatar name={user.name} size="sm" />
 			<div className="q-sb-app-frame__person">
 				<Text size="sm" color="heading" weight="medium">
-					Ada Park
+					{user.name}
 				</Text>
 				<Text size="xs" color="muted">
-					Owner · Sjocamp
+					{user.detail}
 				</Text>
 			</div>
 		</div>
+	);
+	const search = (
+		<Button
+			size="sm"
+			variant="outline"
+			fullWidth
+			className="q-sb-app-frame__search"
+			onClick={() => setPalette(true)}
+			rightIcon={
+				<Text size="xs" color="muted" mono>
+					⌘K
+				</Text>
+			}
+		>
+			Search
+		</Button>
+	);
+	const accountMenu = (
+		<DropdownMenu
+			size="sm"
+			align="end"
+			width={220}
+			label="Account"
+			trigger={
+				<Button
+					size="sm"
+					variant="ghost"
+					icon={<Avatar name={user.name} size="xs" />}
+					aria-label="Account menu"
+				/>
+			}
+			header={account}
+			items={[
+				{ label: "Settings" },
+				{ label: "Keyboard shortcuts", shortcut: "?" },
+				{ divider: true },
+				{ label: "Sign out" },
+			]}
+		/>
 	);
 	return (
 		<div className={narrow ? "q-sb-app-frame q-sb-app-frame--narrow" : "q-sb-app-frame"}>
@@ -132,54 +182,37 @@ function Frame({ active, crumbs, children, padded = true }: FrameProps) {
 				label="Main"
 				mobile="drawer"
 				value={active}
-				header={<Wordmark size="nav" />}
-				groups={NAV}
-				footer={account}
+				header={
+					<div className="q-sb-app-frame__brand">
+						{brand}
+						{/* Search first: it is where the drawer puts focus when it opens. */}
+						<div className="q-sb-app-frame__brand-row">
+							{search}
+							{accountMenu}
+						</div>
+					</div>
+				}
+				groups={nav}
 				className={narrow ? undefined : "q-sb-app-frame__sidebar"}
 			/>
 			<div className="q-sb-app-frame__body">
-				<header className="q-sb-app-frame__topbar">
-					<SidebarTrigger />
-					<Breadcrumb
-						items={narrow ? crumbs.slice(-1) : crumbs}
-						className="q-sb-app-frame__crumbs"
-					/>
-					<Button
-						size="sm"
-						variant="outline"
-						onClick={() => setPalette(true)}
-						rightIcon={
-							narrow ? undefined : (
-								<Text size="xs" color="muted" mono>
-									⌘K
-								</Text>
-							)
-						}
-					>
-						Search
-					</Button>
-					<DropdownMenu
-						size="sm"
-						align="end"
-						width={240}
-						label="Account"
-						trigger={
-							<Button
-								size="sm"
-								variant="ghost"
-								icon={<Avatar name="Ada Park" size="xs" />}
-								aria-label="Account menu"
-							/>
-						}
-						header={account}
-						items={[
-							{ label: "Settings" },
-							{ label: "Keyboard shortcuts", shortcut: "?" },
-							{ divider: true },
-							{ label: "Sign out" },
-						]}
-					/>
-				</header>
+				{/* No top bar on desktop: PageHeader in main says where you are, the sidebar holds
+				    search and the account. A phone keeps a slim bar for the drawer trigger. */}
+				{narrow && (
+					<header className="q-sb-app-frame__topbar">
+						<SidebarTrigger />
+						<Text size="sm" weight="semibold" color="heading" className="q-sb-app-frame__title">
+							{crumbs[crumbs.length - 1]?.label}
+						</Text>
+						<Button
+							size="sm"
+							variant="ghost"
+							icon="/"
+							aria-label="Search"
+							onClick={() => setPalette(true)}
+						/>
+					</header>
+				)}
 				<main
 					id="app-main"
 					aria-label="Content"

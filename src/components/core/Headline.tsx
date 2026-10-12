@@ -58,7 +58,14 @@ export function Headline({
 					{accent}
 				</em>
 			)}
-			{after ? (accent ? " " : "") + after : ""}
+			{after ? (
+				<>
+					{accent ? " " : ""}
+					{after}
+				</>
+			) : (
+				""
+			)}
 			{period && <span className="q-headline__period">.</span>}
 		</Tag>
 	);

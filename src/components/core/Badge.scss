@@ -1,6 +1,7 @@
 // Badge — sans pill for counts and statuses; status reads through the dot.
 // BEM: .q-badge, __dot(--solid-ink, --hollow, --molten, --paper); --{variant}, --{size}, --count.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -51,6 +52,27 @@
     --q-badge-dot-paper: var(--q-bg);
     --q-badge-dot-molten: var(--q-accent);
     --q-badge-dot-hollow-border: var(--q-accent);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-badge-weight: var(--q-weight-medium);
+    --q-badge-default-bg: var(--q-border); // reads on a Panel's subtle ground too
+    --q-badge-default-border: var(--q-border);
+    --q-badge-primary-bg: var(--q-accent-subtle);
+    --q-badge-primary-fg: var(--q-accent-fg);
+    --q-badge-primary-border: var(--q-accent-subtle);
+    --q-badge-outline-border: var(--q-border-strong);
+  }
+
+  @include app.reset {
+    --q-badge-default-bg: var(--q-bg-subtle);
+    --q-badge-default-border: var(--q-bg-subtle);
+    --q-badge-weight: var(--q-weight-semibold);
+    --q-badge-primary-bg: var(--q-fg);
+    --q-badge-primary-fg: var(--q-bg);
+    --q-badge-primary-border: var(--q-fg);
+    --q-badge-outline-border: var(--q-fg);
   }
 }
 

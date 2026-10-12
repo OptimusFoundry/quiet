@@ -2,6 +2,7 @@
 // __text, __label, __description; --vertical, --{size}; __step--{complete|current|upcoming|error};
 // __line--done. Current step: [aria-current="step"].
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -49,6 +50,25 @@
     --q-step-indicator-description-font-size: var(--q-text-sm);
     --q-step-indicator-description-leading: var(--q-leading-compact);
     --q-step-indicator-description-fg: var(--q-fg-muted);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-step-indicator-marker-border: var(--q-accent);
+    --q-step-indicator-marker-fg: var(--q-accent-fg);
+    --q-step-indicator-marker-complete-bg: var(--q-accent-bg);
+    --q-step-indicator-marker-complete-fg: var(--q-fg-on-accent);
+    --q-step-indicator-marker-complete-border: var(--q-accent-bg);
+    --q-step-indicator-line-done: var(--q-accent);
+  }
+
+  @include app.reset {
+    --q-step-indicator-marker-border: var(--q-border-emphasis);
+    --q-step-indicator-marker-fg: var(--q-fg);
+    --q-step-indicator-marker-complete-bg: var(--q-bg-inverse);
+    --q-step-indicator-marker-complete-fg: var(--q-fg-on-inverse);
+    --q-step-indicator-marker-complete-border: var(--q-bg-inverse);
+    --q-step-indicator-line-done: var(--q-border-emphasis);
   }
 }
 

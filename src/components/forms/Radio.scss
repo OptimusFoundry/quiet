@@ -1,6 +1,7 @@
 // Radio — ink ring with a dot. BEM: .q-radio, __label, __options(--row), __option(--disabled),
 // __control, __dot, __text, __description, __error; --{size}. Checked/invalid read from ARIA.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -33,6 +34,17 @@
     --q-radio-error-font-family: var(--q-font-mono);
     --q-radio-error-font-size: var(--q-text-2xs);
     --q-radio-error-fg: var(--q-accent);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-radio-control-border: var(--q-border-strong);
+    --q-radio-dot-bg: var(--q-accent-bg);
+  }
+
+  @include app.reset {
+    --q-radio-control-border: var(--q-fg);
+    --q-radio-dot-bg: var(--q-fg);
   }
 }
 

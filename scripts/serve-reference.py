@@ -1,4 +1,4 @@
-"""Serves the Claude Design mirror for tests/parity.spec.ts.
+"""Serves the Claude Design mirror (to compare with the Catalog story by eye).
 
 The reference page fetches ~70 .jsx files at once; the stock http.server's 5-slot listen
 queue resets some of those connections, so use a threaded server with a deep queue.

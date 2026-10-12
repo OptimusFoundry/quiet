@@ -1,7 +1,7 @@
 # Accessibility
 
-quiet ships an accessibility and motion layer on every component, tested with axe in light and dark
-plus keyboard and ARIA specs (`tests/`). The app still owns the page.
+quiet ships an accessibility and motion layer on every component, built to WAI-ARIA patterns with
+keyboard support. The app still owns the page.
 
 ## What quiet guarantees
 
@@ -41,12 +41,12 @@ plus keyboard and ARIA specs (`tests/`). The app still owns the page.
 
 ## Contrast exceptions
 
-Two colour choices are kept exactly as designed and accepted in the axe tests:
+Two colour choices are kept exactly as designed and accepted:
 
 | Token | Contrast | Rule |
 |---|---|---|
 | `--q-fg-subtle` (muted-2) | ≈2.98:1 | non-essential text only: decorative serials, dimmed future items |
-| small molten text | ≈3.87:1 | short punctuation-like labels only; never body copy or a sole error message |
+| small molten text (`--q-accent`) | ≈3.87:1 | marketing punctuation only; never body copy or a sole error message. App text and links use `--q-accent-fg` (≈5.6:1), which passes |
 
 Everything a user must read uses `--q-fg-muted` or darker. An error message's words are in body ink, and
 only its mark is molten.

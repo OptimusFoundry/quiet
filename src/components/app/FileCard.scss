@@ -1,0 +1,247 @@
+// FileCard — one file or artifact version: type tile, name + kind/size/meta, Download/Preview.
+// BEM: .q-file-card, __preview, __note, __row, __tile, __body, __title, __name, __meta, __kind,
+// __actions, __link, __trailing; --{surface|outlined|row}, --{sm|md}.
+@use "sass:string";
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-file-card-radius: var(--q-radius-lg);
+    --q-file-card-pad: var(--q-space-card-pad);
+    --q-file-card-gap: var(--q-space-stack);
+    --q-file-card-surface-bg: var(--q-bg-subtle);
+    --q-file-card-outlined-bg: var(--q-bg);
+    --q-file-card-outlined-border: var(--q-border);
+    --q-file-card-fg: var(--q-fg);
+    --q-file-card-meta-fg: var(--q-fg-muted);
+
+    --q-file-card-tile-bg: var(--q-border); // neutral: the Current badge, not the tile, marks a file
+    --q-file-card-tile-fg: var(--q-fg-body);
+    --q-file-card-tile-radius: var(--q-radius-md);
+    --q-file-card-tile-font: var(--q-font-mono);
+    --q-file-card-tile-weight: var(--q-weight-semibold);
+    --q-file-card-tile-tracking: var(--q-tracking-mono);
+
+    --q-file-card-name-weight: var(--q-weight-medium);
+
+    // row: an item in a list of files, on a Panel's subtle ground
+    --q-file-card-row-pad: var(--q-space-1);
+    --q-file-card-row-radius: var(--q-radius-md);
+    --q-file-card-row-bg-hover: var(--q-bg);
+    --q-file-card-row-shadow-hover: var(--q-shadow-1);
+    --q-file-card-row-tile-bg: var(--q-bg);
+    --q-file-card-row-tile-border: var(--q-border);
+    --q-file-card-row-name-fg-hover: var(--q-accent-fg);
+    --q-file-card-trailing-fg: var(--q-fg-muted);
+    --q-file-card-preview-bg: var(--q-bg);
+    --q-file-card-preview-radius: var(--q-radius-md);
+    --q-file-card-note-fg: var(--q-fg-muted);
+
+    --q-file-card-sm-tile-size: var(--q-control-sm);
+    --q-file-card-sm-tile-font-size: var(--q-text-3xs);
+    --q-file-card-sm-name-font-size: var(--q-text-sm);
+    --q-file-card-sm-meta-font-size: var(--q-text-xs);
+    --q-file-card-sm-pad: var(--q-space-1-5);
+    --q-file-card-md-tile-size: var(--q-control-md);
+    --q-file-card-md-tile-font-size: var(--q-text-2xs);
+    --q-file-card-md-name-font-size: var(--q-text-md);
+    --q-file-card-md-meta-font-size: var(--q-text-sm);
+    --q-file-card-md-pad: var(--q-file-card-pad);
+  }
+}
+
+@layer q.components {
+  .q-file-card {
+    --_tile-size: var(--q-file-card-md-tile-size);
+    --_tile-font-size: var(--q-file-card-md-tile-font-size);
+    --_name-font-size: var(--q-file-card-md-name-font-size);
+    --_meta-font-size: var(--q-file-card-md-meta-font-size);
+    --_pad: var(--q-file-card-md-pad);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--q-file-card-gap);
+    min-width: 0;
+    padding: var(--_pad);
+    border-radius: var(--q-file-card-radius);
+    color: var(--q-file-card-fg);
+    font-family: var(--q-font-sans);
+
+    &--surface {
+      background: var(--q-file-card-surface-bg);
+    }
+
+    // One item in a list of files: the whole row opens the file (the name's link is stretched
+    // over it), it lifts to the page ground on hover, and its download shows on hover or focus.
+    &--row {
+      position: relative;
+      margin-inline: calc(-1 * var(--q-file-card-row-pad));
+      padding: var(--q-file-card-row-pad);
+      border-radius: var(--q-file-card-row-radius);
+      transition:
+        background-color var(--q-dur-hover) var(--q-ease-soft),
+        box-shadow var(--q-dur-hover) var(--q-ease-soft);
+
+      &:is(:hover, :focus-within) {
+        background: var(--q-file-card-row-bg-hover);
+        box-shadow: var(--q-file-card-row-shadow-hover);
+      }
+    }
+
+    &--outlined {
+      border: var(--q-hairline) solid var(--q-file-card-outlined-border);
+      background: var(--q-file-card-outlined-bg);
+    }
+
+    @each $size in sm, md {
+      &--#{$size} {
+        --_tile-size: var(--q-file-card-#{$size}-tile-size);
+        --_tile-font-size: var(--q-file-card-#{$size}-tile-font-size);
+        --_name-font-size: var(--q-file-card-#{$size}-name-font-size);
+        --_meta-font-size: var(--q-file-card-#{$size}-meta-font-size);
+        --_pad: var(--q-file-card-#{$size}-pad);
+      }
+    }
+  }
+
+  .q-file-card__preview {
+    overflow: hidden;
+    border-radius: var(--q-file-card-preview-radius);
+    background: var(--q-file-card-preview-bg);
+
+    > :is(img, video, canvas, svg) {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .q-file-card__note {
+    margin: 0;
+    color: var(--q-file-card-note-fg);
+    font-size: var(--_meta-font-size);
+  }
+
+  .q-file-card__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--q-space-stack) var(--q-space-field);
+  }
+
+  .q-file-card__tile {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--_tile-size);
+    height: var(--_tile-size);
+    overflow: hidden;
+    border-radius: var(--q-file-card-tile-radius);
+    background: var(--q-file-card-tile-bg);
+    color: var(--q-file-card-tile-fg);
+    font-family: var(--q-file-card-tile-font);
+    font-size: var(--_tile-font-size);
+    font-weight: var(--q-file-card-tile-weight);
+    letter-spacing: var(--q-file-card-tile-tracking);
+  }
+
+  .q-file-card__body {
+    display: flex;
+    flex: 1 1 12rem;
+    flex-direction: column;
+    gap: var(--q-space-0-25);
+    min-width: 0;
+  }
+
+  .q-file-card__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--q-space-inline);
+  }
+
+  .q-file-card__name {
+    min-width: 0;
+    font-size: var(--_name-font-size);
+    font-weight: var(--q-file-card-name-weight);
+    line-height: var(--q-leading-snug);
+    overflow-wrap: anywhere;
+  }
+
+  // Inline flow: the separator is tied to the item before it (no-break space), so a wrapped line
+  // never starts with "·".
+  .q-file-card__meta {
+    color: var(--q-file-card-meta-fg);
+    font-size: var(--_meta-font-size);
+    line-height: var(--q-leading-snug);
+
+    > * + ::before {
+      content: string.unquote('"\\a0\\b7\\20"');
+    }
+  }
+
+  .q-file-card__actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--q-space-inline);
+    margin-inline-start: auto;
+  }
+
+  .q-file-card__link {
+    color: inherit;
+    text-decoration: none;
+
+    // The row is the target: the name's link covers it.
+    .q-file-card--row &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+
+    .q-file-card--row:is(:hover, :focus-within) & {
+      color: var(--q-file-card-row-name-fg-hover);
+    }
+  }
+
+  .q-file-card__trailing {
+    flex: none;
+    color: var(--q-file-card-trailing-fg);
+    font-size: var(--_meta-font-size);
+    white-space: nowrap;
+  }
+
+  .q-file-card--row {
+    .q-file-card__row {
+      flex-wrap: nowrap;
+      gap: var(--q-space-1-5);
+    }
+
+    .q-file-card__name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .q-file-card__tile {
+      box-sizing: border-box;
+      border: var(--q-hairline) solid var(--q-file-card-row-tile-border);
+      background: var(--q-file-card-row-tile-bg);
+    }
+
+    // Above the stretched link, and only shown while the row is pointed at or focused.
+    .q-file-card__actions {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity var(--q-dur-hover) var(--q-ease-soft);
+    }
+
+    &:is(:hover, :focus-within) .q-file-card__actions {
+      opacity: 1;
+    }
+  }
+}

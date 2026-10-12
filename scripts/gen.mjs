@@ -14,8 +14,9 @@ const loader = readFileSync(`${REF}/ds-loader.js`, "utf8");
 const files = JSON.parse(loader.match(/var FILES = (\[[^\]]*\])/)[1]);
 // quiet's own components (not in the reference), appended after the reference ones:
 // src/components/future — the Claude Design "Future Components" concepts, rebuilt on quiet tokens;
-// src/components/charts — quiet's chart set; src/components/chat — AI chat (thread, messages, composer).
-const own = ["future", "charts", "chat"]
+// src/components/charts — quiet's chart set; src/components/chat — AI chat (thread, messages, composer);
+// src/components/app — SaaS screen parts (page header, description list, panel, entity link, …).
+const own = ["future", "charts", "chat", "app"]
 	.flatMap((group) =>
 		readdirSync(`src/components/${group}`)
 			.filter((f) => f.endsWith(".tsx"))
@@ -41,7 +42,7 @@ const boot =
 	/let DS;\nloadDS\('\.\.\/'\)\.then\(d => \{ DS = d; ReactDOM\.createRoot\(document\.getElementById\('root'\)\)\.render\(<App \/>\); \}\);\n$/;
 if (!boot.test(script)) throw new Error("index.html boot line changed — update gen.mjs");
 // The App is the reference's untyped Babel script, kept verbatim so the catalog stays
-// pixel-identical to it; it is checked by tests/parity.spec.ts, not by tsc.
+// pixel-identical to it; it is compared by eye with the reference, not checked by tsc.
 writeFileSync(
 	"src/stories/catalog.generated.tsx",
 	`${HEADER}// @ts-nocheck\nimport React from "react";\nimport * as DS from "../index";\n\n${script.replace(boot, "")}\nexport default App;\n`,

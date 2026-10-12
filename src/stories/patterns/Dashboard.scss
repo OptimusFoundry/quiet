@@ -1,0 +1,26 @@
+// Dashboard — KPI tiles with their trend inside the tile.
+
+.q-sb-dashboard {
+	// One tile per KPI: the StatCard's own ground, with the sparkline inside it under the delta.
+	&__kpi-col {
+		display: flex;
+	}
+
+	&__kpi {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		border-radius: var(--q-stat-card-radius);
+		background: var(--q-stat-card-filled-bg);
+		min-width: 0;
+	}
+
+	&__kpi > .q-stat-card {
+		flex: 1;
+	}
+
+	&__spark {
+		margin: 0 var(--q-stat-card-padding) var(--q-stat-card-padding);
+		max-width: calc(100% - 2 * var(--q-stat-card-padding));
+	}
+}

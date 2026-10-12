@@ -1,6 +1,7 @@
 // Progress — thin bar. BEM: .q-progress, __meta, __value, __track, __fill (--indeterminate);
 // --{sm|md|lg}, --{success|warning|error|heat}. The fill width comes in as --_progress.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -22,6 +23,17 @@
     --q-progress-dur: 0.4s;             // fill glides between values; slower than a hover
     --q-progress-indeterminate-dur: 1.6s; // one pass of the indeterminate segment
     --q-progress-indeterminate-width: 30%;
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-progress-track-bg: var(--q-bg-subtle);
+    --q-progress-fill: var(--q-accent);
+  }
+
+  @include app.reset {
+    --q-progress-track-bg: var(--q-border);
+    --q-progress-fill: var(--q-fg);
   }
 }
 

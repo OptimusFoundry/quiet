@@ -1,0 +1,150 @@
+// PageHeader — the top of an app screen: back link, eyebrow, title + status, description, meta, actions, tabs.
+// BEM: .q-page-header, __main, __heading, __above, __back, __eyebrow, __title-row, __title, __status,
+// __description, __meta, __meta-item, __actions, __tabs. App look only, so the tokens default to app values.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-page-header-space-below: 0; // the page's own gap spaces what follows
+    --q-page-header-gap: var(--q-space-stack);
+    --q-page-header-heading-gap: var(--q-space-1);
+    --q-page-header-meta-space-above: var(--q-space-0-5); // facts sit a little apart from the intro
+    --q-page-header-heading-min: 20rem;
+    --q-page-header-actions-gap: var(--q-space-inline);
+
+    --q-page-header-above-gap: var(--q-space-1);
+    --q-page-header-above-space-below: var(--q-space-1-5);
+    --q-page-header-back-fg: var(--q-fg-muted);
+    --q-page-header-path-separator-fg: var(--q-fg-subtle);
+    --q-page-header-eyebrow-fg: var(--q-fg-muted);
+    --q-page-header-eyebrow-font-size: var(--q-text-sm);
+
+    --q-page-header-title-fg: var(--q-fg);
+    --q-page-header-title-font-size: var(--q-text-3xl); // 24 in the app look: the one display size on a product screen
+    --q-page-header-title-weight: var(--q-weight-heading);
+    --q-page-header-title-tracking: -0.02em; // tighter than --q-tracking-tight at display size
+    --q-page-header-title-leading: var(--q-leading-tight);
+    --q-page-header-status-gap: var(--q-space-1-5);
+
+    --q-page-header-description-fg: var(--q-fg-muted);
+    --q-page-header-description-font-size: var(--q-text-intro);
+    --q-page-header-description-leading: var(--q-leading-body);
+    --q-page-header-description-measure: 40rem;
+
+    --q-page-header-meta-fg: var(--q-fg-muted);
+    --q-page-header-meta-font-size: var(--q-text-sm);
+    --q-page-header-meta-gap: var(--q-space-2-5);
+  }
+}
+
+@layer q.components {
+  .q-page-header {
+    display: flex;
+    flex-direction: column;
+    margin-block-end: var(--q-page-header-space-below);
+    font-family: var(--q-font-sans);
+  }
+
+  .q-page-header__main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--q-page-header-gap);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .q-page-header__heading {
+    display: flex;
+    flex: 1 1 var(--q-page-header-heading-min);
+    flex-direction: column;
+    gap: var(--q-page-header-heading-gap);
+    min-inline-size: 0;
+  }
+
+  .q-page-header__above {
+    display: flex;
+    margin-block-end: var(--q-page-header-above-space-below);
+    flex-wrap: wrap;
+    gap: var(--q-page-header-above-gap);
+    align-items: baseline;
+  }
+
+  // The path above the title: a quiet way back, not a link shouting in accent. It takes the
+  // accent and its underline only on hover or focus.
+  .q-page-header__back {
+    white-space: nowrap;
+
+    &:not(:hover, :focus-visible) {
+      border-bottom-color: transparent;
+      color: var(--q-page-header-back-fg);
+    }
+  }
+
+  .q-page-header__eyebrow {
+    color: var(--q-page-header-eyebrow-fg);
+    font-size: var(--q-page-header-eyebrow-font-size);
+  }
+
+  .q-page-header__back + .q-page-header__eyebrow::before {
+    margin-inline-end: var(--q-page-header-above-gap);
+    color: var(--q-page-header-path-separator-fg);
+    content: "/";
+  }
+
+  .q-page-header__title-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--q-page-header-status-gap);
+    align-items: baseline;
+  }
+
+  .q-page-header__title {
+    margin: 0;
+    color: var(--q-page-header-title-fg);
+    font-size: var(--q-page-header-title-font-size);
+    font-weight: var(--q-page-header-title-weight);
+    line-height: var(--q-page-header-title-leading);
+    letter-spacing: var(--q-page-header-title-tracking);
+    overflow-wrap: anywhere;
+  }
+
+  .q-page-header__status {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--q-page-header-status-gap);
+    align-items: baseline;
+  }
+
+  .q-page-header__description {
+    max-inline-size: var(--q-page-header-description-measure);
+    margin: 0;
+    color: var(--q-page-header-description-fg);
+    font-size: var(--q-page-header-description-font-size);
+    line-height: var(--q-page-header-description-leading);
+  }
+
+  // Facts are spaced apart, not dotted: fewer marks, more air.
+  .q-page-header__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--q-page-header-meta-gap);
+    margin: var(--q-page-header-meta-space-above) 0 0;
+    padding: 0;
+    color: var(--q-page-header-meta-fg);
+    font-size: var(--q-page-header-meta-font-size);
+    list-style: none;
+  }
+
+  .q-page-header__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--q-page-header-actions-gap);
+    align-items: center;
+  }
+
+  .q-page-header__tabs {
+    min-inline-size: 0;
+    margin-block-start: var(--q-page-header-gap);
+  }
+}

@@ -1,0 +1,66 @@
+/* Layout for the App/FileCard story. */
+.q-sb-file-card {
+	display: grid;
+	gap: var(--q-space-section);
+	max-width: 720px;
+	padding: var(--q-space-card-pad);
+	color: var(--q-fg-body);
+	font-size: var(--q-text-md);
+
+	&__section {
+		display: grid;
+		gap: var(--q-space-stack);
+	}
+
+	&__title {
+		margin: 0;
+		color: var(--q-fg);
+		font-size: var(--q-text-heading-4);
+		font-weight: var(--q-weight-heading);
+	}
+
+	&__meta {
+		margin: 0;
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+	}
+
+	&__list {
+		display: grid;
+		gap: var(--q-space-stack);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&__narrow {
+		max-width: 360px;
+	}
+
+	&__thumb {
+		display: grid;
+		gap: var(--q-space-inline);
+		padding: var(--q-space-card-pad);
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-xs);
+	}
+
+	&__thumb-title {
+		color: var(--q-fg);
+		font-size: var(--q-text-md);
+		font-weight: var(--q-weight-heading);
+	}
+}
+
+/* Rows sit on a Panel's subtle ground, as in a run's Artifacts rail. */
+.q-sb-file-card__rows {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-0-5);
+	max-width: var(--q-w-detail-panel);
+	margin: 0;
+	padding: var(--q-space-stack);
+	border-radius: var(--q-radius-lg);
+	background: var(--q-bg-subtle);
+	list-style: none;
+}

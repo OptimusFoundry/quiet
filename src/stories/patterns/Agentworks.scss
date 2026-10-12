@@ -1,0 +1,120 @@
+// Agentworks — the app-look proof screens: list page, detail page (main + rail), sign-in.
+
+.q-sb-agentworks {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-section);
+
+	// A list: its filters and the table they filter, one group.
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-stack);
+	}
+
+	// Filters sit on one row above the table; they wrap on narrow screens.
+	&__toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--q-space-inline);
+		align-items: end;
+	}
+
+	&__search {
+		flex: 1 1 240px;
+	}
+
+	&__filter {
+		flex: 0 1 180px;
+	}
+
+	&__cell {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-0-25);
+	}
+
+	// Detail page: the lead column, and a rail of facts beside it; the rail drops below under 960px.
+	&__detail {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) var(--q-w-detail-panel);
+		gap: var(--q-space-block);
+		align-items: start;
+	}
+
+	&__main,
+	&__rail {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-block);
+		min-width: 0;
+	}
+
+	// Files listed in a rail Panel: bare FileCard rows, spaced, no rules between them.
+	&__files {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-0-5);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&__versions {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-inline);
+	}
+
+	@media (width < 960px) {
+		&__detail {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}
+
+// Sign-in: a centred 400 card on the subtle ground; the product name and one line above it.
+.q-sb-signin {
+	box-sizing: border-box;
+	display: grid;
+	place-items: center;
+	min-height: 100vh;
+	padding: var(--q-space-block) var(--q-space-stack);
+	background: var(--q-bg-subtle);
+
+	&__card {
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-field);
+		width: min(100%, var(--q-w-detail-panel));
+		padding: var(--q-space-card-pad);
+		border-radius: var(--q-radius-lg);
+		background: var(--q-bg);
+		box-shadow: var(--q-shadow-1);
+	}
+
+	&__head {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-0-5);
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: var(--q-space-stack);
+	}
+
+	&__or {
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+		text-align: center;
+	}
+
+	&__legal {
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-xs);
+		text-align: center;
+	}
+}

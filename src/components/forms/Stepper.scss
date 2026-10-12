@@ -1,6 +1,7 @@
 // Stepper — pill group of − / value / +. BEM: .q-stepper, __button, __field; --{size}, --disabled.
 // --_chars (set inline) is the value's length; the field grows 10px per character.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -93,5 +94,12 @@
     font-variant-numeric: tabular-nums;
     color: var(--q-stepper-field-fg);
     text-align: center;
+  }
+
+  // The app look: a stepper in a form field's column keeps its own width.
+  @include app.rules {
+    .q-stepper {
+      align-self: flex-start;
+    }
   }
 }

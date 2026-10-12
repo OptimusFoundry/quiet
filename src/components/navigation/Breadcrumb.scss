@@ -1,6 +1,7 @@
 // Breadcrumb — mono caps trail. BEM: .q-breadcrumb, __list, __item, __separator, __crumb, __more;
 // --{size}; __crumb--action (a link or a button with onClick). Current crumb: [aria-current="page"].
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -17,6 +18,17 @@
     --q-breadcrumb-crumb-fg-hover: var(--q-accent);
     --q-breadcrumb-crumb-fg-current: var(--q-fg);
     --q-breadcrumb-more-fg: var(--q-fg-muted);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-breadcrumb-crumb-fg-hover: var(--q-accent-fg);
+    --q-breadcrumb-lg-font-size: var(--q-text-sm);
+  }
+
+  @include app.reset {
+    --q-breadcrumb-crumb-fg-hover: var(--q-accent);
+    --q-breadcrumb-lg-font-size: var(--q-text-xs);
   }
 }
 

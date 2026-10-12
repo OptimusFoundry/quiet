@@ -11,22 +11,27 @@ colour, size or duration, there is a token for it.
 | Job | Token | Reference name | Use |
 |---|---|---|---|
 | Ground | `--q-bg` | paper | page, cards, fields |
-| Alternate ground | `--q-bg-subtle` | paper-2 | alternate sections, selected rows, user chat bubbles, wells |
-| Inverse | `--q-bg-inverse` | ink | primary button only |
-| Heading text | `--q-fg` | ink | titles, values, emphasis, section rules |
+| Alternate ground | `--q-bg-subtle` | paper-2 (app look: `--q-gray-25` warmed by 1% accent) | alternate sections, Panels, user chat bubbles, wells |
+| Inverse | `--q-bg-inverse` | ink | primary button on marketing pages; selected chips |
+| Heading text | `--q-fg` | ink | titles, values, emphasis; section rules on marketing pages |
 | Body text | `--q-fg-body` | ink-2 | default paragraph text |
 | Secondary text | `--q-fg-muted` | muted | metadata, help, table secondary lines |
 | Quiet text | `--q-fg-subtle` | muted-2 | non-essential only (fails AA, by design) |
 | Divider | `--q-border` | rule-soft | card edges, list and table dividers |
 | Hover edge | `--q-border-strong` | rule-strong | card hover, emphasis edges |
-| Accent | `--q-accent` | molten | punctuation (below) |
+| Accent | `--q-accent` | molten | marketing: punctuation · app: the brand colour (below) |
 
-Ratio on any screen: **Paper 70 · Paper-2 20 · Ink 9 · Molten 1.** If a screenshot looks orange,
-too much molten is in use.
+### Molten: two looks
 
-### The molten rule
+Molten plays two roles, set by density. **Marketing** (`density="marketing"`, the website, and the
+catalog that parity pins) keeps the reference: molten is punctuation. **The app look**
+(`density="app"` and `"compact"`, every product screen) makes molten the brand colour: it says
+"you can act here" and "this is where you are". Components switch on their own; screens never
+pick a molten token by hand except through the roles below.
 
-Molten (`--q-accent`) marks **one thing that matters**. Allowed:
+#### Marketing: punctuation
+
+Ratio: **Paper 70 · Paper-2 20 · Ink 9 · Molten 1.** Molten marks one thing that matters:
 
 - the full stop after a page title (`PageHero`/`Headline` add it);
 - one italic accent phrase in a headline (`accent` prop);
@@ -34,10 +39,41 @@ Molten (`--q-accent`) marks **one thing that matters**. Allowed:
   the doubt underline in `DoubtMarker`, a cap warning in `CostMeter`;
 - a focus or "past the line" hairline (`ElasticSlider`, `ThresholdHandles`).
 
-Never use it for a fill, a button, a section background, a banner, a large text block, or a second accent colour.
-Primary actions are **ink**, not molten.
+No molten fill, button, section or banner on a marketing page. Primary actions are ink.
 
-**Charts are the exception.** In `Sparkline`, `LineChart`, `BarChart`, `DonutChart` and
+#### The app look: the brand colour
+
+| Role | What takes molten | Token | Built into |
+|---|---|---|---|
+| Links | link text and its resting underline (solid on hover) | `--q-accent-fg`, `--q-accent-border` | `Link`, `ArrowLink`, `EntityLink`, bare `<a>` in prose, `Breadcrumb` hover |
+| Primary action | the one primary button per view | `--q-accent-bg`, `--q-accent-bg-hover`, `--q-fg-on-accent` | `Button variant="primary"` |
+| Current place | the current nav item (tint + accent text and icon), the current page, step, tab | `--q-accent-subtle`, `--q-accent-fg`, `--q-accent` | `Sidebar`, `Pagination`, `StepIndicator`, `Tabs` (line indicator, pill fill) |
+| Selected / checked | selected rows and filters, checked controls, slider fill | `--q-accent-subtle`, `--q-accent-bg` | `Table`, `List`, `FilterTabs`, `Checkbox`, `Radio`, `Switch`, `Slider` |
+| Focus | the keyboard focus ring, focused field edges, text selection | `--q-focus-ring-color`, `--q-accent`, `--q-selection-bg` | every control |
+| Progress | the filled part of a bar | `--q-accent` | `Progress` |
+| Attention | warning and error status surfaces and marks | `--q-status-warning-*`, `--q-status-error-*` | `Badge`, `Alert`, `Banner`, `toast()` |
+| Tinted surface | one highlighted thing: the file-type tile, a selected item, a "primary" badge | `--q-accent-subtle` | `FileCard`, `Badge variant="primary"` |
+
+- **Never** a section, panel, page or banner background; never body text or a paragraph; never a
+  second accent hue. Ink and greys still carry the text; paper and paper-2 still carry the surfaces.
+- **One primary per view.** If three buttons are molten, two of them are secondary.
+- **Contrast:** `--q-accent` itself is ≈3.87:1 on paper, so it is for marks, dots, rings and
+  graphics only. Text and fills use the darker step: `--q-accent-fg` / `--q-accent-bg` ≈5.6:1
+  (foundry), the accent itself on dark grounds (foundry-dark).
+
+| Tier-2 accent token | Job |
+|---|---|
+| `--q-accent` | marks, dots, rings, chart series 1 |
+| `--q-accent-fg` | accent text and links (AA on `--q-bg` and `--q-bg-subtle`) |
+| `--q-accent-bg` / `--q-accent-bg-hover` | accent fills (primary button) |
+| `--q-fg-on-accent` | text on an accent fill |
+| `--q-accent-subtle` / `--q-accent-subtle-hover` | tinted surface: selected, highlighted, attention |
+| `--q-accent-border` | tinted edge; the resting underline of a link |
+
+They derive from `--q-accent`, so `QuietRoot accent` and a product theme's `--q-molten-500` carry
+through. A dark product theme sets `--q-accent-fg`/`-bg` to the accent itself, as foundry-dark does.
+
+**Charts are the exception** in both looks. In `Sparkline`, `LineChart`, `BarChart`, `DonutChart` and
 `NarratedChart`, molten is series 1, the data the user cares about. Comparison series step through ink then greys
 (`--q-chart-series-1…5`). Labels, values and axes never take a series colour.
 
@@ -50,7 +86,9 @@ Components read them through their own tier-3 tokens (`--q-alert-<status>-*`, `-
 [DESIGN.md](../../DESIGN.md#product-themes).
 
 In `foundry` and `foundry-dark` the brand has no green or red, so the tokens resolve to ink and
-molten:
+molten. In the app look every status also gets a **tinted surface**, so a badge reads without its
+6px dot: info and success on `--q-bg-subtle`, warning on `--q-accent-subtle`, error on
+`--q-accent-subtle` with an `--q-accent-border` edge.
 
 | Status | Look | Components |
 |---|---|---|
@@ -84,14 +122,14 @@ surface with `--q-status-*`, use the components' `variant`/`status` props, and n
   [DESIGN.md → Product themes](../../DESIGN.md#product-themes).
 - A product gets its identity from a **theme** (palette, accent, type, shape, density, per-component
   tokens), never from forking components. The rules on this page stay the same in every theme.
-- `QuietRoot accent="…"` swaps the accent for a product. The molten rule still applies to whatever colour
-  it becomes.
+- `QuietRoot accent="…"` swaps the accent for a product. The two looks above apply to whatever colour
+  it becomes; check `--q-accent-fg` still reaches 4.5:1 on paper.
 - Check every screen in both `foundry` and `foundry-dark`. Never hard-code a light-only value.
 
 ### Contrast exceptions (kept on purpose)
 
-`--q-fg-subtle` (≈2.98:1) and small molten text (≈3.87:1) are below AA and are kept exactly as
-designed. Use `--q-fg-subtle` only for text that isn't needed (decorative serials, dimmed future
+`--q-fg-subtle` (≈2.98:1) and small `--q-accent` text (≈3.87:1) are below AA and are kept exactly as
+designed on marketing pages. App text never uses `--q-accent`; it uses `--q-accent-fg`. Use `--q-fg-subtle` only for text that isn't needed (decorative serials, dimmed future
 items). Anything a user must read uses `--q-fg-muted` or darker.
 
 ## Type and spacing
@@ -105,8 +143,10 @@ between what). Grid and page layouts: [grid.md](grid.md), [layouts.md](layouts.m
 - **Radius by surface:** `--q-radius-xs` 6 checkboxes · `sm` 10 tooltips, menu/nav items · `md` 14
   inputs, alerts · `lg` 20 cards, tables, popovers, toasts · `xl` 28 dialogs, drawers · `pill`
   buttons, tags, switches, dots, progress. Never 0 on a container.
-- **Hairlines first:** 1px `--q-border` for dividers and card edges; an ink rule (`--q-fg`) only for
-  section tops and emphasis. Alternate areas use `--q-bg-subtle` between hairlines.
+- **Surfaces before rules (app):** sections group with `Panel` surfaces (`--q-bg-subtle`, radius
+  `--q-radius-lg`) and spacing. 1px `--q-border` hairlines only inside dense tables and lists, and
+  as card edges. No ink rules in an app. **Marketing** keeps the reference: an ink rule (`--q-fg`)
+  on section tops, hairlines for dividers.
 - **Shadows only float:** `--q-shadow-1` selected segment, `--q-shadow-2` popovers, menus, toasts,
   card hover, `--q-shadow-3` dialogs, drawers, palette. Never on text. No glassmorphism. The only
   transparency is the dialog scrim (`--q-scrim`).
@@ -126,7 +166,7 @@ between what). Grid and page layouts: [grid.md](grid.md), [layouts.md](layouts.m
 | Mode | Where |
 |---|---|
 | `marketing` | the website only (QuietRoot's default) |
-| `app` | dashboards, lists, detail pages, settings, chat. **The product default.** |
+| `app` | dashboards, lists, detail pages, settings, chat. **The product default.** Turns on the app look |
 | `compact` | dense tables, inspectors, admin consoles |
 
 Pick one per surface. A compact table inside an app page gets its own `data-density="compact"`

@@ -1,6 +1,7 @@
 // Input — labelled input / textarea. BEM: .q-input, __label, __field(--multiline, --invalid), __hint(--error).
 // Focus is :focus (any focus, as before).
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -27,6 +28,15 @@
     --q-input-hint-tracking: var(--q-tracking-hint);
     --q-input-hint-fg: var(--q-fg-muted);
     --q-input-hint-error-fg: var(--q-accent);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-input-border-focus: var(--q-accent);
+  }
+
+  @include app.reset {
+    --q-input-border-focus: var(--q-fg);
   }
 }
 

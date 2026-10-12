@@ -2,7 +2,7 @@
 
 quiet is a **TypeScript port** of the Optimus Foundry "Soft" design system in Claude Design, plus an
 **accessibility + motion layer** on top. The rule: at rest, every component renders pixel-identical
-to the reference (`tests/parity.spec.ts`); the layer only shows on interaction — keyboard focus,
+to the reference; the layer only shows on interaction — keyboard focus,
 hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESIGN.md](DESIGN.md) first.
 
 ## What is copied, and from where
@@ -11,7 +11,7 @@ hover-equivalents on focus, ARIA, open/close and state-change motion. Read [DESI
 |---|---|---|
 | `src/components/<group>/*.tsx` | `docs/reference/optimus-design/components/*.jsx` + `*.d.ts` | ported to TypeScript (props interface from the `.d.ts`, JSDoc and `@startingPoint` kept), then the a11y + motion layer edited in |
 | `src/styles/tokens/` | `docs/reference/optimus-design/tokens/` | rebuilt as 3-tier `--q-*` tokens with the same values; the reference names live in `tokens/_reference-compat.scss` |
-| `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest (parity tests) |
+| `src/components/<group>/*.scss` | the reference's inline styles | quiet's own BEM SCSS, pixel-identical at rest |
 | `src/index.ts` | `ds-loader.js` file list | `npm run gen` |
 | `src/styles/tokens.generated.{ts,json}` | the compiled SCSS | `npm run gen` (`TokenName`, `cssVar`; the name list shipped as `dist/tokens.json`) |
 | `src/stories/catalog.generated.tsx` | `components/index.html` App script | `npm run gen` (verbatim, `@ts-nocheck`) |
@@ -27,8 +27,26 @@ in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes 
    keep `\uXXXX` escapes as escapes. Verify against the project before trusting the copy.
 3. `git diff` the mirror to see what changed and port it by hand into the `.tsx` (same paths),
    keeping the a11y + motion layer and the types, then run `npm run gen`.
-4. `npm run test` — `tests/parity.spec.ts` must show the catalog pixel-identical to the
-   reference `components/index.html`.
+4. Compare the Catalog story with the reference `components/index.html` side by side — at rest
+   they must look identical.
+
+## The app look
+
+Product screens render in `data-density="app"` (or `"compact"`); the reference look is
+`"marketing"`, the default, which the catalog renders in, so parity is unaffected. In the app look
+the accent is the brand colour (links, primary action, current/selected/checked, focus, progress,
+attention status), links read as links at rest, and sections group with surfaces, not ink rules
+(docs/guidelines/foundations.md, "Molten: two looks"; spec docs/plans/2026-10-11-app-look.md).
+
+- **Mixins** in `src/styles/_app.scss` (`@use "../../styles/app";`):
+  - `app.look { … }` at the end of a component's `q.tokens` block, after its defaults: the app values of tier-2/3 tokens.
+  - `app.reset { … }` right after it: the defaults of exactly the same keys, for a marketing frame nested in an app.
+  - `app.rules { … }` in `q.components`: rules only the app look has (an `@scope` that stops at a nested marketing root).
+- `scripts/check-app-look.mjs` (in `npm run lint`) fails when a stylesheet's `look` and `reset` keys differ.
+- Never change a default to get an app value: the defaults are the reference, pinned by parity.
+- New tier-2 accent steps: `--q-accent-fg` (text, links), `--q-accent-bg`/`-bg-hover` + `--q-fg-on-accent`
+  (fills), `--q-accent-subtle`/`-subtle-hover` (tints), `--q-accent-border`. `--q-accent` itself is
+  marks only (3.87:1).
 
 ## The a11y + motion layer
 
@@ -40,7 +58,6 @@ in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes 
   no press shrink, one moving thing per surface, reduced motion respected.
 - Keep edits minimal and in the reference's style (`React.useState`, classes from the component's
   `.scss`); never change what renders at rest. Colour contrast is a deliberate exception (exact colours kept).
-- Tests: `tests/a11y.spec.ts` (axe, light + dark) and `tests/a11y-<group>.spec.ts` (keyboard/ARIA).
 
 ## Styling conventions (BEM + tokens)
 
@@ -87,14 +104,14 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
   `tokens/_reference-compat.scss`, for the generated catalog and pasted Claude Design code.
 - **Scope anything global to `[data-quiet]`** (set by `QuietRoot`, and on `<html>` by
   `applyTheme`): element selectors, `::selection`, the reference-compat names. Nothing outside a
-  quiet root changes when quiet.css loads (`tests/coexistence.spec.ts`; README "Where quiet's
+  quiet root changes when quiet.css loads (README "Where quiet's
   styles apply").
 - Links: a component that renders `<a>` from `href` picks its element with `useLinkElement` from
   `src/lib/link.tsx`, so `QuietRoot linkComponent` routes it.
 - Enforced by `stylelint.config.mjs` (BEM class pattern, `--q-*`/`--_*` custom properties, no raw
   values in component rules). `npm run lint` runs Biome + Stylelint.
 - Biome's `src/components/**` override turns off the a11y lint rules that fight quiet's deliberate
-  ARIA-on-div DOM (it must match the reference; axe + the keyboard specs are the a11y gate), plus
+  ARIA-on-div DOM (it must match the reference), plus
   `noArrayIndexKey` and `noNonNullAssertion`. `useExhaustiveDependencies` and `noExplicitAny` are
   errors: a callback an effect must not restart on goes through `useEffectEvent`; a deliberate extra
   dependency gets a `biome-ignore` saying what it triggers. Rest props are typed as the HTML
@@ -105,13 +122,16 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 `src/components/future/` holds components that are **not** in the reference: concepts from the
 Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
 on quiet tokens + BEM with full keyboard/ARIA. Parity doesn't apply to them; `npm run gen`
-exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…),
-tests: `tests/future-<set>.spec.ts`. Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
+exports them after the reference components. Stories: `src/stories/future/*.stories.tsx` (Future/…). Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = molten).
 
 Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts molten is the primary data
 colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `src/components/chat/`
 (AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
-inside; the product wires it to Claude). Stories: Charts, Chat; tests `charts.spec.ts`, `chat.spec.ts`.
+inside; the product wires it to Claude). Stories: Charts, Chat.
+
+And `src/components/app/`: SaaS screen parts — `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`,
+`FileCard`, `Transcript`. They only render in the app look, so their tier-3 tokens default straight to
+app values (no `app.look` block). Stories: `src/stories/app/` (App/…, `parameters: { density: "app" }`). `npm run new -- app <Name>` scaffolds.
 
 Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
 `scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
@@ -128,11 +148,10 @@ section, since the catalog is generated from the reference and must stay pixel-i
     `skills/quiet-app`, `agents/quiet-screen-reviewer.md`, `hooks/` (`quiet-guard.mjs`).
 - **Agents** (`.claude/agents/`):
   - `component-builder`: builds one component, write-scoped to its files.
-  - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
   - `visual-reviewer`: screenshots stories in both themes against `docs/guidelines/checklist.md`.
-- **Scaffold:** `npm run new -- <future|charts|chat> <Name>` writes `<Name>.{tsx,scss}` from convention templates. It refuses reference groups.
+- **Scaffold:** `npm run new -- <future|charts|chat|app> <Name>` writes `<Name>.{tsx,scss}` from convention templates. It refuses reference groups.
 - **Hook:** `.claude/settings.json` runs `.claude/hooks/lint-changed.sh` after every Edit or Write.
-  - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}`, `tests/*.ts` and `scripts/*.mjs`.
+  - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}` and `scripts/*.mjs`.
   - It only reports back; it never blocks.
 
 ## Vendoring (how apps use quiet)
@@ -150,14 +169,13 @@ must build in an app's bundler, not only in this repo's:
   chunks ahead of the entry CSS, so any quiet stylesheet can be the first to load. Each component
   `.scss` starts with `@use "../../styles/layers";` (`_layers.scss` holds the order statement;
   `npm run new` adds it). `scripts/check-layers.mjs` (in `npm run lint`) compiles each one and fails
-  if it doesn't name all five layers in order before anything else. `tests/layer-order-build.spec.ts`
-  builds a minified, split app and checks the computed colours.
+  if it doesn't name all five layers in order before anything else.
 - **The copy list** is `COPY` in `scripts/quiet.mjs`. Add a path there when apps need it.
 - **`npx quiet check`** in the app fails on local edits. A bug an app hits is fixed here, then re-synced.
 - **App-facing Claude assets are a plugin in `claude/`**, not `.claude/` (which is for developing
   quiet). `quiet sync` copies it to the app's `.claude/skills/quiet/`, where Claude Code loads it as a
   skills-directory plugin, namespaced `quiet:` (no settings.json edits; hooks in `hooks/hooks.json`).
-  It must work in any app: no quiet Storybook, quiet tests or quiet paths. Name new parts `quiet-*`;
+  It must work in any app: no quiet Storybook or quiet paths. Name new parts `quiet-*`;
   agents sit flat in `agents/` (Claude Code doesn't load a plugin's agent sub-folders) with `model`,
   `color` and `skills: [quiet-app]` frontmatter. Validate with `claude plugin validate claude`.
   Ship what an app lacks (measuring rendered screens), not duplicates of what an app's harness
@@ -169,11 +187,10 @@ must build in an app's bundler, not only in this repo's:
 - **Branches:** other sessions keep worktrees and branches of this repo. Re-check `git branch --show-current` and `git status` before committing. Never stash, reset or check out someone else's work.
 - **Shared working tree:** when several agents share one, each touches only its own files and nobody commits until all are done.
 - **Storybook:** restart it (`npm run dev -- --ci --no-open`) when a new story file is "not found". The running server doesn't always pick up new `*.stories.tsx` files.
-- **Overlapping test runs:** pass `--output <scratch-dir>` to `npx playwright test` so runs don't wipe each other's `test-results/`.
 
 ## quiet's own code
 
 `src/QuietRoot.tsx`, `src/a11y/`, `src/lib/` (`env.ts`: dev checks without Node types), `src/styles/` (tokens, themes, base, utilities), `stylelint/` (the plugin and the app config apps extend), `scripts/` (`quiet.mjs`: vendoring sync/check),
-`tests/` and the Storybook config.
+and the Storybook config.
 
-**Before finishing:** `npm run lint && npm run typecheck && npm run build && npm run test`.
+**Before finishing:** `npm run lint && npm run typecheck && npm run build`, then look at what you changed in Storybook (both themes).

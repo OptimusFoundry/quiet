@@ -1,0 +1,28 @@
+/* Layout for the App/Transcript story. */
+.q-sb-transcript {
+  display: grid;
+  gap: var(--q-space-section);
+  max-width: 880px;
+  padding: var(--q-space-section) var(--q-space-page-x);
+  color: var(--q-fg-body);
+  font-family: var(--q-font-sans);
+}
+
+.q-sb-transcript__title {
+  margin: 0;
+  color: var(--q-fg);
+  font-size: var(--q-text-heading-1);
+  font-weight: var(--q-weight-heading);
+}
+
+.q-sb-transcript__block {
+  display: grid;
+  gap: var(--q-space-card-gap);
+}
+
+.q-sb-transcript__label {
+  margin: 0;
+  color: var(--q-fg-muted);
+  font-size: var(--q-text-sm);
+  font-weight: var(--q-weight-regular);
+}

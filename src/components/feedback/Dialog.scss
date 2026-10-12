@@ -124,7 +124,9 @@
     letter-spacing: var(--q-dialog-title-tracking);
   }
 
+  // The title's full stop follows the type role: shown on editorial pages, none in the app look.
   .q-dialog__dot {
+    display: var(--q-period-display);
     color: var(--q-dialog-dot);
   }
 

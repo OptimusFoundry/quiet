@@ -3,6 +3,7 @@
 // --collapsed, --compact, --dividers, --drawer; __icon--initials. Current item: [aria-current="page"].
 // Mobile drawer: .q-sidebar-drawer, __scrim, __panel. External opener: .q-sidebar-trigger.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -82,6 +83,31 @@
       --q-sidebar-width-dur: 0s;
     }
   }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-sidebar-label-fg: var(--q-fg-muted);
+    --q-sidebar-item-height: var(--q-control-sm);
+    --q-sidebar-item-font-size: var(--q-text-sm);
+    --q-sidebar-item-weight: var(--q-weight-medium);
+    --q-sidebar-item-weight-current: var(--q-weight-semibold);
+    --q-sidebar-icon-font-size: var(--q-text-sm);
+    --q-sidebar-item-fg-current: var(--q-accent-fg);
+    --q-sidebar-item-bg-current: var(--q-accent-subtle);
+    --q-sidebar-icon-fg-current: var(--q-accent-fg);
+  }
+
+  @include app.reset {
+    --q-sidebar-label-fg: var(--q-fg-subtle);
+    --q-sidebar-item-height: var(--q-control-md);
+    --q-sidebar-item-font-size: var(--q-text-md);
+    --q-sidebar-item-weight: var(--q-weight-regular);
+    --q-sidebar-item-weight-current: var(--q-weight-semibold);
+    --q-sidebar-icon-font-size: var(--q-text-md);
+    --q-sidebar-item-fg-current: var(--q-fg);
+    --q-sidebar-item-bg-current: var(--q-bg-subtle);
+    --q-sidebar-icon-fg-current: var(--q-fg);
+  }
 }
 
 @layer q.components {
@@ -93,7 +119,8 @@
     box-sizing: border-box;
     width: var(--_width, var(--q-sidebar-width));
     padding: var(--q-sidebar-py) var(--q-sidebar-px);
-    overflow: hidden;
+    // Clip only sideways (the collapse animation): a menu opening down from the header stays visible.
+    overflow: clip visible;
     border-right: var(--q-hairline) solid var(--q-sidebar-border);
     background: var(--q-sidebar-bg);
     transition: width var(--q-sidebar-width-dur) var(--q-sidebar-width-ease);

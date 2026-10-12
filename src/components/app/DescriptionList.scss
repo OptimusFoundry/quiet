@@ -1,0 +1,160 @@
+// DescriptionList — an entity's properties as label/value pairs, values right beside their labels.
+// BEM: .q-description-list (size container), __list (dl), __pair, __label (dt), __detail (dd),
+// __line, __value (--mono, --empty), __copy, __hint; --{inline|stacked}, --{sm|md}, --cols-{1|2|3}.
+// No hairlines between rows: spacing groups the pairs.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-description-list-label-width: 160px;
+    --q-description-list-sm-label-width: 128px;
+    --q-description-list-label-max: 40%;
+    --q-description-list-label-fg: var(--q-fg-muted);
+    --q-description-list-value-fg: var(--q-fg);
+    --q-description-list-empty-fg: var(--q-fg-muted);
+    --q-description-list-hint-fg: var(--q-fg-muted);
+    --q-description-list-copy-fg: var(--q-fg-muted);
+    --q-description-list-copy-fg-hover: var(--q-fg);
+    --q-description-list-copied-fg: var(--q-accent-fg);
+    --q-description-list-mono-font: var(--q-font-mono);
+    --q-description-list-leading: var(--q-leading-ui);
+
+    --q-description-list-row-gap: var(--q-space-stack);
+    --q-description-list-sm-row-gap: var(--q-space-inline);
+    --q-description-list-stacked-sm-row-gap: var(--q-space-1-5);
+    --q-description-list-column-gap: var(--q-space-block);
+    --q-description-list-pair-gap: var(--q-space-stack);
+    --q-description-list-stacked-pair-gap: var(--q-space-0-5);
+    --q-description-list-value-gap: var(--q-space-0-5);
+
+    --q-description-list-md-label-size: var(--q-text-sm);
+    --q-description-list-md-value-size: var(--q-text-md);
+    --q-description-list-md-mono-size: var(--q-text-sm);
+    --q-description-list-md-hint-size: var(--q-text-sm);
+    --q-description-list-sm-label-size: var(--q-text-xs);
+    --q-description-list-sm-value-size: var(--q-text-sm);
+    --q-description-list-sm-mono-size: var(--q-text-xs);
+    --q-description-list-sm-hint-size: var(--q-text-xs);
+  }
+}
+
+@layer q.components {
+  .q-description-list {
+    --_cols: 1;
+    --_row-gap: var(--q-description-list-row-gap);
+    --_label-width: var(--q-description-list-label-width);
+    --_label-size: var(--q-description-list-md-label-size);
+    --_value-size: var(--q-description-list-md-value-size);
+    --_mono-size: var(--q-description-list-md-mono-size);
+    --_hint-size: var(--q-description-list-md-hint-size);
+
+    container-type: inline-size;
+    min-width: 0;
+    font-family: var(--q-font-sans);
+    line-height: var(--q-description-list-leading);
+
+    &--sm {
+      --_row-gap: var(--q-description-list-sm-row-gap);
+      --_label-width: var(--q-description-list-sm-label-width);
+      --_label-size: var(--q-description-list-sm-label-size);
+      --_value-size: var(--q-description-list-sm-value-size);
+      --_mono-size: var(--q-description-list-sm-mono-size);
+      --_hint-size: var(--q-description-list-sm-hint-size);
+    }
+
+    &--stacked.q-description-list--sm {
+      --_row-gap: var(--q-description-list-stacked-sm-row-gap);
+    }
+
+    &--cols-2 { --_cols: 2; }
+    &--cols-3 { --_cols: 3; }
+  }
+
+  .q-description-list__list {
+    display: grid;
+    grid-template-columns: repeat(var(--_cols), minmax(0, 1fr));
+    gap: var(--_row-gap) var(--q-description-list-column-gap);
+    align-items: start;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Several pairs per row only where there is room for them.
+  @container (width < 720px) {
+    .q-description-list__list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .q-description-list__pair {
+    display: grid;
+    grid-template-columns: min(var(--_label-width), var(--q-description-list-label-max)) minmax(0, 1fr);
+    column-gap: var(--q-description-list-pair-gap);
+    align-items: baseline;
+    min-width: 0;
+
+    .q-description-list--stacked & {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--q-description-list-stacked-pair-gap);
+    }
+  }
+
+  .q-description-list__label {
+    min-width: 0;
+    color: var(--q-description-list-label-fg);
+    font-size: var(--_label-size);
+    overflow-wrap: anywhere;
+  }
+
+  .q-description-list__detail {
+    min-width: 0;
+    margin: 0;
+    color: var(--q-description-list-value-fg);
+    font-size: var(--_value-size);
+  }
+
+  .q-description-list__line {
+    display: flex;
+    align-items: baseline;
+    gap: var(--q-description-list-value-gap);
+    min-width: 0;
+  }
+
+  .q-description-list__value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+
+    &--mono {
+      font-family: var(--q-description-list-mono-font);
+      font-size: var(--_mono-size);
+    }
+
+    &--empty {
+      color: var(--q-description-list-empty-fg);
+    }
+  }
+
+  // A 32px hit target that doesn't make its row taller than the text line.
+  .q-description-list__copy {
+    flex: none;
+    margin-block: calc((var(--_value-size) * var(--q-description-list-leading) - var(--q-control-sm)) / 2);
+    align-self: center;
+    color: var(--q-description-list-copy-fg);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--q-description-list-copy-fg-hover);
+    }
+
+    &[data-state="copied"] {
+      color: var(--q-description-list-copied-fg);
+    }
+  }
+
+  .q-description-list__hint {
+    display: block;
+    margin-top: var(--q-space-0-25);
+    color: var(--q-description-list-hint-fg);
+    font-size: var(--_hint-size);
+  }
+}

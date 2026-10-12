@@ -1,6 +1,7 @@
 // Pagination — mono page pills. BEM: .q-pagination, __page, __ellipsis; --{variant} (default,
 // outline, ghost), --{size}. Current page: [aria-current="page"].
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -28,6 +29,25 @@
     --q-pagination-outline-border: var(--q-border);
     --q-pagination-outline-border-current: var(--q-border-emphasis);
     --q-pagination-ghost-fg: var(--q-fg-muted);
+    --q-pagination-ghost-fg-hover: var(--q-accent);
+    --q-pagination-ghost-bg-current: var(--q-bg-subtle);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-pagination-default-bg-current: var(--q-accent-subtle);
+    --q-pagination-default-fg-current: var(--q-accent-fg);
+    --q-pagination-default-border-current: var(--q-accent-subtle);
+    --q-pagination-outline-border-current: var(--q-accent);
+    --q-pagination-ghost-fg-hover: var(--q-accent-fg);
+    --q-pagination-ghost-bg-current: var(--q-accent-subtle);
+  }
+
+  @include app.reset {
+    --q-pagination-default-bg-current: var(--q-bg-inverse);
+    --q-pagination-default-fg-current: var(--q-fg-on-inverse);
+    --q-pagination-default-border-current: var(--q-bg-inverse);
+    --q-pagination-outline-border-current: var(--q-border-emphasis);
     --q-pagination-ghost-fg-hover: var(--q-accent);
     --q-pagination-ghost-bg-current: var(--q-bg-subtle);
   }
