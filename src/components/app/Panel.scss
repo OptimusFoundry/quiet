@@ -7,6 +7,7 @@
   :root,
   [data-theme] {
     --q-panel-radius: var(--q-radius-lg);
+    --q-panel-actions-pull: var(--q-space-1);
     --q-panel-gap: var(--q-space-field);
     --q-panel-gap-empty: var(--q-space-1);
     --q-panel-pad: var(--q-space-card-pad);
@@ -137,9 +138,10 @@
   }
 
   .q-panel__actions {
-    // Centred on the title's line, not its top: pulled up (and the header kept its height) by half
-    // the difference between a small control and the title's line box.
-    --_pull: calc((var(--q-panel-title-font-size) * var(--q-panel-title-leading) - var(--q-control-sm)) / 2);
+    // Centred on the title's line, not its top: pulled up (and the header keeps its height) by half
+    // the difference between a small control and the title's line box: (14 × 1.05 − 32) / 2 ≈ 8.65,
+    // held on the space scale.
+    --_pull: calc(var(--q-panel-actions-pull) * -1);
 
     display: flex;
     flex: none;

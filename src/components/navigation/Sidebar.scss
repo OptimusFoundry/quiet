@@ -79,7 +79,7 @@
     --q-sidebar-trigger-bg: transparent;
     --q-sidebar-trigger-bg-hover: var(--q-bg-hover);
     --q-sidebar-trigger-fg: var(--q-fg);
-    --q-sidebar-trigger-font-size: var(--q-icon-lg);
+    --q-sidebar-trigger-font-size: var(--q-text-lg); // sizes the default em-sized menu icon; on the type scale
     --q-sidebar-trigger-mark: var(--q-accent);
     --q-sidebar-trigger-mark-size: var(--q-space-0-75);
   }

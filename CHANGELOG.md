@@ -2,6 +2,15 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Fixed
+
+- Off-scale values quiet-audit flagged inside quiet (reported from saas-template): the Sidebar
+  trigger's font size was an icon token (19px), now `--q-text-lg`; the AppShell pane's close button
+  had the browser's default font size, now `--q-text-sm`; Panel actions were pulled by a computed
+  −8.65px, now `--q-panel-actions-pull` (−8, on the space scale). Nothing moves visibly.
+
 ## 1.1.1
 
 ### Changed
