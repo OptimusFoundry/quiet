@@ -21,13 +21,10 @@ TypeScript (strict), formatted and linted by Biome; only SCSS goes through Style
 
 ## Component APIs
 
-Apps migrating from Proto (`../proto-design-system`, retiring) are the main consumers, so give
-components the escape hatches apps reach for:
-
-- **`ref` and rest props.** A component takes a React 19 `ref` prop (no `forwardRef`) and spreads
-  rest HTML attributes (`id`, `aria-*`, `data-testid`, handlers) onto its root or, for form widgets,
-  onto the focusable control. `className`/`style` merge. Core and forms do; bring other groups in
-  line when you touch them.
+- **`ref` and rest props.** A component types `ref?: React.Ref<El>` (React 19, no `forwardRef`) and
+  spreads rest HTML attributes (`id`, `aria-*`, `data-testid`, handlers, and `ref` with them) onto its
+  root or, for form widgets, onto the focusable control. `className`/`style` merge. Core and forms
+  do; bring other groups in line when you touch them.
 - **Form widgets** take `name`, `form`, `required`, `onBlur`/`onFocus` (fired when focus leaves the
   whole widget, popup included) and a ref to a focusable element, so they work with a native
   `<form>` and with react-hook-form's `Controller`. `onChange` passes the value, not the event, except
