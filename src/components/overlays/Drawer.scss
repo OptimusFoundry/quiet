@@ -106,7 +106,7 @@
     letter-spacing: var(--q-drawer-title-tracking);
   }
 
-  // The title's full stop follows the type role: shown on editorial pages, none in the app look.
+  // The title's full stop follows the type role (--q-period-display, none in the one look).
   .q-drawer__dot {
     display: var(--q-period-display);
     color: var(--q-drawer-dot);

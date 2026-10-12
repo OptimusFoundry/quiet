@@ -1,6 +1,6 @@
 // AccountMenu — sidebar foot: avatar + name (+ detail) opening the account menu upward.
 // BEM: .q-account-menu (the menu anchor), __button, __text, __name, __detail, __more.
-// Opens above its trigger: it sits at the bottom of the viewport. App look only.
+// Opens above its trigger: it sits at the bottom of the viewport.
 @use "../../styles/layers";
 
 @layer q.tokens {

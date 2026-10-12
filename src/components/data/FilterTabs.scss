@@ -1,6 +1,5 @@
 // FilterTabs — pill radio group for filtering. BEM: .q-filter-tabs, __tab (--sm), __icon, __count.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -18,32 +17,16 @@
     --q-filter-tabs-tab-sm-font-size: var(--q-text-sm);
     --q-filter-tabs-tab-fg: var(--q-fg);
     --q-filter-tabs-tab-border: var(--q-border);
-    --q-filter-tabs-tab-border-hover: var(--q-fg);
-    --q-filter-tabs-tab-selected-bg: var(--q-fg);
-    --q-filter-tabs-tab-selected-fg: var(--q-bg);
-    --q-filter-tabs-tab-selected-border: var(--q-fg);
-    --q-filter-tabs-count-md-font-size: var(--q-text-2xs);
-    --q-filter-tabs-count-sm-font-size: var(--q-text-3xs);
-    --q-filter-tabs-count-color: var(--q-fg-muted);
-    --q-filter-tabs-count-selected-color: var(--q-fg-subtle);
-  }
-
-  // The app look (styles/_app.scss).
-  @include app.look {
     --q-filter-tabs-tab-border-hover: var(--q-border-strong);
     --q-filter-tabs-tab-selected-bg: var(--q-accent-subtle);
     --q-filter-tabs-tab-selected-fg: var(--q-accent-fg);
     --q-filter-tabs-tab-selected-border: var(--q-accent-border);
+    --q-filter-tabs-count-md-font-size: var(--q-text-2xs);
+    --q-filter-tabs-count-sm-font-size: var(--q-text-3xs);
+    --q-filter-tabs-count-color: var(--q-fg-muted);
     --q-filter-tabs-count-selected-color: var(--q-accent-fg);
   }
 
-  @include app.reset {
-    --q-filter-tabs-tab-border-hover: var(--q-fg);
-    --q-filter-tabs-tab-selected-bg: var(--q-fg);
-    --q-filter-tabs-tab-selected-fg: var(--q-bg);
-    --q-filter-tabs-tab-selected-border: var(--q-fg);
-    --q-filter-tabs-count-selected-color: var(--q-fg-subtle);
-  }
 }
 
 @layer q.components {

@@ -4,7 +4,6 @@
 // [data-sliding]; the indicator's geometry comes in as --_left/--_top/--_width/--_height.
 // .q-tab-panel is the tabpanel Tabs renders when given `panels` (or TabPanel on its own).
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -24,7 +23,7 @@
     --q-tabs-md-icon-size: 14px; // label size + 3px; no text step at 14
     --q-tabs-md-height: var(--q-field-sm);
     --q-tabs-md-px: var(--q-space-2);
-    --q-tabs-lg-font-size: var(--q-text-xs);
+    --q-tabs-lg-font-size: var(--q-text-sm);
     --q-tabs-lg-icon-size: var(--q-text-md);
     --q-tabs-lg-height: 44px; // segment height inside the 4px enclosed/pill track
     --q-tabs-lg-px: var(--q-space-2-5);
@@ -34,8 +33,8 @@
     --q-tabs-line-tab-pb: var(--q-space-1-5);
     --q-tabs-line-fg: var(--q-fg-muted);
     --q-tabs-line-fg-hover: var(--q-fg);
-    --q-tabs-line-fg-selected: var(--q-fg);
-    --q-tabs-line-indicator: var(--q-border-emphasis);
+    --q-tabs-line-fg-selected: var(--q-accent-fg);
+    --q-tabs-line-indicator: var(--q-accent);
 
     --q-tabs-track-gap: var(--q-space-0-5);
     --q-tabs-track-pad: var(--q-space-0-5);
@@ -51,28 +50,12 @@
     --q-tabs-pill-radius: var(--q-radius-pill);
     --q-tabs-pill-fg: var(--q-fg);
     --q-tabs-pill-bg-hover: var(--q-bg-subtle);
-    --q-tabs-pill-fg-selected: var(--q-fg-on-inverse);
-    --q-tabs-pill-bg-selected: var(--q-bg-inverse);
+    --q-tabs-pill-fg-selected: var(--q-fg-on-accent);
+    --q-tabs-pill-bg-selected: var(--q-accent-bg);
 
     --q-tab-panel-pt: var(--q-space-3);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-tabs-line-fg-selected: var(--q-accent-fg);
-    --q-tabs-line-indicator: var(--q-accent);
-    --q-tabs-pill-fg-selected: var(--q-fg-on-accent);
-    --q-tabs-pill-bg-selected: var(--q-accent-bg);
-    --q-tabs-lg-font-size: var(--q-text-sm);
-  }
-
-  @include app.reset {
-    --q-tabs-line-fg-selected: var(--q-fg);
-    --q-tabs-line-indicator: var(--q-border-emphasis);
-    --q-tabs-pill-fg-selected: var(--q-fg-on-inverse);
-    --q-tabs-pill-bg-selected: var(--q-bg-inverse);
-    --q-tabs-lg-font-size: var(--q-text-xs);
-  }
 }
 
 @layer q.components {

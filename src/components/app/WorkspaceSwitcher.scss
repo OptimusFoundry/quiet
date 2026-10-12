@@ -1,6 +1,5 @@
 // WorkspaceSwitcher — sidebar head: mark + name (+ detail) opening a switch menu.
 // BEM: .q-workspace-switcher (the menu anchor), __button, __mark, __text, __name, __detail, __chevron.
-// App look only, so the tokens default to app values.
 @use "../../styles/layers";
 
 @layer q.tokens {

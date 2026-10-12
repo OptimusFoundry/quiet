@@ -1,6 +1,5 @@
 // Label — mono caps field label. BEM: .q-label, __row, __text, __required, __sub; --{size}.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -13,7 +12,7 @@
     --q-label-fg: var(--q-fg-muted);
     --q-label-sm-font-size: var(--q-text-3xs);
     --q-label-md-font-size: var(--q-text-label);
-    --q-label-lg-font-size: var(--q-text-xs);
+    --q-label-lg-font-size: var(--q-text-sm);
     --q-label-required-fg: var(--q-accent);
     --q-label-required-gap: var(--q-space-0-25);
     --q-label-sub-font-size: var(--q-text-sm);
@@ -22,14 +21,6 @@
     --q-label-disabled-opacity: 0.4;
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-label-lg-font-size: var(--q-text-sm);
-  }
-
-  @include app.reset {
-    --q-label-lg-font-size: var(--q-text-xs);
-  }
 }
 
 @layer q.components {

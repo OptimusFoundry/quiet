@@ -1,5 +1,5 @@
 // AppIcon — a stroke icon from quiet's app set. BEM: .q-app-icon; --{sm|md|lg}. A pixel size
-// arrives as --_size. App look only, so the tokens default to app values.
+// arrives as --_size.
 @use "../../styles/layers";
 
 @layer q.tokens {

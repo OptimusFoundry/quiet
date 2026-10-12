@@ -1,7 +1,7 @@
 // AppShell — the signed-in frame: Sidebar on a canvas, the screen an inset raised panel.
 // BEM: .q-app-shell, __skip, __sidebar, __panel, __sentinel; --narrow (below the breakpoint).
 // The panel carries [data-scrolled] for the TopBar's rule. Sets the Sidebar's and TopBar's tier-3
-// tokens for its slots, so both read as part of the frame. App look only: tokens default to app values.
+// tokens for its slots, so both read as part of the frame.
 @use "../../styles/layers";
 
 @layer q.tokens {

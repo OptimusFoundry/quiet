@@ -2,7 +2,6 @@
 // BEM: .q-top-bar, __trigger, __lead, __crumbs, __title, __middle, __actions. Sticky to the top of
 // its scroller; a size container, so a narrow bar shows only the current crumb. AppShell turns the
 // rule off until its panel scrolls (it sets --q-top-bar-border).
-// App look only, so the tokens default to app values.
 @use "../../styles/layers";
 
 @layer q.tokens {

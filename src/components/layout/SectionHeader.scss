@@ -1,14 +1,13 @@
 // SectionHeader — ruled section top: heading on the left, description/actions on the right.
 // BEM: .q-section-header, __heading, __aside, __description, __actions; --md, --sm, --split.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
   [data-theme] {
-    --q-section-header-rule: var(--q-fg);
+    --q-section-header-rule: transparent;
     --q-section-header-md-gap: var(--q-space-4);
-    --q-section-header-md-pt: var(--q-space-4);
+    --q-section-header-md-pt: 0;
     --q-section-header-md-heading-gap: var(--q-space-2);
     --q-section-header-md-description-font-size: var(--q-text-intro);
     --q-section-header-md-title-size: var(--q-text-heading-2);
@@ -16,7 +15,7 @@
     --q-section-header-md-title-tracking: var(--q-tracking-h2);
     --q-section-header-md-title-leading: var(--q-leading-none);
     --q-section-header-sm-gap: var(--q-space-2);
-    --q-section-header-sm-pt: var(--q-space-2);
+    --q-section-header-sm-pt: 0;
     --q-section-header-sm-heading-gap: var(--q-space-1);
     --q-section-header-sm-description-font-size: var(--q-text-md);
     --q-section-header-column-min: 320px; // split columns wrap below this width; no tier-2 equivalent
@@ -27,18 +26,6 @@
     --q-section-header-actions-gap: var(--q-space-2);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-section-header-rule: transparent;
-    --q-section-header-md-pt: 0;
-    --q-section-header-sm-pt: 0;
-  }
-
-  @include app.reset {
-    --q-section-header-rule: var(--q-fg);
-    --q-section-header-md-pt: var(--q-space-4);
-    --q-section-header-sm-pt: var(--q-space-2);
-  }
 }
 
 @layer q.components {

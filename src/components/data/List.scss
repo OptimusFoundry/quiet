@@ -3,7 +3,6 @@
 // (--divided, --interactive, --disabled, --animated), __leading, __text, __primary, __secondary,
 // __trailing (--text), __arrow.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -14,7 +13,7 @@
     --q-list-label-font-size: var(--q-text-label);
     --q-list-label-tracking: var(--q-tracking-label);
     --q-list-label-color: var(--q-fg-muted);
-    --q-list-label-border: var(--q-fg);
+    --q-list-label-border: transparent;
     --q-list-label-padding-bottom: var(--q-space-1);
     --q-list-label-bordered-padding-top: var(--q-space-1-5);
     --q-list-label-bordered-px: var(--q-space-2);
@@ -33,9 +32,9 @@
     --q-list-lg-secondary-font-size: var(--q-text-md);
 
     --q-list-item-gap: var(--q-space-2);
-    --q-list-item-divider: var(--q-border);
+    --q-list-item-divider: transparent;
     --q-list-item-bg-hover: var(--q-bg-subtle);
-    --q-list-item-bg-selected: var(--q-bg-subtle);
+    --q-list-item-bg-selected: var(--q-accent-subtle);
     --q-list-item-radius: var(--q-radius-sm);
     --q-list-item-bleed: var(--q-space-1); // interactive rows bleed past the text edge
     --q-list-item-disabled-opacity: 0.4;
@@ -49,7 +48,7 @@
     --q-list-trailing-font-size: var(--q-text-2xs);
     --q-list-trailing-tracking: var(--q-tracking-mono);
     --q-list-arrow-color: var(--q-fg-muted);
-    --q-list-arrow-color-hover: var(--q-accent);
+    --q-list-arrow-color-hover: var(--q-accent-fg);
     --q-list-arrow-nudge: var(--q-space-0-5);
     --q-list-rise-distance: var(--q-space-1);
     --q-list-rise-duration: 0.4s; // reference entrance; between --q-dur-expand and the loops
@@ -57,22 +56,6 @@
     --q-list-rise-stagger: 60ms;
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    // Surfaces, not rules: no line under group labels or between rows; interactive rows show a
-    // hover surface instead.
-    --q-list-label-border: transparent;
-    --q-list-item-divider: transparent;
-    --q-list-item-bg-selected: var(--q-accent-subtle);
-    --q-list-arrow-color-hover: var(--q-accent-fg);
-  }
-
-  @include app.reset {
-    --q-list-label-border: var(--q-fg);
-    --q-list-item-divider: var(--q-border);
-    --q-list-item-bg-selected: var(--q-bg-subtle);
-    --q-list-arrow-color-hover: var(--q-accent);
-  }
 }
 
 @layer q.components {

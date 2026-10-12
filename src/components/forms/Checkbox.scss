@@ -1,7 +1,6 @@
 // Checkbox — ink square with a check / dash. BEM: .q-checkbox, __box, __mark, __text, __description,
 // __error; --{size}, --labelled, --disabled. Checked/mixed and invalid read from ARIA.
 @use "../../styles/layers";
-@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -21,11 +20,11 @@
     --q-checkbox-box-offset: var(--q-space-0-25); // optical alignment with the first text line
     --q-checkbox-lg-box-offset: 3px;
     --q-checkbox-box-radius: var(--q-radius-xs);
-    --q-checkbox-box-border: var(--q-fg);
+    --q-checkbox-box-border: var(--q-border-strong);
     --q-checkbox-box-border-invalid: var(--q-accent);
     --q-checkbox-box-bg: var(--q-bg);
-    --q-checkbox-box-bg-checked: var(--q-fg);
-    --q-checkbox-mark-fg: var(--q-bg);
+    --q-checkbox-box-bg-checked: var(--q-accent-bg);
+    --q-checkbox-mark-fg: var(--q-fg-on-accent);
     --q-checkbox-mark-scale-off: 0.6;
     --q-checkbox-text-gap: var(--q-space-0-25);
     --q-checkbox-text-leading: var(--q-leading-ui);
@@ -36,18 +35,6 @@
     --q-checkbox-error-fg: var(--q-accent);
   }
 
-  // The app look (styles/_app.scss).
-  @include app.look {
-    --q-checkbox-box-border: var(--q-border-strong);
-    --q-checkbox-box-bg-checked: var(--q-accent-bg);
-    --q-checkbox-mark-fg: var(--q-fg-on-accent);
-  }
-
-  @include app.reset {
-    --q-checkbox-box-border: var(--q-fg);
-    --q-checkbox-box-bg-checked: var(--q-fg);
-    --q-checkbox-mark-fg: var(--q-bg);
-  }
 }
 
 @layer q.components {
