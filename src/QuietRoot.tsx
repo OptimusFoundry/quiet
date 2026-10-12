@@ -1,4 +1,5 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
+import { isDev } from "./lib/env";
 import { type LinkComponent, LinkProvider } from "./lib/link";
 import "./styles/index.scss";
 import { useProviderTheme } from "./styles/themes/ThemeProvider";
@@ -7,9 +8,10 @@ import { defaultTheme, getTheme, type ThemeName } from "./styles/themes/themes";
 export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 	/** Any registered theme (built-in, or added with defineThemes). Unregistered names fall back to defaultTheme. Scopes to this subtree. Omitted: the enclosing ThemeProvider's theme, else defaultTheme. */
 	theme?: ThemeName;
-	/** marketing = the website · app = dashboards & settings · compact = tables, inspectors, admin. */
-	density?: "marketing" | "app" | "compact";
-	/** Overrides the theme's accent (any CSS colour). Still punctuation only — never a fill. */
+	/** Spacing density. `comfortable` (default) for most screens, `compact` for dense tools.
+	 *  @deprecated `"app"` and `"marketing"`: quiet has one look; both mean `"comfortable"`. */
+	density?: "comfortable" | "compact" | "app" | "marketing";
+	/** Overrides the theme's accent (any CSS colour); the fill and text steps derive from it. */
 	accent?: string;
 	/** Router link for every component that renders an `<a>` from an in-app `href`. */
 	linkComponent?: LinkComponent;
@@ -20,7 +22,7 @@ export interface QuietRootProps extends HTMLAttributes<HTMLDivElement> {
 /** Scopes a theme, density and accent to its subtree. For app-wide theming use <ThemeProvider>. */
 export function QuietRoot({
 	theme,
-	density = "marketing",
+	density = "comfortable",
 	accent,
 	linkComponent,
 	className,
@@ -31,6 +33,11 @@ export function QuietRoot({
 }: QuietRootProps) {
 	const inherited = useProviderTheme();
 	const resolved = getTheme(theme ?? inherited ?? defaultTheme);
+	const dense = density === "compact" ? "compact" : "comfortable";
+	if (isDev() && (density === "app" || density === "marketing"))
+		console.warn(
+			`quiet: density="${density}" is deprecated (one look); use "comfortable" or "compact".`,
+		);
 	return (
 		<LinkProvider value={linkComponent}>
 			<div
@@ -38,7 +45,7 @@ export function QuietRoot({
 				className={className ? `quiet ${className}` : "quiet"}
 				data-quiet=""
 				data-theme={resolved.name}
-				data-density={density}
+				data-density={dense}
 				style={
 					{
 						colorScheme: resolved.colorScheme,
