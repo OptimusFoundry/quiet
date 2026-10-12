@@ -82,4 +82,4 @@ Lay out with `gap` on a flex or grid parent. The first and last child never carr
 | Marketing gaps (64/128) in an app | half the screen is air | `density="app"` |
 | Margins on components | they double up at edges and break when reordered | `gap` on the parent |
 | Card padding 16 in app | cramped and off-token | `--q-space-card-pad` (24) |
-| A taller gap to "separate" with no heading | the reader can't tell why | a `SectionHeader` or a hairline |
+| A taller gap to "separate" with no heading | the reader can't tell why | a titled `Panel` (app) or a `SectionHeader` (site) |

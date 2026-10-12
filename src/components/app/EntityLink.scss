@@ -1,0 +1,103 @@
+// EntityLink — an inline link to another record: accent text on a soft accent underline.
+// BEM: .q-entity-link, __icon, __kind, __name, __id, __external, __dot; --sm, --md, --mono, --done, --blocked.
+@use "../../styles/layers";
+
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-entity-link-fg: var(--q-accent-fg);
+    --q-entity-link-underline: var(--q-accent-border);
+    --q-entity-link-underline-hover: currentcolor;
+    --q-entity-link-underline-offset: 0.2em;
+    --q-entity-link-gap: var(--q-space-0-5);
+    --q-entity-link-kind-fg: inherit; // one link, one colour under one underline
+    --q-entity-link-id-font-size: 0.92em;
+    --q-entity-link-done-fg: var(--q-fg-muted);
+    --q-entity-link-blocked-dot: var(--q-status-error-fg);
+    --q-entity-link-dot-size: 0.5em;
+    --q-entity-link-dur: var(--q-dur-hover);
+
+    --q-entity-link-sm-font-size: var(--q-text-sm);
+    --q-entity-link-md-font-size: var(--q-text-md);
+  }
+}
+
+@layer q.components {
+  .q-entity-link {
+    color: var(--q-entity-link-fg);
+    font-size: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: var(--q-entity-link-underline);
+    text-decoration-thickness: var(--q-hairline);
+    text-underline-offset: var(--q-entity-link-underline-offset);
+    transition: text-decoration-color var(--q-entity-link-dur) var(--q-ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--q-entity-link-fg);
+      text-decoration-color: var(--q-entity-link-underline-hover);
+    }
+
+    &--sm {
+      font-size: var(--q-entity-link-sm-font-size);
+    }
+
+    &--md {
+      font-size: var(--q-entity-link-md-font-size);
+    }
+
+    &--done,
+    &--done:is(:hover, :focus-visible) {
+      color: var(--q-entity-link-done-fg);
+      text-decoration-line: line-through;
+      text-decoration-color: currentcolor;
+    }
+
+    &--done:is(:hover, :focus-visible) {
+      text-decoration-line: underline line-through;
+    }
+  }
+
+  // Icon, dot and arrow sit as atomic inline boxes, so the underline skips them and they never
+  // wrap away from the name.
+  .q-entity-link__icon,
+  .q-entity-link__external {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: -0.125em;
+  }
+
+  .q-entity-link__icon {
+    margin-inline-end: var(--q-entity-link-gap);
+  }
+
+  .q-entity-link__external {
+    margin-inline-start: var(--q-entity-link-gap);
+  }
+
+  .q-entity-link__dot {
+    display: inline-block;
+    box-sizing: border-box;
+    width: var(--q-entity-link-dot-size);
+    height: var(--q-entity-link-dot-size);
+    margin-inline-end: var(--q-entity-link-gap);
+    border: var(--q-hairline) solid var(--q-entity-link-blocked-dot);
+    border-radius: var(--q-radius-pill);
+    vertical-align: 0.05em;
+  }
+
+  .q-entity-link__kind {
+    color: var(--q-entity-link-kind-fg);
+  }
+
+  .q-entity-link__id {
+    font-family: var(--q-font-mono);
+    font-size: var(--q-entity-link-id-font-size);
+    white-space: nowrap;
+  }
+
+  .q-entity-link--mono .q-entity-link__name {
+    font-family: var(--q-font-mono);
+    font-size: var(--q-entity-link-id-font-size);
+    white-space: nowrap;
+  }
+}

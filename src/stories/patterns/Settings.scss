@@ -1,5 +1,5 @@
-// Settings — a sticky section nav beside one form column; Switch rows on hairlines and the
-// danger zone in an accent hairline box.
+// Settings — a sticky section nav beside one form column of surface Panels; Switch rows on
+// hairlines inside their Panel, and the danger zone in an outlined Panel with an error edge.
 
 .q-sb-settings {
 	display: grid;
@@ -43,13 +43,14 @@
 		flex-direction: column;
 	}
 
-	// The first rule is ink, the rest hairline grey.
+	// Rows of one kind: hairlines between them, none above the first.
 	&__notice {
 		padding: var(--q-space-stack) 0;
 		border-top: var(--q-hairline) solid var(--q-border);
 
 		&:first-child {
-			border-top-color: var(--q-fg);
+			padding-top: 0;
+			border-top: 0;
 		}
 	}
 
@@ -58,9 +59,7 @@
 	}
 
 	&__danger {
-		padding: var(--q-space-card-pad);
-		border: var(--q-hairline) solid var(--q-accent);
-		border-radius: var(--q-radius-lg);
+		border-color: var(--q-status-error-border);
 	}
 
 	&__danger-text {

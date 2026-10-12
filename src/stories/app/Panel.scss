@@ -1,0 +1,59 @@
+/* Layout for the App/Panel story. */
+.q-sb-panel {
+  display: grid;
+  gap: var(--q-space-section);
+  max-width: 960px;
+  padding: var(--q-space-section) var(--q-space-page-x);
+  color: var(--q-fg-body);
+  font-family: var(--q-font-sans);
+}
+
+.q-sb-panel__title {
+  margin: 0;
+  color: var(--q-fg);
+  font-size: var(--q-text-heading-1);
+  font-weight: var(--q-weight-heading);
+}
+
+.q-sb-panel__block {
+  display: grid;
+  gap: var(--q-space-card-gap);
+}
+
+.q-sb-panel__label {
+  margin: 0;
+  color: var(--q-fg-muted);
+  font-size: var(--q-text-xs);
+}
+
+.q-sb-panel__page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: var(--q-space-block);
+  align-items: start;
+
+  @media (width < 720px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.q-sb-panel__rail {
+  display: grid;
+  gap: var(--q-space-card-gap);
+}
+
+.q-sb-panel__prose,
+.q-sb-panel__line {
+  margin: 0;
+  font-size: var(--q-text-sm);
+  line-height: var(--q-leading-ui);
+}
+
+.q-sb-panel__list {
+  display: grid;
+  gap: var(--q-space-stack);
+  margin: 0;
+  padding: 0;
+  font-size: var(--q-text-sm);
+  list-style: none;
+}

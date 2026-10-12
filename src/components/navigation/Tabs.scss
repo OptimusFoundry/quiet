@@ -4,6 +4,7 @@
 // [data-sliding]; the indicator's geometry comes in as --_left/--_top/--_width/--_height.
 // .q-tab-panel is the tabpanel Tabs renders when given `panels` (or TabPanel on its own).
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -54,6 +55,21 @@
     --q-tabs-pill-bg-selected: var(--q-bg-inverse);
 
     --q-tab-panel-pt: var(--q-space-3);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-tabs-line-fg-selected: var(--q-accent-fg);
+    --q-tabs-line-indicator: var(--q-accent);
+    --q-tabs-pill-fg-selected: var(--q-fg-on-accent);
+    --q-tabs-pill-bg-selected: var(--q-accent-bg);
+  }
+
+  @include app.reset {
+    --q-tabs-line-fg-selected: var(--q-fg);
+    --q-tabs-line-indicator: var(--q-border-emphasis);
+    --q-tabs-pill-fg-selected: var(--q-fg-on-inverse);
+    --q-tabs-pill-bg-selected: var(--q-bg-inverse);
   }
 }
 

@@ -21,12 +21,15 @@ CSS, a token, the component choice or the markup) and the fix, citing the guidel
 4. **Judge** against `node_modules/@optimusfoundry/quiet/docs/guidelines/checklist.md`, only what the audit can't measure:
    - **Layout:** the screen's job is clear from the page; the layout is one from `layouts.md`; the
      lead block is the widest and comes first; splits are the allowed ones in `grid.md`.
-   - **Sections:** the lightest container that works (`sections.md`), no card-in-card, no panel
-     around a table, nothing boxed for decoration, not every section given equal weight.
+   - **Sections:** surfaces before rules (`sections.md`): titled `Panel`s, no ink rules or hairlines
+     between sections, no card-in-card, no frame around a table, empty sections collapsed, one lead.
+   - **Links:** anything that navigates reads as a link at rest; records named on the page are
+     `EntityLink`s; no table row is clickable without a link in its name cell.
    - **Components:** each chosen by `components.md`; nothing hand-rolled that quiet has; states
      (loading, empty, error) designed for every data block.
-   - **Colour:** molten only as punctuation (charts: series 1), status only through `--q-status-*`
-     and component props.
+   - **Colour:** the app look is on (`density="app"`): molten on the primary action, current nav,
+     links, selected/checked states; never a section background or body text; one primary per view.
+     Status only through `--q-status-*` and component props, and each status reads without its dot.
    - **Content:** `content.md` voice, no banned words, labels and numbers formatted as it says.
    - **foundry-dark** as legible as light; at 390, nothing scrolls sideways and nothing is cut off.
 5. **Report** blocking findings first, then nits. Don't report anything the audit already passed.

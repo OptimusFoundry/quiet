@@ -12,17 +12,25 @@ reference itself, mirrored byte-for-byte in [`docs/reference/optimus-design/`](d
 
 ## What quiet adds (and nothing else)
 
-- **Dark mode** — `<QuietRoot mode="dark">`, derived from the same grey ladder inverted
-  (`src/styles/themes/_foundry-dark.scss`). The brand itself is light-only; the Optimus Foundry site stays light.
-- **Swappable accent** — `<QuietRoot accent="…">` replaces molten for another product. The rule
-  doesn't change: the accent is punctuation only, never a fill.
+- **Dark mode** — the `foundry-dark` theme (`src/styles/themes/_foundry-dark.scss`), the brand's own
+  dark mode as on optimusfoundry.com: paper `#0e0f11`, paper-2 `#16171a`, ink `#f4f4f5`, molten
+  `#ff7a3d`. The Claude Design reference is light-only, so this palette comes from the site.
+- **Swappable accent** — `<QuietRoot accent="…">` replaces molten for another product; the derived
+  `--q-accent-fg`/`-bg`/`-subtle`/`-border` follow it.
 - **Density** — `<QuietRoot density="app">` sets the reference's own `data-density` modes.
+- **The app look** — under `density="app"`/`"compact"` quiet retunes the reference for product
+  screens: molten becomes the brand colour (links, the primary action, current nav, selected and
+  checked states, focus, progress, attention status), links read as links at rest, sections group
+  with surfaces instead of ink rules, and status badges get tinted surfaces. `marketing` (the
+  default, and the catalog) stays pixel-identical to the reference. Rules:
+  [docs/guidelines/foundations.md](docs/guidelines/foundations.md#molten-two-looks);
+  spec: [docs/plans/2026-10-11-app-look.md](docs/plans/2026-10-11-app-look.md).
 
 - **Accessibility + motion layer** — keyboard operation and focus management per WAI-ARIA patterns,
   visible keyboard focus, accessible names and states, and eased open/close/state motion in the
   reference's own motion language. It never changes the at-rest look (pixel parity is tested).
 
-Everything else — tokens, styling, the catalog page — is the reference, unchanged. Colour contrast
+Everything else — tokens, styling, the catalog page — is the reference, unchanged at marketing density. Colour contrast
 is a deliberate exception: `--muted-2` (2.98:1) and small molten text are kept exactly as designed.
 
 ## Status colour
@@ -38,6 +46,8 @@ Status is a tier-2 role, like `--q-fg` or `--q-border`: three tokens per status,
 | `--q-status-error-fg` / `-bg` / `-border` | failed, blocking | `--q-accent` / `--q-bg` / `--q-accent` |
 
 `fg` colours glyphs, icons, fills and status text; `bg` is a status surface; `border` is its edge.
+In the app look the `bg`/`border` tint: info and success `--q-bg-subtle`, warning `--q-accent-subtle`,
+error `--q-accent-subtle` / `--q-accent-border`. A product theme's own status hues (in `q.themes`) win.
 The brand has no status hues, so the defaults are greys and molten: info and success stay
 neutral, warning and error are hot. A product theme sets real hues here.
 

@@ -3,6 +3,7 @@
 // __check, __expand, __detail, __skeleton-cell, __skeleton (--first), __empty,
 // __foot (--control, --nowrap, --numeric).
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -69,6 +70,25 @@
     --q-table-empty-padding-x: var(--q-space-2);
     --q-table-empty-font-size: var(--q-text-md);
     --q-table-empty-color: var(--q-fg-muted);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-table-head-border: var(--q-border);
+    --q-table-foot-border: var(--q-border);
+    --q-table-row-bg-selected: var(--q-accent-subtle);
+    --q-table-check-border: var(--q-border-strong);
+    --q-table-check-bg-checked: var(--q-accent-bg);
+    --q-table-check-fg: var(--q-fg-on-accent);
+  }
+
+  @include app.reset {
+    --q-table-head-border: var(--q-fg);
+    --q-table-foot-border: var(--q-fg);
+    --q-table-row-bg-selected: var(--q-bg-subtle);
+    --q-table-check-border: var(--q-fg);
+    --q-table-check-bg-checked: var(--q-fg);
+    --q-table-check-fg: var(--q-bg);
   }
 }
 

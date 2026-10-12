@@ -9,7 +9,7 @@ Use the active voice and short sentences.
 |---|---|---|
 | Voice | "we" (the studio) / "you" | plain imperative and labels; "you" when a sentence is needed |
 | Foundry verbs (cast, forge, temper, stamp) | one per paragraph | **never.** Say "create", "build", "publish", "delete" |
-| Headlines | end with a period, one italic accent phrase | page titles end with the molten period (PageHero adds it); no italic flourish needed |
+| Headlines | end with a period, one italic accent phrase | page titles have no period (`density="app"` hides it); no italic flourish |
 | Roman numerals, serials ("01 / 14") | process steps, years (MMXXVI) | serials in mono labels only; no Roman numerals for data |
 
 ## Banned words

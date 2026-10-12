@@ -5,7 +5,7 @@
 // through the sync workflow.
 import { existsSync, writeFileSync } from "node:fs";
 
-const OWN = ["future", "charts", "chat"];
+const OWN = ["future", "charts", "chat", "app"];
 const [group, name] = process.argv.slice(2);
 
 function fail(msg) {

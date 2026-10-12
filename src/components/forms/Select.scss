@@ -1,6 +1,7 @@
 // Select — native select in field chrome. BEM: .q-select (--{size}, --invalid), __label, __control,
 // __input, __chevron. The hint is a FormHint.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -33,6 +34,17 @@
     --q-select-ring-focus: var(--q-ring-soft);
     --q-select-chevron-inset: var(--q-space-2);
     --q-select-chevron-fg: var(--q-fg-muted);
+    --q-select-chevron-size: 7px; // the app look's drawn chevron
+    --q-select-chevron-stroke: 1.5px;
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-select-border-focus: var(--q-accent);
+  }
+
+  @include app.reset {
+    --q-select-border-focus: var(--q-fg);
   }
 }
 
@@ -112,5 +124,22 @@
     color: var(--q-select-chevron-fg);
     transform: translateY(-50%);
     pointer-events: none;
+  }
+
+  // The app look draws a chevron in place of the reference's ↓ glyph.
+  @include app.rules {
+    .q-select__chevron {
+      font-size: 0;
+
+      &::before {
+        content: "";
+        display: block;
+        width: var(--q-select-chevron-size);
+        height: var(--q-select-chevron-size);
+        border-right: var(--q-select-chevron-stroke) solid currentcolor;
+        border-bottom: var(--q-select-chevron-stroke) solid currentcolor;
+        transform: translateY(-25%) rotate(45deg);
+      }
+    }
   }
 }

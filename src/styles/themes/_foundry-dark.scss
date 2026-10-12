@@ -1,16 +1,24 @@
-// Theme: foundry-dark — derived, not in the brand (the brand is light-only). The same grey
-// ladder inverted: the ink end becomes the light end, so strong fills turn light.
+// Theme: foundry-dark — the brand's dark mode, as on optimusfoundry.com ([data-theme="dark"]):
+// near-black paper, a lifted molten, light ink. Ladder → site name: 0 paper, 50 paper-2,
+// 100 rule-soft, 400 muted-2, 500 muted, 800 ink-2, 900 ink. 200 (hover edges) has no site
+// equivalent and sits between rule-soft and rule.
 [data-theme="foundry-dark"] {
-  --q-gray-0: #131316;
-  --q-gray-50: #1c1c20;
-  --q-gray-100: #2a2a30;
-  --q-gray-200: #3d3d45;
-  --q-gray-400: #6e6e76;
-  --q-gray-500: #9a9aa2;
-  --q-gray-800: #c9c9cf;
-  --q-gray-900: #f3f3f5;
-  --q-molten-500: #f06a33;
+  --q-gray-0: #0e0f11;
+  --q-gray-25: #16171a; // dark keeps paper-2 for panels: lighter would mean less contrast
+  --q-gray-50: #16171a;
+  --q-gray-100: #26272b;
+  --q-gray-200: #3a3b40;
+  --q-gray-400: #75757b;
+  --q-gray-500: #9a9aa0;
+  --q-gray-800: #c8c8cd;
+  --q-gray-900: #f4f4f5;
+  --q-molten-500: #ff7a3d;
   --q-shadow-rgb: 0 0 0;
+
+  // On the dark ground the accent itself is ≈7.4:1, so text and fills use it and lighten on hover.
+  --q-accent-fg: var(--q-accent);
+  --q-accent-bg: var(--q-accent);
+  --q-accent-bg-hover: color-mix(in oklab, var(--q-accent) 85%, white);
 
   // Dark surfaces need heavier shadows and a hairline to separate floating panels.
   --q-scrim: rgb(0 0 0 / 50%);

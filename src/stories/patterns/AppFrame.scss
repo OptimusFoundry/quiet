@@ -1,4 +1,4 @@
-// The signed-in app frame: 240 sidebar + 64 top bar + main, plus the layout helpers every
+// The signed-in app frame: 240 sidebar + main (a slim top bar only under 720px, for the drawer), plus the layout helpers every
 // Patterns page uses inside it (stack, row, page hero). Plain CSS on --q-* tokens.
 
 // Shared by every page that imports this file, so the selectors are wrapped in :where() (no
@@ -24,13 +24,33 @@
 }
 
 :where(.q-sb-app-frame__body) {
-	display: grid;
-	grid-template-rows: var(--q-h-topbar) minmax(0, 1fr);
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+// Sidebar head: the brand, then Search beside the account menu.
+:where(.q-sb-app-frame__brand) {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-stack);
+	width: 100%;
+}
+
+:where(.q-sb-app-frame__brand-row) {
+	display: flex;
+	align-items: center;
+	gap: var(--q-space-inline);
+}
+
+:where(.q-sb-app-frame__search) {
+	flex: 1;
 	min-width: 0;
 }
 
 :where(.q-sb-app-frame__topbar) {
 	display: flex;
+	height: var(--q-h-topbar);
 	align-items: center;
 	gap: var(--q-space-stack);
 	flex-wrap: nowrap;
@@ -43,9 +63,12 @@
 	background: var(--q-bg);
 }
 
-:where(.q-sb-app-frame__crumbs) {
+:where(.q-sb-app-frame__title) {
 	flex: 1;
 	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 :where(.q-sb-app-frame__person) {

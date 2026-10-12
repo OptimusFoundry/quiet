@@ -8,7 +8,7 @@ const STORY = (theme: string) =>
 // Same accepted colours as tests/a11y.spec.ts (the reference's --muted-2 and small molten text).
 const ACCEPTED_LOW_CONTRAST: Record<string, string[]> = {
 	foundry: ["#95959c", "#e0531a"],
-	"foundry-dark": ["#6e6e76", "#f06a33"],
+	"foundry-dark": ["#75757b", "#ff7a3d"],
 };
 
 async function open(page: Page, theme = "foundry") {

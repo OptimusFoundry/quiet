@@ -30,6 +30,24 @@ in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes 
 4. `npm run test` — `tests/parity.spec.ts` must show the catalog pixel-identical to the
    reference `components/index.html`.
 
+## The app look
+
+Product screens render in `data-density="app"` (or `"compact"`); the reference look is
+`"marketing"`, the default, which the catalog renders in, so parity is unaffected. In the app look
+the accent is the brand colour (links, primary action, current/selected/checked, focus, progress,
+attention status), links read as links at rest, and sections group with surfaces, not ink rules
+(docs/guidelines/foundations.md, "Molten: two looks"; spec docs/plans/2026-10-11-app-look.md).
+
+- **Mixins** in `src/styles/_app.scss` (`@use "../../styles/app";`):
+  - `app.look { … }` at the end of a component's `q.tokens` block, after its defaults: the app values of tier-2/3 tokens.
+  - `app.reset { … }` right after it: the defaults of exactly the same keys, for a marketing frame nested in an app.
+  - `app.rules { … }` in `q.components`: rules only the app look has (an `@scope` that stops at a nested marketing root).
+- `scripts/check-app-look.mjs` (in `npm run lint`) fails when a stylesheet's `look` and `reset` keys differ.
+- Never change a default to get an app value: the defaults are the reference, pinned by parity.
+- New tier-2 accent steps: `--q-accent-fg` (text, links), `--q-accent-bg`/`-bg-hover` + `--q-fg-on-accent`
+  (fills), `--q-accent-subtle`/`-subtle-hover` (tints), `--q-accent-border`. `--q-accent` itself is
+  marks only (3.87:1).
+
 ## The a11y + motion layer
 
 - Shared behaviour lives in `src/a11y/hooks.ts` (focus trap/restore, Escape, outside click,
@@ -113,6 +131,11 @@ colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `
 (AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
 inside; the product wires it to Claude). Stories: Charts, Chat; tests `charts.spec.ts`, `chat.spec.ts`.
 
+And `src/components/app/`: SaaS screen parts — `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`,
+`FileCard`, `Transcript`. They only render in the app look, so their tier-3 tokens default straight to
+app values (no `app.look` block). Stories: `src/stories/app/` (App/…, `parameters: { density: "app" }`);
+tests: `tests/app-<kebab>.spec.ts`. `npm run new -- app <Name>` scaffolds.
+
 Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
 `scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
 section, since the catalog is generated from the reference and must stay pixel-identical to it.
@@ -130,7 +153,7 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - `component-builder`: builds one component, write-scoped to its files.
   - `a11y-reviewer`: read-only; runs the axe and keyboard specs and reviews ARIA patterns.
   - `visual-reviewer`: screenshots stories in both themes against `docs/guidelines/checklist.md`.
-- **Scaffold:** `npm run new -- <future|charts|chat> <Name>` writes `<Name>.{tsx,scss}` from convention templates. It refuses reference groups.
+- **Scaffold:** `npm run new -- <future|charts|chat|app> <Name>` writes `<Name>.{tsx,scss}` from convention templates. It refuses reference groups.
 - **Hook:** `.claude/settings.json` runs `.claude/hooks/lint-changed.sh` after every Edit or Write.
   - It runs Stylelint on a changed `src/**/*.scss`, and Biome on changed `src/**/*.{ts,tsx}`, `tests/*.ts` and `scripts/*.mjs`.
   - It only reports back; it never blocks.

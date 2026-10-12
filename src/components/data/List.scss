@@ -3,6 +3,7 @@
 // (--divided, --interactive, --disabled, --animated), __leading, __text, __primary, __secondary,
 // __trailing (--text), __arrow.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -54,6 +55,19 @@
     --q-list-rise-duration: 0.4s; // reference entrance; between --q-dur-expand and the loops
     --q-list-rise-ease: var(--q-ease-forge);
     --q-list-rise-stagger: 60ms;
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-list-label-border: var(--q-border);
+    --q-list-item-bg-selected: var(--q-accent-subtle);
+    --q-list-arrow-color-hover: var(--q-accent-fg);
+  }
+
+  @include app.reset {
+    --q-list-label-border: var(--q-fg);
+    --q-list-item-bg-selected: var(--q-bg-subtle);
+    --q-list-arrow-color-hover: var(--q-accent);
   }
 }
 

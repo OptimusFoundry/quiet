@@ -14,8 +14,9 @@ const loader = readFileSync(`${REF}/ds-loader.js`, "utf8");
 const files = JSON.parse(loader.match(/var FILES = (\[[^\]]*\])/)[1]);
 // quiet's own components (not in the reference), appended after the reference ones:
 // src/components/future — the Claude Design "Future Components" concepts, rebuilt on quiet tokens;
-// src/components/charts — quiet's chart set; src/components/chat — AI chat (thread, messages, composer).
-const own = ["future", "charts", "chat"]
+// src/components/charts — quiet's chart set; src/components/chat — AI chat (thread, messages, composer);
+// src/components/app — SaaS screen parts (page header, description list, panel, entity link, …).
+const own = ["future", "charts", "chat", "app"]
 	.flatMap((group) =>
 		readdirSync(`src/components/${group}`)
 			.filter((f) => f.endsWith(".tsx"))

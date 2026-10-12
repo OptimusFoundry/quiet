@@ -48,9 +48,12 @@ Decide on paper before writing JSX.
 3. Outline: headings only. One `h1`, an `h2` per section, an `h3` per panel, ordered status, lead
    block, supporting blocks, destructive last (`sections.md`). One block leads.
 4. Place: panes and spans from `grid.md`'s allowed splits; the lead gets the widest.
-5. Contain: the lightest container that works. No card-in-card, no panel around a table.
-6. Components: choose each with `components.md`. No badge, alert, chart or icon just because a slot
-   exists.
+5. Contain: surfaces before rules. `PageHeader` on top (title, status, meta, actions), titled
+   `Panel`s for sections, a `DescriptionList` for properties, empty sections collapsed (`Panel empty`).
+   No ink rules or hairlines between sections, no card-in-card, no frame around a table.
+6. Components: choose each with `components.md`. Every record named on the page is an `EntityLink`
+   (a table's name cell too); files are `FileCard`s; a run's history is a `Transcript`. No badge,
+   alert, chart or icon just because a slot exists.
 7. Gaps and text: job tokens from `spacing.md`, roles from `typography.md`. No raw px, sizes or colours.
 8. States: loading, empty (nothing yet vs filtered), error and offline for every data block.
 
@@ -60,7 +63,10 @@ Decide on paper before writing JSX.
 - Raw colours, px or durations. Status colour only from `--q-status-*` and component props.
 - Guessed or invented `--q-*` names. Look them up in `dist/tokens.json`; `TokenName` + `cssVar()` in TS;
   the `quiet/known-tokens` Stylelint rule (README). Your own custom properties are `--app-*`.
-- Molten as a fill, button or background (charts: series 1).
+- Molten by hand. In `density="app"` the components make it the brand colour (links, the one primary
+  action, current nav, selected and checked states, focus); never use it for a section background
+  or body text, and never write `--q-accent` for text (it's 3.87:1; components use `--q-accent-fg`).
+- Text that navigates but doesn't look like a link, or a clickable table row with no link in it.
 - Banned words (`content.md`), exclamation marks or emoji.
 
 If quiet lacks something, build it in the product on quiet tokens and BEM, and flag it for quiet.

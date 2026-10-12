@@ -1,6 +1,6 @@
 ---
 name: new-component
-description: Add a component to quiet's own groups (src/components/future, charts, chat) end to end: scaffold, styles, behaviour, story, tests, export. Use whenever a quiet component is added.
+description: Add a component to quiet's own groups (src/components/future, charts, chat, app) end to end: scaffold, styles, behaviour, story, tests, export. Use whenever a quiet component is added.
 ---
 
 # Add a quiet component
@@ -20,7 +20,7 @@ Read them first. This skill covers only the order of work and the mistakes that 
 ## 2. Scaffold
 
 ```bash
-npm run new -- <future|charts|chat> <PascalName>
+npm run new -- <future|charts|chat|app> <PascalName>
 ```
 
 ## 3. Build

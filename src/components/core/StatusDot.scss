@@ -1,5 +1,6 @@
 // StatusDot — mono caps status with a leading dot. BEM: .q-status-dot, __dot; --live, --prototype.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -12,6 +13,15 @@
     --q-status-dot-color: var(--q-fg);
     --q-status-dot-live-color: var(--q-accent);
     --q-status-dot-prototype-border: var(--q-fg-subtle);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-status-dot-live-color: var(--q-accent);
+  }
+
+  @include app.reset {
+    --q-status-dot-live-color: var(--q-accent);
   }
 }
 

@@ -144,7 +144,7 @@ test("table: uncontrolled expansion honours defaultExpanded; footer pads control
 
 const ACCEPTED_LOW_CONTRAST: Record<string, string[]> = {
 	foundry: ["#95959c", "#e0531a"],
-	"foundry-dark": ["#6e6e76", "#f06a33"],
+	"foundry-dark": ["#75757b", "#ff7a3d"],
 };
 
 for (const theme of ["foundry", "foundry-dark"]) {

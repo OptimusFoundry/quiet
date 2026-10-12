@@ -11,7 +11,7 @@ const url = (id: string, theme = "foundry") =>
 // Same accepted colours as tests/a11y.spec.ts (2026-10-08, "keep exact colours").
 const ACCEPTED_LOW_CONTRAST: Record<string, string[]> = {
 	foundry: ["#95959c", "#e0531a"],
-	"foundry-dark": ["#6e6e76", "#f06a33"],
+	"foundry-dark": ["#75757b", "#ff7a3d"],
 };
 
 async function open(page: Page, id: string, theme = "foundry") {
@@ -68,7 +68,8 @@ test("spacing: job tokens follow density", async ({ page }) => {
 
 test("typography: roles measure at their app sizes", async ({ page }) => {
 	await open(page, "typography");
-	for (const m of ["40 / 40 · 700", "17 / 26 · 600", "15 / 23 · 400", "13 / 20 · 400"]) {
+	// The app scale is a notch down from the reference (tokens/_typography.scss): body 14, small 12, weights by role (body 450, strong 620).
+	for (const m of ["40 / 40 · 700", "15 / 23 · 620", "14 / 22 · 450", "12 / 19 · 450"]) {
 		await expect(page.getByText(m, { exact: true }).first()).toBeVisible();
 	}
 });

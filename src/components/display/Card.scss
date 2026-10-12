@@ -1,6 +1,7 @@
 // Card — content surface; lifts on hover/focus when it is a link or button.
 // BEM: .q-card, __eyebrow, __title, __accent, __body, __footer, __meta; --interactive.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -26,6 +27,15 @@
     --q-card-footer-gap: var(--q-space-2);
     --q-card-footer-padding-top: var(--q-space-2);
     --q-card-footer-border: var(--q-border);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-card-shadow-hover: var(--q-shadow-1);
+  }
+
+  @include app.reset {
+    --q-card-shadow-hover: var(--q-shadow-2);
   }
 }
 

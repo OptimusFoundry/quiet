@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useMemo, useState } from "react";
 import {
+	Alert,
 	Approval,
 	Badge,
 	Button,
-	Col,
 	DecayingBadge,
 	DropdownMenu,
 	EmptyState,
 	FilterTabs,
-	Grid,
 	LineageChip,
 	List,
-	PageHero,
+	PageHeader,
 	Pagination,
-	SectionHeader,
+	Panel,
 	StatCard,
 	StatusDot,
 	Table,
+	type TableProps,
 	TextField,
 	toast,
 } from "../../index";
@@ -124,7 +124,10 @@ const signupsFor = (c: (typeof CAMPAIGNS)[number]) =>
 	});
 const PAGE = 8;
 
+type Signup = ReturnType<typeof signupsFor>[number];
+
 function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
+	const narrow = useNarrow();
 	const rows = useMemo(() => signupsFor(campaign), [campaign]);
 	const [page, setPage] = useState(1);
 	const [selected, setSelected] = useState<string[]>([]);
@@ -134,15 +137,47 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 	const pages = Math.max(1, Math.ceil(live.length / PAGE));
 	const shown = live.slice((page - 1) * PAGE, page * PAGE);
 	const picked = live.filter((r) => selected.includes(r.id));
+	const stale = campaign.id === "beta-eu";
+	const lineage = (
+		<LineageChip
+			label={`Signups for ${campaign.name}`}
+			freshness="4 min"
+			steps={[
+				{ id: "form", label: "Signup form", detail: "join.sjocamp.co · POST /signups" },
+				{ id: "verify", label: "Email verification", detail: "Resend webhook", stale },
+				{ id: "dedupe", label: "De-duplicate", detail: "by email, lowercase" },
+				{
+					id: "count",
+					label: "Verified signups",
+					detail: `${campaign.signups.toLocaleString("en-US")}`,
+				},
+			]}
+		/>
+	);
+	const columns: TableProps<Signup>["columns"] = [
+		{ key: "name", header: "Name", sortable: true },
+		...(narrow ? [] : [{ key: "email", header: "Email" }]),
+		{
+			key: "state",
+			header: "Status",
+			render: (r) => (
+				<Badge
+					size="sm"
+					variant={r.state === "Verified" ? "success" : r.state === "Pending" ? "warning" : "error"}
+				>
+					{r.state}
+				</Badge>
+			),
+		},
+		...(narrow ? [] : [{ key: "refs", header: "Referrals", align: "right" as const }]),
+		{ key: "when", header: "Joined", align: "right", nowrap: true },
+	];
 	return (
 		<div className="q-sb-app-frame__stack">
-			<PageHero
-				size="md"
-				ruled={false}
-				className="q-sb-app-frame__hero"
+			<PageHeader
 				eyebrow={campaign.kind}
 				title={campaign.name}
-				actions={
+				status={
 					<>
 						<Badge
 							size="sm"
@@ -156,9 +191,19 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 						>
 							{campaign.status}
 						</Badge>
-						<Button size="sm" variant="secondary">
-							Edit campaign
-						</Button>
+						<DecayingBadge
+							size="sm"
+							checkedAt={campaign.checked}
+							now={NOW}
+							onRecheck={() => toast({ title: "Domain re-checked.", meta: campaign.kind })}
+						>
+							Domain verified
+						</DecayingBadge>
+					</>
+				}
+				meta={[`${campaign.signups.toLocaleString("en-US")} signups`, stale ? null : lineage]}
+				actions={
+					<>
 						<DropdownMenu
 							size="sm"
 							align="end"
@@ -173,112 +218,43 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 								{ label: "Archive", danger: true },
 							]}
 						/>
+						<Button size="sm" variant="primary">
+							Edit campaign
+						</Button>
 					</>
 				}
 			/>
-			<div className="q-sb-app-frame__row q-sb-app-frame__row--stack">
-				<DecayingBadge
-					checkedAt={campaign.checked}
-					now={NOW}
-					onRecheck={() => toast({ title: "Domain re-checked.", meta: campaign.kind })}
-				>
-					Domain verified
-				</DecayingBadge>
-				<LineageChip
-					label={`Signups for ${campaign.name}`}
-					freshness="4 min"
-					steps={[
-						{ id: "form", label: "Signup form", detail: "join.sjocamp.co · POST /signups" },
-						{
-							id: "verify",
-							label: "Email verification",
-							detail: "Resend webhook",
-							stale: campaign.id === "beta-eu",
-						},
-						{ id: "dedupe", label: "De-duplicate", detail: "by email, lowercase" },
-						{
-							id: "count",
-							label: "Verified signups",
-							detail: `${campaign.signups.toLocaleString("en-US")}`,
-						},
-					]}
+			{stale && (
+				<Alert variant="warning" title="Verified counts may be behind." action={lineage}>
+					The Resend webhook hasn't reported for 30 hours, so new verifications aren't counted yet.
+				</Alert>
+			)}
+			<div className="q-sb-records__stats">
+				<StatCard variant="filled" label="Signups" value={campaign.signups} />
+				<StatCard
+					variant="filled"
+					label="Bounce · 7d"
+					value={`${campaign.bounce.toFixed(1)}%`}
+					trend={campaign.bounce > 5 ? "down" : "neutral"}
+					delta={campaign.bounce > 5 ? "above 5%" : "under 5%"}
 				/>
+				<StatCard variant="filled" label="Referrals" value={Math.round(campaign.signups * 0.18)} />
 			</div>
-			<Grid columns={12} gap="md">
-				<Col span={4} spanSm={4}>
-					<StatCard variant="filled" label="Signups" value={campaign.signups} />
-				</Col>
-				<Col span={4} spanSm={4}>
-					<StatCard
-						variant="filled"
-						label="Bounce · 7d"
-						value={`${campaign.bounce.toFixed(1)}%`}
-						trend={campaign.bounce > 5 ? "down" : "neutral"}
-						delta={campaign.bounce > 5 ? "above 5%" : "under 5%"}
-					/>
-				</Col>
-				<Col span={4} spanSm={4}>
-					<StatCard
-						variant="filled"
-						label="Referrals"
-						value={Math.round(campaign.signups * 0.18)}
-					/>
-				</Col>
-			</Grid>
-			<SectionHeader
-				size="sm"
-				as="h2"
+			<Panel
+				variant="plain"
+				padding="none"
 				title="Signups"
+				count={live.length || undefined}
 				description={
-					picked.length ? `${picked.length} selected` : "Select rows to act on several at once."
+					live.length === 0
+						? undefined
+						: picked.length
+							? `${picked.length} selected`
+							: "Select rows to act on several at once."
 				}
-			/>
-			{live.length === 0 ? (
-				<EmptyState
-					size="sm"
-					title="No signups yet"
-					description="This campaign hasn't been sent. Signups land here as they verify."
-				/>
-			) : (
-				<>
-					<Table
-						size="sm"
-						label={`Signups for ${campaign.name}`}
-						selectable
-						selected={selected}
-						onSelectionChange={(keys) => {
-							setSelected(keys as string[]);
-							setConfirmed(false);
-						}}
-						rowLabel={(r) => r.name}
-						minWidth={560}
-						columns={[
-							{ key: "name", header: "Name", sortable: true },
-							{ key: "email", header: "Email" },
-							{
-								key: "state",
-								header: "Status",
-								render: (r) => (
-									<Badge
-										size="sm"
-										variant={
-											r.state === "Verified"
-												? "success"
-												: r.state === "Pending"
-													? "warning"
-													: "error"
-										}
-									>
-										{r.state}
-									</Badge>
-								),
-							},
-							{ key: "refs", header: "Referrals", align: "right" },
-							{ key: "when", header: "Joined", align: "right" },
-						]}
-						data={shown}
-					/>
-					{pages > 1 && (
+				empty="No signups yet. This campaign hasn't been sent; signups land here as they verify."
+				footer={
+					pages > 1 ? (
 						<div className="q-sb-records__pager">
 							<Pagination
 								size="sm"
@@ -288,9 +264,26 @@ function Detail({ campaign }: { campaign: (typeof CAMPAIGNS)[number] }) {
 								label="Signups pages"
 							/>
 						</div>
-					)}
-				</>
-			)}
+					) : undefined
+				}
+			>
+				{live.length > 0 && (
+					<Table<Signup>
+						size="sm"
+						label={`Signups for ${campaign.name}`}
+						selectable
+						selected={selected}
+						onSelectionChange={(keys) => {
+							setSelected(keys as string[]);
+							setConfirmed(false);
+						}}
+						rowLabel={(r) => r.name}
+						minWidth={narrow ? undefined : 560}
+						columns={columns}
+						data={shown}
+					/>
+				)}
+			</Panel>
 			{picked.length > 0 && (
 				<Approval
 					title={`Remove ${picked.length} signup${picked.length > 1 ? "s" : ""} from ${campaign.name}`}

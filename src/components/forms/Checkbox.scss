@@ -1,6 +1,7 @@
 // Checkbox — ink square with a check / dash. BEM: .q-checkbox, __box, __mark, __text, __description,
 // __error; --{size}, --labelled, --disabled. Checked/mixed and invalid read from ARIA.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -33,6 +34,19 @@
     --q-checkbox-error-font-family: var(--q-font-mono);
     --q-checkbox-error-font-size: var(--q-text-2xs);
     --q-checkbox-error-fg: var(--q-accent);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-checkbox-box-border: var(--q-border-strong);
+    --q-checkbox-box-bg-checked: var(--q-accent-bg);
+    --q-checkbox-mark-fg: var(--q-fg-on-accent);
+  }
+
+  @include app.reset {
+    --q-checkbox-box-border: var(--q-fg);
+    --q-checkbox-box-bg-checked: var(--q-fg);
+    --q-checkbox-mark-fg: var(--q-bg);
   }
 }
 

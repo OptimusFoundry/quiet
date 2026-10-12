@@ -12,14 +12,19 @@ const SCREENS = [
 	"billing",
 	"assistant",
 	"states",
+	// The app-look proof screens (docs/plans/2026-10-11-app-look.md); one file, several stories.
+	"agentworks--runs",
+	"agentworks--run",
+	"agentworks--artifact",
+	"agentworks--sign-in",
 ] as const;
 const url = (id: string, theme = "foundry") =>
-	`/iframe.html?id=patterns-${id}--default&viewMode=story&globals=theme:${theme}`;
+	`/iframe.html?id=patterns-${id.includes("--") ? id : `${id}--default`}&viewMode=story&globals=theme:${theme}`;
 
 // Same accepted colours as tests/a11y.spec.ts (2026-10-08, "keep exact colours").
 const ACCEPTED_LOW_CONTRAST: Record<string, string[]> = {
 	foundry: ["#95959c", "#e0531a"],
-	"foundry-dark": ["#6e6e76", "#f06a33"],
+	"foundry-dark": ["#75757b", "#ff7a3d"],
 };
 
 async function open(page: Page, id: string, theme = "foundry") {

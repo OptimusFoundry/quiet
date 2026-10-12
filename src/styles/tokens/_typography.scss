@@ -45,6 +45,21 @@
 // retune them for product screens: smaller headings, no molten period, sans sentence-case labels and hints.
 :root,
 [data-density="marketing"] {
+  // The size scale's body range, re-declared so a marketing frame inside an app gets it back.
+  --q-text-2xs: 11px;
+  --q-text-xs: 12px;
+  --q-text-sm: 13px;
+  --q-text-md: 15px;
+  --q-text-lg: 17px;
+  --q-text-xl: 19px;
+  --q-text-2xl: 24px;
+  --q-text-3xl: 30px;
+  --q-weight-regular: 400;
+  --q-weight-medium: 500;
+  --q-weight-semibold: 600;
+  --q-font-sans: "Inter Tight", "Helvetica Neue", helvetica, arial, sans-serif;
+  --q-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", menlo, monospace;
+
   --q-text-heading-1: var(--q-text-5xl);
   --q-text-heading-2: var(--q-text-4xl);
   --q-text-heading-3: var(--q-text-3xl);
@@ -71,13 +86,33 @@
 
 [data-density="app"],
 [data-density="compact"] {
+  // Product screens are text-heavy: the whole body range steps down a notch (body 15 → 14,
+  // small 13 → 12, labels 11 → 10.5), so every component that sizes from the scale follows.
+  --q-text-2xs: 10.5px;
+  --q-text-xs: 11px;
+  --q-text-sm: 12px;
+  --q-text-md: 14px;
+  --q-text-lg: 15px;
+  --q-text-xl: 17px;
+  --q-text-2xl: 20px;
+  --q-text-3xl: 24px; // the page title (PageHeader); 30 and up stay marketing steps
+
+  // Product screens set in Geist and Geist Mono: wider and clearer than Inter Tight at 11–14px,
+  // with a mono drawn to match. Small text on a soft ink gets a little more weight (variable fonts).
+  --q-font-sans: "Geist", "Inter", -apple-system, "Helvetica Neue", arial, sans-serif;
+  --q-font-mono: "Geist Mono", ui-monospace, "SF Mono", menlo, monospace;
+  // Weight by role: body 450, names/labels/nav 550, strong 620, titles 650.
+  --q-weight-regular: 450;
+  --q-weight-medium: 550;
+  --q-weight-semibold: 620;
+
   --q-text-heading-1: var(--q-text-2xl);
   --q-text-heading-2: var(--q-text-xl);
   --q-text-heading-3: var(--q-text-lg);
   --q-text-heading-4: var(--q-text-md);
   --q-text-metric: var(--q-text-2xl);
   --q-text-intro: var(--q-text-md);
-  --q-weight-heading: var(--q-weight-semibold);
+  --q-weight-heading: 650;
   --q-tracking-h4: var(--q-tracking-tight);
   --q-tracking-h3: var(--q-tracking-tight);
   --q-tracking-h2: var(--q-tracking-tight);

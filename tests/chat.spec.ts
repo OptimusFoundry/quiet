@@ -8,7 +8,7 @@ const STORY = (theme = "foundry") =>
 	`/iframe.html?id=chat--all&viewMode=story&globals=theme:${theme}`;
 const ACCEPTED_LOW_CONTRAST: Record<string, string[]> = {
 	foundry: ["#95959c", "#e0531a"],
-	"foundry-dark": ["#6e6e76", "#f06a33"],
+	"foundry-dark": ["#75757b", "#ff7a3d"],
 };
 
 // File contents for setInputFiles. Node's Buffer, reached through globalThis because the project's

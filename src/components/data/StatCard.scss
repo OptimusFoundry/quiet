@@ -2,6 +2,7 @@
 // --plain, --interactive), __head, __label, __icon, __value, __meta, __delta, __glyph (--down),
 // __period.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -37,6 +38,17 @@
     --q-stat-card-delta-color: var(--q-fg);
     --q-stat-card-delta-down-color: var(--q-accent);
     --q-stat-card-period-tracking: var(--q-tracking-mono);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-stat-card-plain-border-top: var(--q-border);
+    --q-stat-card-delta-down-color: var(--q-accent-fg);
+  }
+
+  @include app.reset {
+    --q-stat-card-plain-border-top: var(--q-fg);
+    --q-stat-card-delta-down-color: var(--q-accent);
   }
 }
 

@@ -1,6 +1,7 @@
 // Button — pill action. BEM: .q-button, __icon, __arrow; --{variant}, --{size}, --full, --icon-only.
 // Tier-3 tokens (override hooks) first, then the block.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -37,6 +38,29 @@
     --q-button-ghost-fg-hover: var(--q-accent);
     --q-button-ghost-icon-bg-hover: var(--q-bg-subtle);
     --q-button-destructive-fg: var(--q-fg);
+    --q-button-destructive-border: var(--q-border-emphasis);
+    --q-button-destructive-hover: var(--q-accent);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-button-primary-bg: var(--q-accent-bg);
+    --q-button-primary-bg-hover: var(--q-accent-bg-hover);
+    --q-button-primary-fg: var(--q-fg-on-accent);
+    --q-button-primary-border: var(--q-accent-bg);
+    --q-button-secondary-border: var(--q-border-strong);
+    --q-button-ghost-fg-hover: var(--q-accent-fg);
+    --q-button-destructive-border: var(--q-border-strong);
+    --q-button-destructive-hover: var(--q-accent-fg);
+  }
+
+  @include app.reset {
+    --q-button-primary-bg: var(--q-bg-inverse);
+    --q-button-primary-bg-hover: var(--q-bg-inverse-hover);
+    --q-button-primary-fg: var(--q-fg-on-inverse);
+    --q-button-primary-border: var(--q-bg-inverse);
+    --q-button-secondary-border: var(--q-border-emphasis);
+    --q-button-ghost-fg-hover: var(--q-accent);
     --q-button-destructive-border: var(--q-border-emphasis);
     --q-button-destructive-hover: var(--q-accent);
   }

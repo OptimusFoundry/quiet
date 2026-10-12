@@ -1,6 +1,7 @@
 // Rule — hairline divider, horizontal or vertical, optionally labelled.
 // BEM: .q-rule, __line, __label; --vertical, --labelled, --ink, --dashed, --dotted.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -13,6 +14,15 @@
     --q-rule-label-font-size: var(--q-text-label);
     --q-rule-label-tracking: var(--q-tracking-label);
     --q-rule-label-fg: var(--q-fg-muted);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-rule-ink-color: var(--q-border);
+  }
+
+  @include app.reset {
+    --q-rule-ink-color: var(--q-fg);
   }
 }
 

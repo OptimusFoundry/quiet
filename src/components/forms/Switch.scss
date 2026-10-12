@@ -1,6 +1,7 @@
 // Switch — ink-outlined pill with a sliding thumb. BEM: .q-switch, __track, __thumb, __text,
 // __description; --{size}, --described, --label-left, --disabled. On state reads aria-checked.
 @use "../../styles/layers";
+@use "../../styles/app";
 
 @layer q.tokens {
   :root,
@@ -29,6 +30,23 @@
     --q-switch-text-leading: var(--q-leading-ui);
     --q-switch-description-font-size: var(--q-text-sm);
     --q-switch-description-fg: var(--q-fg-muted);
+  }
+
+  // The app look (styles/_app.scss).
+  @include app.look {
+    --q-switch-track-border: var(--q-border-strong);
+    --q-switch-track-bg: var(--q-bg-subtle);
+    --q-switch-track-bg-on: var(--q-accent-bg);
+    --q-switch-thumb-bg: var(--q-fg-muted);
+    --q-switch-thumb-bg-on: var(--q-fg-on-accent);
+  }
+
+  @include app.reset {
+    --q-switch-track-border: var(--q-fg);
+    --q-switch-track-bg: var(--q-bg);
+    --q-switch-track-bg-on: var(--q-fg);
+    --q-switch-thumb-bg: var(--q-fg);
+    --q-switch-thumb-bg-on: var(--q-bg);
   }
 }
 
