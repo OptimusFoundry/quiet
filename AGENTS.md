@@ -30,23 +30,19 @@ in `src/` is TypeScript (strict), formatted and linted by Biome; only SCSS goes 
 4. Compare the Catalog story with the reference `components/index.html` side by side — at rest
    they must look identical.
 
-## The app look
+## One look
 
-Product screens render in `data-density="app"` (or `"compact"`); the reference look is
-`"marketing"`, the default, which the catalog renders in, so parity is unaffected. In the app look
-the accent is the brand colour (links, primary action, current/selected/checked, focus, progress,
-attention status), links read as links at rest, and sections group with surfaces, not ink rules
-(docs/guidelines/foundations.md, "Molten: two looks"; spec docs/plans/2026-10-11-app-look.md).
+quiet has a single look (docs/plans/2026-10-12-one-look.md): soft ink, the lava accent (fills
+`--q-accent-bg`, text `--q-accent-fg`, raw `--q-accent` for marks only, 3.87:1), grounds instead of
+rules, Geist with sentence-case sans labels, dense pill controls, panes over drawers.
 
-- **Mixins** in `src/styles/_app.scss` (`@use "../../styles/app";`):
-  - `app.look { … }` at the end of a component's `q.tokens` block, after its defaults: the app values of tier-2/3 tokens.
-  - `app.reset { … }` right after it: the defaults of exactly the same keys, for a marketing frame nested in an app.
-  - `app.rules { … }` in `q.components`: rules only the app look has (an `@scope` that stops at a nested marketing root).
-- `scripts/check-app-look.mjs` (in `npm run lint`) fails when a stylesheet's `look` and `reset` keys differ.
-- Never change a default to get an app value: the defaults are the reference, pinned by parity.
-- New tier-2 accent steps: `--q-accent-fg` (text, links), `--q-accent-bg`/`-bg-hover` + `--q-fg-on-accent`
-  (fills), `--q-accent-subtle`/`-subtle-hover` (tints), `--q-accent-border`. `--q-accent` itself is
-  marks only (3.87:1).
+- `data-density` is spacing only: `comfortable` (default) or `compact`. `app`/`marketing` are
+  deprecated aliases of `comfortable`.
+- Accent steps: `--q-accent-fg` (text, links), `--q-accent-bg`/`-bg-hover` + `--q-fg-on-accent`
+  (fills), `--q-accent-subtle`/`-subtle-hover` (tints), `--q-accent-border`.
+- `scripts/check-one-look.mjs` (in `npm run lint`) fails on any return of the old two-look plumbing.
+- The phases still to come (component sweep, retirements, reference removal) are in the plan; until
+  they land, parity notes elsewhere in this file are stale.
 
 ## The a11y + motion layer
 
@@ -133,9 +129,8 @@ inside; the product wires it to Claude). Stories: Charts, Chat.
 
 And `src/components/app/`: SaaS screen parts — the frame (`AppShell`: Sidebar on a canvas, inset main
 panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppIcon` (quiet's own stroke
-icon set, `icons.ts`; marketing keeps the reference's glyphs), `PageHeader`, `Panel`, `DescriptionList`,
-`EntityLink`, `FileCard`, `Transcript`. They only render in the app look, so their tier-3 tokens default straight to
-app values (no `app.look` block). Stories: `src/stories/app/` (App/…, `parameters: { density: "app" }`). `npm run new -- app <Name>` scaffolds.
+icon set, `icons.ts`), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
+`Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
 
 Single own components outside those folders (today `feedback/Toaster`) are appended to `own` in
 `scripts/gen.mjs` and get their own stories (`src/stories/<Name>.stories.tsx`) instead of a catalog
