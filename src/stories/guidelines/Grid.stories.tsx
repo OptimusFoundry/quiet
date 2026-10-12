@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
-import { Col, Grid } from "../../index";
+import { Col, Grid, Text } from "../../index";
 import type { TokenName } from "../../styles/tokens.generated";
-import { GuidePage, Mono, Part, Span } from "./Guide";
+import { GuidePage, Num, Part, Span } from "./Guide";
 import "./Grid.scss";
 
 // docs/guidelines/grid.md as specimens: the allowed splits over the 12 columns, the responsive span
@@ -35,7 +35,9 @@ function Columns() {
 function SplitRow({ s }: { s: Split }) {
 	return (
 		<div className="q-sb-grid__split">
-			<Mono>{s.name}</Mono>
+			<Text size="sm" color="heading" weight="medium">
+				{s.name}
+			</Text>
 			<div className="q-sb-grid__split-stage">
 				<Columns />
 				<Grid
@@ -49,7 +51,9 @@ function SplitRow({ s }: { s: Split }) {
 						// biome-ignore lint/suspicious/noArrayIndexKey: static specimen
 						<Col key={i} span={c.span} start={c.start}>
 							<div className="q-sb-grid__cell">
-								<Mono className="q-sb-grid__cell-label">{c.span}</Mono>
+								<span className="q-sb-grid__cell-label">
+									<Num>{c.span}</Num>
+								</span>
 							</div>
 						</Col>
 					))}
@@ -71,14 +75,18 @@ function Frame({ width, cols }: { width: number; cols: Split["cols"] }) {
 	}, []);
 	return (
 		<div className="q-sb-grid__frame" style={{ "--_w": `${width}px` } as CSSProperties}>
-			<Mono>grid {w}px wide</Mono>
+			<Text size="sm" color="muted">
+				Grid <Num>{w}</Num> px wide
+			</Text>
 			<div ref={ref}>
 				<Grid columns={12} gap="md" rowGap="md">
 					{cols.map((c, i) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: static specimen
 						<Col key={i} span={c.span}>
 							<div className="q-sb-grid__cell">
-								<Mono className="q-sb-grid__cell-label">span {c.span}</Mono>
+								<span className="q-sb-grid__cell-label">
+									Span <Num>{c.span}</Num>
+								</span>
 							</div>
 						</Col>
 					))}
@@ -92,7 +100,7 @@ const PANES = [
 	["--q-w-sidebar", "sidebar"],
 	["--q-w-settings-nav", "settings nav"],
 	["--q-w-list-pane", "list pane"],
-	["--q-w-detail-panel", "detail panel"],
+	["--q-w-detail-panel", "detail panel beside content"],
 	["--q-w-form", "form / chat / prose"],
 ] as const satisfies ReadonlyArray<readonly [TokenName, string]>;
 
@@ -101,7 +109,7 @@ function GridPage() {
 		<GuidePage
 			title="Grid"
 			doc="grid.md"
-			intro="Fixed panes hold navigation and tools. The 12-column grid holds content blocks. App gutter is 24; spans are 3 · 4 · 6 · 8 · 9 · 12."
+			intro="Fixed panes hold navigation and tools. The 12-column grid holds content blocks. The gutter is 24 (16 compact); spans are 3 · 4 · 6 · 8 · 9 · 12."
 		>
 			<Part
 				title="Allowed splits"
@@ -132,7 +140,7 @@ function GridPage() {
 			>
 				<div className="q-sb-grid__panes">
 					{PANES.map(([t, l]) => (
-						<Span key={t} token={t} label={`${t} · ${l}`} />
+						<Span key={t} token={t} label={l} />
 					))}
 				</div>
 			</Part>

@@ -1,22 +1,35 @@
-// Guidelines/Typography specimens (Typography.stories.tsx).
+/* Guidelines/Typography specimens (Typography.stories.tsx). */
 
 .q-sb-typography {
-	&__hero {
-		padding: 0;
-	}
-
+	/* One role per row, faint dividers between. */
 	&__row {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
-		gap: var(--q-space-3);
+		grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+		gap: var(--q-space-stack) var(--q-grid-gutter);
 		align-items: center;
-		padding: var(--q-space-2) 0;
-		border-top: var(--q-hairline) solid var(--q-border);
+		padding: var(--q-space-stack) 0;
+
+		& + & {
+			border-top: var(--q-hairline) solid var(--q-border);
+		}
+
+		&:first-child {
+			padding-top: 0;
+		}
+
+		&:last-child {
+			padding-bottom: 0;
+		}
 	}
 
 	&__meta {
 		display: grid;
 		gap: var(--q-space-0-5);
+		min-width: 0;
+	}
+
+	&__how {
+		color: var(--q-fg-muted);
 	}
 
 	&__specimen {
@@ -27,8 +40,8 @@
 	&__sizes {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: baseline;
-		gap: var(--q-space-4);
+		align-items: flex-end;
+		gap: var(--q-space-block);
 	}
 
 	&__size {
@@ -36,7 +49,7 @@
 		gap: var(--q-space-0-5);
 	}
 
-	// --_size is the text token the sample shows.
+	/* --_size is the text token the sample shows. */
 	&__sample {
 		font-size: var(--_size);
 		line-height: 1;
@@ -44,14 +57,8 @@
 	}
 
 	&__hierarchy {
-		display: grid;
 		gap: var(--q-space-block);
 		max-width: var(--q-w-form);
-	}
-
-	&__section {
-		display: grid;
-		gap: var(--q-space-block);
 	}
 
 	&__stack {

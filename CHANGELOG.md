@@ -2,6 +2,20 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 1.0.1
+
+### Added
+
+- `--q-bg-canvas`, the app's canvas as a tier-2 ground (AppShell reads it; foundry-dark sets it
+  darker than the panel), so a page on the same frame without AppShell, such as a sign-in, matches.
+
+### Changed
+
+- The Sign-in layout (docs/guidelines/layouts.md) is the split frame: the canvas half carries the
+  product, the form sits on an inset white panel. Patterns/Agentworks "Sign in" shows it.
+- The Guidelines stories (Spacing, Typography, Grid, Layouts, Sections) are rebuilt in the one look:
+  PageHeader and Panels, sentence case, no rules; Layouts draws all eleven in the current frame.
+
 ## 1.0.0
 
 quiet's own: one look everywhere (an inset three-pane shell with a push inspector, soft ink, the
