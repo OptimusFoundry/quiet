@@ -2,6 +2,27 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 0.9.1
+
+Guidance only: no component or token changes. Re-sync to get the new `quiet` plugin and guidelines.
+
+### Changed
+
+- **Guidelines** (`docs/guidelines/`) rewritten for the one look and the app shell (an inset
+  three-pane shell with a push inspector): the ten rules, `layouts.md`'s App shell, `typography.md`,
+  `foundations.md` and a checklist with a Frame section and a production-build check. New
+  `coverage-gaps.md` lists what has no standard yet.
+- **`quiet` plugin:** `quiet-app` names a mode (Build, Change, Review, Copy), routes to the
+  guidelines by task, carries the AppShell wiring and warns against styling app markup with a
+  component's `--q-<component>-*` tokens. `quiet-screen-reviewer` reviews a production build.
+- **quiet's own skills and agents** follow the one look; `sync-from-claude-design` is removed.
+- `npm run new` accepts every group.
+
+### Added
+
+- `scripts/check-docs.mjs` (in `npm run lint`): every token and component the guidelines, README,
+  DESIGN.md, skills and agents name must exist.
+
 ## 0.9.0
 
 ### Added
