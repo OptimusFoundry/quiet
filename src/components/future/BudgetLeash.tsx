@@ -4,12 +4,6 @@ import { Button } from "../core/Button";
 import { Tabs } from "../navigation/Tabs";
 import "./BudgetLeash.scss";
 
-/**
- * A spend limit on an agent drawn as a leash: the slack line from the agent to its cap sags while
- * there is room and pulls taut (taking the accent) as it spends. The agent slows before it stops. Read as
- * a meter; lengthen it with presets or "Give slack".
- * @startingPoint section="Future" subtitle="A spend cap that goes taut" viewport="640x200"
- */
 export interface BudgetLeashProps {
 	/** The run or agent, e.g. "Meerkat · research run" */
 	label: string;
@@ -48,9 +42,13 @@ const SPEEDS: [string, string, string, string] = [
 	"stopped at the leash",
 ];
 
-// Budget as a leash, not a hard stop. The slack line from the agent to the cap sags while there is
-// room and pulls taut as it spends; the agent slows before it stops, and you can see the tension
-// from across the room. Lengthen the leash with a preset or "Give slack".
+/**
+ * A spend limit on an agent drawn as a leash, not a hard stop. The slack line from the agent to
+ * its cap sags while there is room and pulls taut (taking the accent) as it spends; the agent
+ * slows before it stops, and you can see the tension from across the room. Read as a meter;
+ * lengthen it with presets or "Give slack". Evolved from the budget cap.
+ * @startingPoint section="Future" subtitle="A spend cap that goes taut" viewport="640x200"
+ */
 export function BudgetLeash({
 	label,
 	agent,

@@ -5,11 +5,6 @@ import { Attachment } from "./Attachment";
 import { useCopy } from "./chat-utils";
 import "./ChatMessage.scss";
 
-/**
- * One turn in a conversation. A person's message is a soft bubble on the right; Claude's reply is
- * plain prose under a small name row, with no bubble. While `status="streaming"` a soft caret trails
- * the text, and assistive tech hears "Claude is responding" once rather than every token.
- */
 export interface ChatMessageProps {
 	/** Who said it; pass the API message's `role` straight through */
 	from?: "user" | "assistant" | "system";
@@ -51,7 +46,9 @@ const fmtTime = (t: Date | string | number | undefined) => {
 	};
 };
 
-// The Claude mark: an accent asterisk on a quiet tile — the one bit of heat in a reply.
+/**
+ * The Claude mark: an accent asterisk on a quiet tile, the one bit of heat in a reply.
+ */
 export function ClaudeMark({ size = "md", className }: { size?: "sm" | "md"; className?: string }) {
 	return (
 		<span
@@ -65,10 +62,12 @@ export function ClaudeMark({ size = "md", className }: { size?: "sm" | "md"; cla
 	);
 }
 
-// One turn in a conversation. `from` is who said it — pass the API message's role straight through.
-// A person's message is a soft bubble on the right; Claude's reply is
-// plain prose under a small name row — no bubble. While `status="streaming"` a soft caret trails the
-// text and assistive tech hears "Claude is responding" once, not every token.
+/**
+ * One turn in a conversation. `from` is who said it: pass the API message's role straight through.
+ * A person's message is a soft bubble on the right; Claude's reply is plain prose under a small name
+ * row, with no bubble, so long answers read like writing. While `status="streaming"` a soft caret
+ * trails the text, and assistive tech hears "Claude is responding" once rather than every token.
+ */
 export function ChatMessage({
 	from = "assistant",
 	name,

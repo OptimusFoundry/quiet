@@ -5,11 +5,6 @@ import { Switch } from "../forms/Switch";
 import { Tabs } from "../navigation/Tabs";
 import "./ScopeGrant.scss";
 
-/**
- * Narrow, time-boxed permission for an agent, in plain words: a switch per scope, one duration,
- * and a footer that says what it can't do. Grant hands the set over; Revoke takes it all back.
- * @startingPoint section="Future" subtitle="What an agent may do, and for how long" viewport="680x420"
- */
 export interface Scope {
 	id: string;
 	/** Plain words, e.g. "Publish to Bluesky, X, Threads" */
@@ -60,9 +55,13 @@ export interface ScopeGrantProps {
 
 const first = (s: string) => s.split(" ")[0]!.toLowerCase();
 
-// Narrow, time-boxed permission for an agent, in plain words. The footer says what it can't do,
-// because that is the part people actually want to read. Every scope is a switch; the duration is
-// one choice; Grant hands the set over and Revoke takes it all back.
+/**
+ * Narrow, time-boxed permission for an agent, in plain words: a switch per scope, one duration,
+ * and a footer that says what it can't do, because that is the part people actually want to read.
+ * Grant hands the set over; Revoke takes it all back. Evolved from OAuth permission walls and tool
+ * settings.
+ * @startingPoint section="Future" subtitle="What an agent may do, and for how long" viewport="680x420"
+ */
 export function ScopeGrant({
 	agent,
 	title,

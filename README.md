@@ -139,7 +139,7 @@ The guidelines explain how to put the components together into product screens t
 | [accessibility](docs/guidelines/accessibility.md) | what quiet guarantees, what the app must do |
 | [checklist](docs/guidelines/checklist.md) | the review before shipping |
 
-Reference screens are in Storybook under **Patterns**; measured specimens under **Guidelines**.
+Reference screens are in Storybook under **Patterns**; measured specimens under **Foundations**.
 
 ### Styling your own pages
 

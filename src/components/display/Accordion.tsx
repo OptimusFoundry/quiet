@@ -3,10 +3,6 @@ import { rovingKeyDown } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./Accordion.scss";
 
-/**
- * Disclosure list: rows set apart by space and faint dividers; the chevron turns and the content eases open.
- * @startingPoint section="Display" subtitle="Disclosure list" viewport="800x420"
- */
 export interface AccordionProps {
 	items: Array<{
 		id?: string | number;
@@ -89,6 +85,10 @@ function Row({
 	);
 }
 
+/**
+ * Disclosure list: rows set apart by space and faint dividers; the chevron turns and the content eases open.
+ * @startingPoint section="Display" subtitle="Disclosure list" viewport="800x420"
+ */
 export function Accordion({
 	items = [],
 	multiple = false,

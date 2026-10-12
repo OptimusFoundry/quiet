@@ -4,11 +4,6 @@ import type { ToastProps } from "./Toast";
 import { Toast } from "./Toast";
 import "./Toaster.scss";
 
-/**
- * Fixed, portalled stack for Toasts raised with `toast()`. Mount one near the app root; extra
- * Toasters stay inert, so toasts never render twice. The stack is a polite live region; error
- * toasts announce assertively (role="alert"), the rest are role="status".
- */
 export interface ToasterProps {
 	position?:
 		| "top-left"
@@ -98,6 +93,11 @@ toast.dismiss = (id?: string) =>
 const kindOf = (t: ToastOptions) =>
 	t.variant ?? (t.status && t.status !== "info" ? t.status : "default");
 
+/**
+ * Fixed, portalled stack for Toasts raised with `toast()`. Mount one near the app root; extra
+ * Toasters stay inert, so toasts never render twice. The stack is a polite live region; error
+ * toasts announce assertively (role="alert"), the rest are role="status".
+ */
 export function Toaster({
 	position = "bottom-right",
 	duration = 5000,

@@ -1,0 +1,40 @@
+/* A framed thread + composer for the ChatThread stories. The thread needs a height to scroll in.
+   The frame sits on the page ground: a user bubble is the warm ground, so it can't be the frame. */
+.q-sb-chat-thread {
+	display: grid;
+	grid-template-rows: minmax(0, 1fr) auto;
+	gap: var(--q-space-2);
+	width: 100%;
+	max-width: 760px;
+	height: var(--_height, 560px);
+	padding: var(--q-space-2);
+	border-radius: var(--q-radius-xl);
+	border: var(--q-hairline) solid var(--q-border);
+	background: var(--q-bg);
+	box-sizing: border-box;
+
+	&--bare {
+		grid-template-rows: minmax(0, 1fr);
+	}
+
+	&__empty {
+		display: grid;
+		gap: var(--q-space-2-5);
+		width: 100%;
+		justify-items: center;
+		text-align: center;
+	}
+
+	&__empty-title {
+		margin: 0;
+		font-size: var(--q-text-2xl);
+		font-weight: 600;
+		letter-spacing: var(--q-tracking-tight);
+		color: var(--q-fg);
+	}
+
+	&__model {
+		font-size: var(--q-text-sm);
+		color: var(--q-fg-muted);
+	}
+}

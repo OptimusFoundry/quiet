@@ -3,10 +3,6 @@ import { useEscape, useFocusTrap, useModalBackground, usePresence } from "../../
 import { CloseButton } from "../feedback/parts";
 import "./Drawer.scss";
 
-/**
- * Side sheet. Full height, rounded inner corners (--q-radius-xl), floats on its shadow, slow ease-in-out slide.
- * @startingPoint section="Overlays" subtitle="Side sheets" viewport="900x560"
- */
 export interface DrawerProps {
 	open: boolean;
 	onClose?: () => void;
@@ -24,6 +20,10 @@ export interface DrawerProps {
 
 const SIZES: string[] = ["sm", "md", "lg"];
 
+/**
+ * Side sheet. Full height, rounded inner corners (--q-radius-xl), floats on its shadow, slow ease-in-out slide.
+ * @startingPoint section="Overlays" subtitle="Side sheets" viewport="900x560"
+ */
 export function Drawer({
 	open,
 	onClose,

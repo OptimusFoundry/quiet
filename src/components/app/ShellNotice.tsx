@@ -2,12 +2,6 @@ import type React from "react";
 import { Icon } from "../core/Icon";
 import "./ShellNotice.scss";
 
-/**
- * A workspace-wide condition that needs action, as one line of text on AppShell's canvas above the
- * panel: a failed payment, an outage, read-only mode, "viewing as Ada". Pass it to `AppShell notice`.
- * At most one at a time; slow nudges are a `SidebarNotice`, a page's own notice a `NoticeChip`.
- * @startingPoint section="App" subtitle="Urgent workspace notice on the canvas" viewport="900x80"
- */
 export interface ShellNoticeProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style" | "children"> {
 	ref?: React.Ref<HTMLDivElement>;
@@ -25,6 +19,12 @@ export interface ShellNoticeProps
 	style?: React.CSSProperties;
 }
 
+/**
+ * A workspace-wide condition that needs action, as one line of text on AppShell's canvas above the
+ * panel: a failed payment, an outage, read-only mode, "viewing as Ada". Pass it to `AppShell notice`.
+ * At most one at a time; slow nudges are a `SidebarNotice`, a page's own notice a `NoticeChip`.
+ * @startingPoint section="App" subtitle="Urgent workspace notice on the canvas" viewport="900x80"
+ */
 export function ShellNotice({
 	children,
 	action,

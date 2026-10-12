@@ -1,0 +1,42 @@
+/* Layout for the FileCard stories. */
+.q-sb-file-card__list {
+	display: grid;
+	gap: var(--q-space-stack);
+	width: 100%;
+	max-width: 720px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.q-sb-file-card__narrow {
+	max-width: 360px;
+}
+
+.q-sb-file-card__thumb {
+	display: grid;
+	gap: var(--q-space-inline);
+	padding: var(--q-space-card-pad);
+	color: var(--q-fg-muted);
+	font-size: var(--q-text-xs);
+}
+
+.q-sb-file-card__thumb-title {
+	color: var(--q-fg);
+	font-size: var(--q-text-md);
+	font-weight: var(--q-weight-heading);
+}
+
+/* Rows sit on a Panel's subtle ground, as in a run's Artifacts rail. */
+.q-sb-file-card__rows {
+	display: flex;
+	flex-direction: column;
+	gap: var(--q-space-0-5);
+	width: 100%;
+	max-width: var(--q-w-detail-panel);
+	margin: 0;
+	padding: var(--q-space-stack);
+	border-radius: var(--q-radius-lg);
+	background: var(--q-bg-subtle);
+	list-style: none;
+}

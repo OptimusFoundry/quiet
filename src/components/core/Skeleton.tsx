@@ -1,10 +1,6 @@
 import React from "react";
 import "./Skeleton.scss";
 
-/**
- * Paper-2 loading placeholder with a slow 2s pulse.
- * @startingPoint section="Feedback" subtitle="Loading placeholders" viewport="600x240"
- */
 export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	/** The placeholder span (nothing is attached once `loading` is false and children render). */
 	ref?: React.Ref<HTMLSpanElement>;
@@ -29,6 +25,10 @@ export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLSpanElement
 const VARIANTS: string[] = ["text", "circular", "rectangular", "rounded"];
 const len = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
 
+/**
+ * Loading placeholder on a soft ground, with a slow 2s pulse.
+ * @startingPoint section="Feedback" subtitle="Loading placeholders" viewport="600x240"
+ */
 export function Skeleton({
 	variant = "text",
 	width,

@@ -1,0 +1,11 @@
+/* Rows for the DecayingBadge re-check story: a domain and its badge on a warm ground. */
+.q-sb-decaying-badge__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--q-space-2);
+	padding: var(--q-space-1-5) var(--q-space-2);
+	background: var(--q-bg-subtle);
+	border-radius: var(--q-radius-md);
+	font-size: var(--q-text-sm);
+}

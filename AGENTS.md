@@ -116,20 +116,31 @@ Canonical example: `src/components/core/Button.tsx` + `Button.scss`.
 
 `src/components/future/` holds agent and trust components: concepts from the
 Claude Design project "Protoapp Design System" (Future Components I–IV), picked for fit and rebuilt
-on quiet tokens + BEM with full keyboard/ARIA. Stories: `src/stories/future/*.stories.tsx` (Future/…). Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = the accent).
+on quiet tokens + BEM with full keyboard/ARIA. Status colour comes from `--q-status-*` (foundry: success = ink, warning/error = the accent).
 
 Also quiet's own: `src/components/charts/` (hand-rolled SVG; **in charts the accent is the primary data
 colour** — series 1 accent, then ink and greys via `--q-chart-series-*`) and `src/components/chat/`
 (AI chat UI: thread, messages, rich composer with attachments, tool calls, code blocks — no API
-inside; the product wires it to Claude). Stories: Charts, Chat.
+inside; the product wires it to Claude).
 
 And `src/components/app/`: SaaS screen parts — the frame (`AppShell`: Sidebar on a canvas, inset main
 panel, optional third pane; `TopBar`, `WorkspaceSwitcher`, `AccountMenu`), `AppIcon` (a bare
 `<svg>` from quiet's stroke icon set, `core/icons.ts`, which `Icon` draws too), `PageHeader`, `Panel`, `DescriptionList`, `EntityLink`, `FileCard`,
-`Transcript`. Stories: `src/stories/app/` (App/…). `npm run new -- app <Name>` scaffolds.
+`Transcript`. `npm run new -- app <Name>` scaffolds.
 
-Stories for the original groups go in `src/stories/extensions/` (a few, like Toaster, sit at
-`src/stories/<Name>.stories.tsx`).
+## Storybook
+
+The sidebar: **Overview** (the UI kit, `src/stories/overview/`), **Foundations** (the measured
+specimens behind `docs/guidelines/`, and theming), **Components/<Group>/<Name>**, **Patterns** (whole
+screens) and **Integration**. Order is `storySort` in `.storybook/preview.tsx`; group labels in
+`src/stories/overview/groups.ts` (`future/` shows as "Agent & trust").
+- Every component file `src/components/<group>/<Name>.tsx` has a page,
+  `src/stories/components/<group>/<Name>.stories.tsx` (`component`, `tags: ["autodocs"]`, a `Playground`, then
+  named stories; shape of `core/Button.stories.tsx`), and an Overview tile in
+  `src/stories/overview/tiles/<group>.tsx`. `scripts/check-stories.mjs` (in `npm run lint`) enforces both.
+- The Docs description is the JSDoc right above `export function <Name>`; tags (`@startingPoint`) are
+  stripped from it.
+- Storybook's own chrome is themed in `.storybook/theme.ts` (foundry by hand; it can't read tokens).
 
 ## Harness (Claude Code)
 

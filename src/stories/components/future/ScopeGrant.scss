@@ -1,0 +1,4 @@
+/* ScopeGrant in a short box (the overview tile): tighter gaps. */
+.q-sb-scope-grant--tile {
+	--q-scope-grant-gap: var(--q-space-1);
+}

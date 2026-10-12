@@ -4,14 +4,6 @@ import { SidebarProvider, useSidebar } from "../navigation/Sidebar";
 import { AppIcon } from "./AppIcon";
 import "./AppShell.scss";
 
-/**
- * The signed-in app frame: the Sidebar sits on a soft canvas and the screen is an inset, raised
- * panel that scrolls on its own, with an optional TopBar pinned inside it. An optional third pane
- * (notifications, details, an assistant) opens beside the screen and narrows it, never covering it.
- * Starts with a skip link. Below `breakpoint` the panel goes flush, the Sidebar becomes a drawer
- * (opened from the TopBar) and the third pane covers the screen, sliding in from the right.
- * @startingPoint section="App" subtitle="Sidebar on a canvas, inset main panel, third pane" viewport="1100x560"
- */
 export interface AppShellProps {
 	/** The app's `Sidebar` (with a `WorkspaceSwitcher` header and an `AccountMenu` footer) */
 	sidebar: React.ReactNode;
@@ -43,6 +35,14 @@ export interface AppShellProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * The signed-in app frame: the Sidebar sits on a soft canvas and the screen is an inset, raised
+ * panel that scrolls on its own, with an optional TopBar pinned inside it. An optional third pane
+ * (notifications, details, an assistant) opens beside the screen and narrows it, never covering it.
+ * Starts with a skip link. Below `breakpoint` the panel goes flush, the Sidebar becomes a drawer
+ * (opened from the TopBar) and the third pane covers the screen, sliding in from the right.
+ * @startingPoint section="App" subtitle="Sidebar on a canvas, inset main panel, third pane" viewport="1100x560"
+ */
 export function AppShell({ breakpoint = 720, ...props }: AppShellProps) {
 	return (
 		<SidebarProvider breakpoint={breakpoint}>

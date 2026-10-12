@@ -1,0 +1,42 @@
+/* Layout for the Sidebar stories: a framed app shell of fixed height, so each story shows the
+   Sidebar against a main area whether it renders in Docs or on its own canvas. */
+.q-sb-sidebar {
+	display: flex;
+	height: 520px;
+	overflow: hidden;
+	background: var(--q-bg);
+	color: var(--q-fg-body);
+	font-family: var(--q-font-sans);
+
+	&__brand {
+		color: var(--q-fg);
+		font-size: var(--q-text-sm);
+		font-weight: var(--q-weight-semibold);
+	}
+
+	&__user {
+		display: flex;
+		gap: var(--q-space-1-5);
+		align-items: center;
+		padding: 0 var(--q-space-1-5);
+	}
+
+	&__content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: var(--q-space-1-5);
+		padding: var(--q-space-1-5) var(--q-space-2);
+	}
+
+	&__main {
+		display: grid;
+		align-content: start;
+		gap: var(--q-space-1-5);
+		padding: var(--q-space-3);
+	}
+}

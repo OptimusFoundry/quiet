@@ -1,10 +1,6 @@
 import React from "react";
 import "./PageTransition.scss";
 
-/**
- * Re-plays a slow enter animation whenever transitionKey changes; the previous view fades out first.
- * @startingPoint section="Layout" subtitle="View enter transitions" viewport="700x260"
- */
 export interface PageTransitionProps {
 	/** Change it to replay (route, tab value) */
 	transitionKey: React.Key;
@@ -23,6 +19,10 @@ const VARIANTS: Record<string, string> = {
 	scale: "scale",
 };
 
+/**
+ * Re-plays a slow enter animation whenever transitionKey changes; the previous view fades out first.
+ * @startingPoint section="Layout" subtitle="View enter transitions" viewport="700x260"
+ */
 export function PageTransition({
 	transitionKey,
 	variant = "fade",

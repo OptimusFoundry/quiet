@@ -1,0 +1,18 @@
+/* Layout for the LineageChip stories: a headline number with its chip. */
+.q-sb-lineage-chip {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--q-space-1-5);
+}
+
+.q-sb-lineage-chip__figure {
+	font-size: var(--q-text-3xl);
+	font-weight: 600;
+	letter-spacing: var(--q-tracking-h3);
+	font-variant-numeric: tabular-nums;
+}
+
+.q-sb-lineage-chip__num {
+	font-variant-numeric: tabular-nums;
+}

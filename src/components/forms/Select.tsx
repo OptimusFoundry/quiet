@@ -3,7 +3,6 @@ import { Icon } from "../core/Icon";
 import { FormHint } from "./FormHint";
 import "./Select.scss";
 
-/** Native select in a pill field, with a chevron icon. */
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
 	label?: React.ReactNode;
 	options?: Array<string | { value: string; label: string; disabled?: boolean }>;
@@ -19,6 +18,7 @@ export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectE
 
 const SIZES = ["sm", "md", "lg"];
 
+/** Native select in a pill field, with a chevron icon. */
 export function Select({
 	label,
 	options = [],

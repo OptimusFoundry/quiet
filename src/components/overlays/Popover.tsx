@@ -3,10 +3,6 @@ import { focusables, useEscape, useOutside, usePresence } from "../../a11y/hooks
 import { CloseButton } from "../feedback/parts";
 import "./Popover.scss";
 
-/**
- * Click-triggered floating panel for rich content. Rounded (--q-radius-lg), floats on --q-shadow-float.
- * @startingPoint section="Overlays" subtitle="Floating panels" viewport="600x360"
- */
 export interface PopoverProps {
 	trigger: React.ReactNode;
 	title?: React.ReactNode;
@@ -29,6 +25,10 @@ export interface PopoverProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * Click-triggered floating panel for rich content. Rounded (--q-radius-lg), floats on --q-shadow-float.
+ * @startingPoint section="Overlays" subtitle="Floating panels" viewport="600x360"
+ */
 export function Popover({
 	trigger,
 	title,

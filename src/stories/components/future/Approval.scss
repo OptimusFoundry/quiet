@@ -1,0 +1,5 @@
+/* An Approval in a small box (the overview tile): tighter padding and gaps. */
+.q-sb-approval--fit {
+	--q-approval-gap: var(--q-space-1);
+	--q-approval-padding: var(--q-space-2);
+}

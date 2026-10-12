@@ -1,7 +1,7 @@
 # Spacing
 
 Every gap on a screen is one of eight **job tokens**. Pick by what the gap separates, never by
-how it looks. Specimen: Storybook `guidelines-spacing--default`.
+how it looks. Specimen: Storybook `foundations-spacing--default`.
 
 ## The scale
 

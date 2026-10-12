@@ -1,0 +1,49 @@
+/* KPI tiles and an inline sentence for the Sparkline stories. */
+.q-sb-sparkline {
+	&__kpis {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--q-space-2);
+	}
+
+	&__kpi {
+		display: grid;
+		gap: var(--q-space-0-75);
+		min-width: 200px;
+		padding: var(--q-space-2) var(--q-space-2-5);
+		background: var(--q-bg-subtle);
+		border-radius: var(--q-radius-md);
+	}
+
+	&__kpi-label {
+		font-size: var(--q-text-sm);
+		color: var(--q-fg-muted);
+	}
+
+	&__kpi-row {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: var(--q-space-2);
+	}
+
+	&__kpi-value {
+		font-size: var(--q-text-2xl);
+		font-weight: 600;
+		letter-spacing: var(--q-tracking-tight);
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
+		color: var(--q-fg);
+	}
+
+	&__inline {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--q-space-1);
+		font-size: var(--q-text-sm);
+	}
+
+	&__strong {
+		font-weight: 600;
+	}
+}

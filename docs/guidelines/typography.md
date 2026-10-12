@@ -2,7 +2,7 @@
 
 An app screen uses **eight roles** and nothing else, set in Geist (Geist Mono for code, IDs and
 keys), in sentence case, on soft ink. Every role is reached through a component prop, never a
-hand-set `font-size`. Specimen: Storybook `guidelines-typography--default`.
+hand-set `font-size`. Specimen: Storybook `foundations-typography--default`.
 
 ## Roles
 

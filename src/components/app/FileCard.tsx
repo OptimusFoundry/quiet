@@ -78,11 +78,6 @@ export function fileKind(mimeType = "", name = ""): FileKind {
 
 type FileCardHostAttributes = Omit<React.HTMLAttributes<HTMLDivElement>, "children">;
 
-/**
- * One file or artifact version: a type tile, the name with its kind, size and meta, and its
- * Download / Preview actions. The raw MIME type stays available in a tooltip on the kind.
- * @startingPoint section="App" subtitle="A file with its kind, size and download" viewport="700x200"
- */
 export interface FileCardProps extends FileCardHostAttributes {
 	/** File name, e.g. "q3-pipeline.xlsx" */
 	name: React.ReactNode;
@@ -102,7 +97,7 @@ export interface FileCardProps extends FileCardHostAttributes {
 	download?: boolean | string;
 	/** Shows a "Preview" ghost button */
 	onPreview?: () => void;
-	/** Next to the name, e.g. <Badge variant="primary">Current</Badge> */
+	/** Next to the name, e.g. `<Badge variant="primary">Current</Badge>` */
 	badge?: React.ReactNode;
 	/** Thumbnail shown above the row */
 	preview?: React.ReactNode;
@@ -118,6 +113,11 @@ export interface FileCardProps extends FileCardHostAttributes {
 	size?: "sm" | "md";
 }
 
+/**
+ * One file or artifact version: a type tile, the name with its kind, size and meta, and its
+ * Download / Preview actions. The raw MIME type stays available in a tooltip on the kind.
+ * @startingPoint section="App" subtitle="A file with its kind, size and download" viewport="700x200"
+ */
 export function FileCard({
 	name,
 	mimeType,

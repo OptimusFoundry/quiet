@@ -1,10 +1,6 @@
 import type React from "react";
 import "./Label.scss";
 
-/**
- * Sentence-case field label (the label role) with required mark, sub text, badge and trailing action.
- * @startingPoint section="Forms" subtitle="Field labels" viewport="600x200"
- */
 export interface LabelProps {
 	children: React.ReactNode;
 	htmlFor?: string;
@@ -24,6 +20,10 @@ export interface LabelProps {
 
 const SIZES = ["sm", "md", "lg"];
 
+/**
+ * Sentence-case field label (the label role) with required mark, sub text, badge and trailing action.
+ * @startingPoint section="Forms" subtitle="Field labels" viewport="600x200"
+ */
 export function Label({
 	children,
 	htmlFor,

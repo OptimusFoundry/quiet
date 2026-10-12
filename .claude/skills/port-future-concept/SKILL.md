@@ -67,4 +67,4 @@ Each concept has its `name`, `from`/`replaces` and `why` on its `<Concept …>` 
 
 Keep the concept's idea, and record what you dropped and why in your report.
 
-Then follow the `new-component` skill: scaffold, story section with `index` = concept number, `from` and `idea` adapted from the source, tests, and the done-bar.
+Then follow the `new-component` skill: scaffold, a story page under **Components/Agent & trust** with the concept's `from` and idea adapted from the source into the component's JSDoc, an Overview tile, tests, and the done-bar.

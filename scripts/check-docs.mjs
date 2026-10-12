@@ -44,6 +44,13 @@ const NOT_QUIET = new Set([
 	"Current",
 	"ListFiles",
 	"Review",
+	// Storybook: sidebar paths (Components/<Group>/<Name>), the Playground story, story helpers.
+	"Components",
+	"Group",
+	"Playground",
+	"Row",
+	"Column",
+	"Note",
 ]);
 
 const declared = new Set(tokenNames());

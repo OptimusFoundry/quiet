@@ -19,18 +19,6 @@ export interface FileUploadItem {
 	error?: string | null;
 }
 
-/**
- * Dashed drop zone or button with a hairline file list. Type, size and count validation; optional simulated progress.
- *
- * Controlled: pass `files` and update it from `onChange` (and from your uploader: `progress`,
- * `error`). Rows the picker adds arrive in `onChange` with a generated string `id` and their `file`.
- *
- * Native forms: with `name`, the `file` of every row that has one and no `error` is submitted
- * as that field (the form needs `encType="multipart/form-data"` to send the bytes). Rows without
- * a `file` (preloaded, or already on your server) are not submitted; send their ids yourself.
- * `required` blocks submit while no row is free of errors, and focuses the picker.
- * @startingPoint section="Forms" subtitle="Drop zone + file list" viewport="700x440"
- */
 export interface FileUploadProps
 	extends Omit<
 		React.HTMLAttributes<HTMLElement>,
@@ -147,6 +135,18 @@ function FileRow({
 	);
 }
 
+/**
+ * Dashed drop zone or button with a hairline file list. Type, size and count validation; optional simulated progress.
+ *
+ * Controlled: pass `files` and update it from `onChange` (and from your uploader: `progress`,
+ * `error`). Rows the picker adds arrive in `onChange` with a generated string `id` and their `file`.
+ *
+ * Native forms: with `name`, the `file` of every row that has one and no `error` is submitted
+ * as that field (the form needs `encType="multipart/form-data"` to send the bytes). Rows without
+ * a `file` (preloaded, or already on your server) are not submitted; send their ids yourself.
+ * `required` blocks submit while no row is free of errors, and focuses the picker.
+ * @startingPoint section="Forms" subtitle="Drop zone + file list" viewport="700x440"
+ */
 export function FileUpload({
 	label,
 	hint,

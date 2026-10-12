@@ -4,10 +4,6 @@ import { useMergedRef } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./Checkbox.scss";
 
-/**
- * Soft-cornered checkbox (--radius-xs), accent fill with a check icon. Indeterminate, description, error, sizes.
- * @startingPoint section="Forms" subtitle="Soft checks" viewport="600x220"
- */
 export interface CheckboxProps
 	extends Omit<
 		React.HTMLAttributes<HTMLSpanElement>,
@@ -42,6 +38,10 @@ export interface CheckboxProps
 
 const SIZES = ["sm", "md", "lg"];
 
+/**
+ * Soft-cornered checkbox, accent fill with a check icon. Indeterminate, description, error, sizes.
+ * @startingPoint section="Forms" subtitle="Soft checks" viewport="600x220"
+ */
 export function Checkbox({
 	label,
 	description,

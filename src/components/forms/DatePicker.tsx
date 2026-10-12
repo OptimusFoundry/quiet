@@ -4,10 +4,6 @@ import { useFocusTrap, useMergedRef, usePresence } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./DatePicker.scss";
 
-/**
- * Date field with a rounded month calendar. Today = an accent dot, selected = an accent fill.
- * @startingPoint section="Forms" subtitle="Calendar date picker" viewport="600x500"
- */
 export interface DatePickerProps
 	extends Omit<
 		React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -113,6 +109,10 @@ function NavBtn({
 	);
 }
 
+/**
+ * Date field with a rounded month calendar. Today = an accent dot, selected = an accent fill.
+ * @startingPoint section="Forms" subtitle="Calendar date picker" viewport="600x500"
+ */
 export function DatePicker({
 	label,
 	value,

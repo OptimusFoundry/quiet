@@ -2,10 +2,6 @@ import React from "react";
 import "./Banner.scss";
 import { CloseButton, isStatus, StatusIcon, warnDeprecated } from "./parts";
 
-/**
- * Full-width page-level strip above the header or app content, on its status ground.
- * @startingPoint section="Feedback" subtitle="Page-level strips" viewport="900x320"
- */
 export interface BannerProps {
 	/**
 	 * @deprecated Banner has one look (its status ground); drop the prop. `"paper"` is accepted
@@ -24,6 +20,10 @@ export interface BannerProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * Full-width page-level strip above the header or app content, on its status ground.
+ * @startingPoint section="Feedback" subtitle="Page-level strips" viewport="900x320"
+ */
 export function Banner({
 	variant,
 	status = "info",

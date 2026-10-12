@@ -3,12 +3,6 @@ import { Button } from "../core/Button";
 import { Spinner } from "../core/Spinner";
 import "./AgentRun.scss";
 
-/**
- * An agent's run as named, timed, interruptible steps — replaces spinners and progress toasts for
- * work that touches real data. The last step is always a person; when the run reaches it, its
- * marker takes the accent and `actions` appear. Controlled: the caller advances `current`.
- * @startingPoint section="Future" subtitle="Interruptible agent steps" viewport="760x360"
- */
 export interface AgentRunStep {
 	id?: string | number;
 	/** What the step does, e.g. "Compute 7-day bounce rate" */
@@ -60,8 +54,14 @@ function stepState(
 	return i === count - 1 ? "waiting" : "running";
 }
 
-// Work that takes seconds and touches real data, shown as named, timed, interruptible steps.
-// The last step is always a person: when the run reaches it, its marker takes the accent.
+/**
+ * An agent's run as named, timed, interruptible steps. Work that takes seconds and touches real
+ * data can't hide behind a spinner, so every step is named, timed and can be paused, taken over or
+ * stopped. The last step is always a person: when the run reaches it, its marker takes the accent
+ * and `actions` appear. Controlled: the caller advances `current`. Evolved from spinners, progress
+ * bars and toasts.
+ * @startingPoint section="Future" subtitle="Interruptible agent steps" viewport="760x360"
+ */
 export function AgentRun({
 	title,
 	meta,

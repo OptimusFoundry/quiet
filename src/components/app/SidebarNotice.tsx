@@ -3,12 +3,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon } from "../core/Icon";
 import "./SidebarNotice.scss";
 
-/**
- * A slow nudge about the account, as a small card at the foot of the Sidebar, above the
- * `AccountMenu`: a trial ending, usage nearing a limit, a new version. Dismissible. In the collapsed
- * rail it becomes an icon with a mark. Urgent conditions are a `ShellNotice` instead.
- * @startingPoint section="App" subtitle="Account nudge in the Sidebar" viewport="300x200"
- */
 export interface SidebarNoticeProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, "title" | "className" | "style" | "children"> {
 	ref?: React.Ref<HTMLDivElement>;
@@ -67,6 +61,12 @@ function Action({
 	);
 }
 
+/**
+ * A slow nudge about the account, as a small card at the foot of the Sidebar, above the
+ * `AccountMenu`: a trial ending, usage nearing a limit, a new version. Dismissible. In the collapsed
+ * rail it becomes an icon with a mark. Urgent conditions are a `ShellNotice` instead.
+ * @startingPoint section="App" subtitle="Account nudge in the Sidebar" viewport="300x200"
+ */
 export function SidebarNotice({
 	title,
 	description,

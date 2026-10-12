@@ -2,12 +2,6 @@ import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
 import "./AnomalyRibbon.scss";
 
-/**
- * A thin ribbon along a series (or above a table) marking where something unexpected happened.
- * Each mark is a button (arrow keys move between them, one tab stop); selecting one announces what
- * it is and lifts its neighbourhood in the series. Evolved from manual scanning.
- * @startingPoint section="Future" subtitle="Anomaly ribbon" viewport="700x220"
- */
 export interface Anomaly {
 	/** Position in the series (0-based) */
 	at: number;
@@ -29,7 +23,7 @@ export interface AnomalyRibbonProps {
 	onSelect?: (at: number | null) => void;
 	/** Accessible name of the group of marks */
 	label?: string;
-	/** Replaces "N anomalies in <count>" */
+	/** Replaces the default caption, e.g. "3 anomalies in 60" */
 	summary?: React.ReactNode;
 	/** Your own series or table, rendered under the ribbon */
 	children?: React.ReactNode;
@@ -40,8 +34,14 @@ export interface AnomalyRibbonProps {
 // Bars this close to the selected anomaly are lifted, so the eye lands on its neighbourhood.
 const NEAR = 5;
 
-// A thin ribbon along a series that marks where something unexpected happened. You don't scan for
-// the needle: each mark is a button, and selecting one says what it is (and lets you jump to it).
+/**
+ * A thin ribbon along a series (or above a table) marking where the model found something it
+ * didn't expect. You don't scan for the needle; the ribbon hands it to you. Each mark is a button
+ * (arrow keys move between them, one tab stop); selecting one announces what it is, lifts its
+ * neighbourhood in the series and calls `onSelect`, so you can jump there. Evolved from manual
+ * scanning.
+ * @startingPoint section="Future" subtitle="Anomaly ribbon" viewport="700x220"
+ */
 export function AnomalyRibbon({
 	anomalies = [],
 	count,

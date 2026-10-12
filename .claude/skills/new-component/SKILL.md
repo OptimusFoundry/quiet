@@ -58,9 +58,15 @@ Mistakes that got past review before:
 
 ## 4. Story
 
-- **Where:** `src/stories/app/` for `app`, `src/stories/future/` for `future` (`Concept` + `Spec`
-  from `./Concept`), `src/stories/extensions/` for the other groups; style it with a `q-sb-*` `.scss`
-  next to the story. Import the component from its own file.
+- **Where:** `src/stories/components/<group>/<Name>.stories.tsx`, titled `Components/<Label>/<Name>`
+  (labels and order in `src/stories/overview/groups.ts`; `future` is "Agent & trust"). Copy the
+  shape of `src/stories/components/core/Button.stories.tsx`: `component`, `tags: ["autodocs"]`,
+  `args`, a `Playground` first, then named stories. Lay out with `Row`/`Column`/`Note` from
+  `../Story`; a `q-sb-*` `.scss` next to the story only when it needs more. Import the component
+  from its own file. The Docs page description is the JSDoc directly above `export function <Name>`.
+- **Tile:** add `{ name, blurb, render }` to `src/stories/overview/tiles/<group>.tsx`, a small inert
+  preview for the Overview UI kit. `scripts/check-stories.mjs` (in `npm run lint`) fails without the
+  story or the tile.
 - Show every state someone would design against (empty, error, disabled, long text), nothing
   decorative. If it lives in a screen, show it in the frame too (`src/stories/patterns/AppFrame.tsx`).
 - Check it by hand in Storybook: both themes, keyboard only (Tab, arrows, Escape), and at 390 wide.

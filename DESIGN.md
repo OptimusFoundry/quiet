@@ -97,7 +97,7 @@ component and utility rules, the same as the built-in themes:
 Unlayered, a theme would outrank all of quiet's layers instead of sitting where the built-in
 themes do. Loaded before `@optimusfoundry/quiet/style.css` without the order statement, it would
 create `q.themes` first and end up below `q.tokens`, so the defaults would win.
-`src/stories/external-theme/` holds a working example.
+`src/stories/foundations/external-theme/` holds a working example.
 
 **What a theme sets:**
 

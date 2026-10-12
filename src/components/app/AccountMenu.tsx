@@ -4,11 +4,6 @@ import { DropdownMenu, type DropdownMenuProps } from "../overlays/DropdownMenu";
 import { AppIcon } from "./AppIcon";
 import "./AccountMenu.scss";
 
-/**
- * The foot of the app sidebar: who is signed in, opening a menu upward (profile, preferences,
- * sign out). A menu button (Enter, Space or ↓ opens; Escape closes and returns focus).
- * @startingPoint section="App" subtitle="Signed-in person and account menu" viewport="600x360"
- */
 export interface AccountMenuProps {
 	/** The person's name */
 	name: string;
@@ -28,6 +23,11 @@ export interface AccountMenuProps {
 	style?: React.CSSProperties;
 }
 
+/**
+ * The foot of the app sidebar: who is signed in, opening a menu upward (profile, preferences,
+ * sign out). A menu button (Enter, Space or ↓ opens; Escape closes and returns focus).
+ * @startingPoint section="App" subtitle="Signed-in person and account menu" viewport="600x360"
+ */
 export function AccountMenu({
 	name,
 	detail,

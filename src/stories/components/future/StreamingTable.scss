@@ -1,0 +1,14 @@
+/* Layout for the StreamingTable stories: controls above a live table. */
+.q-sb-streaming-table {
+	display: grid;
+	gap: var(--q-space-stack);
+	width: 100%;
+	max-width: 640px;
+}
+
+.q-sb-streaming-table__controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--q-space-2);
+}

@@ -1,0 +1,11 @@
+/* Layout for the StatCard stories: a dashboard row of metrics that wraps. */
+.q-sb-stat-card {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+	gap: var(--q-space-card-gap);
+	max-width: var(--q-w-content);
+
+	&--one {
+		max-width: 280px;
+	}
+}

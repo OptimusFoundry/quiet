@@ -1,11 +1,6 @@
 import React from "react";
 import "./Panel.scss";
 
-/**
- * Titled section container for app screens. Groups with a surface (subtle ground, large radius)
- * instead of a rule on top; an empty panel collapses to its header plus one muted line.
- * @startingPoint section="App" subtitle="Titled surface section" viewport="700x240"
- */
 export interface PanelProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "children" | "className" | "style"> {
 	/** Section heading; when given the panel is a `<section>` named by it */
@@ -37,6 +32,11 @@ const PADDINGS: string[] = ["none", "sm", "md"];
 const isEmptyChildren = (children: React.ReactNode) =>
 	React.Children.toArray(children).filter((c) => c !== "").length === 0;
 
+/**
+ * Titled section container for app screens. Groups with a surface (subtle ground, large radius)
+ * instead of a rule on top; an empty panel collapses to its header plus one muted line.
+ * @startingPoint section="App" subtitle="Titled surface section" viewport="700x240"
+ */
 export function Panel({
 	title,
 	as: Heading = "h2",

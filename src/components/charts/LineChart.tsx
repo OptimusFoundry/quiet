@@ -14,12 +14,6 @@ import {
 import "./chart.scss";
 import "./LineChart.scss";
 
-/**
- * Lines (optionally areas) over a shared x axis. Series 1 is the accent, comparisons ink then greys
- * (series 4–5 dash). Crosshair + tooltip on hover; the plot is a slider over the x points, so
- * arrows move the same crosshair and the values are announced.
- * @startingPoint section="Charts" subtitle="Trends over time" viewport="800x320"
- */
 export interface LineChartSeries {
 	id?: string | number;
 	name: string;
@@ -60,9 +54,13 @@ export interface LineChartProps {
 
 const PAD = { top: 8, right: 8, bottom: 22, left: 40 };
 
-// Lines over a shared x axis. Series 1 is the accent, comparisons ink then grey. A crosshair + tooltip
-// follows the pointer; the plot is also a slider over the x points, so Left/Right (Home/End,
-// PageUp/PageDown) move the same crosshair and the values are read out as the slider's value.
+/**
+ * Lines (optionally areas) over a shared x axis. Series 1 is the accent, comparisons ink then greys
+ * (series 4–5 dash). A crosshair + tooltip follows the pointer; the plot is also a slider over the x
+ * points, so Left/Right (Home/End, PageUp/PageDown) move the same crosshair and the values are
+ * announced.
+ * @startingPoint section="Charts" subtitle="Trends over time" viewport="800x320"
+ */
 export function LineChart({
 	series = [],
 	labels = [],

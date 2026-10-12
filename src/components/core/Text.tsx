@@ -2,10 +2,6 @@ import React from "react";
 import { isDev } from "../../lib/env";
 import "./Text.scss";
 
-/**
- * Typography primitive — body sizes, weights, colors, mono for code and IDs, headings, truncation.
- * @startingPoint section="Type" subtitle="Sizes, weights, colors, clamps" viewport="700x320"
- */
 export interface TextProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "color" | "children" | "className" | "style"> {
 	/** The rendered element (`p`, `h1`–`h4`, or the `as` element). */
@@ -79,6 +75,10 @@ function warnItalic() {
 	);
 }
 
+/**
+ * Typography primitive — body sizes, weights, colors, mono for code and IDs, headings, truncation.
+ * @startingPoint section="Type" subtitle="Sizes, weights, colors, clamps" viewport="700x320"
+ */
 export function Text({
 	as,
 	heading,

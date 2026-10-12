@@ -2,11 +2,6 @@ import React from "react";
 import { Progress } from "../feedback/Progress";
 import "./CostMeter.scss";
 
-/**
- * Live agent spend, split by kind of work, each line against its own cap. The total sits large;
- * a line at or past `warnAt` of its cap turns its hairline bar to the accent and marks the figure.
- * @startingPoint section="Future" subtitle="Spend by kind of work" viewport="600x300"
- */
 export interface CostMeterItem {
 	id?: string | number;
 	/** Kind of work, e.g. "Rendering clips" */
@@ -34,9 +29,13 @@ export interface CostMeterProps {
 
 const usd = (v: number) => `$${v.toFixed(2)}`;
 
-// Spend that ticks in real money as agents work, split by the kind of work — caps per kind, not
-// per agent, because the question is "is this worth it?", never "who spent it?". A line nearing
-// its cap takes the accent.
+/**
+ * Live agent spend that ticks in real money, split by kind of work, each line against its own cap.
+ * Caps go per kind of work, not per agent, because the question is always "is this worth it?",
+ * never "who spent it?". The total sits large; a line at or past `warnAt` of its cap turns its
+ * hairline bar to the accent and marks the figure. Evolved from the usage page and billing alerts.
+ * @startingPoint section="Future" subtitle="Spend by kind of work" viewport="600x300"
+ */
 export function CostMeter({
 	label,
 	items = [],

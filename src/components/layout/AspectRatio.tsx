@@ -1,11 +1,6 @@
 import type React from "react";
 import "./AspectRatio.scss";
 
-/**
- * Fixed-ratio frame. Covers img/video children; empty, it is a placeholder on a soft ground with a
- * sentence-case label (default: the preset and ratio, "Video · 1.78").
- * @startingPoint section="Layout" subtitle="Ratio frames + placeholders" viewport="800x300"
- */
 export interface AspectRatioProps {
 	/** Preset or width/height number */
 	ratio?: "square" | "video" | "portrait" | "wide" | "photo" | number;
@@ -30,6 +25,11 @@ const defaultLabel = (ratio: AspectRatioProps["ratio"], r: number) => {
 	return typeof ratio === "string" ? `${ratio[0]!.toUpperCase()}${ratio.slice(1)} · ${n}` : n;
 };
 
+/**
+ * Fixed-ratio frame. Covers img/video children; empty, it is a placeholder on a soft ground with a
+ * sentence-case label (default: the preset and ratio, "Video · 1.78").
+ * @startingPoint section="Layout" subtitle="Ratio frames + placeholders" viewport="800x300"
+ */
 export function AspectRatio({
 	ratio = "video",
 	label,

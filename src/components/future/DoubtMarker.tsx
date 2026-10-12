@@ -2,12 +2,6 @@ import React from "react";
 import { useEscape } from "../../a11y/hooks";
 import "./DoubtMarker.scss";
 
-/**
- * An inline mark on a claim the system isn't sure of. Hover or focus explains why; with
- * `onRecheck` the claim is the button that sends the system back to the data, which then
- * confirms it or rewrites it in place.
- * @startingPoint section="Future" subtitle="Claims that admit doubt" viewport="700x220"
- */
 export interface DoubtMarkerProps {
 	/** The claim as originally written */
 	children: React.ReactNode;
@@ -34,9 +28,13 @@ const STATUS_TEXT: Record<string, string> = {
 	revised: "Revised",
 };
 
-// An inline mark on a claim the system isn't sure of. Hover or focus explains why; with
-// `onRecheck` the claim itself is the button that sends the system back to the data, which then
-// confirms it or rewrites it in place (`status="revised"` + `revision`).
+/**
+ * An inline mark on a claim the system isn't sure of: it says so, and hover or focus says why.
+ * With `onRecheck` the claim is the button that sends the system back to the data, which then
+ * confirms it or rewrites it in place (`status="revised"` + `revision`) with the qualification it
+ * should have had. Evolved from comment threads.
+ * @startingPoint section="Future" subtitle="Claims that admit doubt" viewport="700x220"
+ */
 export function DoubtMarker({
 	children,
 	reason,

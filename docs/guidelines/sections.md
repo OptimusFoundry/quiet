@@ -2,7 +2,7 @@
 
 How to break a page into parts. A page is **a stack of sections**, each section is **a heading plus
 content**, and each section sits in one container. **Grounds and spacing group;
-lines don't.** Specimen: Storybook `guidelines-sections--default`; the components are under **App**
+lines don't.** Specimen: Storybook `foundations-sections--default`; the components are under **Components/App**
 (`Panel`, `DescriptionList`).
 
 ## The containers (app)

@@ -3,10 +3,6 @@ import { focusNeighbour } from "../../a11y/hooks";
 import "./Alert.scss";
 import { CloseButton, StatusIcon } from "./parts";
 
-/**
- * Inline, in-flow message box on its status ground (--q-radius-md); status reads through the icon.
- * @startingPoint section="Feedback" subtitle="Info · success · warning · error" viewport="700x420"
- */
 export interface AlertProps {
 	variant?: "info" | "success" | "warning" | "error";
 	title?: React.ReactNode;
@@ -23,6 +19,10 @@ export interface AlertProps {
 
 const VARIANTS: string[] = ["info", "success", "warning", "error"];
 
+/**
+ * Inline, in-flow message box on its status ground (--q-radius-md); status reads through the icon.
+ * @startingPoint section="Feedback" subtitle="Info · success · warning · error" viewport="700x420"
+ */
 export function Alert({
 	variant = "info",
 	title,

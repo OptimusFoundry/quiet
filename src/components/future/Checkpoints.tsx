@@ -2,11 +2,6 @@ import React from "react";
 import { Button } from "../core/Button";
 import "./Checkpoints.scss";
 
-/**
- * A timeline of snapshots you can scrub when people and agents both edit. Agent snapshots are
- * square, human ones round. Arrow keys move between snapshots; Enter restores the selected one.
- * @startingPoint section="Future" subtitle="Scrubbable shared history" viewport="760x240"
- */
 export interface Checkpoint {
 	id?: string;
 	/** What changed, e.g. "Paused 3 campaigns" */
@@ -42,9 +37,13 @@ export interface CheckpointsProps {
 
 const plural = (n: number, w: string) => `${n} later ${w}${n === 1 ? "" : "s"}`;
 
-// When people and agents both edit, state needs a timeline you can scrub, not a hidden undo stack.
-// Agent snapshots are square, human ones round. Arrow keys move between snapshots; Enter (or the
-// Restore button) restores the selected one.
+/**
+ * A timeline of snapshots you can scrub when people and agents both edit, instead of a hidden undo
+ * stack. Agent snapshots are square, human ones round. Arrow keys move between snapshots; Enter
+ * (or the Restore button) restores the selected one. Restoring is itself a checkpoint: append it
+ * in `onRestore`, so history is never thrown away. Evolved from undo stacks and audit logs.
+ * @startingPoint section="Future" subtitle="Scrubbable shared history" viewport="760x240"
+ */
 export function Checkpoints({
 	checkpoints = [],
 	value,

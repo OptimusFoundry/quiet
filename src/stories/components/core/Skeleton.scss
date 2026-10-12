@@ -1,0 +1,14 @@
+/* A run row and its placeholder (Skeleton.stories.tsx). */
+.q-sb-skeleton {
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: var(--q-space-1-5);
+	}
+
+	&__text {
+		display: grid;
+		flex: 1;
+		gap: var(--q-space-0-5);
+	}
+}

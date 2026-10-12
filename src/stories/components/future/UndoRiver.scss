@@ -1,0 +1,6 @@
+/* UndoRiver in a short box (the overview tile): lanes as tall as an item, no gap above the hint. */
+.q-sb-undo-river--tile {
+	--q-undo-river-gap: 0;
+	--q-undo-river-lane-height: var(--q-undo-river-item-height);
+	--q-undo-river-band-pt: var(--q-space-1);
+}

@@ -1,12 +1,6 @@
 import React from "react";
 import "./GhostFuture.scss";
 
-/**
- * An empty state that shows what is likely to come: dashed ghost rows drawn from similar lists,
- * each folding away as a real row arrives. Ghosts are decorative (hidden from assistive tech);
- * the caption says where they come from.
- * @startingPoint section="Future" subtitle="Empty states that show the shape of success" viewport="700x360"
- */
 export interface GhostFutureRow {
 	label: React.ReactNode;
 	/** When it usually happens, e.g. "day 3" */
@@ -27,8 +21,13 @@ export interface GhostFutureProps {
 	style?: React.CSSProperties;
 }
 
-// An empty state that shows the likely shape of what's coming: dashed ghost rows (what similar
-// lists looked like early on), each one folding away as a real row arrives in its place.
+/**
+ * An empty state that shows what is likely to come. Instead of "nothing here yet", dashed ghost
+ * rows show what similar lists looked like early on, each folding away as a real row arrives in
+ * its place. Ghosts are decorative (hidden from assistive tech); the caption says where they come
+ * from. Evolved from the empty state.
+ * @startingPoint section="Future" subtitle="Empty states that show the shape of success" viewport="700x360"
+ */
 export function GhostFuture({
 	ghosts = [],
 	children,

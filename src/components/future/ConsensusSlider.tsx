@@ -12,12 +12,6 @@ export interface ConsensusPosition {
 	/** Show the agent mark instead of an avatar */
 	agent?: boolean;
 }
-/**
- * A shared setting that shows where teammates and agents set theirs, as markers above the track,
- * with the spread band between the lowest and highest. Agreement is the band narrowing.
- * Evolved from Slider + comments.
- * @startingPoint section="Future" subtitle="Consensus slider" viewport="700x220"
- */
 export interface ConsensusSliderProps {
 	label?: React.ReactNode;
 	/** Your position */
@@ -44,6 +38,12 @@ export interface ConsensusSliderProps {
 
 const mean = (vs: number[]) => vs.reduce((a, b) => a + b, 0) / vs.length;
 
+/**
+ * A shared setting that shows where teammates and agents set theirs, as markers above the track,
+ * with the spread band between the lowest and highest. Agreement is the band narrowing, visible
+ * without a thread. Evolved from Slider + comments.
+ * @startingPoint section="Future" subtitle="Consensus slider" viewport="700x220"
+ */
 export function ConsensusSlider({
 	label,
 	value,

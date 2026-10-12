@@ -1,13 +1,6 @@
 import React from "react";
 import "./ThresholdHandles.scss";
 
-/**
- * Alert thresholds as lines dragged on the chart itself. Bars outside the band are the alerts that
- * would have fired, and the count updates as you move a line — sensitivity set with the false
- * positives in view. Each line is a vertical slider (arrows, PageUp/PageDown, Home/End).
- * Evolved from the alert rule form.
- * @startingPoint section="Future" subtitle="Threshold handles" viewport="700x260"
- */
 export interface ThresholdValue {
 	/** Lower line; omit for a high-only alert */
 	low?: number;
@@ -26,7 +19,7 @@ export interface ThresholdHandlesProps {
 	step?: number;
 	label?: React.ReactNode;
 	formatValue?: (value: number) => React.ReactNode;
-	/** Summary line; default "Would have fired N× in <data.length>" */
+	/** Summary line; default `"Would have fired N× in <data.length>"` */
 	summary?: (fires: number, total: number) => React.ReactNode;
 	lowLabel?: string;
 	highLabel?: string;
@@ -38,8 +31,13 @@ const round = (n: number) => Number(n.toFixed(6));
 
 type Which = "low" | "high";
 
-// Alert thresholds as lines you drag on the chart itself. Bars outside the band are the alerts that
-// would have fired, so you set sensitivity with the false positives in view.
+/**
+ * Alert thresholds as lines dragged on the chart itself. Bars outside the band are the alerts that
+ * would have fired, and the count updates as you move a line: sensitivity set by feel, with the
+ * false positives in view. Each line is a vertical slider (arrows, PageUp/PageDown, Home/End).
+ * Evolved from the alert rule form.
+ * @startingPoint section="Future" subtitle="Threshold handles" viewport="700x260"
+ */
 export function ThresholdHandles({
 	data = [],
 	value,

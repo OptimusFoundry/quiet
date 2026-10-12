@@ -3,10 +3,6 @@ import { motionToken, usePresence } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./Table.scss";
 
-/**
- * Data table. Sentence-case label headers, faint row dividers, no vertical rules. Sorting, selection, expandable rows, striped, bordered (an outer frame), loading.
- * @startingPoint section="Data" subtitle="Sortable, selectable table" viewport="900x420"
- */
 export interface TableProps<Row = Record<string, unknown>, Key extends React.Key = React.Key> {
 	columns: Array<{
 		key: string;
@@ -231,6 +227,10 @@ function TR<Row>({
 	);
 }
 
+/**
+ * Data table. Sentence-case label headers, faint row dividers, no vertical rules. Sorting, selection, expandable rows, striped, bordered (an outer frame), loading.
+ * @startingPoint section="Data" subtitle="Sortable, selectable table" viewport="900x420"
+ */
 export function Table<Row = Record<string, unknown>, Key extends React.Key = React.Key>({
 	columns = [],
 	data = [],

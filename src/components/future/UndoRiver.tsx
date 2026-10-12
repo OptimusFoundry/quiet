@@ -3,12 +3,6 @@ import { rovingKeyDown } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./UndoRiver.scss";
 
-/**
- * Everything anyone (or any agent) did drifts downstream for a day, dimming as it ages; anything
- * still in the river can be pulled back. Undo becomes a place, not a keystroke. One tab stop;
- * arrows move along the river, newest first; an undo is announced.
- * @startingPoint section="Future" subtitle="Undo as a place" viewport="720x220"
- */
 export interface UndoRiverItem {
 	id: string | number;
 	/** What was done, e.g. "Paused Founding members" */
@@ -53,9 +47,13 @@ const ago = (ms: number) => {
 	return "just now";
 };
 
-// Undo stops being a keystroke that works for one step. Everything anyone (or any agent) did
-// drifts downstream for `window`, dimming as it goes, and anything still in the river can be
-// pulled back. Newest first for the keyboard: one tab stop, arrows move along the river.
+/**
+ * Everything anyone (or any agent) did drifts downstream for `window` (a day by default), dimming
+ * as it ages; anything still in the river can be pulled back. Undo becomes a place, not a
+ * keystroke. One tab stop; arrows move along the river, newest first; an undo is announced.
+ * Evolved from the toast and ⌘Z.
+ * @startingPoint section="Future" subtitle="Undo as a place" viewport="720x220"
+ */
 export function UndoRiver({
 	items = [],
 	now,

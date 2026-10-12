@@ -1,10 +1,6 @@
 import React from "react";
 import "./Badge.scss";
 
-/**
- * Sans pill for counts and statuses. Status reads through the dot, not a color fill.
- * @startingPoint section="Primitives" subtitle="Counts and status pills" viewport="700x180"
- */
 export interface BadgeProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	ref?: React.Ref<HTMLSpanElement>;
 	variant?: "default" | "primary" | "secondary" | "outline" | "success" | "warning" | "error";
@@ -33,6 +29,10 @@ const VARIANTS: string[] = [
 	"error",
 ];
 
+/**
+ * Sans pill for counts and statuses. Status reads through the dot, not a color fill.
+ * @startingPoint section="Primitives" subtitle="Counts and status pills" viewport="700x180"
+ */
 export function Badge({
 	variant = "default",
 	size = "md",

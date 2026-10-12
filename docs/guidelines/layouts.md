@@ -1,7 +1,7 @@
 # Layouts
 
 Eleven page layouts cover a SaaS product. Pick one per screen by **what the user does there**. Don't
-compose a new one. Dimensions are comfortable density. Specimen: Storybook `guidelines-layouts--default`.
+compose a new one. Dimensions are comfortable density. Specimen: Storybook `foundations-layouts--default`.
 
 Every layout sits in the app shell's panel. Its column (`padded`, the default) has `--q-space-block` (32)
 above, `--q-space-page-x` (32) at the sides and `--q-space-section` (48) below, caps at `--q-w-max`

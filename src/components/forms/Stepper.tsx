@@ -3,10 +3,6 @@ import { motionToken, useMergedRef } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./Stepper.scss";
 
-/**
- * Numeric stepper: minus, value, plus in one pill field.
- * @startingPoint section="Forms" subtitle="Number stepper" viewport="500x140"
- */
 export interface StepperProps
 	extends Omit<
 		React.InputHTMLAttributes<HTMLInputElement>,
@@ -82,6 +78,10 @@ function StepBtn({
 	);
 }
 
+/**
+ * Numeric stepper: minus, value, plus in one pill field.
+ * @startingPoint section="Forms" subtitle="Number stepper" viewport="500x140"
+ */
 export function Stepper({
 	value,
 	defaultValue,

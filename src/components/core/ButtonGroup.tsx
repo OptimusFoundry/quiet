@@ -1,10 +1,6 @@
 import type React from "react";
 import "./ButtonGroup.scss";
 
-/**
- * Groups Buttons — spaced or attached into one pill.
- * @startingPoint section="Actions" subtitle="Spaced or attached button sets" viewport="700x200"
- */
 export interface ButtonGroupProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className" | "style"> {
 	ref?: React.Ref<HTMLDivElement>;
@@ -22,6 +18,10 @@ export interface ButtonGroupProps
 
 const SPACING: unknown[] = ["sm", "md", "lg"];
 
+/**
+ * Groups Buttons — spaced or attached into one pill.
+ * @startingPoint section="Actions" subtitle="Spaced or attached button sets" viewport="700x200"
+ */
 export function ButtonGroup({
 	children,
 	attached = false,

@@ -1,0 +1,52 @@
+/* Layout for the Grid and Col stories: labelled cells, and a pane you can resize to watch the
+   grid change band (sm under 720px, md under 960px, lg above). */
+.q-sb-grid {
+	&__cell {
+		display: grid;
+		place-items: center;
+		min-height: var(--q-control-lg);
+		padding: var(--q-space-1);
+		border-radius: var(--q-radius-md);
+		background: var(--q-bg-subtle);
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-sm);
+		font-variant-numeric: tabular-nums;
+		text-align: center;
+	}
+
+	&__cell--tall {
+		height: 100%;
+	}
+
+	&__pane {
+		box-sizing: border-box;
+		width: 1000px;
+		min-width: 320px;
+		max-width: 100%;
+		padding: var(--q-space-2);
+		border-radius: var(--q-radius-lg);
+		background: var(--q-bg);
+		box-shadow: var(--q-shadow-1);
+		resize: horizontal;
+		overflow: auto;
+	}
+
+	/* The band the Grid measured (its data-bp), so a resize shows the switch. */
+	&__band {
+		margin: 0 0 var(--q-space-1);
+		color: var(--q-fg-muted);
+		font-size: var(--q-text-xs);
+
+		&::after {
+			content: "Band: lg (960px and up)";
+		}
+	}
+}
+
+.q-sb-grid__pane:has(.q-grid[data-bp="md"]) .q-sb-grid__band::after {
+	content: "Band: md (720 to 959px)";
+}
+
+.q-sb-grid__pane:has(.q-grid[data-bp="sm"]) .q-sb-grid__band::after {
+	content: "Band: sm (under 720px)";
+}

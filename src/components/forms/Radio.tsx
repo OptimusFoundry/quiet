@@ -3,10 +3,6 @@ import { FormValue } from "../../a11y/form";
 import { rovingKeyDown, useMergedRef } from "../../a11y/hooks";
 import "./Radio.scss";
 
-/**
- * Radio group. Options may carry description and disabled.
- * @startingPoint section="Forms" subtitle="Radio groups" viewport="600x220"
- */
 export interface RadioProps
 	extends Omit<
 		React.HTMLAttributes<HTMLDivElement>,
@@ -46,6 +42,10 @@ export interface RadioProps
 const SIZES = ["sm", "md", "lg"];
 type RadioOption = Exclude<RadioProps["options"][number], string>;
 
+/**
+ * Radio group. Options may carry description and disabled.
+ * @startingPoint section="Forms" subtitle="Radio groups" viewport="600x220"
+ */
 export function Radio({
 	name,
 	label,

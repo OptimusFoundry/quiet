@@ -2,7 +2,7 @@
 
 Two tools, chosen by what the column holds. **Fixed-width panes** hold navigation and tool UI
 (lists, inspectors, forms). **The 12-column grid** holds content blocks that should share space.
-Specimen: Storybook `guidelines-grid--default`.
+Specimen: Storybook `foundations-grid--default`.
 
 ## Pane or grid?
 

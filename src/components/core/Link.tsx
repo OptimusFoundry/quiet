@@ -3,10 +3,6 @@ import { useLinkElement } from "../../lib/link";
 import { Icon } from "./Icon";
 import "./Link.scss";
 
-/**
- * Inline text link in the accent text colour, with a soft underline that firms up on hover.
- * @startingPoint section="Actions" subtitle="Inline text links" viewport="600x160"
- */
 export interface LinkProps
 	extends Omit<
 		React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -27,6 +23,10 @@ export interface LinkProps
 
 const SIZES: string[] = ["sm", "md", "lg"];
 
+/**
+ * Inline text link in the accent text colour, with a soft underline that firms up on hover.
+ * @startingPoint section="Actions" subtitle="Inline text links" viewport="600x160"
+ */
 export function Link({
 	href = "#",
 	variant = "default",

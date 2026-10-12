@@ -1,12 +1,6 @@
 import React from "react";
 import "./ElasticSlider.scss";
 
-/**
- * A slider that resists past its safe line instead of showing a validation error. Past `safe` a
- * drag loses leverage and springs back on release, and the keyboard stops at the line, unless the
- * override is held. Evolved from Slider + validation.
- * @startingPoint section="Future" subtitle="Elastic slider" viewport="700x200"
- */
 export interface ElasticSliderProps {
 	label?: React.ReactNode;
 	value?: number;
@@ -38,6 +32,12 @@ export interface ElasticSliderProps {
 // Past the safe line a pointer drag keeps only this share of its travel (it "loses leverage").
 const LEVERAGE = 0.35;
 
+/**
+ * A slider that resists past its safe line instead of showing a validation error: resistance
+ * replaces the error message. Past `safe` a drag loses leverage and springs back on release, and
+ * the keyboard stops at the line, unless the override is held. Evolved from Slider + validation.
+ * @startingPoint section="Future" subtitle="Elastic slider" viewport="700x200"
+ */
 export function ElasticSlider({
 	label,
 	value,

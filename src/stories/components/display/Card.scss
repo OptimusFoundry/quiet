@@ -1,0 +1,8 @@
+/* Layout for the Card stories: a grid of cards that wraps. */
+.q-sb-card {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+	gap: var(--q-space-card-gap);
+	align-items: start;
+	max-width: var(--q-w-content);
+}

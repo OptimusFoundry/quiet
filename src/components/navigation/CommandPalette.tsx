@@ -3,10 +3,6 @@ import { useEscape, useFocusTrap, usePresence } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./CommandPalette.scss";
 
-/**
- * ⌘K palette. Filter-as-you-type, grouped results, full keyboard control. Floats on --q-shadow-float.
- * @startingPoint section="Navigation" subtitle="⌘K command palette" viewport="900x600"
- */
 export interface CommandPaletteItem {
 	id?: string;
 	label: string;
@@ -31,6 +27,10 @@ export interface CommandPaletteProps<Item extends CommandPaletteItem = CommandPa
 	label?: string;
 }
 
+/**
+ * ⌘K palette. Filter-as-you-type, grouped results, full keyboard control. Floats on --q-shadow-float.
+ * @startingPoint section="Navigation" subtitle="⌘K command palette" viewport="900x600"
+ */
 export function CommandPalette<Item extends CommandPaletteItem = CommandPaletteItem>({
 	open,
 	onClose,

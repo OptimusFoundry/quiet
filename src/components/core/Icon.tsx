@@ -4,11 +4,6 @@ import "./Icon.scss";
 
 export { ICON_ALIASES, ICONS, type IconName } from "./icons";
 
-/**
- * A stroke icon from quiet's set (`icons.ts`: a 24 grid, round caps, `currentColor`), sized in em so
- * it follows the text beside it. Decorative unless `label` is given.
- * @startingPoint section="Primitives" subtitle="Stroke icons" viewport="600x160"
- */
 export interface IconProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
 	ref?: React.Ref<HTMLSpanElement>;
@@ -49,6 +44,11 @@ function pathOf(name: string): string | undefined {
 	return (ICONS as Record<string, string>)[ICON_ALIASES[name] ?? name];
 }
 
+/**
+ * A stroke icon from quiet's set (`icons.ts`: a 24 grid, round caps, `currentColor`), sized in em so
+ * it follows the text beside it. Decorative unless `label` is given.
+ * @startingPoint section="Primitives" subtitle="Stroke icons" viewport="600x160"
+ */
 export function Icon({
 	name = "arrow-right",
 	glyph,

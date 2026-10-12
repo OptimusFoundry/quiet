@@ -4,11 +4,6 @@ import type { LineChartProps } from "./LineChart";
 import { LineChart } from "./LineChart";
 import "./NarratedChart.scss";
 
-/**
- * A line chart that comes with its reading: short sentences, each a button that marks the point
- * or range it talks about. The narration is passed in, not generated.
- * @startingPoint section="Charts" subtitle="A chart with its reading" viewport="800x460"
- */
 export interface NarratedChartBeat {
 	/** One short sentence */
 	text: React.ReactNode;
@@ -25,9 +20,13 @@ export interface NarratedChartProps extends Omit<LineChartProps, "highlight"> {
 	onBeatChange?: (beat: number) => void;
 }
 
-// A line chart that comes with its reading: a few short sentences, each a button that marks the
-// point or range it talks about. The narration is written by the product (or an agent) and passed
-// in; the chart only shows where each sentence lives. One tab stop, arrows move between beats.
+/**
+ * A line chart that comes with its reading: a few short sentences, each a button that marks the
+ * point or range it talks about, so the story and the evidence stay side by side. The narration is
+ * written by the product (or an agent) and passed in, not generated. One tab stop, arrows move
+ * between beats.
+ * @startingPoint section="Charts" subtitle="A chart with its reading" viewport="800x460"
+ */
 export function NarratedChart({
 	beats = [],
 	beat,

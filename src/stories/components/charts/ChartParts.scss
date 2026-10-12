@@ -1,0 +1,7 @@
+/* A positioned plot box for the ChartTooltip story: the tooltip places itself inside it. */
+.q-sb-chart-parts__plot {
+	position: relative;
+	height: 120px;
+	border-radius: var(--q-radius-md);
+	background: var(--q-bg-subtle);
+}

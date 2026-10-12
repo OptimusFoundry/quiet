@@ -4,10 +4,6 @@ import { useMergedRef, usePresence } from "../../a11y/hooks";
 import { Icon } from "../core/Icon";
 import "./MultiSelect.scss";
 
-/**
- * Multi-value select. Chosen values show as removable mono pills; menu has checkboxes, filter, and clear.
- * @startingPoint section="Forms" subtitle="Multi-value select" viewport="600x460"
- */
 export interface MultiSelectProps
 	extends Omit<
 		React.HTMLAttributes<HTMLSpanElement>,
@@ -76,6 +72,10 @@ const text = (o: MultiSelectItem) =>
 const reduced = () =>
 	typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/**
+ * Multi-value select. Chosen values show as removable mono pills; menu has checkboxes, filter, and clear.
+ * @startingPoint section="Forms" subtitle="Multi-value select" viewport="600x460"
+ */
 export function MultiSelect({
 	label,
 	options = [],

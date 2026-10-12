@@ -2,10 +2,6 @@ import React from "react";
 import { Grid } from "./Grid";
 import "./Stack.scss";
 
-/**
- * Flex row/column on the 8px grid.
- * @startingPoint section="Layout" subtitle="Flex stacks on the 8px grid" viewport="700x200"
- */
 type StackDirection = "row" | "column" | "row-reverse" | "column-reverse";
 
 export interface StackProps {
@@ -37,6 +33,10 @@ const GAPS: (string | number)[] = ["none", "xs", "sm", "md", "lg", "xl", "2xl"];
 const DIRS: string[] = ["row", "column", "row-reverse", "column-reverse"];
 const px = (v: string | number | undefined) => (typeof v === "number" ? `${v}px` : v);
 
+/**
+ * Flex row/column on the 8px grid.
+ * @startingPoint section="Layout" subtitle="Flex stacks on the 8px grid" viewport="700x200"
+ */
 export function Stack({
 	direction = "column",
 	directionMd,
