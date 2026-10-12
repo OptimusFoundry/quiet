@@ -27,8 +27,8 @@
     --q-intent-bar-chip-border: var(--q-border);
     --q-intent-bar-chip-border-hover: var(--q-fg);
     --q-intent-bar-chip-size: var(--q-text-xs);
-    --q-intent-bar-chip-key-font: var(--q-font-mono);
-    --q-intent-bar-chip-key-size: var(--q-text-3xs);
+    --q-intent-bar-chip-key-font: var(--q-font-label);
+    --q-intent-bar-chip-key-size: var(--q-text-label);
     --q-intent-bar-chip-key-fg: var(--q-fg-muted);
     --q-intent-bar-chip-value-fg: var(--q-fg);
     --q-intent-bar-chip-value-weight: var(--q-weight-medium);
@@ -135,8 +135,8 @@
   .q-intent-bar__chip-key {
     font-family: var(--q-intent-bar-chip-key-font);
     font-size: var(--q-intent-bar-chip-key-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-intent-bar-chip-key-fg);
   }
 
@@ -145,14 +145,9 @@
     color: var(--q-intent-bar-chip-value-fg);
   }
 
-  // A hairline chevron: the chip opens.
+  // A chevron: the chip opens.
   .q-intent-bar__chip-caret {
-    width: var(--q-space-0-5);
-    height: var(--q-space-0-5);
-    margin: 0 var(--q-space-0-25) var(--q-space-0-25);
-    border-right: var(--q-hairline) solid var(--q-intent-bar-chip-key-fg);
-    border-bottom: var(--q-hairline) solid var(--q-intent-bar-chip-key-fg);
-    transform: rotate(45deg);
+    color: var(--q-intent-bar-chip-key-fg);
   }
 
   .q-intent-bar__footer {

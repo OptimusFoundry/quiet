@@ -1,10 +1,11 @@
 import React from "react";
 import { Button } from "../core/Button";
+import { Icon } from "../core/Icon";
 import "./DraftDiff.scss";
 
 /**
  * Inline, word-level suggestions instead of "regenerate". Each hunk shows the struck original and
- * the proposed words with accept (✓) and keep (×) keys; a resolved hunk can be reopened. The ship
+ * the proposed words with accept (check) and keep (close) keys; a resolved hunk can be reopened. The ship
  * button stays disabled while any hunk is pending.
  * @startingPoint section="Future" subtitle="Accept suggestions hunk by hunk" viewport="760x300"
  */
@@ -126,7 +127,7 @@ export function DraftDiff({
 											aria-label={`Accept ${quote(h.after)}`}
 											onClick={() => resolve(i, "accepted")}
 										>
-											<span aria-hidden="true">{"✓"}</span>
+											<Icon name="check" size="sm" />
 										</button>
 										<button
 											type="button"
@@ -134,7 +135,7 @@ export function DraftDiff({
 											aria-label={`Keep ${quote(h.before)}`}
 											onClick={() => resolve(i, "rejected")}
 										>
-											<span aria-hidden="true">{"×"}</span>
+											<Icon name="close" size="sm" />
 										</button>
 									</span>
 								</span>

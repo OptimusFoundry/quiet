@@ -9,8 +9,8 @@
     --q-budget-leash-gap: var(--q-space-1-5);
     --q-budget-leash-label-size: var(--q-text-md);
     --q-budget-leash-label-weight: var(--q-weight-semibold);
-    --q-budget-leash-speed-font: var(--q-font-mono);
-    --q-budget-leash-speed-size: var(--q-text-3xs);
+    --q-budget-leash-speed-font: var(--q-font-label);
+    --q-budget-leash-speed-size: var(--q-text-label);
     --q-budget-leash-speed-fg: var(--q-fg-muted);
     --q-budget-leash-speed-fg-taut: var(--q-fg);
     --q-budget-leash-amount-size: var(--q-text-md);
@@ -77,8 +77,8 @@
   .q-budget-leash__speed {
     font-family: var(--q-budget-leash-speed-font);
     font-size: var(--q-budget-leash-speed-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-budget-leash-speed-fg);
 
     .q-budget-leash--taut & {
@@ -180,8 +180,8 @@
   .q-budget-leash__presets-label {
     font-family: var(--q-budget-leash-speed-font);
     font-size: var(--q-budget-leash-speed-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-budget-leash-speed-fg);
   }
 

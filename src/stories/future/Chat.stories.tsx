@@ -227,7 +227,7 @@ function ChatDemo({
 							)}
 							{t.text && <Words text={t.text} />}
 							{t.code && <CodeBlock language="sql" code={CODE} />}
-							{t.stopped && <p className="q-sb-chat__mono">Stopped</p>}
+							{t.stopped && <p className="q-sb-chat__label">Stopped</p>}
 						</ChatMessage>
 					),
 				)}
@@ -242,8 +242,8 @@ function ChatDemo({
 				}}
 				accept="image/*,.pdf,.csv,.txt,.md,.docx,.xlsx,.json"
 				maxSize={20 * 1024 * 1024}
-				toolbar={<span className="q-sb-chat__mono">Claude Opus 5.5</span>}
-				hint="⏎ send · ⇧⏎ line"
+				toolbar={<span className="q-sb-chat__label">Claude Opus 5.5</span>}
+				hint="Enter to send · Shift Enter for a new line"
 			/>
 		</div>
 	);
@@ -300,7 +300,7 @@ function Page() {
 			>
 				<Spec label="Working demo" col>
 					<ChatDemo />
-					<span className="q-sb-chat__mono">
+					<span className="q-sb-chat__label">
 						Send a message (attach a file if you like) — the reply is faked with a timer
 					</span>
 				</Spec>
@@ -370,7 +370,7 @@ function Page() {
 						accept="image/*,.pdf,.csv,.txt,.md"
 						maxFiles={4}
 						maxSize={5 * 1024 * 1024}
-						toolbar={<span className="q-sb-chat__mono">Claude Opus 5.5</span>}
+						toolbar={<span className="q-sb-chat__label">Claude Opus 5.5</span>}
 						hint="4 files · 5 MB each"
 					/>
 				</Spec>
@@ -527,7 +527,7 @@ function Page() {
 						]}
 						onSelect={setPicked}
 					/>
-					<span className="q-sb-chat__mono" aria-live="polite">
+					<span className="q-sb-chat__label" aria-live="polite">
 						{picked ? `Picked: ${picked}` : "Pick one"}
 					</span>
 				</Spec>

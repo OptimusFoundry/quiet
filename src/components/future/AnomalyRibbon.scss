@@ -17,8 +17,8 @@
     --q-anomaly-ribbon-mark-bg-selected: var(--q-accent);
     --q-anomaly-ribbon-mark-ring: var(--q-accent);
     --q-anomaly-ribbon-mark-focus-ring: 0 0 0 2px var(--q-bg), 0 0 0 3px var(--q-fg);
-    --q-anomaly-ribbon-caption-font-family: var(--q-font-mono);
-    --q-anomaly-ribbon-caption-font-size: var(--q-text-2xs);
+    --q-anomaly-ribbon-caption-font-family: var(--q-font-label);
+    --q-anomaly-ribbon-caption-font-size: var(--q-text-label);
     --q-anomaly-ribbon-caption-fg: var(--q-fg-muted);
     --q-anomaly-ribbon-detail-fg: var(--q-fg);
     --q-anomaly-ribbon-series-height: calc(var(--q-space-10) + var(--q-space-1-25));
@@ -87,8 +87,8 @@
     font-family: var(--q-anomaly-ribbon-caption-font-family);
     font-size: var(--q-anomaly-ribbon-caption-font-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-anomaly-ribbon-caption-fg);
   }
 

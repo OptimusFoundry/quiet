@@ -9,13 +9,9 @@
   :root,
   [data-theme] {
     --q-transcript-gap: var(--q-space-inline);
-    --q-transcript-session-border: var(--q-border); // a session is one box: its head and its thread
     --q-transcript-session-radius: var(--q-radius-lg);
-    --q-transcript-session-bg: var(--q-bg);
-    --q-transcript-head-bg: transparent;
-    --q-transcript-head-bg-hover: var(--q-bg-subtle);
-    --q-transcript-head-bg-open: var(--q-bg-subtle);
-    --q-transcript-head-divider: var(--q-border);
+    --q-transcript-head-bg: var(--q-bg-subtle); // a session's head is a ground; its thread sits below
+    --q-transcript-head-bg-hover: color-mix(in srgb, var(--q-fg) 4%, var(--q-bg-subtle));
     --q-transcript-head-px: var(--q-space-stack);
     --q-transcript-head-py: var(--q-space-1-5);
     --q-transcript-label-fg: var(--q-fg);
@@ -32,8 +28,8 @@
     --q-transcript-author-size: var(--q-text-sm);
     --q-transcript-author-weight: var(--q-weight-semibold);
     --q-transcript-time-fg: var(--q-fg-muted);
-    --q-transcript-time-font: var(--q-font-mono);
-    --q-transcript-time-size: var(--q-text-2xs);
+    --q-transcript-time-font: var(--q-font-label);
+    --q-transcript-time-size: var(--q-text-label);
     --q-transcript-code-bg: var(--q-bg-subtle);
     --q-transcript-code-font: var(--q-font-mono);
     --q-transcript-code-radius: var(--q-radius-sm);
@@ -51,10 +47,6 @@
 
   .q-transcript__session {
     min-width: 0;
-    overflow: clip;
-    border: var(--q-hairline) solid var(--q-transcript-session-border);
-    border-radius: var(--q-transcript-session-radius);
-    background: var(--q-transcript-session-bg);
   }
 
   .q-transcript__heading {
@@ -70,6 +62,7 @@
     box-sizing: border-box;
     width: 100%;
     padding: var(--q-transcript-head-py) var(--q-transcript-head-px);
+    border-radius: var(--q-transcript-session-radius);
     background: var(--q-transcript-head-bg);
     text-align: left;
   }
@@ -87,16 +80,8 @@
   }
 
   .q-transcript__chevron {
-    display: inline-block;
-    width: var(--q-space-1-5);
     color: var(--q-transcript-chevron-fg);
     transition: transform var(--q-dur-expand) var(--q-ease-soft);
-  }
-
-  // Open: the head is tinted and ruled off from its own thread, inside the same box.
-  .q-transcript__toggle[aria-expanded="true"] {
-    border-bottom: var(--q-hairline) solid var(--q-transcript-head-divider);
-    background: var(--q-transcript-head-bg-open);
   }
 
   .q-transcript__toggle[aria-expanded="true"] .q-transcript__chevron {
@@ -157,7 +142,7 @@
     color: var(--q-transcript-time-fg);
     font-family: var(--q-transcript-time-font);
     font-size: var(--q-transcript-time-size);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
   }
 
   // The group's byline names the speaker; the reply's own name row stays for screen readers only.

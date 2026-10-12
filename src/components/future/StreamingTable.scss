@@ -8,8 +8,8 @@
   :root,
   [data-theme] {
     --q-streaming-table-gap: var(--q-space-1);
-    --q-streaming-table-bar-font-family: var(--q-font-mono);
-    --q-streaming-table-bar-font-size: var(--q-text-2xs);
+    --q-streaming-table-bar-font-family: var(--q-font-label);
+    --q-streaming-table-bar-font-size: var(--q-text-label);
     --q-streaming-table-bar-fg: var(--q-fg-muted);
     --q-streaming-table-state-fg: var(--q-fg);
     --q-streaming-table-dot-size: var(--q-space-0-75);
@@ -46,8 +46,8 @@
     gap: var(--q-streaming-table-gap);
     font-family: var(--q-streaming-table-bar-font-family);
     font-size: var(--q-streaming-table-bar-font-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-streaming-table-bar-fg);
   }
 
@@ -80,8 +80,8 @@
     gap: var(--q-space-0-75);
     border: var(--q-hairline) solid;
     font: inherit;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     cursor: pointer;
     transition:
       background var(--q-dur-hover) var(--q-ease-soft),

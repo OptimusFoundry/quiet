@@ -55,7 +55,7 @@ function CopyButton({ text, labelId }: { text: string; labelId: string }) {
 				aria-labelledby={`${wordId} ${labelId}`}
 				data-state={state}
 				onClick={() => copy(text)}
-				icon={<Icon glyph={state === "copied" ? "✓" : "⧉"} size="md" />}
+				icon={<Icon name={state === "copied" ? "check" : "copy"} size="md" />}
 			/>
 			<span role="status" className="q-sr-only">
 				{state === "copied" ? "Copied" : state === "failed" ? "Copy failed" : ""}

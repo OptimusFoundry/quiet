@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import { fileKind, formatBytes, isImage } from "./chat-utils";
 import "./Attachment.scss";
 
@@ -163,7 +164,7 @@ export function Attachment({
 					aria-label={`Remove ${fileName}`}
 					onClick={onRemove}
 				>
-					<span aria-hidden="true">{"×"}</span>
+					<Icon name="close" size="xs" />
 				</button>
 			)}
 		</div>

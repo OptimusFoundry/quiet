@@ -9,9 +9,9 @@
     --q-hold-button-heat-height: var(--q-space-0-25);
     --q-hold-button-hint-fg: var(--q-fg-on-inverse-muted);
     --q-hold-button-hint-fg-plain: var(--q-fg-muted);
-    --q-hold-button-hint-font: var(--q-font-mono);
-    --q-hold-button-hint-size: var(--q-text-3xs);
-    --q-hold-button-hint-tracking: var(--q-tracking-mono);
+    --q-hold-button-hint-font: var(--q-font-label);
+    --q-hold-button-hint-size: var(--q-text-label);
+    --q-hold-button-hint-tracking: var(--q-tracking-label);
     --q-hold-button-release: var(--q-dur-expand);
   }
 }
@@ -32,7 +32,7 @@
     font-family: var(--q-hold-button-hint-font);
     font-size: var(--q-hold-button-hint-size);
     letter-spacing: var(--q-hold-button-hint-tracking);
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
     color: var(--q-hold-button-hint-fg);
   }
 

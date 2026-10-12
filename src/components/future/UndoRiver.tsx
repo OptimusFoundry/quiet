@@ -1,5 +1,6 @@
 import React from "react";
 import { rovingKeyDown } from "../../a11y/hooks";
+import { Icon } from "../core/Icon";
 import "./UndoRiver.scss";
 
 /**
@@ -61,7 +62,7 @@ export function UndoRiver({
 	window: span = 24 * HOUR,
 	onUndo,
 	label = "Recent actions",
-	startLabel = "just now",
+	startLabel = "Just now",
 	endLabel = "24 h · gone",
 	hint = "Pick anything still drifting by to undo it.",
 	className,
@@ -134,9 +135,7 @@ export function UndoRiver({
 										className={`q-undo-river__who q-undo-river__who--${it.kind || "person"}`}
 									/>
 									{it.label}
-									<span aria-hidden="true" className="q-undo-river__undo">
-										↺
-									</span>
+									<Icon name="undo" size="sm" className="q-undo-river__undo" />
 								</button>
 							</li>
 						);

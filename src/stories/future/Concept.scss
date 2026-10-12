@@ -7,15 +7,15 @@
 	color: var(--q-fg);
 	font-family: var(--q-font-sans);
 
-	&__mono {
-		font-family: var(--q-font-mono);
-		font-size: var(--q-text-3xs);
-		letter-spacing: var(--q-tracking-mono);
-		text-transform: uppercase;
+	&__label {
+		font-family: var(--q-font-label);
+		font-size: var(--q-text-label);
+		font-weight: var(--q-weight-label);
+		text-transform: var(--q-case-label);
 		color: var(--q-fg-muted);
 	}
 
-	&__mono--strong {
+	&__label--strong {
 		color: var(--q-fg);
 	}
 

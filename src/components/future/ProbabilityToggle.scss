@@ -24,8 +24,8 @@
     --q-probability-toggle-heading-gap: var(--q-space-1);
     --q-probability-toggle-label-font-size: var(--q-text-md);
     --q-probability-toggle-label-weight: var(--q-weight-semibold);
-    --q-probability-toggle-level-font-family: var(--q-font-mono);
-    --q-probability-toggle-level-font-size: var(--q-text-2xs);
+    --q-probability-toggle-level-font-family: var(--q-font-label);
+    --q-probability-toggle-level-font-size: var(--q-text-label);
     --q-probability-toggle-level-fg: var(--q-fg);
     --q-probability-toggle-description-font-size: var(--q-text-sm);
     --q-probability-toggle-description-fg: var(--q-fg-muted);
@@ -128,8 +128,8 @@
     font-family: var(--q-probability-toggle-level-font-family);
     font-size: var(--q-probability-toggle-level-font-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-probability-toggle-level-fg);
   }
 

@@ -21,9 +21,9 @@
     --q-chart-baseline: var(--q-border-strong);
     --q-chart-gap: var(--q-bg); // 2px surface gap between fills, ring around markers
     --q-chart-axis-fg: var(--q-fg-muted);
-    --q-chart-axis-font-family: var(--q-font-mono);
-    --q-chart-axis-font-size: var(--q-text-3xs);
-    --q-chart-axis-tracking: var(--q-tracking-mono);
+    --q-chart-axis-font-family: var(--q-font-label);
+    --q-chart-axis-font-size: var(--q-text-label);
+    --q-chart-axis-tracking: var(--q-tracking-label);
     --q-chart-crosshair: var(--q-fg-muted);
     --q-chart-reference: var(--q-fg-muted);
     --q-chart-highlight-bg: var(--q-bg-subtle);
@@ -35,9 +35,8 @@
 
     --q-chart-tooltip-bg: var(--q-bg);
     --q-chart-tooltip-fg: var(--q-fg);
-    --q-chart-tooltip-border: var(--q-border);
     --q-chart-tooltip-radius: var(--q-radius-sm);
-    --q-chart-tooltip-shadow: var(--q-shadow-2);
+    --q-chart-tooltip-shadow: var(--q-shadow-float);
     --q-chart-tooltip-px: var(--q-space-1-5);
     --q-chart-tooltip-py: var(--q-space-1);
     --q-chart-tooltip-gap: var(--q-space-0-5);
@@ -146,7 +145,6 @@
     gap: var(--q-chart-tooltip-gap);
     min-width: max-content;
     padding: var(--q-chart-tooltip-py) var(--q-chart-tooltip-px);
-    border: var(--q-hairline) solid var(--q-chart-tooltip-border);
     border-radius: var(--q-chart-tooltip-radius);
     background: var(--q-chart-tooltip-bg);
     box-shadow: var(--q-chart-tooltip-shadow);

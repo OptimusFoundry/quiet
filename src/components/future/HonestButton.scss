@@ -16,8 +16,8 @@
     --q-honest-button-fill-bg: var(--q-bg-subtle);
     --q-honest-button-fill-line: inset 0 calc(var(--q-space-0-25) * -1) 0 var(--q-fg); // ink edge along the bottom
     --q-honest-button-dot: var(--q-accent);
-    --q-honest-button-eta-font-family: var(--q-font-mono);
-    --q-honest-button-eta-font-size: var(--q-text-2xs);
+    --q-honest-button-eta-font-family: var(--q-font-label);
+    --q-honest-button-eta-font-size: var(--q-text-label);
     --q-honest-button-eta-fg: var(--q-fg-muted);
     --q-honest-button-disabled-opacity: 0.4;
     --q-honest-button-extra: var(--q-space-16); // the extra length a 60s wait adds
@@ -110,7 +110,7 @@
     font-size: var(--q-honest-button-eta-font-size);
     font-variant-numeric: tabular-nums;
     font-weight: var(--q-weight-regular);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
     color: var(--q-honest-button-eta-fg);
   }
 

@@ -13,19 +13,18 @@
     --q-doubt-marker-underline-offset: 0.25em; // sits below descenders at any body size
     --q-doubt-marker-bg-hover: var(--q-bg-subtle);
     --q-doubt-marker-radius: var(--q-radius-2xs);
-    --q-doubt-marker-tag-font: var(--q-font-mono);
-    --q-doubt-marker-tag-size: var(--q-text-3xs);
+    --q-doubt-marker-tag-font: var(--q-font-label);
+    --q-doubt-marker-tag-size: var(--q-text-label);
     --q-doubt-marker-tag-fg: var(--q-fg-muted);
     --q-doubt-marker-bubble-bg: var(--q-bg);
-    --q-doubt-marker-bubble-border: var(--q-border);
-    --q-doubt-marker-bubble-shadow: var(--q-shadow-2);
+    --q-doubt-marker-bubble-shadow: var(--q-shadow-float);
     --q-doubt-marker-bubble-radius: var(--q-radius-md);
     --q-doubt-marker-bubble-padding: var(--q-space-1-5);
     --q-doubt-marker-bubble-width: 280px;
     --q-doubt-marker-bubble-offset: var(--q-space-1);
     --q-doubt-marker-bubble-z: var(--q-z-popover);
-    --q-doubt-marker-status-font: var(--q-font-mono);
-    --q-doubt-marker-status-size: var(--q-text-3xs);
+    --q-doubt-marker-status-font: var(--q-font-label);
+    --q-doubt-marker-status-size: var(--q-text-label);
     --q-doubt-marker-status-fg: var(--q-fg);
     --q-doubt-marker-reason-size: var(--q-text-sm);
     --q-doubt-marker-reason-fg: var(--q-fg-body);
@@ -93,8 +92,8 @@
     margin-left: var(--q-space-0-75);
     font-family: var(--q-doubt-marker-tag-font);
     font-size: var(--q-doubt-marker-tag-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     vertical-align: middle;
     color: var(--q-doubt-marker-tag-fg);
   }
@@ -111,7 +110,6 @@
     max-width: calc(100vw - 2 * var(--q-space-2));
     margin-top: var(--q-doubt-marker-bubble-offset);
     padding: var(--q-doubt-marker-bubble-padding);
-    border: var(--q-hairline) solid var(--q-doubt-marker-bubble-border);
     border-radius: var(--q-doubt-marker-bubble-radius);
     background: var(--q-doubt-marker-bubble-bg);
     box-shadow: var(--q-doubt-marker-bubble-shadow);
@@ -141,8 +139,8 @@
   .q-doubt-marker__hint {
     font-family: var(--q-doubt-marker-status-font);
     font-size: var(--q-doubt-marker-status-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-doubt-marker-status-fg);
   }
 

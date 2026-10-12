@@ -210,7 +210,7 @@ function Conversation() {
 						Claude Opus 5.5
 					</Text>
 				}
-				hint={narrow ? undefined : "⏎ send · ⇧⏎ line"}
+				hint={narrow ? undefined : "Enter to send · Shift Enter for a new line"}
 			/>
 		</div>
 	);

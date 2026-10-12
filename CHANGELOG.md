@@ -89,6 +89,25 @@ quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; noth
 
 - `Card accent` and `EmptyState accent` (the italic phrase after the title): no app used them.
 - `EmptyState`'s default `/` glyph: pass `icon` for one.
+- **future, charts, chat, app: one-look sweep.** Labels, captions, timestamps, durations and chart
+  axes drop mono caps for the label role (`--q-font-label`, `--q-text-label`, `--q-case-label`); mono
+  stays for code, IDs and lineage table names. Unicode marks become `Icon` (Approval, HoldButton,
+  DraftDiff, StreamingTable, LineageChip, UndoRiver, IntentBar, Attachment, ChatComposer, ChatThread,
+  ToolCall, EntityLink, PageHeader back, DescriptionList copy, Transcript). Accent text reads
+  `--q-accent-fg` (ElasticSlider over value, ConsensusSlider agent mark, NarratedChart index).
+  Grounds instead of rules: Approval, ToolCall, CodeBlock and Transcript session heads sit on
+  `--q-bg-subtle` with no border; ScopeGrant loses its footer rule. Chart tooltips and the
+  DoubtMarker bubble float on `--q-shadow-float` with no border. Text that leaned on CSS uppercase is
+  now sentence case ("Hold", "Just now", "Low"/"High", "Failed").
+- Private tier-3 tokens renamed or removed with this: `--q-consensus-slider-mono-*` and
+  `--q-receipt-mono-*` become `-meta-*`; `--q-tool-call-border(-hover)` becomes `--q-tool-call-bg(-hover)`;
+  `--q-code-block-border`, `--q-approval-border`, `--q-scope-grant-border`, `--q-chart-tooltip-border`,
+  `--q-doubt-marker-bubble-border`, `--q-transcript-session-border`, `--q-transcript-session-bg`,
+  `--q-transcript-head-divider` and `--q-transcript-head-bg-open` are gone.
+
+### Removed
+
+- `ApprovalConsequence.glyph` (no app used it): pass `icon`, a stroke-icon name, instead.
 
 ### Deprecated
 

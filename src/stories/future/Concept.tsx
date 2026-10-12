@@ -3,8 +3,8 @@
 import type { ReactNode } from "react";
 import "./Concept.scss";
 
-const MONO = "q-sb-concept__mono";
-const MONO_STRONG = "q-sb-concept__mono q-sb-concept__mono--strong";
+const LABEL = "q-sb-concept__label";
+const LABEL_STRONG = "q-sb-concept__label q-sb-concept__label--strong";
 
 export function FuturePage({
 	title,
@@ -17,7 +17,7 @@ export function FuturePage({
 }) {
 	return (
 		<main className="q-sb-concept">
-			<div className={MONO_STRONG}>Future</div>
+			<div className={LABEL_STRONG}>Future</div>
 			<h1 className="q-sb-concept__title">
 				{title}
 				<span className="q-sb-concept__dot">.</span>
@@ -46,7 +46,7 @@ export function Concept({
 	return (
 		<section id={id} className="q-sb-concept__section">
 			<div className="q-sb-concept__head">
-				<span className={MONO_STRONG}>{String(index).padStart(2, "0")}</span>
+				<span className={LABEL_STRONG}>{String(index).padStart(2, "0")}</span>
 				<h2 className="q-sb-concept__name">
 					{name}
 					<span className="q-sb-concept__dot">.</span>
@@ -54,7 +54,7 @@ export function Concept({
 			</div>
 			<div className="q-sb-concept__meta">
 				<div>
-					<div className={MONO}>Evolved from</div>
+					<div className={LABEL}>Evolved from</div>
 					<div className="q-sb-concept__from">{from}</div>
 				</div>
 				<p className="q-sb-concept__idea">{idea}</p>
@@ -77,7 +77,7 @@ export function Spec({
 	// content, so specimens never force sideways scroll.
 	return (
 		<div className={col ? "q-sb-concept__spec q-sb-concept__spec--col" : "q-sb-concept__spec"}>
-			<div className={`${MONO} q-sb-concept__spec-label`}>{label}</div>
+			<div className={`${LABEL} q-sb-concept__spec-label`}>{label}</div>
 			<div className="q-sb-concept__spec-body">{children}</div>
 		</div>
 	);

@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "../core/Icon";
 import { Spinner } from "../core/Spinner";
 import "./ToolCall.scss";
 
@@ -94,12 +95,8 @@ export function ToolCall({
 				<span className="q-tool-call__name">{verb}</span>
 				{summary && <span className="q-tool-call__summary">{summary}</span>}
 				<span className="q-sr-only">{`, ${STATUS_TEXT[status]}`}</span>
-				<span className="q-tool-call__meta">{status === "error" ? "failed" : time}</span>
-				{hasDetail && (
-					<span aria-hidden="true" className="q-tool-call__chevron">
-						{"›"}
-					</span>
-				)}
+				<span className="q-tool-call__meta">{status === "error" ? "Failed" : time}</span>
+				{hasDetail && <Icon name="chevron-right" size="sm" className="q-tool-call__chevron" />}
 			</button>
 			{hasDetail && (
 				<div

@@ -171,7 +171,7 @@ export function ThresholdHandles({
 					>
 						<span className="q-threshold-handles__line" />
 						<span aria-hidden="true" className="q-threshold-handles__tag">
-							{which} {fmt(v)}
+							{which === "low" ? "Low" : "High"} {fmt(v)}
 						</span>
 					</span>
 				))}

@@ -73,7 +73,7 @@ function DoubtDemo() {
 				</DoubtMarker>
 			</p>
 			<div className="q-sb-trust__foot">
-				<span className="q-sb-trust__mono">Press a claim you doubt</span>
+				<span className="q-sb-trust__label">Press a claim you doubt</span>
 				{Object.keys(st).length > 0 && (
 					<Button size="sm" variant="ghost" onClick={() => setSt({})}>
 						Reset

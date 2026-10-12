@@ -17,9 +17,9 @@
     --q-ghost-future-label-fg: var(--q-fg-muted);
     --q-ghost-future-label-font-size: var(--q-text-sm);
     --q-ghost-future-hint-fg: var(--q-fg-muted);
-    --q-ghost-future-hint-font-size: var(--q-text-2xs);
+    --q-ghost-future-hint-font-size: var(--q-text-label);
     --q-ghost-future-caption-fg: var(--q-fg-muted);
-    --q-ghost-future-caption-font-size: var(--q-text-2xs);
+    --q-ghost-future-caption-font-size: var(--q-text-label);
     --q-ghost-future-opacity: 0.9; // nearest ghost
     --q-ghost-future-opacity-step: 0.18; // each further ghost
     --q-ghost-future-opacity-min: 0.3;
@@ -101,10 +101,10 @@
   .q-ghost-future__hint,
   .q-ghost-future__caption {
     color: var(--q-ghost-future-hint-fg);
-    font-family: var(--q-font-mono);
+    font-family: var(--q-font-label);
     font-size: var(--q-ghost-future-hint-font-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
   }
 
   .q-ghost-future__caption {

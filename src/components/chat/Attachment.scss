@@ -17,14 +17,14 @@
     --q-attachment-tile-bg: var(--q-bg-subtle);
     --q-attachment-tile-fg: var(--q-fg-muted);
     --q-attachment-tile-radius: var(--q-radius-sm);
-    --q-attachment-tile-font: var(--q-font-mono);
+    --q-attachment-tile-font: var(--q-font-label);
     --q-attachment-tile-size-text: var(--q-text-3xs);
     --q-attachment-name-fg: var(--q-fg);
     --q-attachment-name-size: var(--q-text-sm);
     --q-attachment-name-weight: var(--q-weight-medium);
     --q-attachment-meta-fg: var(--q-fg-muted);
-    --q-attachment-meta-size: var(--q-text-2xs);
-    --q-attachment-meta-font: var(--q-font-mono);
+    --q-attachment-meta-size: var(--q-text-label);
+    --q-attachment-meta-font: var(--q-font-label);
     --q-attachment-error-dot: var(--q-accent);
     --q-attachment-dot-size: var(--q-space-0-75);
     --q-attachment-progress-height: var(--q-space-0-25);
@@ -96,7 +96,7 @@
     color: var(--q-attachment-tile-fg);
     font-family: var(--q-attachment-tile-font);
     font-size: var(--q-attachment-tile-size-text);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
   }
 
   .q-attachment__thumb {
@@ -132,11 +132,11 @@
     color: var(--q-attachment-meta-fg);
     font-family: var(--q-attachment-meta-font);
     font-size: var(--q-attachment-meta-size);
-    letter-spacing: var(--q-tracking-mono);
+    letter-spacing: var(--q-tracking-label);
     line-height: var(--q-leading-ui);
     white-space: nowrap;
     text-overflow: ellipsis;
-    text-transform: uppercase;
+    text-transform: var(--q-case-label);
   }
 
   .q-attachment__dot {

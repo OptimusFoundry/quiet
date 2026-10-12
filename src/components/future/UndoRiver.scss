@@ -26,8 +26,8 @@
     --q-undo-river-who-you: var(--q-accent);
     --q-undo-river-who-ink: var(--q-fg);
     --q-undo-river-undo-fg: var(--q-fg-muted);
-    --q-undo-river-edge-font: var(--q-font-mono);
-    --q-undo-river-edge-size: var(--q-text-3xs);
+    --q-undo-river-edge-font: var(--q-font-label);
+    --q-undo-river-edge-size: var(--q-text-label);
     --q-undo-river-edge-fg: var(--q-fg-muted);
     --q-undo-river-status-size: var(--q-text-sm);
     --q-undo-river-status-fg: var(--q-fg-muted);
@@ -137,8 +137,8 @@
     bottom: var(--q-space-1);
     font-family: var(--q-undo-river-edge-font);
     font-size: var(--q-undo-river-edge-size);
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-undo-river-edge-fg);
 
     &--start {

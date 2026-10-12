@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../core/Button";
+import { Icon } from "../core/Icon";
 import { Attachment } from "./Attachment";
 import { accepts, formatBytes, toAttachment } from "./chat-utils";
 import "./ChatComposer.scss";
@@ -332,7 +333,7 @@ export function ChatComposer({
 						className="q-chat-composer__send"
 						aria-label="Send message"
 						disabled={!canSend}
-						icon={<span aria-hidden="true">{"↑"}</span>}
+						icon={<Icon name="arrow-up" />}
 					/>
 				)}
 			</div>

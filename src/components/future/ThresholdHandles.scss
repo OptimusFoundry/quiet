@@ -18,8 +18,8 @@
     --q-threshold-handles-band-bg: var(--q-bg-subtle);
     --q-threshold-handles-label-font-size: var(--q-text-md);
     --q-threshold-handles-label-weight: var(--q-weight-medium);
-    --q-threshold-handles-summary-font-family: var(--q-font-mono);
-    --q-threshold-handles-summary-font-size: var(--q-text-2xs);
+    --q-threshold-handles-summary-font-family: var(--q-font-label);
+    --q-threshold-handles-summary-font-size: var(--q-text-label);
     --q-threshold-handles-summary-fg: var(--q-fg-muted);
     --q-threshold-handles-summary-fg-firing: var(--q-fg);
     --q-threshold-handles-hit: var(--q-space-2);
@@ -30,8 +30,8 @@
     --q-threshold-handles-tag-radius: var(--q-radius-xs);
     --q-threshold-handles-tag-bg: var(--q-fg);
     --q-threshold-handles-tag-fg: var(--q-bg);
-    --q-threshold-handles-tag-font-family: var(--q-font-mono);
-    --q-threshold-handles-tag-font-size: var(--q-text-3xs);
+    --q-threshold-handles-tag-font-family: var(--q-font-label);
+    --q-threshold-handles-tag-font-size: var(--q-text-label);
     --q-threshold-handles-tag-ring: 0 0 0 2px var(--q-bg), 0 0 0 3px var(--q-fg);
   }
 }
@@ -61,8 +61,8 @@
     font-family: var(--q-threshold-handles-summary-font-family);
     font-size: var(--q-threshold-handles-summary-font-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     color: var(--q-threshold-handles-summary-fg);
 
     &[data-firing] {
@@ -149,8 +149,8 @@
     font-family: var(--q-threshold-handles-tag-font-family);
     font-size: var(--q-threshold-handles-tag-font-size);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--q-tracking-mono);
-    text-transform: uppercase;
+    letter-spacing: var(--q-tracking-label);
+    text-transform: var(--q-case-label);
     white-space: nowrap;
     transform: translateY(-50%);
     transition: box-shadow var(--q-dur-hover) var(--q-ease-soft);
