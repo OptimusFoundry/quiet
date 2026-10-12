@@ -142,6 +142,7 @@ section, since the catalog is generated from the reference and must stay pixel-i
   - `new-component`: add a component end to end.
   - `port-future-concept`: judge fit and read a Claude Design concept through Chrome.
   - `sync-from-claude-design`: update the reference copy, hash-verified, with parity.
+  - `sync-design-artifact`: push quiet to its Claude Design system artifact (only changed files; `scripts/design-artifact.mjs`), or pull refinements made there back.
   - `review-component`: the pre-PR checklist.
   - App-facing (the `quiet` plugin in `claude/`, placed by `quiet sync`, see "Vendoring"):
     `skills/quiet-app`, `agents/quiet-screen-reviewer.md`, `hooks/` (`quiet-guard.mjs`).
