@@ -2,6 +2,14 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Fixed
+
+- `ChatThread`'s scroller is now the containing block for its children. Absolutely positioned
+  `.q-sr-only` labels inside messages escaped the scroll clip and stretched the page's scroll
+  container (the AppShell panel) by the full height of the history.
+
 ## 1.1.2
 
 ### Fixed
