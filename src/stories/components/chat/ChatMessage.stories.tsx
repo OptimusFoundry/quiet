@@ -63,7 +63,9 @@ export const FromAPerson: Story = {
 
 export const FromClaude: Story = {
 	parameters: {
-		docs: { description: { story: "Plain prose under a name row, no bubble; Copy and Retry." } },
+		docs: {
+			description: { story: "Plain prose under a name row, no bubble; a Copy icon and Retry." },
+		},
 	},
 	render: () => (
 		<ChatMessage time={new Date(2026, 9, 8, 9, 42)} onRetry={noop}>
