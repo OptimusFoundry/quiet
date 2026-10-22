@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../core/Button";
+import { Icon } from "../core/Icon";
 import type { AttachmentProps } from "./Attachment";
 import { Attachment } from "./Attachment";
 import { useCopy } from "./chat-utils";
@@ -142,10 +143,15 @@ export function ChatMessage({
 					variant="ghost"
 					size="sm"
 					onClick={doCopy}
-					aria-label={copyState === "copied" ? "Copied" : "Copy message"}
-				>
-					{copyState === "copied" ? "Copied" : copyState === "failed" ? "Copy failed" : "Copy"}
-				</Button>
+					icon={<Icon name={copyState === "copied" ? "check" : "copy"} />}
+					aria-label={
+						copyState === "copied"
+							? "Copied"
+							: copyState === "failed"
+								? "Copy failed"
+								: "Copy message"
+					}
+				/>
 			)}
 			{onRetry && (
 				<Button variant="ghost" size="sm" onClick={onRetry}>

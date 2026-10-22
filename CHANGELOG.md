@@ -2,6 +2,13 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Changed
+
+- `ChatMessage`'s Copy action is an icon button: a copy icon, then a check once copied. Its
+  accessible name is unchanged ("Copy message", "Copied"); a failed copy is now named "Copy failed".
+
 ## 1.1.3
 
 ### Fixed
