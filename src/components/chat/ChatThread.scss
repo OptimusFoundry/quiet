@@ -28,6 +28,9 @@
   }
 
   .q-chat-thread__scroller {
+    // The containing block for absolutely-positioned children (.q-sr-only labels in messages);
+    // without it they escape the scroll clip and stretch whatever scrolls outside the thread.
+    position: relative;
     flex: 1;
     min-height: 0;
     overflow-y: auto;
