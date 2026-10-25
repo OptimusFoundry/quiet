@@ -1,0 +1,20 @@
+// ThinkingOrb — a canvas the component paints. BEM: .q-thinking-orb; [data-motion="running|still"].
+// The component reads the dot colours and lap duration below, and sets --_size from `size`
+// (the bitmap is size × devicePixelRatio, so the CSS size has to be pinned).
+@layer q.tokens {
+  :root,
+  [data-theme] {
+    --q-thinking-orb-dot: var(--q-fg-muted);
+    --q-thinking-orb-dot-accent: var(--q-accent);
+    --q-thinking-orb-dur: var(--q-dur-forge-loop);
+  }
+}
+
+@layer q.components {
+  .q-thinking-orb {
+    display: block;
+    flex-shrink: 0;
+    width: var(--_size);
+    height: var(--_size);
+  }
+}
