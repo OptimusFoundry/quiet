@@ -2,6 +2,13 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Fixed
+
+- `ToolCall` shrinks to its column. A long summary that never wraps, such as a URL, set the
+  `ChatMessage` grid track to its full width and made the `ChatThread` scroll sideways.
+
 ## 1.2.0
 
 ### Changed
