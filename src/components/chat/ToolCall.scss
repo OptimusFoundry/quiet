@@ -105,6 +105,7 @@
   }
 
   .q-tool-call__meta {
+    flex: none;
     margin-left: auto;
     color: var(--q-tool-call-meta-fg);
     font-family: var(--q-tool-call-meta-font);

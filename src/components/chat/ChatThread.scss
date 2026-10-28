@@ -71,6 +71,12 @@
     translate: -50% 0;
   }
 
+  // A secondary button has no fill at rest, and this one floats over the messages.
+  .q-chat-thread__jump .q-button {
+    background: var(--q-bg);
+    box-shadow: var(--q-shadow-float);
+  }
+
   .q-chat-thread__divider {
     display: flex;
     align-items: center;

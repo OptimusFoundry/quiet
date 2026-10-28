@@ -2,6 +2,15 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Fixed
+
+- `ChatThread`'s "Jump to latest" button has a solid fill and a float shadow. It was a secondary
+  button with no fill at rest, so the messages showed through it.
+- `ToolCall`'s status label ("Failed" or the time) keeps its width. A long summary squeezed it to
+  one letter per line.
+
 ## 1.2.1
 
 ### Fixed
