@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { ChatMessage } from "../../../components/chat/ChatMessage";
 import { ToolCall } from "../../../components/chat/ToolCall";
 import { Button } from "../../../components/core/Button";
 import { Column, Note, Row } from "../Story";
@@ -116,3 +117,22 @@ function Controlled() {
 }
 
 export const ControlledOpen: Story = { render: () => <Controlled /> };
+
+const LONG_URL = `https://api.open-meteo.com/v1/forecast?latitude=45.32&longitude=-75.67&hourly=${"temperature_2m,".repeat(40)}`;
+
+export const LongSummary: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: "A summary that never wraps truncates inside a reply instead of widening it.",
+			},
+		},
+	},
+	render: () => (
+		<Column wide>
+			<ChatMessage from="assistant" name="Claude">
+				<ToolCall name="Web fetch" status="error" summary={LONG_URL} input={{ url: LONG_URL }} />
+			</ChatMessage>
+		</Column>
+	),
+};

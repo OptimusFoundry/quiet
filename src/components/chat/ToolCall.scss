@@ -30,7 +30,9 @@
 }
 
 @layer q.components {
+  // A grid or flex parent would otherwise size to the summary's full nowrap width.
   .q-tool-call {
+    min-width: 0;
     border-radius: var(--q-tool-call-radius);
     background: var(--q-tool-call-bg);
     transition: background var(--q-dur-hover) var(--q-ease-soft);
