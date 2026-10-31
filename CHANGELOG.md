@@ -2,6 +2,15 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 1.4.0
+
+### Changed
+
+- An `AppShell` pane with `width="wide"` takes 2/3 of the room beside the Sidebar instead of a
+  fixed 600. While other panes are open it gives width back, so the screen keeps `mainMinWidth`.
+  600 (`--q-app-shell-aside-width-wide`) is now its floor; below that, the older pane closes, as
+  before.
+
 ## 1.3.1
 
 ### Fixed

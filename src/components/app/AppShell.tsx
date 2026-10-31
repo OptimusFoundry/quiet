@@ -14,7 +14,7 @@ export interface AppShellPane {
 	/** Called when the pane asks to close: its close button, Escape, or a newer pane that doesn't fit beside it */
 	onClose?: () => void;
 	children?: React.ReactNode;
-	/** `default` is 360 (a list); `wide` is 600 (a document or a preview). Default "default" */
+	/** `default` is 360 (a list); `wide` takes 2/3 of the room beside the Sidebar (a document or a preview), shrinking to 600 while other panes are open. Default "default" */
 	width?: "default" | "wide";
 	/** Replaces the title in the pane's head (a switcher, a name, a version, a menu); the close button stays */
 	head?: React.ReactNode;
@@ -99,6 +99,17 @@ function tokenPx(el: HTMLElement, token: string): number {
 	return Number.parseFloat(getComputedStyle(el).getPropertyValue(token)) || 0;
 }
 
+// A wide pane's token width is its floor: it grows past it to this share of the room beside the
+// Sidebar, and gives width back while other panes are open.
+const WIDE_SHARE = 2 / 3;
+
+function paneWidth(el: HTMLElement, p: AppShellPane): number {
+	return tokenPx(
+		el,
+		p.width === "wide" ? "--q-app-shell-aside-width-wide" : "--q-app-shell-aside-width",
+	);
+}
+
 function ShellView({
 	sidebar,
 	topBar,
@@ -154,19 +165,26 @@ function ShellView({
 		const kept = order.current.map((id) => byId.get(id)).filter((p) => p !== undefined);
 		// width is 0 until the ResizeObserver first reports; checking then would close every pane but one.
 		if (!el || width === 0 || kept.length < 2) return;
-		const paneWidth = (p: AppShellPane) =>
-			tokenPx(
-				el,
-				p.width === "wide" ? "--q-app-shell-aside-width-wide" : "--q-app-shell-aside-width",
-			);
 		const fits = () => {
 			if (isMobile) return false;
 			const rail = collapsed || kept.some((p) => p.railSidebar);
 			const side = tokenPx(el, rail ? "--q-w-sidebar-collapsed" : "--q-w-sidebar");
-			return width - side - kept.reduce((sum, p) => sum + paneWidth(p), 0) >= mainMinWidth;
+			return width - side - kept.reduce((sum, p) => sum + paneWidth(el, p), 0) >= mainMinWidth;
 		};
 		while (kept.length > 1 && !fits()) kept.shift()?.onClose?.();
 	}, [openKey, width, isMobile, collapsed, mainMinWidth]);
+
+	const widePx = (p: AppShellPane): number | undefined => {
+		const el = root.current;
+		if (p.width !== "wide" || isMobile || !el || width === 0) return undefined;
+		const others = panes.filter((o) => o.open && o.id !== p.id);
+		const rail = collapsed || p.railSidebar || others.some((o) => o.railSidebar);
+		const room = width - tokenPx(el, rail ? "--q-w-sidebar-collapsed" : "--q-w-sidebar");
+		const taken = others.reduce((sum, o) => sum + paneWidth(el, o), 0);
+		return Math.round(
+			Math.max(paneWidth(el, p), Math.min(room * WIDE_SHARE, room - mainMinWidth - taken)),
+		);
+	};
 
 	const cls = [
 		"q-app-shell",
@@ -197,7 +215,7 @@ function ShellView({
 			</main>
 			<div className="q-app-shell__asides">
 				{panes.map((p) => (
-					<ShellPane key={p.id} pane={p} isMobile={isMobile} />
+					<ShellPane key={p.id} pane={p} isMobile={isMobile} widthPx={widePx(p)} />
 				))}
 			</div>
 		</div>
@@ -210,8 +228,19 @@ const ASIDE_EXIT_MS = 280;
 // Desktop: beside the screen, non-modal. Phone: the same pane, full screen over the screen, so it
 // is modal there (background inert, focus held). Either way focus moves in on open and back to the
 // opener on close.
-function ShellPane({ pane: p, isMobile }: { pane: AppShellPane; isMobile: boolean }) {
+function ShellPane({
+	pane: p,
+	isMobile,
+	widthPx,
+}: {
+	pane: AppShellPane;
+	isMobile: boolean;
+	widthPx?: number;
+}) {
 	const { mounted, state } = usePresence(p.open, ASIDE_EXIT_MS);
+	// A closing pane keeps the width it had, so its content doesn't reflow while the slot shrinks.
+	const shownPx = React.useRef(widthPx);
+	if (p.open) shownPx.current = widthPx;
 	const pane = React.useRef<HTMLElement>(null);
 	const opener = React.useRef<HTMLElement | null>(null);
 	// The opener is read when the pane is asked to open, before it mounts and anything moves focus.
@@ -240,7 +269,14 @@ function ShellPane({ pane: p, isMobile }: { pane: AppShellPane; isMobile: boolea
 		.filter(Boolean)
 		.join(" ");
 	return (
-		<div className={slot}>
+		<div
+			className={slot}
+			style={
+				shownPx.current === undefined
+					? undefined
+					: ({ "--_w": `${shownPx.current}px` } as React.CSSProperties)
+			}
+		>
 			{mounted && (
 				<aside
 					ref={pane}
