@@ -23,7 +23,7 @@
     --q-app-shell-top-bar-border-scrolled: var(--q-border);
 
     --q-app-shell-aside-width: 360px; // a readable notification column; no tier-2 width fits
-    --q-app-shell-aside-width-wide: 600px; // a document or preview; at 1440 it fits beside a 360 pane
+    --q-app-shell-aside-width-wide: 600px; // a wide pane's floor; it grows to 2/3 of the room beside the Sidebar
     --q-app-shell-aside-dur: var(--q-dur-expand);
     --q-app-shell-sheet-z: var(--q-z-overlay);
     --q-app-shell-aside-head-height: 44px; // lines up with the TopBar

@@ -176,7 +176,7 @@ export const TwoPanes: Story = {
 		docs: {
 			description: {
 				story:
-					"`panes` opens more than one pane, left to right. The wide pane carries its own `head` and holds the Sidebar at its rail while open. Escape closes the newest pane first. Below the width where both fit beside a 400 screen, opening one closes the older.",
+					"`panes` opens more than one pane, left to right. The wide pane takes 2/3 of the room beside the Sidebar, gives width back (down to 600) when the second pane opens, carries its own `head` and holds the Sidebar at its rail while open. Escape closes the newest pane first. Below the width where both fit beside a 400 screen, opening one closes the older.",
 			},
 		},
 	},
