@@ -22,6 +22,8 @@ export interface AppShellPane {
 	flush?: boolean;
 	/** While open, holds the Sidebar at its rail. The person's own choice comes back when it closes */
 	railSidebar?: boolean;
+	/** Set false for a pane the screen opens on its own (on page load, not from a control): focus stays where it is. On a phone the sheet is modal and still takes focus. Default true */
+	focusOnOpen?: boolean;
 }
 
 export interface AppShellProps {
@@ -244,8 +246,10 @@ function ShellPane({
 	const pane = React.useRef<HTMLElement>(null);
 	const opener = React.useRef<HTMLElement | null>(null);
 	// The opener is read when the pane is asked to open, before it mounts and anything moves focus.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: focus moves when the pane opens, not when the flag changes
 	React.useEffect(() => {
-		if (!p.open || !mounted || pane.current?.contains(document.activeElement)) return;
+		if (!p.open || !mounted || p.focusOnOpen === false) return;
+		if (pane.current?.contains(document.activeElement)) return;
 		pane.current?.focus({ preventScroll: true });
 	}, [p.open, mounted]);
 	React.useEffect(() => {
