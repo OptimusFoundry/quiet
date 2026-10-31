@@ -2,6 +2,14 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 1.5.0
+
+### Added
+
+- An `AppShell` pane takes `focusOnOpen`. Set it to `false` for a pane the screen opens on its
+  own, such as on page load: focus stays where it is instead of moving into the pane. On a phone
+  the pane is a modal sheet and still takes focus.
+
 ## 1.4.0
 
 ### Changed

@@ -1,6 +1,6 @@
 {
 	"name": "@optimusfoundry/quiet",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"description": "A React design system with one look: an inset three-pane app shell, soft ink, a lava accent and dense pill controls.",
 	"type": "module",
 	"license": "UNLICENSED",
