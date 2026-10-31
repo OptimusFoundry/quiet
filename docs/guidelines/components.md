@@ -17,7 +17,7 @@ the wrong option it prevents.
 | the frame of a signed-in screen | `AppShell` + `Sidebar` (`WorkspaceSwitcher`, `AccountMenu`) + `TopBar` | a header, nav or account menu built by the page; your own header on `--q-top-bar-*` tokens |
 | where you are, and screen-wide actions | `TopBar` (`crumbs`, `actions`) | a second breadcrumb bar, a back link standing in for the trail on desktop |
 | the top of a page | `PageHeader` (title, `status`, `meta`, `actions`, `back`, `eyebrow`, `tabs`) under the TopBar | a heading with a rule, the page name only in the TopBar |
-| secondary content beside the screen (notifications, an inspector, the assistant) | AppShell's third pane (`aside`, `asideTitle`, `asideOpen`) | a `Drawer` or `Dialog` over the screen; a fixed column built by the page |
+| secondary content beside the screen (notifications, an inspector, the assistant, a document) | AppShell's third pane (`aside`, `asideTitle`, `asideOpen`), or `panes` for two side by side (`width="wide"` for a document) | a `Drawer` or `Dialog` over the screen; a fixed column built by the page |
 | an icon | `AppIcon` (quiet's stroke set, `name`) | unicode glyphs (→ ✕ ✓), emoji, a second icon library |
 | a titled section | `Panel` (surface; `outlined` in a grid; `plain` for the lead; `empty` collapses) | a heading with a rule, a hand-built bordered `<section>` |
 | an agent run's history | `Transcript` (sessions, grouped messages, `ToolCall`s, events) | raw `[chat · @name] text` lines, empty session headings |

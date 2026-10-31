@@ -2,6 +2,23 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Added
+
+- `AppShell` takes `panes`: more than one right pane, side by side, left to right. Each pane has
+  its own `id`, `title`, `open` and `onClose`. `width="wide"` is 600 (a document or a preview)
+  next to the default 360. `head` replaces the title in the pane's head and keeps the close button.
+  `flush` drops the body's padding. `railSidebar` holds the Sidebar at its rail while the pane is open.
+- Escape closes the newest open pane first.
+- When a newer pane doesn't fit beside the screen's `mainMinWidth` (default 400), `AppShell` calls
+  `onClose` on the older panes. On a phone, one pane shows at a time, as a full-screen sheet.
+- `SidebarProvider` takes `forceRail`: it holds the desktop Sidebar at its rail and hides its
+  toggle. The person's own choice comes back when it ends.
+- Token `--q-app-shell-aside-width-wide` (600px).
+
+The single-pane props (`aside`, `asideOpen`, `onAsideClose`, `asideTitle`, `asideId`) keep working.
+
 ## 1.2.2
 
 ### Fixed
