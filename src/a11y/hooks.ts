@@ -87,17 +87,28 @@ export function useFocusTrap(ref: RefObject<HTMLElement | null>, active: boolean
 	}, [active]);
 }
 
-/** Calls `onEscape` on Escape while active. */
+// Active Escape handlers, oldest first. One Escape closes only the newest layer: a menu open in a
+// pane closes, the pane stays.
+const escapeLayers: object[] = [];
+
+/** Calls `onEscape` on Escape while active, if it is the most recently activated layer and nothing handled the key first (`preventDefault`). */
 export function useEscape(active: boolean, onEscape: (() => void) | undefined) {
 	const cb = useRef(onEscape);
 	cb.current = onEscape;
 	useEffect(() => {
 		if (!active) return;
+		const layer = {};
+		escapeLayers.push(layer);
 		const onKey = (e: globalThis.KeyboardEvent) => {
-			if (e.key === "Escape") cb.current?.();
+			if (e.key !== "Escape" || e.defaultPrevented || escapeLayers.at(-1) !== layer) return;
+			e.preventDefault();
+			cb.current?.();
 		};
 		document.addEventListener("keydown", onKey);
-		return () => document.removeEventListener("keydown", onKey);
+		return () => {
+			document.removeEventListener("keydown", onKey);
+			escapeLayers.splice(escapeLayers.indexOf(layer), 1);
+		};
 	}, [active]);
 }
 

@@ -2,6 +2,15 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 1.3.1
+
+### Fixed
+
+- One Escape closes only the newest open layer. A `DropdownMenu` (or `Popover`, `Tooltip`…) open
+  inside an `AppShell` pane or a `Dialog` closed both the menu and the pane. `useEscape` now runs
+  only the most recently activated handler, skips a key that something already handled
+  (`preventDefault`), and marks the key handled.
+
 ## 1.3.0
 
 ### Added
