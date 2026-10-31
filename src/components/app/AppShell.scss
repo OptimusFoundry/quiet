@@ -2,7 +2,8 @@
 // BEM: .q-app-shell, __skip, __sidebar, __notice, __panel, __sentinel; --narrow (below the
 // breakpoint), --notice (a ShellNotice row on the canvas above the panel and pane).
 // The panel carries [data-scrolled] for the TopBar's rule. Sets the Sidebar's and TopBar's tier-3
-// tokens for its slots, so both read as part of the frame.
+// tokens for its slots, so both read as part of the frame. Right panes: __asides holds one
+// __aside-slot per pane (--wide, --open), each holding an __aside.
 @use "../../styles/layers";
 
 @layer q.tokens {
@@ -22,6 +23,7 @@
     --q-app-shell-top-bar-border-scrolled: var(--q-border);
 
     --q-app-shell-aside-width: 360px; // a readable notification column; no tier-2 width fits
+    --q-app-shell-aside-width-wide: 600px; // a document or preview; at 1440 it fits beside a 360 pane
     --q-app-shell-aside-dur: var(--q-dur-expand);
     --q-app-shell-sheet-z: var(--q-z-overlay);
     --q-app-shell-aside-head-height: 44px; // lines up with the TopBar
@@ -46,19 +48,12 @@
   .q-app-shell {
     position: relative;
     display: grid;
-    --_aside: 0px;
-
-    grid-template-columns: auto minmax(0, 1fr) var(--_aside);
+    grid-template-columns: auto minmax(0, 1fr) auto;
     box-sizing: border-box;
     height: 100dvh;
-    transition: grid-template-columns var(--q-app-shell-aside-dur) var(--q-ease-forge);
     background: var(--q-app-shell-canvas);
     color: var(--q-fg-body);
     font-family: var(--q-font-body);
-
-    &--aside-open {
-      --_aside: var(--q-app-shell-aside-width);
-    }
 
     &--notice {
       grid-template-rows: auto minmax(0, 1fr);
@@ -135,7 +130,7 @@
     }
   }
 
-  .q-app-shell--notice > :is(.q-app-shell__panel, .q-app-shell__aside-slot) {
+  .q-app-shell--notice > :is(.q-app-shell__panel, .q-app-shell__asides) {
     grid-row: 2;
   }
 
@@ -171,18 +166,37 @@
     }
   }
 
-  // Third pane: a column that grows from 0, holding a raised panel of its own width, so its
-  // content doesn't reflow while the column opens; the screen narrows beside it.
-  .q-app-shell__aside-slot {
+  // Right panes: each slot grows from 0 on its own, holding a raised panel of its own width, so
+  // its content doesn't reflow while the slot opens; the screen narrows beside them.
+  .q-app-shell__asides {
+    display: flex;
     min-width: 0;
+    min-height: 0;
+  }
+
+  .q-app-shell__aside-slot {
+    --_w: var(--q-app-shell-aside-width);
+
+    flex: none;
+    width: 0;
+    min-height: 0;
     overflow: hidden;
+    transition: width var(--q-app-shell-aside-dur) var(--q-ease-forge);
+
+    &--wide {
+      --_w: var(--q-app-shell-aside-width-wide);
+    }
+
+    &--open {
+      width: var(--_w);
+    }
   }
 
   .q-app-shell__aside {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    width: calc(var(--q-app-shell-aside-width) - var(--q-app-shell-inset));
+    width: calc(var(--_w) - var(--q-app-shell-inset));
     height: calc(100% - 2 * var(--q-app-shell-inset));
     margin: var(--q-app-shell-inset) var(--q-app-shell-inset) var(--q-app-shell-inset) 0;
     overflow: hidden;
@@ -220,6 +234,14 @@
     padding: 0 var(--q-space-1) 0 var(--q-app-shell-aside-px);
   }
 
+  .q-app-shell__aside-lead {
+    display: flex;
+    flex: 1;
+    gap: var(--q-space-1);
+    align-items: center;
+    min-width: 0;
+  }
+
   .q-app-shell__aside-title {
     margin: 0;
     color: var(--q-app-shell-aside-title-fg);
@@ -252,6 +274,10 @@
     min-height: 0;
     padding: 0 var(--q-app-shell-aside-px) var(--q-app-shell-aside-px);
     overflow: auto;
+
+    &--flush {
+      padding: 0;
+    }
   }
 
   .q-app-shell__sentinel {

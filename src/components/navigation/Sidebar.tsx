@@ -61,6 +61,8 @@ export interface SidebarProviderProps {
 	open?: boolean;
 	defaultOpen?: boolean;
 	onOpenChange?: (open: boolean) => void;
+	/** Holds the desktop Sidebar at its rail and hides its toggle, e.g. while a wide pane is open. The person's own choice comes back when it ends */
+	forceRail?: boolean;
 	children?: React.ReactNode;
 }
 
@@ -111,6 +113,7 @@ interface SidebarContextValue extends SidebarState {
 	panelId: string | undefined;
 	register: React.Dispatch<React.SetStateAction<SidebarRail>>;
 	scoped: boolean;
+	forceRail: boolean;
 }
 
 const px = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
@@ -131,6 +134,7 @@ export function SidebarProvider({
 	open,
 	defaultOpen = false,
 	onOpenChange,
+	forceRail = false,
 	children,
 	_scoped = false,
 }: SidebarProviderProps & { _scoped?: boolean }) {
@@ -172,8 +176,9 @@ export function SidebarProvider({
 			panelId: rail.panelId,
 			register,
 			scoped: _scoped,
+			forceRail,
 		}),
-		[isMobile, isOpen, setOpen, drawer, rail, _scoped],
+		[isMobile, isOpen, setOpen, drawer, rail, _scoped, forceRail],
 	);
 	return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 }
@@ -332,7 +337,9 @@ function SidebarView({
 			return defaultCollapsed;
 		}
 	});
-	const isCol = !drawer && (collapsed ?? (innerCol || ctx.isMobile));
+	// A forced rail leaves the person's own choice untouched, so it comes back when the force ends.
+	const forced = !drawer && ctx.forceRail;
+	const isCol = forced || (!drawer && (collapsed ?? (innerCol || ctx.isMobile)));
 	const cur = value ?? innerVal;
 	const pick = (v: string) => {
 		setInnerVal(v);
@@ -363,10 +370,10 @@ function SidebarView({
 			attention,
 			collapsed: isCol,
 			drawer: mode === "drawer",
-			toggle: () => toggleRef.current(),
+			toggle: forced ? null : () => toggleRef.current(),
 			panelId: `${uid}panel`,
 		});
-	}, [register, attention, isCol, mode, uid]);
+	}, [register, attention, isCol, forced, mode, uid]);
 	React.useEffect(() => () => register(UNREGISTERED), [register]);
 
 	const { mounted, state } = usePresence(drawer && ctx.open, 160);
@@ -419,7 +426,8 @@ function SidebarView({
 							<Icon name="close" />
 						</button>
 					) : (
-						collapsible && (
+						collapsible &&
+						!forced && (
 							<button
 								type="button"
 								aria-label={isCol ? "Expand sidebar" : "Collapse sidebar"}

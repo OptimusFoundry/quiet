@@ -51,7 +51,7 @@ canvas (grey) ──────────────────────
 | Sidebar footer | `AccountMenu` (avatar, name, email; profile, shortcuts, sign out) | the only place the account lives |
 | Panel | AppShell `children`: the inset white panel, radius 14, a soft shadow, scrolls on its own | the screen. No second ground: Panels inside it take the warm grey |
 | TopBar | quiet's `TopBar` in AppShell `topBar`: the Sidebar toggle, `crumbs` (the last is the current page), global `actions` | 44 high, pinned to the panel's top; its rule shows only once the panel scrolls. Actions are `size="sm"` ghost buttons (icon-only ones named): pane toggles with `aria-expanded` and `aria-controls="app-aside"`, then at most one screen-wide action. Render the component, never copy its tokens onto your own header |
-| Third pane | AppShell `aside`, `asideTitle`, `asideOpen`, `onAsideClose` | 360 wide, **pushes** the panel narrower (never overlays it); one pane at a time (notifications, an inspector, the assistant's changes); a title and a close button; Escape closes it and focus returns to its opener |
+| Third pane | AppShell `aside`, `asideTitle`, `asideOpen`, `onAsideClose` for one pane; `panes` for more | 360 wide (`width="wide"`: 600, for a document or a preview), **pushes** the panel narrower (never overlays it); notifications, an inspector, the assistant's changes; a title (or its own `head`) and a close button; Escape closes the newest pane and focus returns to its opener. Two panes sit side by side while the screen keeps 400 (`mainMinWidth`); below that, opening one closes the older. A wide pane may hold the Sidebar at its rail (`railSidebar`) |
 | Search | one `CommandPalette` with `hotkey` ⌘K | it mirrors every nav destination and page action; it's the only search UI |
 | Notices | by urgency, not by page: an urgent workspace-wide condition (payment failed, outage, read-only, viewing as someone) is a `ShellNotice` in AppShell `notice`, one line on the canvas above the panel; a slow account nudge (trial, usage) is a `SidebarNotice` above the `AccountMenu`; a condition on this page is a `NoticeChip` in the TopBar's actions that opens its details in the third pane | at most one of each; each is also logged in the notifications pane. Never a `Banner` stacked on every page |
 | Notifications | a `List size="sm"` in the third pane, grouped Today / Earlier, unread marked, opened from a bell in the TopBar | system events, kept until read |
@@ -62,7 +62,7 @@ canvas (grey) ──────────────────────
   so `back` is the way up) and `eyebrow` for the record's kind. Never a second breadcrumb bar.
 - **Collapses:** under 720 the panel goes flush (no inset, radius or shadow), the Sidebar becomes a
   drawer opened by the TopBar toggle, page-x becomes 16, and the third pane opens as a full-screen
-  sheet with the same title and close button (modal: the background is inert).
+  sheet with the same title and close button (modal: the background is inert), one at a time.
 - **Never:** a header, nav or notification drawer built by the page; a `Drawer` around a copy of the
   nav; an overlay where the pane belongs; the panel's own header styled with `--q-top-bar-*` tokens
   (they exist only where `TopBar` is imported, so a production build drops them).

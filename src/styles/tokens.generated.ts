@@ -131,6 +131,7 @@ export type TokenName =
 	| "--q-app-shell-aside-title-font-size"
 	| "--q-app-shell-aside-title-weight"
 	| "--q-app-shell-aside-width"
+	| "--q-app-shell-aside-width-wide"
 	| "--q-app-shell-canvas"
 	| "--q-app-shell-inset"
 	| "--q-app-shell-nav-bg-hover"

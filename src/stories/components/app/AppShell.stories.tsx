@@ -8,6 +8,7 @@ import { ShellNotice } from "../../../components/app/ShellNotice";
 import { TopBar } from "../../../components/app/TopBar";
 import { Button } from "../../../components/core/Button";
 import { Link } from "../../../components/core/Link";
+import { Text } from "../../../components/core/Text";
 import { DemoPage, DemoSidebar, Notifications } from "./AppStory";
 
 // The frame on its own, with stand-in content. Whole screens in it are Patterns/* (AppFrame.tsx).
@@ -95,6 +96,91 @@ export const ThirdPane: Story = {
 		},
 	},
 	render: () => <PaneDemo />,
+};
+
+function TwoPanesDemo() {
+	const [doc, setDoc] = useState(true);
+	const [list, setList] = useState(true);
+	return (
+		<AppShell
+			sidebar={<DemoSidebar />}
+			topBar={
+				<TopBar
+					crumbs={CRUMBS}
+					actions={
+						<>
+							<Button
+								size="sm"
+								variant={doc ? "secondary" : "ghost"}
+								icon={<AppIcon name="file" />}
+								aria-label="Report"
+								aria-expanded={doc}
+								aria-controls="app-doc"
+								onClick={() => setDoc((o) => !o)}
+							/>
+							<Button
+								size="sm"
+								variant={list ? "secondary" : "ghost"}
+								icon={<AppIcon name="bell" />}
+								aria-label="Notifications, 2 unread"
+								aria-expanded={list}
+								aria-controls="app-aside"
+								onClick={() => setList((o) => !o)}
+							/>
+						</>
+					}
+				/>
+			}
+			panes={[
+				{
+					id: "app-doc",
+					title: "Report",
+					width: "wide",
+					railSidebar: true,
+					open: doc,
+					onClose: () => setDoc(false),
+					head: (
+						<>
+							<Text as="span" weight="semibold" color="heading">
+								Run report
+							</Text>
+							<Text as="span" size="sm" color="muted">
+								v3
+							</Text>
+						</>
+					),
+					children: (
+						<Text as="p">
+							The run finished in 4 minutes. Two steps retried once; nothing needs a look.
+						</Text>
+					),
+				},
+				{
+					id: "app-aside",
+					title: "Notifications",
+					open: list,
+					onClose: () => setList(false),
+					children: <Notifications />,
+				},
+			]}
+		>
+			<DemoPage>
+				<PageHeader title="Run 233f76c2" />
+			</DemoPage>
+		</AppShell>
+	);
+}
+
+export const TwoPanes: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story:
+					"`panes` opens more than one pane, left to right. The wide pane carries its own `head` and holds the Sidebar at its rail while open. Escape closes the newest pane first. Below the width where both fit beside a 400 screen, opening one closes the older.",
+			},
+		},
+	},
+	render: () => <TwoPanesDemo />,
 };
 
 export const WithNotices: Story = {
