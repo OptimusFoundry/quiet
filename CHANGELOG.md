@@ -2,6 +2,16 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## 1.5.1
+
+### Fixed
+
+- An `AppShell` pane no longer makes the whole page scroll. Its body is now positioned, so
+  absolutely positioned content inside it (such as `q-sr-only` text) clips and scrolls with the
+  pane. Before, that content was positioned against the shell and stretched the document.
+- A long code line in an assistant `ChatMessage` no longer widens the reply. The body's grid
+  column is `minmax(0, 1fr)`, so the code block scrolls on its own and paragraphs keep wrapping.
+
 ## 1.5.0
 
 ### Added

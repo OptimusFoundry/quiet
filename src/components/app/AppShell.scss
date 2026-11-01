@@ -271,6 +271,9 @@
 
   .q-app-shell__aside-body {
     flex: 1;
+    // Positioned so absolute content (q-sr-only text) scrolls and clips with the pane instead of
+    // stretching the page.
+    position: relative;
     min-height: 0;
     padding: 0 var(--q-app-shell-aside-px) var(--q-app-shell-aside-px);
     overflow: auto;
