@@ -139,6 +139,8 @@
 
   .q-chat-message--assistant .q-chat-message__body {
     display: grid;
+    // A long code line scrolls inside its code block instead of widening the whole reply.
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--q-space-1-5);
 
     p {
