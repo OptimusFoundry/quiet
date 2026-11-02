@@ -2,6 +2,13 @@
 
 quiet follows [semver](https://semver.org). Releases are git tags `vX.Y.Z`; nothing is published to a registry.
 
+## Unreleased
+
+### Fixed
+
+- The `Toast` close button (`.q-close-button`) inherits its font instead of the browser's default
+  13.33px `<button>` size, so it stays on the type scale.
+
 ## 1.5.1
 
 ### Fixed
